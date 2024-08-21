@@ -2,13 +2,10 @@
 
 namespace Modules\Auth\Http\Controllers\Api;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 use App\Models\User;
-use Modules\Billing\Entities\Plan;
 
 class LoginController extends Controller
 {
@@ -29,7 +26,6 @@ class LoginController extends Controller
         }
 
 
-
         if(!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'status' => 'error',
@@ -44,10 +40,7 @@ class LoginController extends Controller
             ], 401);
         }
 
-        // user does not have account - create it now
-        if(!$user->account ){
-            $user->account()->create();
-        }
+       
 
         $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
 
@@ -56,7 +49,7 @@ class LoginController extends Controller
 
         
         $response = [
-            'user' => $user->load('account', 'driver', 'carrier'),
+            'user' => $user,
             'token' => $token
         ];
 

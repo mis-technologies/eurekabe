@@ -1,0 +1,11 @@
+{
+    "name": "Explore",
+    "alias": "explore",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Explore\\Providers\\ExploreServiceProvider"
+    ],
+    "files": []
+}

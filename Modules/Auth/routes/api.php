@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\PasswordController;
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Http\Controllers\Api\EmailController;
 use Modules\Auth\Http\Controllers\Api\LoginController;
+use Modules\Auth\Http\Controllers\Api\PasswordController;
 use Modules\Auth\Http\Controllers\Api\RegisterController;
 
 /*
@@ -25,7 +25,7 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         Route::post('login', [LoginController::class, 'login']);
         Route::post('register', [RegisterController::class, 'register']);
         Route::post('password/forgot', [PasswordController::class, 'forgetPassword']);
-        Route::post('password/reset', [PasswordController::class, 'passwordReset']);
+        Route::post('password/reset', [PasswordController::class, 'resetPassword']);
         Route::get('email/verify/{id}', [EmailController::class, 'verifyLink'])->name('email.verifylink');
         Route::post('email/verify', [EmailController::class, 'verifyCode'])->name('email.verifycode');
         Route::post('email/resend-code', [EmailController::class, 'resendCode'])->name('email.resendcode');

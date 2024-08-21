@@ -1,20 +1,20 @@
 <?php
 
-namespace Modules\Auth\Http\Controllers;
+namespace Modules\Exam\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class AuthController extends Controller
+class ExamController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('auth::index');
+        return view('exam::index');
     }
 
     /**
@@ -22,7 +22,7 @@ class AuthController extends Controller
      */
     public function create()
     {
-        return view('auth::create');
+        return view('exam::create');
     }
 
     /**
@@ -38,7 +38,7 @@ class AuthController extends Controller
      */
     public function show($id)
     {
-        return view('auth::show');
+        return view('exam::show');
     }
 
     /**
@@ -46,7 +46,7 @@ class AuthController extends Controller
      */
     public function edit($id)
     {
-        return view('auth::edit');
+        return view('exam::edit');
     }
 
     /**

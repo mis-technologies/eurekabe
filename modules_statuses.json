@@ -1,4 +1,10 @@
 {
     "Admin": true,
-    "Auth": true
+    "Auth": true,
+    "Student": true,
+    "Common": true,
+    "Payment": true,
+    "Exam": true,
+    "Advocate": true,
+    "Explore": true
 }

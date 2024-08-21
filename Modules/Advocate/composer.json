@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/advocate",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Advocate\\": "app/",
+            "Modules\\Advocate\\Database\\Factories\\": "database/factories/",
+            "Modules\\Advocate\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Advocate\\Tests\\": "tests/"
+        }
+    }
+}
