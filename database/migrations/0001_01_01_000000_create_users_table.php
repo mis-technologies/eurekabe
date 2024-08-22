@@ -20,6 +20,12 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
+
+            $table->string('role')->nullable()->default('student');
+            $table->foreignId('school_id')->nullable();
+            $table->foreignId('verified_by')->nullable(); 
+            $table->date('verified_at')->nullable();
+
            
             $table->string('username', 50)->nullable();
             $table->string('interest')->nullable();
@@ -27,7 +33,7 @@ return new class extends Migration
             $table->string('mobile', 50)->nullable();
             $table->integer('ref_by')->nullable();
             $table->decimal('balance', 18, 8)->default(0);
-            $table->string('image', 91)->nullable();
+            $table->string('image')->nullable();
             $table->text('address')->nullable()->comment('contains full address');
             $table->boolean('status')->default(true)->comment('0: banned, 1: active');
             $table->boolean('ev')->default(false)->comment('0: email unverified, 1: email verified');

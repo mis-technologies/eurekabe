@@ -18,14 +18,11 @@ class StudentController extends Controller
 
             $user = User::find(Auth::user()->id);
             $payload = $request->validate([
-                'type' => 'required',
                 'school_id' => 'required'
             ]);
 
-            if ($payload['type'] == 'student') {
-                $payload['user_id'] = $user->id;
-                Student::create($payload);
-            }
+            $payload['role'] = 'student';
+            $user->update($payload);
 
             return response()->json([
                 'success' => true,
@@ -43,7 +40,7 @@ class StudentController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'LoggedIn User retrieved successfully',
-                'data' => $user->load('student', 'advocate')
+                'data' => $user
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

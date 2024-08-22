@@ -19,12 +19,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'phone',
-        'password',
+    protected $guarded = [
+        'id',
     ];
 
     /**
@@ -50,9 +46,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function student()
+    public function school()
     {
-        return $this->hasOne(Student::class);
+        return $this->belongsTo(School::class, 'school_id');
     }
 
     // public function advocate()
