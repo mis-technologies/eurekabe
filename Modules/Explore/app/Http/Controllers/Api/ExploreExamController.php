@@ -20,7 +20,7 @@ class ExploreExamController extends Controller
 
         // Filtering (e.g., by subject or level)
         if ($request->has('subject')) {
-            if($subject = Subject::where('name', $request->get('subject'))->first() ){
+            if($subject = Subject::where('name', $request->get('subject'))->orWhere('id', $request->get('subject'))->first() ){
                 $query->where('subject_id', $subject->id);
             }   
            
@@ -29,12 +29,11 @@ class ExploreExamController extends Controller
 
         // Filtering (e.g., by subject or level)
         if ($request->has('school')) {
-            if($school = School::where('acronym', $request->get('school'))->first() ){
+            if($school = School::where('acronym', $request->get('school'))->orWhere('id', $request->get('school' ))->first() ){
                 $query->where('school_id', $school->id);
             }   
            
         }
-
 
         if ($request->has('level')) {
             $query->where('level', $request->get('level')); // 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000
@@ -44,8 +43,8 @@ class ExploreExamController extends Controller
         if ($request->has('search')) {
             $search = $request->get('search');
             $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+                $q->where('title', 'like', "%{$search}%");
+                //   ->orWhere('description', 'like', "%{$search}%");
             });
         }
 
@@ -57,7 +56,11 @@ class ExploreExamController extends Controller
 
         // Pagination
         $perPage = $request->get('per_page', 10);
+
+
         $exams = $query->paginate($perPage);
+
+
 
         // Return API response
         return response()->json([
@@ -88,4 +91,82 @@ class ExploreExamController extends Controller
             'data' => $exam,
         ], 200);
     }
+
+
+    /**
+     * Get featured exams.
+     */
+    public function featured()
+    {
+        // Retrieve exams marked as featured
+        $exams = Exam::where('is_featured', true)->get();
+
+        // Return API response
+        return response()->json([
+            'success' => true,
+            'data' => $exams,
+        ], 200);
+    }
+
+    /**
+     * Get popular exams.
+     */
+    public function popular()
+    {
+        // Retrieve exams based on a popularity metric, e.g., number of views or enrollments
+        $exams = Exam::orderBy('popularity', 'desc')->limit(10)->get();
+
+        // Return API response
+        return response()->json([
+            'success' => true,
+            'data' => $exams,
+        ], 200);
+    }
+
+    /**
+     * Get recommended exams based on some criteria.
+     */
+    public function recommend()
+    {
+        // Retrieve recommended exams based on user preferences, past performance, or similar criteria
+        $recommendedExams = Exam::where('recommended', true)->get();
+
+        // Return API response
+        return response()->json([
+            'success' => true,
+            'data' => $recommendedExams,
+        ], 200);
+    }
+
+
+    
+    /**
+     * Retrieve 10 items for all groupings: "recommend", "featured", and "popular".
+     */
+    public function listings()
+    {
+        // Retrieve 10 featured exams
+        $featuredExams =Exam::inRandomOrder()->limit(5)->get();//Exam::where('is_featured', true)->limit(10)->get();
+
+        // Retrieve 10 popular exams based on a popularity metric (e.g., number of views or enrollments)
+        $popularExams = Exam::inRandomOrder()->limit(5)->get();//Exam::orderBy('popularity', 'desc')->limit(10)->get();
+
+        // Retrieve 10 recommended exams based on some criteria (e.g., user preferences)
+        $recommendedExams = Exam::inRandomOrder()->limit(5)->get(); //Exam::where('recommended', true)->limit(10)->get();
+
+        $categories = Subject::inRandomOrder()->limit(20)->get();
+
+        // Return all groupings in a single response
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'featured' => $featuredExams,
+                'popular' => $popularExams,
+                'recommended' => $recommendedExams,
+                'categories' => $categories,
+            ],
+        ], 200);
+    }
+
+
 }
