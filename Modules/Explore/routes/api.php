@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Explore\Http\Controllers\Api\ExploreExamController;
+use Modules\Explore\Http\Controllers\Api\ExploreSchoolController;
 
 /*
  *--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ Route::prefix('v1')->group(function () {
 
      Route::middleware('auth:sanctum')->prefix('explore')->group(function () {
         Route::apiResource('exams', ExploreExamController::class);
+        Route::apiResource('schools', ExploreSchoolController::class);
     });
 
 

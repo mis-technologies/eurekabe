@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Advocate\Http\Controllers\AdvocateController;
+use Modules\Advocate\Http\Controllers\Api\AdvocateSchoolController;
 
 /*
  *--------------------------------------------------------------------------
@@ -14,6 +14,17 @@ use Modules\Advocate\Http\Controllers\AdvocateController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('advocate', AdvocateController::class)->names('advocate');
+Route::namespace('Api')->prefix('v1')->group(function () {
+
+  
+    // Account
+    Route::middleware('auth:sanctum')->prefix('advocates')->group(function () {
+        Route::post('schools', [AdvocateSchoolController::class, 'store']);
+        Route::get('schools', [AdvocateSchoolController::class, 'index']);
+        Route::get('schools/{school}', [AdvocateSchoolController::class, 'show']);
+    });
+
+
+
 });
+

@@ -5,6 +5,7 @@ namespace Modules\Explore\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Modules\Exam\Models\Exam;
 use Illuminate\Http\Request;
+use Modules\Common\Models\School;
 use Modules\Exam\Models\Subject;
 
 class ExploreExamController extends Controller
@@ -21,6 +22,15 @@ class ExploreExamController extends Controller
         if ($request->has('subject')) {
             if($subject = Subject::where('name', $request->get('subject'))->first() ){
                 $query->where('subject_id', $subject->id);
+            }   
+           
+        }
+
+
+        // Filtering (e.g., by subject or level)
+        if ($request->has('school')) {
+            if($school = School::where('acronym', $request->get('school'))->first() ){
+                $query->where('school_id', $school->id);
             }   
            
         }

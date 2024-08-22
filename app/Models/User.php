@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Common\Models\School;
+use Modules\Student\Models\Student;
 
 class User extends Authenticatable
 {
@@ -25,8 +27,6 @@ class User extends Authenticatable
         'password',
     ];
 
-
-    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -55,8 +55,15 @@ class User extends Authenticatable
         return $this->hasOne(Student::class);
     }
 
-    public function advocate()
+    // public function advocate()
+    // {
+    //     return $this->hasOne(Ad::class);
+    // }
+
+    public function schools()
     {
-        return $this->hasOne(Advocate::class);
+        return $this->belongsToMany(School::class)->withPivot('role');
     }
+
+   
 }

@@ -11,6 +11,10 @@ class ExamDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            QuestionTypeSeeder::class,
+            ExamsSeeder::class,
+            QuestionsSeeder::class
+        ]);
     }
 }

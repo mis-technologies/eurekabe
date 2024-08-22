@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace Modules\Common\Models;;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,4 +32,21 @@ class School extends Model
     {
         return $this->hasMany(Exam::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot('role');
+    }
 }
+
+
+// Attaching a User with a Specific Role:
+// $school->users()->attach($user->id, ['role' => 'advocate']);
+
+
+// Updating a User's Role:
+// $school->users()->updateExistingPivot($user->id, ['role' => 'follower']);
+
+
+// You can filter users based on their role in a specific school:
+//     $advocates = $school->users()->wherePivot('role', 'advocate')->get();
