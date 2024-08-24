@@ -3,55 +3,45 @@
 namespace Modules\Explore\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Modules\Common\Models\School;
 use Illuminate\Http\Request;
+use Modules\Exam\Models\Exam;
+use Modules\Exam\Models\Subject;
 
 class ExploreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+ 
+
+     /**
+     * Retrieve 10 items for all groupings: "recommend", "featured", and "popular".
      */
-    public function index(Request $request)
+    public function index()
     {
-        // Initialize query builder for School
-        $query = School::query();
+        // Retrieve 10 featured exams
+        $featuredExams =Exam::inRandomOrder()->limit(5)->get();//Exam::where('is_featured', true)->limit(10)->get();
 
-        // Filtering (e.g., by acronym, state, or city)
-        if ($request->has('acronym')) {
-            $query->where('acronym', $request->get('acronym'));
-        }
+        // Retrieve 10 popular exams based on a popularity metric (e.g., number of views or enrollments)
+        $popularExams = Exam::inRandomOrder()->limit(5)->get();//Exam::orderBy('popularity', 'desc')->limit(10)->get();
 
-        if ($request->has('state')) {
-            $query->where('state', $request->get('state'));
-        }
+        // Retrieve 10 recommended exams based on some criteria (e.g., user preferences)
+        $recommendedExams = Exam::inRandomOrder()->limit(5)->get(); //Exam::where('recommended', true)->limit(10)->get();
 
-        if ($request->has('city')) {
-            $query->where('city', $request->get('city'));
-        }
+        $categories = Subject::inRandomOrder()->limit(20)->get();
 
-        // Searching (e.g., search by name or description)
-        if ($request->has('search')) {
-            $search = $request->get('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('about', 'like', "%{$search}%");
-            });
-        }
+        $students = User::where('role', 'student')->inRandomOrder()->limit(20)->get();
 
-        // Sorting
-        if ($request->has('sort_by') && in_array($request->get('sort_by'), ['name', 'created_at'])) {
-            $sortOrder = $request->get('sort_order', 'asc'); // default to ascending order
-            $query->orderBy($request->get('sort_by'), $sortOrder);
-        }
 
-        // Pagination
-        $perPage = $request->get('per_page', 10);
-        $schools = $query->paginate($perPage);
-
-        // Return API response
+        // Return all groupings in a single response
         return response()->json([
             'success' => true,
-            'data' => $schools,
+            'data' => [
+                'featured' => $featuredExams,
+                'popular' => $popularExams,
+                'recommended' => $recommendedExams,
+                'categories' => $categories,
+                'students' => $students,
+            ],
         ], 200);
     }
 

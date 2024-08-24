@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Explore\Http\Controllers\Api\ExploreController;
 use Modules\Explore\Http\Controllers\Api\ExploreExamController;
 use Modules\Explore\Http\Controllers\Api\ExploreSchoolController;
 use Modules\Explore\Http\Controllers\Api\ExploreStudentController;
@@ -19,7 +20,8 @@ use Modules\Explore\Http\Controllers\Api\ExploreStudentController;
 Route::prefix('v1')->group(function () {
 
      Route::middleware('auth:sanctum')->prefix('explore')->group(function () {
-        Route::get('exams/listings', [ExploreExamController::class, 'listings']);
+        Route::get('/', [ExploreController::class, 'index']);
+        Route::get('interests', [ExploreController::class, 'interests']);
         Route::apiResource('exams', ExploreExamController::class);
         Route::apiResource('schools', ExploreSchoolController::class);
         Route::apiResource('students', ExploreStudentController::class);
