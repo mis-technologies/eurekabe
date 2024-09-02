@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use NextApps\VerificationCode\VerificationCode;
 
 class LoginController extends Controller
 {
@@ -34,6 +35,8 @@ class LoginController extends Controller
         }
 
         if (!$user->hasVerifiedEmail()) {
+
+            VerificationCode::send($user->email);
             return response([
                 'status' => 'error',
                 'message' => 'Please check your inbox for email verification'
