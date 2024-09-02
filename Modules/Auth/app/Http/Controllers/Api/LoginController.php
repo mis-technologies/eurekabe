@@ -30,14 +30,14 @@ class LoginController extends Controller
             return response([
                 'status' => 'error',
                 'message' => 'Incorrect password or email'
-            ], 422);
+            ], 401);
         }
 
         if (!$user->hasVerifiedEmail()) {
             return response([
                 'status' => 'error',
                 'message' => 'Please check your inbox for email verification'
-            ], 401);
+            ], 403);
         }
 
        
