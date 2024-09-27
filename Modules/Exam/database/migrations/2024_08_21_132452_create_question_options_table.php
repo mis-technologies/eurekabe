@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('question_options', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedInteger('question_id');
-            $table->string('option');
-            $table->unsignedInteger('correct_ans')->default(0)->comment('1 = yes, 0 = No');
+            $table->foreignId('id');
+            $table->foreignId('question_id');
+            $table->text('option')->nullable(); //
+            $table->text('remark')->nullable();
+            $table->boolean('is_correct')->default(false);
             $table->timestamps();
         });
     }

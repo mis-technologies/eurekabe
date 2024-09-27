@@ -15,7 +15,7 @@ class QuestionType extends Model
      */
     protected $fillable = [];
 
-    protected static function newFactory(): QuestionTypeFactory
+    protected static function newFactory()
     {
         //return QuestionTypeFactory::new();
     }

@@ -2,10 +2,8 @@
 
 namespace Modules\Exam\Models;
 
-use App\School;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Exam\Database\Factories\ExamFactory;
+use Modules\Common\Models\School;
 
 class Exam extends Model
 {
@@ -26,10 +24,10 @@ class Exam extends Model
         return $this->hasMany(Question::class, 'exam_id');
     }
 
-    public function results()
-    {
-        return $this->hasMany(Result::class, 'exam_id');
-    }
+    // public function results()
+    // {
+    //     return $this->hasMany(Result::class, 'exam_id');
+    // }
 
    
     public function passark()
@@ -38,8 +36,8 @@ class Exam extends Model
     }
 
    
-    public function upcomming($examid)
-    {
-        return $this->where('id', $examid)->where('status', 1)->where('start_date', '>', \Carbon\Carbon::now()->toDateString())->first();
-    }
+    // public function upcomming($examid)
+    // {
+    //     return $this->where('id', $examid)->where('status', 1)->where('start_date', '>', \Carbon\Carbon::now()->toDateString())->first();
+    // }
 }

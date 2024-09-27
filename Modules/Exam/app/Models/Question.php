@@ -13,9 +13,27 @@ class Question extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
 
-    protected static function newFactory(): QuestionFactory
+    public $with = ['options'];
+
+
+    protected $fillable = [
+        'id',
+        'exam_id',
+        'question',
+        'marks',
+        'question_type_id',
+        'status',
+        'written_ans'
+    ];
+
+    public function options()
+    {
+        return $this->hasMany(QuestionOption::class, 'question_id');
+    }
+
+
+    protected static function newFactory()
     {
         //return QuestionFactory::new();
     }

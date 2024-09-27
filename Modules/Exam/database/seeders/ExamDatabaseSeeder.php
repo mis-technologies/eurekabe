@@ -14,7 +14,8 @@ class ExamDatabaseSeeder extends Seeder
         $this->call([
             QuestionTypeSeeder::class,
             ExamsSeeder::class,
-            QuestionsSeeder::class
+            QuestionsSeeder::class,
+            QuestionOptionSeeder::class
         ]);
     }
 }

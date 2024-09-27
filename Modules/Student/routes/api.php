@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Student\Http\Controllers\Api\StudentController;
+use Modules\Student\Http\Controllers\Api\StudentExamController;
 
 /*
  *--------------------------------------------------------------------------
@@ -17,18 +18,19 @@ use Modules\Student\Http\Controllers\Api\StudentController;
 Route::namespace('Api')->prefix('v1')->group(function () {
 
   
-    // Account
-    Route::middleware('auth:sanctum')->prefix('students')->group(function () {
+    Route::middleware('auth:sanctum')->prefix('student')->group(function () {
+       
         Route::post('account', [StudentController::class, 'createAccount']);
         Route::get('me', [StudentController::class, 'getAccount']);
-    });
 
 
-
-     // Explore
-     Route::middleware('auth:sanctum')->prefix('explore')->group(function () {
-        Route::post('exams', [StudentController::class, 'createAccount']);
-        Route::get('me', [StudentController::class, 'getAccount']);
+        // Exam
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('exams', [StudentExamController::class, 'index']);
+            Route::get('exams/{exam}', [StudentExamController::class, 'show']);
+            Route::post('exams/{exam}/start', [StudentExamController::class, 'start']);
+            Route::post('exams{exam/submit', [StudentExamController::class, 'submit']);
+        });
     });
 
 
