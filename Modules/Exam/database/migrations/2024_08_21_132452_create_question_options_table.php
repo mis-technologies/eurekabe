@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('question_options', function (Blueprint $table) {
-            $table->foreignId('id');
+            $table->id();
             $table->foreignId('question_id');
-            $table->text('option')->nullable(); //
-            $table->text('remark')->nullable();
+            $table->longText('option')->nullable(); //
+            $table->longText('remark')->nullable();
             $table->boolean('is_correct')->default(false);
             $table->timestamps();
         });

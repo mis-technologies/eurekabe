@@ -2760,10 +2760,10 @@ mso-bidi-language:AR-SA">If y = 3 sin 4x, dy/dx equals</span><br>',
 
 
         foreach ($questions as $question) {
-            unset($question['id']);
-            
+            // unset($question['id']);
+
             Question::updateOrCreate([
-              'exam_id' => $question['exam_id']  
+              'id' => $question['id']  
             ], $question);
         }
     }

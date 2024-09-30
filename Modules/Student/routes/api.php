@@ -27,9 +27,9 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         // Exam
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('exams', [StudentExamController::class, 'index']);
-            Route::get('exams/{exam}', [StudentExamController::class, 'show']);
+            Route::get('exams/{studentExam}', [StudentExamController::class, 'show']);
             Route::post('exams/{exam}/start', [StudentExamController::class, 'start']);
-            Route::post('exams{exam/submit', [StudentExamController::class, 'submit']);
+            Route::post('exams/{studentExam}/submit', [StudentExamController::class, 'submit']);
         });
     });
 
