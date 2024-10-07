@@ -13,7 +13,7 @@ class ExploreController extends Controller
 {
  
 
-     /**
+    /**
      * Retrieve 10 items for all groupings: "recommend", "featured", and "popular".
      */
     public function index()
@@ -42,6 +42,21 @@ class ExploreController extends Controller
                 'categories' => $categories,
                 'students' => $students,
             ],
+        ], 200);
+    }
+
+    /**
+     * Retrieve 10 items for all groupings: "recommend", "featured", and "popular".
+     */
+    public function interests()
+    {
+      
+        $categories = Subject::inRandomOrder()->limit(100)->get();
+
+        // Return all groupings in a single response
+        return response()->json([
+            'success' => true,
+            'data' => $categories
         ], 200);
     }
 
