@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Modules\Common\Models\School;
 use Modules\Student\Models\Student;
 
 class StudentController extends Controller
@@ -60,6 +61,14 @@ class StudentController extends Controller
             if ($request->has('about')) {
                 $user->about = $request->about;
             }
+
+            if ($request->has('school_id')) {
+                if(!$school = School::find($request->school_id)){
+                    return response()->json(['success' => false, 'message' => 'Invalid school'], 400);
+                }
+                $user->school_id = $request->school_id;
+            }
+
 
             if ($request->has('username')) {
                 $validation = Validator::make($request->all(), [

@@ -22,6 +22,7 @@ Route::namespace('Api')->prefix('v1')->group(function () {
        
         Route::post('account', [StudentController::class, 'createAccount']);
         Route::get('me', [StudentController::class, 'getAccount']);
+        Route::patch('me', [StudentController::class, 'updateAccount']);
 
 
         // Exam
