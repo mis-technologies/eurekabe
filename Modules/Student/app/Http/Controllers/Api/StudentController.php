@@ -41,7 +41,7 @@ class StudentController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'LoggedIn User retrieved successfully',
-                'data' => $user
+                'data' => $user->load('school')
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
