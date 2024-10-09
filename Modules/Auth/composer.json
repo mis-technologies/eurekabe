@@ -8,7 +8,6 @@
         }
     ],
     "require": {
-        "nextapps/laravel-verification-code": "*"
     },
     "extra": {
         "laravel": {

@@ -8,8 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Modules\Auth\Http\Requests\RegisterRequest;
-use NextApps\VerificationCode\VerificationCode;
-
+use Wotz\VerificationCode\VerificationCode;
 
 class RegisterController extends Controller
 {
