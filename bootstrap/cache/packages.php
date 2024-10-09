@@ -38,11 +38,11 @@
   array (
     'providers' => 
     array (
-      0 => 'NextApps\\VerificationCode\\VerificationCodeServiceProvider',
+      0 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
     ),
     'aliases' => 
     array (
-      'VerificationCode' => 'NextApps\\VerificationCode\\VerificationCode',
+      'VerificationCode' => 'Wotz\\VerificationCode\\VerificationCode',
     ),
   ),
   'nunomaduro/collision' => 
