@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 use Illuminate\Support\Facades\Validator;
-use NextApps\VerificationCode\VerificationCode;
+use Wotz\VerificationCode\VerificationCode;
 
 
 class ForgotPasswordController extends Controller

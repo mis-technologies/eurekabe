@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Notifications\ResetPasswordVerificationNotification;
 use Illuminate\Support\Facades\Validator;
 use Modules\Auth\Http\Requests\ForgetPasswordRequest;
-use NextApps\VerificationCode\VerificationCode;
+use Wotz\VerificationCode\VerificationCode;
 
 class PasswordController extends Controller
 {

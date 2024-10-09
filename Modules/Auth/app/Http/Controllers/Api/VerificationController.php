@@ -5,8 +5,7 @@ namespace Modules\Auth\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Models\User;
-use NextApps\VerificationCode\VerificationCode;
-
+use Wotz\VerificationCode\VerificationCode;
 
 class VerificationController extends Controller
 {
