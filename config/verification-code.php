@@ -21,7 +21,6 @@ return [
     | they look too similar.
     |
     */
-    // 'characters' => '123456789ABCDEFGHJKMNPQRSTUVWXYZ',
     'characters' => '123456789',
 
     /*
@@ -30,10 +29,10 @@ return [
     |--------------------------------------------------------------------------
     |
     | A verification code is only valid for a certain amount of time. Here
-    | you define after how many hours a verification code will expire.
+    | you define after how many seconds a verification code will expire.
     |
     */
-    'expire_hours' => 1,
+    'expire_seconds' => 1 * 60 * 60,
 
     /*
     |--------------------------------------------------------------------------
@@ -46,7 +45,7 @@ return [
     | codes per verifiable, you have to set this option to "null".
     |
     */
-    'max_per_verifiable' => null,
+    'max_per_verifiable' => 1,
 
     /*
     |--------------------------------------------------------------------------
@@ -57,11 +56,23 @@ return [
     | a verification code.
     |
     | It should implement the interface:
-    |   - \NextApps\VerificationCode\Notifications\VerificationCodeCreatedInterface
+    |   - \Wotz\VerificationCode\Notifications\VerificationCodeCreatedInterface
     |
     */
-    'notification' => \Modules\Auth\Notifications\VerificationCodeCreated::class,
-    // 'notification' => \NextApps\VerificationCode\Notifications\VerificationCodeCreated::class,
+    'notification' => Wotz\VerificationCode\Notifications\VerificationCodeCreated::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Model
+    |--------------------------------------------------------------------------
+    |
+    | Here you can customize the VerificationCode class that will be used
+    |
+    | It should extend the package class:
+    |   - \Wotz\VerificationCode\Models\VerificationCode
+    |
+    */
+    'model' => Wotz\VerificationCode\Models\VerificationCode::class,
 
     /*
     |--------------------------------------------------------------------------

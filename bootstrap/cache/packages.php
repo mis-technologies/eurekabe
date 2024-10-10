@@ -34,17 +34,6 @@
       0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
-  'nextapps/laravel-verification-code' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'VerificationCode' => 'Wotz\\VerificationCode\\VerificationCode',
-    ),
-  ),
   'nunomaduro/collision' => 
   array (
     'providers' => 
@@ -68,6 +57,17 @@
     'aliases' => 
     array (
       'Module' => 'Nwidart\\Modules\\Facades\\Module',
+    ),
+  ),
+  'wotz/laravel-verification-code' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'VerificationCode' => 'Wotz\\VerificationCode\\VerificationCode',
     ),
   ),
 );
