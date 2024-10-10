@@ -10,4 +10,4 @@ Artisan::command('inspire', function () {
 
 
   
-Schedule::command('queue:listen')->everySecond()->withoutOverlapping();
+Schedule::command('queue:work')->everySecond()->withoutOverlapping();
