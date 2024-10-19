@@ -7,6 +7,7 @@ use Modules\Exam\Models\Exam;
 use Illuminate\Http\Request;
 use Modules\Common\Models\School;
 use Modules\Exam\Models\Subject;
+use Modules\Student\Models\StudentFavoriteExam;
 
 class ExploreExamController extends Controller
 {
@@ -137,6 +138,34 @@ class ExploreExamController extends Controller
             'data' => $recommendedExams,
         ], 200);
     }
+
+
+
+     /**
+     * Add exam to favorite
+    */
+    public function addExamToFavorite(Request $request)
+    {
+        $user = auth()->user();
+        if (!$exam = Exam::find($request->exam_id)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exam not found',
+            ], 404);
+        }
+
+        $favorite = StudentFavoriteExam::create([
+            'user_id' => $user->id,
+            'exam_id' => $exam->id,
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Exam added to favorite successfully',
+            'data' => $favorite,
+        ]);
+
+    }
+
 
 
 

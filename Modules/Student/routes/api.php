@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Student\Http\Controllers\Api\StudentController;
 use Modules\Student\Http\Controllers\Api\StudentExamController;
+use Modules\Student\Http\Controllers\Api\StudentLeaderboardController;
 
 /*
  *--------------------------------------------------------------------------
@@ -31,11 +32,21 @@ Route::namespace('Api')->prefix('v1')->group(function () {
             Route::post('exams/{exam}/start', [StudentExamController::class, 'start']);
             Route::post('exams/{studentExam}/submit', [StudentExamController::class, 'submit']);
             Route::get('exams/{studentExam}/result', [StudentExamController::class, 'getExamResult']);
+            Route::post('exams/{studentExam}/feedback', [StudentExamController::class, 'addExamFeedback']);
             Route::post('exams/favorites', [StudentExamController::class, 'addExamToFavorite']);
             Route::get('exams/favorites', [StudentExamController::class, 'getFavoriteExams']);
             Route::get('exams/{studentExam}', [StudentExamController::class, 'show']);
-
         });
+
+
+        // Leaderboard
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('leaderboard/weekly', [StudentLeaderboardController::class, 'weeklyLeaderboard']);
+            Route::get('leaderboard/monthly', [StudentLeaderboardController::class, 'monthlyLeaderboard']);
+            Route::get('leaderboard/yearly', [StudentLeaderboardController::class, 'yearlyLeaderboard']);
+        });
+
+
     });
 
 
