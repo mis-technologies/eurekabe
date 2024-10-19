@@ -28,9 +28,13 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         // Exam
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('exams', [StudentExamController::class, 'index']);
-            Route::get('exams/{studentExam}', [StudentExamController::class, 'show']);
             Route::post('exams/{exam}/start', [StudentExamController::class, 'start']);
             Route::post('exams/{studentExam}/submit', [StudentExamController::class, 'submit']);
+            Route::get('exams/{studentExam}/result', [StudentExamController::class, 'getExamResult']);
+            Route::post('exams/favorites', [StudentExamController::class, 'addExamToFavorite']);
+            Route::get('exams/favorites', [StudentExamController::class, 'getFavoriteExams']);
+            Route::get('exams/{studentExam}', [StudentExamController::class, 'show']);
+
         });
     });
 

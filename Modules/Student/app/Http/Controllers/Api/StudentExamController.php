@@ -8,6 +8,7 @@ use Modules\Exam\Models\Exam;
 use Modules\Exam\Models\Question;
 use Modules\Student\Models\StudentExam;
 use Modules\Student\Models\StudentExamResult;
+use Modules\Student\Models\StudentFavoriteExam;
 
 class StudentExamController extends Controller
 {
@@ -110,21 +111,21 @@ class StudentExamController extends Controller
                     $isCorrect = false;
                     $mark = 0;
     
-                    // if ($answerType === 1) {
-                    //     // For multiple-choice, check if the submitted answer matches a correct option
-                    //     $isCorrect = $options->where('is_correct', true)->pluck('id')->contains($userAnswer);
-                    //     $mark = $isCorrect ? 1 : 0;  // Assign mark based on correctness
-                    // } else {
-                    //     // For essay or written-type questions, mark and correctness may be handled manually later
-                    //     $mark = 0; // By default 0 for written answers, may be graded later
-                    // }
+                    if ($answerType === 1) {
+                        // For multiple-choice, check if the submitted answer matches a correct option
+                        $isCorrect = $options->where('is_correct', true)->pluck('id')->contains($userAnswer);
+                        $mark = $isCorrect ? ($question->marks ?? 1) : 0;  
+                    } else {
+                        // For essay or written-type questions, mark and correctness may be handled manually later
+                        $mark = 0; // By default 0 for written answers, may be graded later
+                    }
     
                     // Create the StudentExamResult for this question
                     StudentExamResult::create([
                         'student_exam_id' => $studentExam->id,
                         'exam_id' => $studentExam->exam_id,
                         'user_id' => $studentExam->user_id,
-                        'question' => $question->question,
+                        'question_id' => $question->id,
                         'answer' => $userAnswer, 
                         'correct_answer' => $options->where('is_correct', true)->first()['option'], 
                         'mark' => $mark,  // Store calculated mark
@@ -133,10 +134,70 @@ class StudentExamController extends Controller
                 }
             }
         }
-    
+
+
+        $studentExam->ended_at = now();
+        $studentExam->status = StudentExam::SUBMITTED;
+        $studentExam->save();
+        $result =  $studentExam->result();
+
         // Return a JSON response indicating success
-        return response()->json(['message' => 'Exam submitted successfully']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Exam submitted successfully',
+            'data' => $result
+        ]);
     }
+
+
+
+    /**
+     * Get result of exam.
+     */
+    public function getExamResult(Request $request, $id)
+    {
+        $user = auth()->user();
+        if(!$exam = StudentExam::whereUserId($user->id)->where('id', $id)->first()){
+            return response()->json([
+                'success' => false,
+                'message' => 'Student exam not found',
+            ], 404);
+        }
+        $result =  $exam->result();
+        return response()->json([
+            'success' => true,
+            'message' => 'Student exam result retrieved',
+            'data' => $result
+        ]);
+
+    }
+
+
+    /**
+     * Add exam to favorite
+     */
+    public function addExamToFavorite(Request $request)
+    {
+        $user = auth()->user();
+        if(!$exam = Exam::find($request->exam_id)){
+            return response()->json([
+                'success' => false,
+                'message' => 'Exam not found',
+            ], 404);
+        }
+        
+       $favorite =  StudentFavoriteExam::create([
+            'user_id' => $user->id,
+            'exam_id' => $exam->id
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Exam added to favorite successfully',
+            'data' => $favorite
+        ]);
+
+    }
+
     
 
     /**
