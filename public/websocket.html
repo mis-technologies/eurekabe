@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test with Laravel Reverb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #messages {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+
+        #inputSection {
+            margin-top: 10px;
+        }
+
+        #inputSection input {
+            width: 300px;
+            padding: 5px;
+        }
+
+        #inputSection button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>WebSocket Test with Laravel Reverb</h1>
+    <div id="messages">
+        <!-- Messages will be displayed here -->
+    </div>
+
+    <div id="inputSection">
+        <input type="text" id="messageInput" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send Message</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pusher-js@8.4.0-rc2/dist/web/pusher.min.js"></script>
+    <script>
+        // Replace with your Laravel WebSocket server configuration
+        const wsHost = "127.0.0.1";  // Replace with your WebSocket server IP or hostname
+        const wsPort = "8080";       // WebSocket port (set to the port your WebSocket server is using)
+
+        // Initialize Pusher with your WebSocket configuration
+        Pusher.logToConsole = true;  // For debugging purposes
+
+        const pusher = new Pusher("fovplylsfhqiyhq79yyp", {
+            wsHost: wsHost,
+            wsPort: wsPort,
+            wssPort: wsPort,
+            cluster: "mt1",            // Add a cluster to avoid the error
+            forceTLS: false,            // Ensure that TLS is not forced since it's not secured
+            disableStats: true,
+            enabledTransports: ['ws'],  // Use WebSocket only (not secure WebSocket)
+
+            auth: {
+                headers: {
+                    Authorization: 'Bearer 1|xKnxuiATc31TTVpfIfHPQXYodjJu31JzFfz0LgoWf4c9c8f7',
+                }
+            },
+
+            authorizer: (channel, options) => {
+                return {
+                    authorize: (socketId, callback) => {
+                        fetch('api/broadcasting/auth', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer 1|xKnxuiATc31TTVpfIfHPQXYodjJu31JzFfz0LgoWf4c9c8f7',
+                                "Accept": "application/vnd.api+json"
+                            },
+                            body: JSON.stringify({
+                                socket_id: socketId,
+                                channel_name: channel.name
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('success:', data);
+                            callback(false, data);
+                        })
+                        .catch(error => {
+                            console.log('error:', error);
+                            callback(true, error);
+                        });
+                    }
+                };
+            },
+        });
+
+        const channel = pusher.subscribe('private-3');  // Subscribe to your private channel
+        channel.bind('App\\Events\\TestEvent', function (data) {
+            const messageDiv = document.getElementById('messages');
+            const newMessage = document.createElement('div');
+            newMessage.textContent = `Message: ${data.message}`;
+            messageDiv.appendChild(newMessage);
+        });
+
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+
+            // Send an AJAX request to Laravel backend
+            fetch('/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ message: message })
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    console.log('Message sent!');
+                } else {
+                    console.log('Failed to send message');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+
+</html>

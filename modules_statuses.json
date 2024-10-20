@@ -6,5 +6,6 @@
     "Payment": true,
     "Exam": true,
     "Advocate": true,
-    "Explore": true
+    "Explore": true,
+    "Messaging": true
 }

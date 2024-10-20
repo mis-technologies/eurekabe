@@ -5,7 +5,7 @@ namespace Modules\Common\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Common\Models\Interest;
 
-class SchoolDatabaseSeeder extends Seeder
+class InterestDatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.

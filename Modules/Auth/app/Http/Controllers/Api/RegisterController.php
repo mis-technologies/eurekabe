@@ -2,7 +2,6 @@
 
 namespace Modules\Auth\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +28,7 @@ class RegisterController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Registration successfull, please verify your email address',
+            'message' => 'Registration successful, please verify your email address',
         ]);
     }
 

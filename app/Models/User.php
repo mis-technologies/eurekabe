@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Modules\Common\Models\School;
 use Modules\Student\Models\Student;
 
-class User extends Authenticatable
+class User extends Authenticatable 
 {
     use HasFactory, Notifiable, HasApiTokens;
 

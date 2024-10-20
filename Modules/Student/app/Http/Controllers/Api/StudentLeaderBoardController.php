@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Modules\Student\Models\StudentLeaderBoard;
 use App\Http\Controllers\Controller;
 
-class StudentLeaderboardController extends Controller
+class StudentLeaderBoardController extends Controller
 {
     /**
      * Get the leaderboard for the current week.

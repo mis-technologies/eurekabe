@@ -1,0 +1,23 @@
+{
+    "name": "airondev/media",
+    "description": "",
+    "authors": [
+        {
+            "name": "Airon Dev",
+            "email": "airondev@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\File\\": ""
+        }
+    }
+}

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Common\Database\Factories\CouponFactory;
 
-class Deposit extends Model
+class Coupon extends Model
 {
     protected $table = 'deposits';
     protected $guarded = ['id'];
