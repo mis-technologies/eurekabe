@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Student\Http\Controllers\Api\StudentController;
+use Modules\Student\Http\Controllers\Api\StudentConversationController;
 use Modules\Student\Http\Controllers\Api\StudentExamController;
 use Modules\Student\Http\Controllers\Api\StudentLeaderboardController;
 
@@ -21,12 +22,12 @@ Route::namespace('Api')->prefix('v1')->group(function () {
   
     Route::middleware('auth:sanctum')->prefix('student')->group(function () {
        
+        //Student Account
         Route::post('account', [StudentController::class, 'createAccount']);
         Route::get('me', [StudentController::class, 'getAccount']);
         Route::patch('me', [StudentController::class, 'updateAccount']);
 
-
-        // Exam
+        // Student Exam
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('exams', [StudentExamController::class, 'index']);
             Route::post('exams/{exam}/start', [StudentExamController::class, 'start']);
@@ -38,15 +39,12 @@ Route::namespace('Api')->prefix('v1')->group(function () {
             Route::get('exams/{studentExam}', [StudentExamController::class, 'show']);
         });
 
-
         // Leaderboard
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('leaderboard/weekly', [StudentLeaderboardController::class, 'weeklyLeaderboard']);
             Route::get('leaderboard/monthly', [StudentLeaderboardController::class, 'monthlyLeaderboard']);
             Route::get('leaderboard/yearly', [StudentLeaderboardController::class, 'yearlyLeaderboard']);
-        });
-
-
+        });       
     });
 
 

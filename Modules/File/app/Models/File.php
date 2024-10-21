@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\File\Entities;
+namespace Modules\File\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +35,7 @@ class File extends Model
 
     public function getUrlAttribute(){
         $path = rawurlencode($this->path);
-        $fileLink =  Storage::disk($this->disk)->url($path);
+        $fileLink =  Storage::disk($this->disk)->path($path);
         return $fileLink;
     }
     

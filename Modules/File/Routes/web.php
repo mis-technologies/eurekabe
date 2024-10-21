@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Modules\File\Http\Controllers\FileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +14,6 @@
 |
 */
 
-Route::prefix('media')->group(function() {
-    // Route::get('/', 'FileController@index');
+Route::group([], function () {
+    Route::resource('file', FileController::class)->names('file');
 });

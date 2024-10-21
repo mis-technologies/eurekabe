@@ -3,6 +3,12 @@
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Log;
 
+
+Broadcast::channel('chat', function () {
+    return true;
+});
+
+
 Broadcast::channel('{channel}', function ($user, $channel) {
 
     Log::info('user joined channel', [$user->email, $channel]);
@@ -13,6 +19,9 @@ Broadcast::channel('{channel}', function ($user, $channel) {
     return $authorized;
 
 });
+
+
+
 
 
 

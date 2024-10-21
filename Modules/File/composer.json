@@ -1,10 +1,10 @@
 {
-    "name": "airondev/media",
+    "name": "nwidart/file",
     "description": "",
     "authors": [
         {
-            "name": "Airon Dev",
-            "email": "airondev@gmail.com"
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
         }
     ],
     "extra": {
@@ -17,7 +17,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\File\\": ""
+            "Modules\\File\\": "app/",
+            "Modules\\File\\Database\\Factories\\": "database/factories/",
+            "Modules\\File\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\File\\Tests\\": "tests/"
         }
     }
 }

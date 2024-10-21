@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
 use Modules\Messaging\Models\Conversation;
 use App\Models\User;
-use Modules\File\Entities\File;
+use Modules\File\Models\File;
 use Modules\Messaging\Events\MessageSentEvent;
 use Webpatser\Uuid\Uuid;
 
@@ -20,7 +20,7 @@ class Message extends Model
 
     public $appends = ['is_own'];
 
-    public $with = ['fromUser', 'toUser', 'files'];
+    public $with = ['from', 'to', 'files'];
 
     public function conversation(){
         return $this->belongsTo(Conversation::class);
@@ -30,14 +30,14 @@ class Message extends Model
         return $this->hasMany(File::class, 'entity_id')->where('entity', get_class($this) );
     }
 
-    public function fromUser(){
+    public function from(){
         return $this->belongsTo(User::class, 'user_id')
-        ->select('id', 'firstname', 'username', 'lastname', 'profile_pic', 'email');
+        ->select('id', 'firstname', 'username', 'lastname', 'image', 'email');
     }
 
-    public function toUser(){
+    public function to(){
         return $this->belongsTo(User::class, 'to_user_id')
-        ->select('id', 'firstname', 'username', 'lastname', 'profile_pic', 'email');
+        ->select('id', 'firstname', 'username', 'lastname', 'image', 'email');
     }
 
     public function getIsOwnAttribute(){
@@ -63,7 +63,6 @@ class Message extends Model
                 }
             }
             
-            event( new MessageSentEvent( $message) );
          });
 
     }

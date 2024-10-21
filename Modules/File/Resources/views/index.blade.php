@@ -1,9 +1,7 @@
-@extends('media::layouts.master')
+@extends('file::layouts.master')
 
 @section('content')
     <h1>Hello World</h1>
 
-    <p>
-        This view is loaded from module: {!! config('media.name') !!}
-    </p>
+    <p>Module: {!! config('file.name') !!}</p>
 @endsection

@@ -4,9 +4,11 @@ namespace Modules\Messaging\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class SocketEvent implements ShouldBroadcastNow
 {
@@ -26,6 +28,7 @@ class SocketEvent implements ShouldBroadcastNow
         $this->payload = $payload;
         $this->channel = $channel;
         $this->event = $event;
+        Log::info('SocketEvent Dispatched:', ['channel' => $this->channel, 'event' => $this->event, 'payload' => $this->payload, ]);
     }
 
 
@@ -45,7 +48,9 @@ class SocketEvent implements ShouldBroadcastNow
     public function broadcastOn()
     {
         
-        return new Channel($this->channel);
+        // return new Channel($this->channel);
+        return new PrivateChannel($this->channel); 
+
     }
 
     public function broadcastAs()
