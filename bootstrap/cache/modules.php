@@ -7,9 +7,10 @@
     3 => 'Modules\\Common\\Providers\\CommonServiceProvider',
     4 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
     5 => 'Modules\\Explore\\Providers\\ExploreServiceProvider',
-    6 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
-    7 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
-    8 => 'Modules\\Student\\Providers\\StudentServiceProvider',
+    6 => 'Modules\\File\\Providers\\FileServiceProvider',
+    7 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
+    8 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
+    9 => 'Modules\\Student\\Providers\\StudentServiceProvider',
   ),
   'eager' => 
   array (
@@ -19,9 +20,10 @@
     3 => 'Modules\\Common\\Providers\\CommonServiceProvider',
     4 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
     5 => 'Modules\\Explore\\Providers\\ExploreServiceProvider',
-    6 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
-    7 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
-    8 => 'Modules\\Student\\Providers\\StudentServiceProvider',
+    6 => 'Modules\\File\\Providers\\FileServiceProvider',
+    7 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
+    8 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
+    9 => 'Modules\\Student\\Providers\\StudentServiceProvider',
   ),
   'deferred' => 
   array (
