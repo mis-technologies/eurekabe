@@ -33,7 +33,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::oL5SwmlnF18HCvA3',
+            '_route' => 'generated::S0yqlbeFkcaU69oz',
           ),
           1 => NULL,
           2 => 
@@ -53,7 +53,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::MBHNCwVlb4pnQQRY',
+            '_route' => 'generated::yXxIBukjZryuDAgu',
           ),
           1 => NULL,
           2 => 
@@ -73,7 +73,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Cu2jmKFlZvOfR9O3',
+            '_route' => 'generated::Uiu8y9s6ZnGwEoMF',
           ),
           1 => NULL,
           2 => 
@@ -204,7 +204,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'api.generated::isHHII8oPY7WdsQu',
+            '_route' => 'api.generated::2rrYdb7iAROmVzKw',
           ),
           1 => NULL,
           2 => 
@@ -223,7 +223,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'api.generated::pqz9r0o6uxKZ0ngY',
+            '_route' => 'api.generated::HNvW5KW2lbsCW2p1',
           ),
           1 => NULL,
           2 => 
@@ -242,7 +242,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'api.generated::UeBxmpW1GdG8cPjT',
+            '_route' => 'api.generated::fEfEI4N2CCROqT9J',
           ),
           1 => NULL,
           2 => 
@@ -299,7 +299,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::EVs49MDeHFSpBRmB',
+            '_route' => 'generated::VFILX0H15iTAJwUH',
           ),
           1 => NULL,
           2 => 
@@ -320,7 +320,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::fQNZW6dJ3WXfXW2z',
+            '_route' => 'generated::A2MtMDPWQvB8FIye',
           ),
           1 => NULL,
           2 => 
@@ -612,7 +612,7 @@ app('router')->setCompiledRoutes(
                 $this->renderUsing,
                 fn (\\Laravel\\Folio\\Pipeline\\MatchedView $matchedView) => $this->lastMatchedView = $matchedView,
             ))($request);
-        }";s:5:"scope";s:26:"Laravel\\Folio\\FolioManager";s:4:"this";O:26:"Laravel\\Folio\\FolioManager":4:{s:13:"' . "\0" . '*' . "\0" . 'mountPaths";a:12:{i:0;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:51:"/Users/airon/dev/www/eurekabe/resources/views/pages";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:1;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:59:"/Users/airon/dev/www/eurekabe/Modules/Admin/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:2;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:62:"/Users/airon/dev/www/eurekabe/Modules/Advocate/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:3;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:58:"/Users/airon/dev/www/eurekabe/Modules/Auth/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:4;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:60:"/Users/airon/dev/www/eurekabe/Modules/Common/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:5;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:58:"/Users/airon/dev/www/eurekabe/Modules/Exam/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:6;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:61:"/Users/airon/dev/www/eurekabe/Modules/Explore/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:7;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:58:"/Users/airon/dev/www/eurekabe/Modules/File/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:8;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:63:"/Users/airon/dev/www/eurekabe/Modules/Messaging/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:9;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:61:"/Users/airon/dev/www/eurekabe/Modules/Payment/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:10;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:61:"/Users/airon/dev/www/eurekabe/Modules/Student/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:11;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:58:"/Users/airon/dev/www/eurekabe/Modules/Test/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}}s:14:"' . "\0" . '*' . "\0" . 'renderUsing";N;s:17:"' . "\0" . '*' . "\0" . 'terminateUsing";N;s:18:"' . "\0" . '*' . "\0" . 'lastMatchedView";N;}s:4:"self";s:32:"0000000000000b790000000000000000";}}',
+        }";s:5:"scope";s:26:"Laravel\\Folio\\FolioManager";s:4:"this";O:26:"Laravel\\Folio\\FolioManager":4:{s:13:"' . "\0" . '*' . "\0" . 'mountPaths";a:12:{i:0;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:51:"/Users/airon/dev/www/eurekabe/resources/views/pages";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:1;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:59:"/Users/airon/dev/www/eurekabe/Modules/Admin/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:2;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:62:"/Users/airon/dev/www/eurekabe/Modules/Advocate/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:3;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:58:"/Users/airon/dev/www/eurekabe/Modules/Auth/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:4;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:60:"/Users/airon/dev/www/eurekabe/Modules/Common/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:5;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:58:"/Users/airon/dev/www/eurekabe/Modules/Exam/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:6;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:61:"/Users/airon/dev/www/eurekabe/Modules/Explore/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:7;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:58:"/Users/airon/dev/www/eurekabe/Modules/File/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:8;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:63:"/Users/airon/dev/www/eurekabe/Modules/Messaging/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:9;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:61:"/Users/airon/dev/www/eurekabe/Modules/Payment/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:10;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:61:"/Users/airon/dev/www/eurekabe/Modules/Student/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}i:11;O:23:"Laravel\\Folio\\MountPath":4:{s:10:"middleware";O:37:"Laravel\\Folio\\PathBasedMiddlewareList":1:{s:10:"middleware";a:1:{s:1:"*";a:0:{}}}s:4:"path";s:58:"/Users/airon/dev/www/eurekabe/Modules/Test/resources/views";s:7:"baseUri";s:1:"/";s:6:"domain";N;}}s:14:"' . "\0" . '*' . "\0" . 'renderUsing";N;s:17:"' . "\0" . '*' . "\0" . 'terminateUsing";N;s:18:"' . "\0" . '*' . "\0" . 'lastMatchedView";N;}s:4:"self";s:32:"0000000000000b3b0000000000000000";}}',
         'as' => 'laravel-folio',
       ),
       'fallback' => true,
@@ -630,7 +630,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::oL5SwmlnF18HCvA3' => 
+    'generated::S0yqlbeFkcaU69oz' => 
     array (
       'methods' => 
       array (
@@ -647,13 +647,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000b8c0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000b4e0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::oL5SwmlnF18HCvA3',
+        'as' => 'generated::S0yqlbeFkcaU69oz',
       ),
       'fallback' => false,
       'defaults' => 
@@ -669,7 +669,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::MBHNCwVlb4pnQQRY' => 
+    'generated::yXxIBukjZryuDAgu' => 
     array (
       'methods' => 
       array (
@@ -683,8 +683,8 @@ app('router')->setCompiledRoutes(
                     \\Illuminate\\Support\\Facades\\Event::dispatch(new \\Illuminate\\Foundation\\Events\\DiagnosingHealth);
 
                     return \\Illuminate\\Support\\Facades\\View::file(\'/Users/airon/dev/www/eurekabe/vendor/laravel/framework/src/Illuminate/Foundation/Configuration\'.\'/../resources/health-up.blade.php\');
-                }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"0000000000000b8e0000000000000000";}}',
-        'as' => 'generated::MBHNCwVlb4pnQQRY',
+                }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"0000000000000b500000000000000000";}}',
+        'as' => 'generated::yXxIBukjZryuDAgu',
       ),
       'fallback' => false,
       'defaults' => 
@@ -700,7 +700,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Cu2jmKFlZvOfR9O3' => 
+    'generated::Uiu8y9s6ZnGwEoMF' => 
     array (
       'methods' => 
       array (
@@ -716,13 +716,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:44:"function () {
     return \\view(\'welcome\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000b8f0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000b510000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::Cu2jmKFlZvOfR9O3',
+        'as' => 'generated::Uiu8y9s6ZnGwEoMF',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1219,7 +1219,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'api.generated::isHHII8oPY7WdsQu' => 
+    'api.generated::2rrYdb7iAROmVzKw' => 
     array (
       'methods' => 
       array (
@@ -1234,7 +1234,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'Modules\\Auth\\Http\\Controllers\\Api\\RegisterController@register',
         'controller' => 'Modules\\Auth\\Http\\Controllers\\Api\\RegisterController@register',
-        'as' => 'api.generated::isHHII8oPY7WdsQu',
+        'as' => 'api.generated::2rrYdb7iAROmVzKw',
         'namespace' => 'Api',
         'prefix' => 'api/v1/auth',
         'where' => 
@@ -1255,7 +1255,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'api.generated::pqz9r0o6uxKZ0ngY' => 
+    'api.generated::HNvW5KW2lbsCW2p1' => 
     array (
       'methods' => 
       array (
@@ -1270,7 +1270,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'Modules\\Auth\\Http\\Controllers\\Api\\PasswordController@forgetPassword',
         'controller' => 'Modules\\Auth\\Http\\Controllers\\Api\\PasswordController@forgetPassword',
-        'as' => 'api.generated::pqz9r0o6uxKZ0ngY',
+        'as' => 'api.generated::HNvW5KW2lbsCW2p1',
         'namespace' => 'Api',
         'prefix' => 'api/v1/auth',
         'where' => 
@@ -1291,7 +1291,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'api.generated::UeBxmpW1GdG8cPjT' => 
+    'api.generated::fEfEI4N2CCROqT9J' => 
     array (
       'methods' => 
       array (
@@ -1306,7 +1306,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'Modules\\Auth\\Http\\Controllers\\Api\\PasswordController@resetPassword',
         'controller' => 'Modules\\Auth\\Http\\Controllers\\Api\\PasswordController@resetPassword',
-        'as' => 'api.generated::UeBxmpW1GdG8cPjT',
+        'as' => 'api.generated::fEfEI4N2CCROqT9J',
         'namespace' => 'Api',
         'prefix' => 'api/v1/auth',
         'where' => 
@@ -1436,7 +1436,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::EVs49MDeHFSpBRmB' => 
+    'generated::VFILX0H15iTAJwUH' => 
     array (
       'methods' => 
       array (
@@ -1463,7 +1463,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken',
         ),
-        'as' => 'generated::EVs49MDeHFSpBRmB',
+        'as' => 'generated::VFILX0H15iTAJwUH',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1479,7 +1479,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::fQNZW6dJ3WXfXW2z' => 
+    'generated::A2MtMDPWQvB8FIye' => 
     array (
       'methods' => 
       array (
@@ -1505,7 +1505,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken',
         ),
-        'as' => 'generated::fQNZW6dJ3WXfXW2z',
+        'as' => 'generated::A2MtMDPWQvB8FIye',
       ),
       'fallback' => false,
       'defaults' => 
