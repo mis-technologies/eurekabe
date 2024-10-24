@@ -47,7 +47,8 @@
             "@php artisan migrate:fresh",
             "@php artisan db:seed",
             "@php artisan module:seed -a",
-            "composer dump-autoload",
+            "@php artisan optimize:clear",
+            "composer dump",
             "@php artisan optimize"
         ],
         "post-root-package-install": [
