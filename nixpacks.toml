@@ -1,2 +1,2 @@
 [phases.build]
-cmds = ["composer install --no-dev", "php artisan package:discover --ansi", "composer dump-autoload", "php artisan optimize:clear", "php artisan optimize", "npm install", "npm run build"]
+cmds = ["composer install", "composer dump-autoload", "php artisan optimize:clear", "php artisan optimize", "npm install", "npm run build"]
