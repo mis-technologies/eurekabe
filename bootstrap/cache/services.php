@@ -36,8 +36,9 @@
     32 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
     33 => 'Webpatser\\Uuid\\UuidServiceProvider',
     34 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
-    35 => 'App\\Providers\\AppServiceProvider',
-    36 => 'App\\Providers\\FolioServiceProvider',
+    35 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
+    36 => 'App\\Providers\\AppServiceProvider',
+    37 => 'App\\Providers\\FolioServiceProvider',
   ),
   'eager' => 
   array (
@@ -60,8 +61,9 @@
     16 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
     17 => 'Webpatser\\Uuid\\UuidServiceProvider',
     18 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
-    19 => 'App\\Providers\\AppServiceProvider',
-    20 => 'App\\Providers\\FolioServiceProvider',
+    19 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
+    20 => 'App\\Providers\\AppServiceProvider',
+    21 => 'App\\Providers\\FolioServiceProvider',
   ),
   'deferred' => 
   array (
