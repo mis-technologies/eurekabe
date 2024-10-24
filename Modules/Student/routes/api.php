@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Student\Http\Controllers\Api\StudentController;
-use Modules\Student\Http\Controllers\Api\StudentConversationController;
 use Modules\Student\Http\Controllers\Api\StudentExamController;
 use Modules\Student\Http\Controllers\Api\StudentLeaderboardController;
 
