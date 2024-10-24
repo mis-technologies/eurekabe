@@ -29,15 +29,10 @@ COPY . .
 # Install PHP dependencies using composer
 RUN composer install --prefer-dist --no-scripts --no-dev --optimize-autoloader
 
-RUN composer dump
-
-RUN php artisan server
-
-
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www
 
-# Expose the necessary ports for the app
+# Expose the necessary ports for PHP-FPM (by default 9000)
 EXPOSE 8000
 
 # Start PHP-FPM server
