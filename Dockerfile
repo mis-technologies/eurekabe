@@ -33,7 +33,7 @@ RUN composer install --prefer-dist --no-scripts --no-dev --optimize-autoloader
 COPY --chown=www-data:www-data . /var/www
 
 # Expose the necessary ports for the app
-EXPOSE 9000
+EXPOSE 8000
 
 # Start PHP-FPM server
 CMD ["php-fpm"]
