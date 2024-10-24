@@ -1,5 +1,5 @@
 {
-    "Admin": false,
+    "Admin": true,
     "Auth": true,
     "Student": true,
     "Common": true,
