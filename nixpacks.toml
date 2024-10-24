@@ -1,5 +1,4 @@
 [variables]
-COMPOSER_ALLOW_SUPERUSER=1
-
+COMPOSER_ALLOW_SUPERUSER="1"
 [phases.build]
-cmds = [ "composer install --no-dev", "npm install", "npm run build"]
+cmds = ["composer install --no-dev", "npm install", "npm run build"]
