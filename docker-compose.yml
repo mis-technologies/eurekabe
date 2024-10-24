@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  # Laravel Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel-app:latest
+    container_name: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - APP_KEY=${APP_KEY}
+      - APP_URL=${APP_URL}
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - BROADCAST_CONNECTION=reverb
+      - QUEUE_CONNECTION=database
+      - CACHE_DRIVER=redis
+      - REDIS_HOST=redis
+      - SESSION_DRIVER=database
+    volumes:
+      - .:/var/www
+    networks:
+      - app-network
+    depends_on:
+      - db
+      - redis
+      - reverb
+
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  # Redis
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # WebSockets (Reverb)
+  reverb:
+    image: laravel/reverb:latest
+    container_name: reverb
+    restart: unless-stopped
+    environment:
+      - REVERB_APP_ID=${REVERB_APP_ID}
+      - REVERB_APP_KEY=${REVERB_APP_KEY}
+      - REVERB_APP_SECRET=${REVERB_APP_SECRET}
+      - REVERB_PORT=8080
+    ports:
+      - "6001:6001"  # Expose WebSocket port
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+  # Traefik for Reverse Proxy
+  traefik:
+    image: traefik:v2.9
+    container_name: traefik
+    restart: unless-stopped
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.lets-encrypt.acme.tlschallenge=true
+      - --certificatesresolvers.lets-encrypt.acme.email=your-email@example.com
+      - --certificatesresolvers.lets-encrypt.acme.storage=/letsencrypt/acme.json
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
+    networks:
+      - app-network
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:
+    driver: bridge
