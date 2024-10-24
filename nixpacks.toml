@@ -1,12 +1,2 @@
-[build]
-commands = [
-    "composer install --no-dev",
-    "composer dump-autoload",
-    "php artisan optimize:clear",
-    "php artisan optimize",
-    "npm install",
-    "npm run build"
-]
-
-[start]
-command = "php artisan serve --host=0.0.0.0 --port=8000"
+[phases.build]
+cmds = ["composer install --no-dev", "composer dump-autoload", "php artisan optimize:clear", "php artisan optimize", "npm install", "npm run build"]
