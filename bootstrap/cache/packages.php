@@ -1,4 +1,11 @@
 <?php return array (
+  'cmgmyr/messenger' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Cmgmyr\\Messenger\\MessengerServiceProvider',
+    ),
+  ),
   'laravel/folio' => 
   array (
     'providers' => 
