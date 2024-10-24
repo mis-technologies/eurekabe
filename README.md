@@ -69,6 +69,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 "@php artisan package:discover --ansi" -->
 
 
-<!-- composer dump-autoload
+composer dump-autoload
 php artisan optimize:clear
-php artisan optimize -->
+php artisan optimize
