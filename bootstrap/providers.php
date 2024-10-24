@@ -8,8 +8,8 @@ use Modules\Student\Providers\StudentServiceProvider;
 return [
     App\Providers\AppServiceProvider::class,
     App\Providers\FolioServiceProvider::class,
-    // AdminServiceProvider::class,
-    // AuthServiceProvider::class,
-    // ExamServiceProvider::class,
-    // StudentServiceProvider::class,
+    AdminServiceProvider::class,
+    AuthServiceProvider::class,
+    ExamServiceProvider::class,
+    StudentServiceProvider::class,
 ];
