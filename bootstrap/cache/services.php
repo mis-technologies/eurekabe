@@ -39,8 +39,6 @@
     35 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
     36 => 'App\\Providers\\AppServiceProvider',
     37 => 'App\\Providers\\FolioServiceProvider',
-    38 => 'Modules\\Admin\\Providers\\AdminServiceProvider',
-    39 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
   ),
   'eager' => 
   array (
@@ -66,8 +64,6 @@
     19 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
     20 => 'App\\Providers\\AppServiceProvider',
     21 => 'App\\Providers\\FolioServiceProvider',
-    22 => 'Modules\\Admin\\Providers\\AdminServiceProvider',
-    23 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
   ),
   'deferred' => 
   array (
