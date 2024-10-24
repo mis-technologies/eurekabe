@@ -52,6 +52,7 @@
       22 => 'Illuminate\\View\\ViewServiceProvider',
       23 => 'App\\Providers\\AppServiceProvider',
       24 => 'App\\Providers\\FolioServiceProvider',
+      25 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
     ),
     'aliases' => 
     array (
@@ -971,10 +972,10 @@
     ),
     'scan' => 
     array (
-      'enabled' => false,
+      'enabled' => true,
       'paths' => 
       array (
-        0 => '/Users/airon/dev/www/eurekabe/vendor/*/*',
+        0 => '/Users/airon/dev/www/eurekabe/Modules',
       ),
     ),
     'composer' => 
