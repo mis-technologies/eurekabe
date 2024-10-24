@@ -39,6 +39,10 @@
     35 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
     36 => 'App\\Providers\\AppServiceProvider',
     37 => 'App\\Providers\\FolioServiceProvider',
+    38 => 'Modules\\Admin\\Providers\\AdminServiceProvider',
+    39 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
+    40 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
+    41 => 'Modules\\Student\\Providers\\StudentServiceProvider',
   ),
   'eager' => 
   array (
@@ -64,6 +68,10 @@
     19 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
     20 => 'App\\Providers\\AppServiceProvider',
     21 => 'App\\Providers\\FolioServiceProvider',
+    22 => 'Modules\\Admin\\Providers\\AdminServiceProvider',
+    23 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
+    24 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
+    25 => 'Modules\\Student\\Providers\\StudentServiceProvider',
   ),
   'deferred' => 
   array (

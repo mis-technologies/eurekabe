@@ -1,9 +1,29 @@
 <?php return array (
   'providers' => 
   array (
+    0 => 'Modules\\Admin\\Providers\\AdminServiceProvider',
+    1 => 'Modules\\Advocate\\Providers\\AdvocateServiceProvider',
+    2 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
+    3 => 'Modules\\Common\\Providers\\CommonServiceProvider',
+    4 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
+    5 => 'Modules\\Explore\\Providers\\ExploreServiceProvider',
+    6 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
+    7 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
+    8 => 'Modules\\Student\\Providers\\StudentServiceProvider',
+    9 => 'Modules\\Test\\Providers\\TestServiceProvider',
   ),
   'eager' => 
   array (
+    0 => 'Modules\\Admin\\Providers\\AdminServiceProvider',
+    1 => 'Modules\\Advocate\\Providers\\AdvocateServiceProvider',
+    2 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
+    3 => 'Modules\\Common\\Providers\\CommonServiceProvider',
+    4 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
+    5 => 'Modules\\Explore\\Providers\\ExploreServiceProvider',
+    6 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
+    7 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
+    8 => 'Modules\\Student\\Providers\\StudentServiceProvider',
+    9 => 'Modules\\Test\\Providers\\TestServiceProvider',
   ),
   'deferred' => 
   array (
