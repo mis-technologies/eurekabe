@@ -100,7 +100,8 @@ return [
         | app folder name
         | for example can change it to 'src' or 'App'
         */
-        'app_folder' => 'app/',
+        'app_folder' => '',
+        // 'app_folder' => 'app/',
 
         /*
         |--------------------------------------------------------------------------
@@ -223,20 +224,12 @@ return [
     | directory. This is useful if you host the package in packagist website.
     |
     */
-    // 'scan' => [
-    //     'enabled' => false,
-    //     'paths' => [
-    //         base_path('vendor/*/*'),
-    //     ],
-    // ],
-
     'scan' => [
-        'enabled' => true,
+        'enabled' => false,
         'paths' => [
-            base_path('Modules'),
+            base_path('vendor/*/*'),
         ],
     ],
-
 
     /*
     |--------------------------------------------------------------------------

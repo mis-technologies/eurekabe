@@ -1,0 +1,47 @@
+<?php return array (
+  'providers' => 
+  array (
+    0 => 'Modules\\Advocate\\Providers\\AdvocateServiceProvider',
+    1 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
+    2 => 'Modules\\Common\\Providers\\CommonServiceProvider',
+    3 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
+    4 => 'Modules\\Explore\\Providers\\ExploreServiceProvider',
+    5 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
+    6 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
+    7 => 'Modules\\Student\\Providers\\StudentServiceProvider',
+    8 => 'Modules\\Test\\Providers\\TestServiceProvider',
+    9 => 'Modules\\Advocate\\Providers\\AdvocateServiceProvider',
+    10 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
+    11 => 'Modules\\Common\\Providers\\CommonServiceProvider',
+    12 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
+    13 => 'Modules\\Explore\\Providers\\ExploreServiceProvider',
+    14 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
+    15 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
+    16 => 'Modules\\Student\\Providers\\StudentServiceProvider',
+    17 => 'Modules\\Test\\Providers\\TestServiceProvider',
+  ),
+  'eager' => 
+  array (
+    0 => 'Modules\\Advocate\\Providers\\AdvocateServiceProvider',
+    1 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
+    2 => 'Modules\\Common\\Providers\\CommonServiceProvider',
+    3 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
+    4 => 'Modules\\Explore\\Providers\\ExploreServiceProvider',
+    5 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
+    6 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
+    7 => 'Modules\\Student\\Providers\\StudentServiceProvider',
+    8 => 'Modules\\Test\\Providers\\TestServiceProvider',
+    9 => 'Modules\\Advocate\\Providers\\AdvocateServiceProvider',
+    10 => 'Modules\\Auth\\Providers\\AuthServiceProvider',
+    11 => 'Modules\\Common\\Providers\\CommonServiceProvider',
+    12 => 'Modules\\Exam\\Providers\\ExamServiceProvider',
+    13 => 'Modules\\Explore\\Providers\\ExploreServiceProvider',
+    14 => 'Modules\\Messaging\\Providers\\MessagingServiceProvider',
+    15 => 'Modules\\Payment\\Providers\\PaymentServiceProvider',
+    16 => 'Modules\\Student\\Providers\\StudentServiceProvider',
+    17 => 'Modules\\Test\\Providers\\TestServiceProvider',
+  ),
+  'deferred' => 
+  array (
+  ),
+);
