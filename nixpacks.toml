@@ -1,5 +1,8 @@
 [phases.build]
-cmds = ["composer install", "npm install", "npm run build"]
+cmds = ['yarn runn server:build']
 
-[phases.start]
-cmds = ["composer dump-autoload", "php artisan optimize:clear", "php artisan optimize", "php artisan serve --host=0.0.0.0 --port=8000"]
+
+
+
+[phases.build]
+cmds = [ "composer install --no-dev", "npm install", "npm run build"]
