@@ -38,7 +38,6 @@
     34 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
     35 => 'App\\Providers\\AppServiceProvider',
     36 => 'App\\Providers\\FolioServiceProvider',
-    37 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
   ),
   'eager' => 
   array (
@@ -63,7 +62,6 @@
     18 => 'Wotz\\VerificationCode\\VerificationCodeServiceProvider',
     19 => 'App\\Providers\\AppServiceProvider',
     20 => 'App\\Providers\\FolioServiceProvider',
-    21 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
   ),
   'deferred' => 
   array (

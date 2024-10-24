@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -26,8 +29,7 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "Modules\\": "Modules/"
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
@@ -42,7 +44,7 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan migrate:fresh --force", 
+            "@php artisan migrate:fresh --force",
             "@php artisan db:seed",
             "@php artisan module:seed -a",
             "@php artisan optimize:clear",
@@ -64,11 +66,8 @@
         },
         "merge-plugin": {
             "include": [
-                "composer.json",
+                "composer.local.json",
                 "Modules/*/composer.json"
-            ],
-            "require": [
-                
             ],
             "recurse": true,
             "replace": false,
