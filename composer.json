@@ -65,8 +65,7 @@
         },
         "merge-plugin": {
             "include": [
-                "composer.json",
-                "Modules/*/composer.json"
+                "composer.json"
             ],
             "require": [
                 
