@@ -9,12 +9,11 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
     require $maintenance;
 }
 
-// Function to ensure directory exists and is writable
+// Function to ensure directory exists
 function ensureDirectoryExists($dir) {
     if (!is_dir($dir)) {
         mkdir($dir, 0775, true); // Create directory recursively
     }
-    chmod($dir, 0775); // Set permissions
 }
 
 // Ensure the required directories exist
