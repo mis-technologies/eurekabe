@@ -9,17 +9,6 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
     require $maintenance;
 }
 
-// Function to ensure directory exists
-function ensureDirectoryExists($dir) {
-    if (!is_dir($dir)) {
-        mkdir($dir, 0775, true); // Create directory recursively
-    }
-}
-
-// Ensure the required directories exist
-ensureDirectoryExists(__DIR__.'/../storage/framework');
-ensureDirectoryExists(__DIR__.'/../bootstrap/cache');
-
 // Register the Composer autoloader...
 require __DIR__.'/../vendor/autoload.php';
 
