@@ -9,9 +9,7 @@
     ],
     "extra": {
         "laravel": {
-            "providers": [
-                 "Modules\\Admin\\Providers\\AdminServiceProvider"
-            ],
+            "providers": [],
             "aliases": {
 
             }
