@@ -68,6 +68,8 @@ class StudentLeaderBoardController extends Controller
             ->take(10)
             ->get();
 
+
+            
         return response()->json([
             'success' => true,
             'leaderboard' => $leaderboard
