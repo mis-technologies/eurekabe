@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Student\Http\Controllers\Api\StudentController;
 use Modules\Student\Http\Controllers\Api\StudentExamController;
-use Modules\Student\Http\Controllers\Api\StudentLeaderboardController;
+use Modules\Student\Http\Controllers\Api\StudentLeaderBoardController;
 
 /*
  *--------------------------------------------------------------------------
@@ -40,9 +40,9 @@ Route::namespace('Api')->prefix('v1')->group(function () {
 
         // Leaderboard
         Route::middleware('auth:sanctum')->group(function () {
-            Route::get('leaderboard/weekly', [StudentLeaderboardController::class, 'weeklyLeaderboard']);
-            Route::get('leaderboard/monthly', [StudentLeaderboardController::class, 'monthlyLeaderboard']);
-            Route::get('leaderboard/yearly', [StudentLeaderboardController::class, 'yearlyLeaderboard']);
+            Route::get('leaderboard/weekly', [StudentLeaderBoardController::class, 'weeklyLeaderboard']);
+            Route::get('leaderboard/monthly', [StudentLeaderBoardController::class, 'monthlyLeaderboard']);
+            Route::get('leaderboard/yearly', [StudentLeaderBoardController::class, 'yearlyLeaderboard']);
         });       
     });
 
