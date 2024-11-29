@@ -1,18 +1,14 @@
 <?php
 
 namespace Modules\File\Facades;
-use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Response;
-use Modules\File\Entities\File as FileEntity;
+use Modules\File\Models\File as FileEntity;
 use Illuminate\Support\Collection;
-
-
-
+use Illuminate\Support\Facades\Auth;
 
 class FileFacade
 {
@@ -25,19 +21,15 @@ class FileFacade
         	$current = Carbon::now()->format('YmdHs');
 	        $fileExtension = $file->getClientOriginalExtension();
 
-	        // regular filename
-	        // $nnn =str_replace( $fileExtension,  '.' .$fileExtension,  Str::slug($file->getClientOriginalName()) );
-	        // $fileName = strtoupper($nnn);
-
 	        // unique filename with timestamp
 	        $nnn =str_replace( $fileExtension, '-'.$current . '.' .$fileExtension,  Str::slug($file->getClientOriginalName()) );
 	        $fileName = strtoupper($nnn);
 
 	        // $path = Storage::putFileAs('resource', $file, $fileName ); //specify sub dir
 	        $path = Storage::disk($storageDisk)->putFileAs($dir, $file, $fileName );
-	         
+	        $user = Auth::user();
 	        $media= FileEntity::create([
-	            'user_id' => auth()->id(),
+	            'user_id' => $user->id,
 	            'disk' =>  $storageDisk,
 	            'entity' => $entityClass,
 	            'entity_id' => $entity->id,

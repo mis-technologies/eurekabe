@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Student\Http\Controllers\Api\StudentController;
 use Modules\Student\Http\Controllers\Api\StudentExamController;
 use Modules\Student\Http\Controllers\Api\StudentLeaderBoardController;
+use Modules\Student\Http\Controllers\Api\StudentNotificationController;
 
 /*
  *--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         Route::post('account', [StudentController::class, 'createAccount']);
         Route::get('me', [StudentController::class, 'getAccount']);
         Route::patch('me', [StudentController::class, 'updateAccount']);
+        Route::post('me/change-profile-picture', [StudentController::class, 'updateProfilePicture']);
 
         // Student Exam
         Route::middleware('auth:sanctum')->group(function () {
@@ -43,7 +45,17 @@ Route::namespace('Api')->prefix('v1')->group(function () {
             Route::get('leaderboard/weekly', [StudentLeaderBoardController::class, 'weeklyLeaderboard']);
             Route::get('leaderboard/monthly', [StudentLeaderBoardController::class, 'monthlyLeaderboard']);
             Route::get('leaderboard/yearly', [StudentLeaderBoardController::class, 'yearlyLeaderboard']);
-        });       
+        });      
+        
+        
+
+        // Notification
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('notifications', [StudentNotificationController::class, 'getNotifications']);
+            Route::get('notifications/mark-as-read', [StudentLeaderBoardController::class, 'yearlyLeaderboard']);
+        });      
+
+
     });
 
 

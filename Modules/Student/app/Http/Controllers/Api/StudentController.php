@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Common\Models\School;
+use Modules\File\Facades\FileFacade;
 use Modules\Student\Models\Student;
 
 class StudentController extends Controller
@@ -84,6 +85,29 @@ class StudentController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Account updated and retrieved successfully',
+                'data' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function updateProfilePicture (Request $request)
+    {
+        try {
+            $user = User::find(Auth::user()->id);
+            if( request()->files->count() ){
+                $files = request()->files;
+                foreach ($files as $key => $value) {
+                    // FileFacade::deleteFile($user->media()->where('identifier', $key)->get() ); //delete previous
+                    // dd($key);
+                    FileFacade::defaultUpload($value, $user, identifier:$key);
+                }
+            }
+            return response()->json([
+                'success' => true,
+                'message' => 'Profile picture updated successfully',
                 'data' => $user
             ]);
         } catch (\Exception $e) {
