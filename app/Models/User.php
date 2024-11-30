@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,8 +18,35 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guarded = [
-        'id',
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'email',
+        'phone',
+        'email_verified_at',
+        'password',
+        'role',
+        'school_id',
+        'verified_by',
+        'verified_at',
+        'username',
+        'interest',
+        'about',
+        'mobile',
+        'ref_by',
+        'balance',
+        'image',
+        'address',
+        'status',
+        'ev',
+        'sv',
+        'ver_code',
+        'ver_code_send_at',
+        'ts',
+        'tv',
+        'tsc',
+        'provider',
+        'provider_id',
     ];
 
     /**
@@ -51,18 +77,21 @@ class User extends Authenticatable
         return $this->belongsTo(School::class, 'school_id');
     }
 
-    
     public function schools()
     {
         return $this->belongsToMany(School::class)->withPivot('role');
     }
 
-
-    public function getImageAttribute(){
-        if(!$profilePic = File::whereUserId($this->id)->where('identifier', 'profile_pic')->first() ){
-            return "https://ui-avatars.com/api/?name={$this->firstname } {$this->lastname }&color=184391&background=fff"; //999
+    public function getImageAttribute()
+    {
+        if (!$profilePic = File::whereUserId($this->id)->where('identifier', 'profile_pic')->first()) {
+            return "https://ui-avatars.com/api/?name={$this->firstname} {$this->lastname}&color=184391&background=fff";
         }
         return $profilePic->url;
     }
-   
+
+    public function getNameAttribute()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
 }
