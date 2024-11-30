@@ -52,7 +52,9 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         // Notification
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('notifications', [StudentNotificationController::class, 'getNotifications']);
-            Route::get('notifications/mark-as-read', [StudentLeaderBoardController::class, 'yearlyLeaderboard']);
+            Route::get('notifications/mark-all-read', [StudentNotificationController::class, 'markAllRead']);
+            Route::get('notifications/{notification}', [StudentNotificationController::class, 'getSingle']);
+            Route::get('notifications/{notification}/mark-read', [StudentNotificationController::class, 'markAsRead']);
         });      
 
 

@@ -19,58 +19,29 @@ class StudentNotificationController extends Controller
     public function getNotifications(Request $request)
     {
 
-        $limit = (int) $request->query('limit') ?? 100;
+        $limit = (int) $request->query('limit');
+        $unread = (boolean) $request->query('unread');
         $user = Auth::user();
 
         if($limit){
-            $userNotifications = $user->notifications()->take($limit)->latest()->get();
-        }else{
-            $userNotifications = $user->notifications()->latest()->get();
+            if($unread){
+                $userNotifications = Auth::user()->unreadNotifications->take($limit);
+            }else{
+                $userNotifications = $user->notifications()->take($limit)->latest()->get();
+            }
         }
-
-        
-
         //GET ALL ONE NOTIFICATION PER ENTITY
         $uniqueNotifications = collect($userNotifications)->unique(function ($item) {
             return $item->data['entity'] . $item->data['entity_id'];
         })->values()->all();
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'all notifications retrieved successfully',
+           'success' => true,
+            'message' => 'Notifications retrieved successfully',
             'data' => $uniqueNotifications
         ]);
     }
 
-
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getUnreadNotifications(Request $request)
-    {
-
-        $limit = (int) $request->query('limit');
-
-        if($limit){
-            $userNotifications = Auth::user()->unreadNotifications->take($limit);
-        }else{
-            $userNotifications = Auth::user()->unreadNotifications;
-        }
-
-
-        //GET ALL ONE NOTIFICATION PER ENTITY
-        $uniqueNotifications = collect($userNotifications)->unique(function ($item) {
-            return $item->data['entity'] . $item->data['entity_id'];
-        })->values()->all();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'all unread notifications retrieved successfully',
-            'data' => $uniqueNotifications
-        ]);
-    }
 
     
     
@@ -83,12 +54,41 @@ class StudentNotificationController extends Controller
      */
     public function markAsRead(Request $request, $id)
     {
-        $notification = Auth::user()->notifications()->where('id', $id)->first();
-
+        if(!$notification = Auth::user()->notifications()->where('id', $id)->first()){
+            return response()->json([
+                'success' => false,
+                'message' => 'Notification not found'
+            ], 404);
+        }
         $notification->markAsRead();
         return response()->json([
-            'status' => 'success',
+           'success' => true,
             'message' => 'successfully marked as read'
+        ], 200);
+    }
+
+
+
+
+    /**
+     * Mark user's notification as read.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSingle(Request $request, $id)
+    {
+        if(!$notification = Auth::user()->notifications()->where('id', $id)->first()){
+            return response()->json([
+                'success' => false,
+                'message' => 'Notification not found'
+            ], 404);
+        }
+        return response()->json([
+           'success' => true,
+            'message' => 'Retrieved successfully',
+            'data' => $notification
         ], 200);
     }
     
@@ -106,12 +106,9 @@ class StudentNotificationController extends Controller
                 ->get()->each(function ($n) {
                     $n->markAsRead();
                 });
-
-        
         event(new SocketEvent( [], Auth::user()->email, 'Notification'));
-
         return response()->json([
-            'status' => 'success',
+           'success' => true,
             'message' => 'All notifications successfully marked as read'
         ], 200);
     }
