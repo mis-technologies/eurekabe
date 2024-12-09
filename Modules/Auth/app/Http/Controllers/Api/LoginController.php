@@ -58,7 +58,7 @@ class LoginController extends Controller
 
         return response([
             'status' => 'success',
-            'message' => 'Login successfull',
+            'message' => 'Login successful',
             'data' => $response
         ], 200);
     }

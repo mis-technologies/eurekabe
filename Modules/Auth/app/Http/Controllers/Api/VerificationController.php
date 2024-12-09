@@ -44,10 +44,8 @@ class VerificationController extends Controller
         $user->sendEmailVerificationNotification();
         return response()->json(["message" => "Email verification link sent on your email"]);
     }
+
     public function verifyCode(Request $request) {
-
-
-
         $user = User::whereEmail($request->email)->first();
 
        if(!$user){
@@ -73,23 +71,21 @@ class VerificationController extends Controller
             $user->account()->create();
         }
 
-        $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
+        // $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
 
-        $response = [
-            'user' => $user->load('account'),
-            'token' => $token
-        ];
-
+        // $response = [
+        //     'user' => $user->load('account'),
+        //     'token' => $token
+        // ];
 
         $response = [
             'status' => 'success',
             'message' => 'email verified successfully',
-            'data' =>  $response
+            // 'data' =>  $response
         ];
 
         return response()->json($response);
     }
-
 
     public function resendCode(Request $request) {
         
