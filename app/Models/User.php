@@ -8,8 +8,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Common\Models\School;
 use Modules\File\Models\File;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class User extends Authenticatable 
+
+class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -48,6 +51,7 @@ class User extends Authenticatable
         'provider',
         'provider_id',
     ];
+    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -58,6 +62,13 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+        return true;
+    }
 
     /**
      * Get the attributes that should be cast.

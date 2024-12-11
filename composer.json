@@ -7,6 +7,8 @@
     "require": {
         "php": "^8.2",
         "cmgmyr/messenger": "^2.30",
+        "filament/filament": "^3.2",
+        "filament/infolists": "^3.2",
         "laravel/folio": "^1.1",
         "laravel/framework": "^11.9",
         "laravel/reverb": "^1.0",
@@ -28,7 +30,6 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-           
         }
     },
     "autoload-dev": {
@@ -38,8 +39,9 @@
     },
     "scripts": {
         "post-autoload-dump": [
-           "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
@@ -61,18 +63,14 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-               
-            ]
+            "dont-discover": []
         },
         "merge-plugin": {
             "include": [
                 "composer.json",
                 "Modules/*/composer.json"
             ],
-            "require": [
-                
-            ],
+            "require": [],
             "recurse": true,
             "replace": false,
             "ignore-duplicates": false,
