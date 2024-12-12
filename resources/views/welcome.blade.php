@@ -1,391 +1,570 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eureka</title>
+@extends('layout.app')
+@section('content')
 
-  <link rel="stylesheet" href="assets/index.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <script src="assets/main.js"></script>
-</head>
-
-<body>
-  <nav class="container">
-    <div class="logo"><img src="assets/images/logo.png" alt="Eureka" /></div>
-    <div class="nav-bar" id="nav-bar">
-      <div class="nav-logo"><img src="assets/images/logo.png" alt="Eureka" /></div>
-      <span class="material-symbols-outlined" id="closeMenu"> &#xe5cd; </span>
-      <ul class="nav-items">
-        <li class=""><a href="#">Home</a></li>
-        <li class=""><a href="#about">About</a></li>
-        <li class=""><a href="#programs">Programs</a></li>
-        <li class=""><a href="#events">Event</a></li>
-        <li class=""><a href="#contact">Contact Us</a></li>
-      </ul>
-      <button>Become an Advocate</button>
-    </div>
-    <span class="material-symbols-outlined" id="openMenu"> &#xe5d2; </span>
-  </nav>
-
-  <section id="hero" class="container">
-    <div class="hero-content">
-      <h1>Empower Education: Become an Advocate for Your School Today!</h1>
-      <h4>
-        Lead the way in creating dynamic learning experiences and hosting
-        impactful events. Join us in shaping a brighter future for education!"
-      </h4>
-      <div>
-        <button>Join the community</button>
-        <div>
-          <p>It’s absolutely free.</p>
-          <img src="assets/images/designs/Vector6.png" alt="" />
+    <!-- Hero Section -->
+    <section id="hero" class="relative overflow-hidden">
+      <div class="morphism z-10 bg-secondary dark:bg-dark dark:text-white py-10 pb-16">
+      <div
+        class="container flex flex-col md:flex-row justify-between h-full md:max-h-[37rem] gap-8"
+      >
+        <!-- Hero Content -->
+        <div
+          class="flex flex-col w-full justify-center items-center gap-5 md:gap-8 md:w-1/2 md:items-start"
+        >
+          <h1
+            class="font-bold font-sans text-3xl text-center leading-normal md:text-start md:text-5xl md:leading-[1.3]"
+          >
+            Empower Education: Become an Advocate for Your School Today!
+          </h1>
+          <h4
+            class="text-[20px] font-normal text-center opacity-60 md:text-start"
+          >
+            Lead the way in creating dynamic learning experiences and hosting
+            impactful events. Join us in shaping a brighter future for
+            education!"
+          </h4>
+          <div class="hidden md:flex items-center gap-14 mt-5">
+            <button
+              class="bg-primary px-10 py-4 font-bold text-xl text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
+            >
+              Join the community
+            </button>
+            <div class="flex flex-col items-center font-bold mx-auto justify-between gap-2">
+              <p>It’s absolutely free.</p>
+              <img src="asset/images/designs/Vector6.png" alt="" class="w-24" />
+            </div>
+          </div>
         </div>
+
+     <!-- Hero Images -->
+      <div class="w-full md:w-1/2 relative flex justify-between z-10 lg:justify-end gap-3">
+      <!--first col  -->
+        <div class="w-[170px] flex flex-col items-center gap-2">    
+          <div class="bg-[#3B88FFCC] bg-opacity-80 w-full h-[226px] overflow-hidden rounded-[120px] flex items-center justify-center">
+            <img src="asset/images/hero/model6.png" alt="" class="object-cover w-full h-full scale-90 translate-y-5">
+          </div>
+          <div class="bg-[#00E25ACC] bg-opacity-80 w-full h-[192.67px] overflow-hidden rounded-[50px] flex items-center justify-center">
+              <img src="asset/images/hero/model3.png" alt="" class="object-cover w-full h-full translate-y-2">
+           </div>
+           <div class="bg-[#BB86FC] w-full h-[170px] overflow-hidden rounded-full flex items-center justify-center">
+            <img src="asset/images/hero/model5.png" alt="" class="object-cover w-full h-full scale-90 translate-y-5">
+          </div>
+          </div>
+          <!--second col  -->
+          <div class="w-[170px] flex flex-col items-center gap-6">      
+            <div class="bg-[#F77947] w-full h-[226.67px] overflow-hidden rounded-[2rem] rounded-br-[40%] flex items-center justify-center">
+              <img src="asset/images/hero/model4.png" alt="" class="object-cover w-full h-full">
+            </div>
+            <div class="bg-[#FCAF00] w-full h-[170px] overflow-hidden rounded-full flex items-center justify-center">
+              <img src="asset/images/hero/model2.png" alt="" class="object-cover w-full h-full">
+            </div>
+            <div class="bg-[#3B88FF] w-full h-[170px] overflow-hidden rounded-full rounded-br-none flex items-center justify-center">
+              <img src="asset/images/hero/model8.png" alt="" class="object-cover w-full h-auto scale-80">
+            </div>             
+          </div>
+          <!-- third col -->
+          <div class="w-[170px] flex flex-col items-center gap-2">
+            <div class="w-full h-1/3 relative rounded-l-full flex items-center justify-end overlapped">
+              <div class="h-full w-full overflow-hidden rounded-l-full flex">
+                <img src="asset/images/hero/model1.png" alt="" class="object-cover w-full h-full">
+              </div>
+            </div>
+            <div class="bg-[#F8BAD1] w-full h-2/3 overflow-hidden rounded-full flex items-center justify-center">
+              <img src="asset/images/hero/model1.png" alt="" class="object-cover w-full h-full scale-95 translate-y-5">
+            </div>
+          </div>         
       </div>
+
+       <!-- Join botton for mobile -->
+       <div
+       class="flex flex-col items-center justify-center gap-4 md:hidden z-10"
+     >
+       <button
+         class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
+       >
+         Join the community
+       </button>
+       <div class="flex flex-col items-center justify-center">
+         <p class="font-bold font-sans text-lg">It’s absolutely free.</p>
+         <img src="asset/images/designs/Vector6.png" alt="" />
+       </div>
+     </div>
+      
     </div>
-    <div class="hero-design">
-      <div class="hero-images">
-        <div class="img-1">
-          <img src="assets/images/young-man-working-from-home BW 1.png" alt="" />
-        </div>
-        <div class="img-2">
+    </div>
+
+      <!-- Hero Icons -->
+      <div class="hidden md:block absolute top-28 -left-1">
+        <img src="asset/images/designs/hero_blue_arrow.png" alt="" />
+      </div>    
+       
+      <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10">
+        <div class="particle-container h-full w-full ">
+          <div class="particle">
+            <img src="asset/images/particle1.png" alt="">
+          </div>
+          <div class="particle">
+            <img src="asset/images/particle2.png" alt="">
+          </div>
+          <div class="particle">
+            <img src="asset/images/particle3.png" alt="">
+          </div>         
+      </div> 
+      </div> 
+    </section>
+
+    <!--Partners  -->
+    <section class="container flex flex-col py-16 gap-12 dark:text-white">    
+    <div
+      class="flex flex-col items-center justify-between md:flex-row gap-y-10"
+    >
+      <h2 class="text-3xl font-bold text-center md:max-w-[20rem] md:text-left font-lato">
+        More than 50+ schools trust <span class="text-primary">Eureka</span>
+      </h2>
+      <div class="flex justify-between items-center gap-8 flex-wrap">
+        <div class="flex items-center justify-between">
           <img
-            src="assets/images/smiling-showing-hello-gesture-holding-folder-young-africanamerican-guy-isolated-blue-background BW 1.png"
-            alt="" />
+            src="asset/images/partners/Black and White Collection 0.png"
+            alt="lorem"
+          />
+          <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
         </div>
-        <div class="img-3">
+        <div class="flex items-center justify-between">
           <img
-            src="assets/images/positive-hipster-girl-with-curly-short-hair-smiles-broadly-wears-piercing-writes-creative-idea-notepad-involved-working-process-surrounded-with-paper-balls-sits-work-place-alone BW 1.png"
-            alt="" />
+            src="asset/images/partners/Black and White Collection 1.png"
+            alt="lorem"
+          />
+          <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
         </div>
-        <div class="img-4">
-          <img src="assets/images/medium-shot-smiley-man-work BW 1.png" alt="" />
+        <div class="flex items-center justify-between">
+          <img
+            src="asset/images/partners/Black and White Collection 2.png"
+            alt="lorem"
+          />
+          <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
+        </div>
+        <div class="flex items-center justify-between">
+          <img
+            src="asset/images/partners/Black and White Collection 3.png"
+            alt="lorem"
+          />
+          <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
         </div>
       </div>
-      <div class="absolute icurve1">
-        <img src="assets/images/designs/curve1.png" alt="">
-      </div>
-      <div class="absolute ix">
-        <img src="assets/images/designs/x.png" alt="">
-      </div>
-      <div class="absolute icurve2">
-        <img src="assets/images/designs/yellow-arrows-x8AhtWqjfw.png" alt="">
-      </div>
-      <div class="absolute icurve3">
-        <img src="assets/images/designs/Frame1.png" alt="">
-      </div>
     </div>
-
-    <div class="absolute i1">
-      <img src="assets/images/designs/Vector (3).png" alt="">
-    </div>
-    <div class="absolute i2">
-      <img src="assets/images/designs/Vector (4).png" alt="">
-    </div>
-    <div class="absolute i3">
-      <img src="assets/images/designs/Vector4.png" alt="">
-    </div>
-    <div class="absolute i4">
-      <img src="assets/images/designs/Vector5.png" alt="">
-      <div class="mask1"></div>
-    </div>
-
+    <div class="h-[1.3px] w-full bg-primary"></div>
   </section>
 
-  <div class="container partners">
-    <h2>More than 50+ schools trust <span>Eureka</span></h2>
-    <div class="sponsors">
-      <div class="sponsor">
-        <img src="assets/images/partners/Black and White Collection 0.png" alt="lorem">
-        <h5>LogoIpsum</h5>
-      </div>
-      <div class="sponsor">
-        <img src="assets/images/partners/Black and White Collection 1.png" alt="lorem">
-        <h5>LogoIpsum</h2>
-      </div>
-      <div class="sponsor">
-        <img src="assets/images/partners/Black and White Collection 2.png" alt="lorem">
-        <h5>LogoIpsum</h2>
-      </div>
-      <div class="sponsor">
-        <img src="assets/images/partners/Black and White Collection 3.png" alt="lorem">
-        <h5>LogoIpsum</h2>
-      </div>
-    </div>
-  </div>
-
-  <section id="about">
-    <div class="container about">
-      <div class="image-container">
-        <img src="assets/images/low-angle-multiracial-college-students BW 1.png" alt="" srcset="" />
-      </div>
-      <div class="section-content">
-        <h2 class="script-font">Who we are</h2>
-        <h1>Join us: Embrace the power of Advocacy</h1>
-        <p>Discover the benefits of becoming an Advocate, from gaining leadership experience to shaping the direction of
-          education in your school.</p>
-        <ul>
-          <li>Leadership experience</li>
-          <li>Diversity advocacy</li>
-          <li>Community building</li>
-          <li>Impactful contributions</li>
-          <li>Communication skills</li>
-          <li>Influence expansion</li>
-        </ul>
-        <div class="button">
-          <button>Join the community</button>
-          <img src="assets/images/designs/Vector6.png" alt="" />
+    <!-- About Section -->
+    <section id="about" class="relative overflow-hidden">
+      <div
+        class="container flex flex-col justify-between items-center gap-10 md:flex-row pt-20 dark:text-white"
+      >
+        <div class="relative w-full md:w-1/2 z-10">
+          <img
+            src="asset/images/low-angle-multiracial-college-students BW 1.png"
+            alt=""
+            class="w-full h-auto"
+          />
+          <img
+            src="asset/images/designs/Frame 628898.png"
+            alt=""
+            class="absolute top-0 left-0 -translate-y-1/2 -translate-x-2 rounded-full shadow-lg drop-shadow-lg"
+          />
         </div>
-      </div>
-    </div>
-    <div class="absolute i5">
-      <img src="assets/images/designs/Vector (2).png" alt="">
-    </div>
-    <div class="absolute i6">
-      <img src="assets/images/designs/Vector10.png" alt="">
-    </div>
-    <div class="absolute i7">
-      <img src="assets/images/designs/Vector4.png" alt="">
-    </div>
-    <div class="absolute i8">
-      <img src="assets/images/designs/Vector.png" alt="">
-      <div class="mask2"></div>
-    </div>
-  </section>
-
-  <div class="container socials">
-    <div class="platform">
-      <img src="assets/images/socials/mingcute_facebook-line.png" alt="">
-      <div class="count">
-        <h1> 5k</h1>
-        <p>followers</p>
-      </div>
-    </div>
-    <div class="platform">
-      <img src="assets/images/socials/Vector.png" alt="">
-      <div class="count">
-        <h1> 5k</h1>
-        <p>Subscribers</p>
-      </div>
-    </div>
-    <div class="platform">
-      <img src="assets/images/socials/Vector (1).png" alt="">
-      <div class="count">
-        <h1> 1M</h1>
-        <p>Subscribers</p>
-      </div>
-    </div>
-    <div class="platform">
-      <img src="assets/images/socials/Vector (2).png" alt="">
-      <div class="count">
-        <h1> 1k</h1>
-        <p>followers</p>
-      </div>
-    </div>
-    <div class="platform">
-      <img src="assets/images/socials/Vector (1).png" alt="">
-      <div class="count">
-        <h1> 3k</h1>
-        <p>followers</p>
-      </div>
-    </div>
-  </div>
-
-  <section id="programs">
-    <div class="container-box">
-      <div class="contents">
-        <h2 class="script-font">what we offer</h2>
-        <h1>Our Programs</h1>
-        <p>Lead curriculum, events, support, and community engagement. Shape education's future with us!</p>
-        <button>Become an Advocate</button>
-      </div>
-
-      <div class="cards">
-        <div class="card span1">
-          <img src="assets/images/icons/clarity_note-line.png" alt="">
-          <h5>
-            Curriculum Development
-          </h5>
-          <p>Shape engaging learning experiences by designing curriculum and promoting innovative teaching methods..</p>
-        </div>
-        <div class="card span1">
-          <img src="assets/images/icons/carbon_license-third-party (1).png" alt="">
-          <h5>
-            Event Organization & Management
-          </h5>
-          <p> Lead in planning and executing school events, fostering a vibrant and inclusive community.</p>
-        </div>
-        <div class="card span1">
-          <img src="assets/images/icons/la_chalkboard-teacher.png" alt="">
-          <h5>
-            Student Support & Mentoring
-          </h5>
-          <p> Provide guidance and encouragement to students, helping them navigate challenges and reach their
-            potential.</p>
-        </div>
-        <div class="card span1">
-          <img src="assets/images/icons/Vector (3).png" alt="">
-          <h5>
-            Community Engagement & Advocacy
-          </h5>
-          <p>Advocate for student needs and collaborate with stakeholders to create a supportive educational
-            environment.</p>
-        </div>
-      </div>
-    </div>
-    <div class="absolute i5">
-      <img src="assets/images/designs/Vector7.png" alt="">
-    </div>
-    <div class="absolute i8">
-      <img src="assets/images/designs/Vector.png" alt="">
-      <div class="mask1"></div>
-    </div>
-    <div class="absolute i9">
-      <img src="assets/images/designs/Vector (1).png" alt="">
-    </div>
-
-  </section>
-
-  <section id="events">
-    <div class="container-box">
-      <div class="contents">
-        <h2 class="script-font">Engagement</h2>
-        <h1>Our Events</h1>
-        <p>Explore upcoming events and experiences.Eureka's OurEvents is more than just a calendar – it's a portal to a
-          world of exploration, discovery, and endless fun. So, join the adventure, unleash your curiosity, and get
-          ready to learn like never before!</p>
-        <button>Become an Advocate</button>
-      </div>
-
-      <div class="cards">
-        <div class="card" id="card-1">
-          <div class="content">
-            <h3>
-              Virtual Escape Rooms
-            </h3>
-            <p>Create subject-specific escape rooms where students work together online to solve puzzles and challenges
-              to "escape." This could be done in history, science, or even literature.</p>
-            <div class="paragraph">
-              <p>Create subject-specific escape rooms where students work together online to solve puzzles and
-                challenges to "escape." This could be done in history, science, or even literature.</p>
-              <p>Create subject-specific escape rooms where students work together online to solve puzzles and
-                challenges to "escape." This could be done in history, science, or even literature.</p>
-            </div>
-
-          </div>
-          <div class="img-container">
-            <img src="assets/images/people-playing-wooden-tower-game 1.png" alt="">
-
+        <div class="w-full md:w-1/2 flex flex-col gap-3">
+          <h2 class="script-font">Who we are</h2>
+          <h1 class="text-2xl font-bold md:text-3xl">
+            Join us: Embrace the power of Advocacy
+          </h1>
+          <p class="opacity-60 text-xl">
+            Discover the benefits of becoming an Advocate, from gaining
+            leadership experience to shaping the direction of education in your
+            school.
+          </p>
+          <ul class="grid grid-cols-2 w-full gap-4 md:gap-x-12 mt-2">
+            <li class="flex items-center gap-3">
+              <img src="asset/images/icons/Check circle.png" alt="" /> 
+              <p class="font-medium text-lg opacity-60"> Leadership experience</p>
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="asset/images/icons/Check circle.png" alt="" />
+              <p class="font-medium text-lg opacity-60">Diversity
+                advocacy</p> 
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="asset/images/icons/Check circle.png" alt="" /> 
+              <p class="font-medium text-lg opacity-60">Community
+                building</p>
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="asset/images/icons/Check circle.png" alt="" />
+              <p class="font-medium text-lg opacity-60">Impactful
+                contributions</p>
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="asset/images/icons/Check circle.png" alt="" />
+              <p class="font-medium text-lg opacity-60">Communication skills</p>
+              
+            </li>
+            <li class="flex items-center gap-3">
+              <img src="asset/images/icons/Check circle.png" alt="" />
+              <p class="font-medium text-lg opacity-60">Influence
+                expansion</p>
+            </li>
+          </ul>
+          <div class="flex flex-col items-center justify-center gap-4 mt-10">
+            <button
+              class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
+            >
+              Join the community
+            </button>
+            <div class="flex flex-col items-center justify-center">
+              <img src="asset/images/designs/Vector6.png" alt=""/>
+            </dv>
           </div>
         </div>
-        <div class="card" id="card-2">
-          <div class="content">
-            <h3>
-              Virtual Escape Rooms
-            </h3>
-            <p>Create subject-specific escape rooms where students work together online to solve puzzles and challenges
-              to "escape." This could be done in history, science, or even literature.</p>
-            <div class="paragraph">
-              <p>Create subject-specific escape rooms where students work together online to solve puzzles and
-                challenges to "escape." This could be done in history, science, or even literature.</p>
-              <p>Create subject-specific escape rooms where students work together online to solve puzzles and
-                challenges to "escape." This could be done in history, science, or even literature.</p>
+      </div>
+      <!-- <div class="absolute top-24 left-0 hidden md:block">
+        <img src="asset/images/designs/who_we_are_i_l.png" alt="" />
+      </div> -->
+      <div class="absolute top-0 left-1/2 rotate-45 -translate-y-8 translate-x-2">
+        <img src="asset/images/designs/purple_top_i.png" alt="" />
+      </div>
+      <div class="absolute bottom-24 right-0 scale-75 hidden md:block">
+        <img src="asset/images/designs/who_we_are_i_r.png" alt="" />
+      </div>
+      <div class="absolute bottom-0 left-0 w-44 h-44">
+        <img
+          src="asset/images/designs/who_we_are_ellipse.png"
+          alt=""
+          class="w-full h-full"
+        />
+      </div>
+    </section>
+
+    <!-- Socials -->
+    <div class="container flex justify-center py-20 gap-12 flex-wrap dark:text-white">
+      <div
+        class="flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2"
+        id="fbI"
+      >
+        <img src="asset/images/socials/mingcute_facebook-line_d.png" alt="" />
+        <div class="count">
+          <h1 class="font-semibold text-2xl md:text-[36px]">5K+</h1>
+          <p class="font-semibold opacity-50 text-[15px]">followers</p>
+        </div>
+      </div>
+      <div
+        class="flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        id="tgI"
+      >
+        <img src="asset/images/socials/telegram_d.png" alt="" />
+        <div class="count">
+          <h1 class="font-semibold text-2xl md:text-[36px]">2K+</h1>
+          <p class="font-semibold opacity-50 text-[15px]">followers</p>
+        </div>
+      </div>
+      <div
+        class="flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        id="waI"
+      >
+        <img src="asset/images/socials/ic_baseline-whatsapp_d.png" alt="" />
+        <div class="count">
+          <h1 class="font-semibold text-2xl md:text-[36px]">1M+</h1>
+          <p class="font-semibold opacity-50 text-[15px]">subscribers</p>
+        </div>
+      </div>
+      <div
+        class="flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        id="inI"
+      >
+        <img src="asset/images/socials/mdi_instagram_d.png" alt="" />
+        <div class="count">
+          <h1 class="font-semibold text-2xl md:text-[36px]">1K+</h1>
+          <p class="font-semibold opacity-50 text-[15px]">followers</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 pr-4" id="twI">
+        <img src="asset/images/socials/mingcute_twitter-line_d.png" alt="" />
+        <div class="count">
+          <h1 class="font-semibold text-2xl md:text-[36px]">3K+</h1>
+          <p class="font-semibold opacity-50 text-[15px]">subscribers</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Programs -->
+    <section id="program" class="bg-secondary py-16 relative dark:bg-dark dark:text-white">
+      <div
+        class="container flex flex-col justify-between gap-10 lg:flex-row z-10"
+      >
+        <div class="w-full md:w-1/2 md:max-w-80 flex flex-col gap-4">
+          <h2 class="script-font">What we offer</h2>
+          <h1 class="text-2xl font-bold">Our Programs</h1>
+          <p class="text-lg opacity-50">
+            Lead curriculum, events, support, and community engagement. Shape
+            education's future with us!
+          </p>
+          <button
+            class="bg-primary w-fit mt-10 px-8 py-3 font-semibold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
+          >
+            Become an Advocate
+          </button>
+        </div>
+
+        <div
+          class="w-full lg:w-7/12 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm"
+        >
+          <div
+            class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
+          >
+            <img src="asset/images/icons/clarity_note-line.png" alt="" />
+            <h5 class="font-bold text-[16px]">Curriculum Development</h5>
+            <p class="opacity-50 text-[16px]">
+              Shape engaging learning experiences by designing curriculum and
+              promoting innovative teaching methods..
+            </p>
+          </div>
+          <div
+            class="relative flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
+          >
+            <img
+              src="asset/images/icons/carbon_license-third-party (1).png"
+              alt=""
+            />
+            <h5 class="font-bold text-[16px]">Event Organization & Management</h5>
+            <p class="opacity-50 text-[16px]">
+              Lead in planning and executing school events, fostering a vibrant
+              and inclusive community.
+            </p>
+            <div class="absolute -bottom-1 right-0 scale-90 translate-y-1/4">
+              <img src="asset/images/designs/x.png" alt="" />
             </div>
           </div>
-          <div class="img-container">
-            <img src="assets/images/people-playing-wooden-tower-game 1.png" alt="">
-
+          <div
+            class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
+          >
+            <img src="asset/images/icons/la_chalkboard-teacher.png" alt="" />
+            <h5 class="font-bold text-[16px]">Student Support & Mentoring</h5>
+            <p class="opacity-50 text-[16px]">
+              Provide guidance and encouragement to students, helping them
+              navigate challenges and reach their potential.
+            </p>
           </div>
-        </div>
-        <div class="card" id="card-3">
-          <div class="content">
-            <h3>
-              Virtual Escape Rooms
-            </h3>
-            <p>Create subject-specific escape rooms where students work together online to solve puzzles and challenges
-              to "escape." This could be done in history, science, or even literature.</p>
-            <div class="paragraph">
-              <p>Create subject-specific escape rooms where students work together online to solve puzzles and
-                challenges to "escape." This could be done in history, science, or even literature.</p>
-              <p>Create subject-specific escape rooms where students work together online to solve puzzles and
-                challenges to "escape." This could be done in history, science, or even literature.</p>
-            </div>
-          </div>
-          <div class="img-container">
-            <img src="assets/images/people-playing-wooden-tower-game 1.png" alt="">
-
-          </div>
-        </div>
-        <div class="card" id="card-4">
-          <div class="content">
-            <h3>
-              Virtual Escape Rooms
-            </h3>
-            <p>Create subject-specific escape rooms where students work together online to solve puzzles and challenges
-              to "escape." This could be done in history, science, or even literature.</p>
-            <div class="paragraph">
-              <p>Create subject-specific escape rooms where students work together online to solve puzzles and
-                challenges to "escape." This could be done in history, science, or even literature.</p>
-              <p>Create subject-specific escape rooms where students work together online to solve puzzles and
-                challenges to "escape." This could be done in history, science, or even literature.</p>
-            </div>
-          </div>
-          <div class="img-container">
-            <img src="assets/images/people-playing-wooden-tower-game 1.png" alt="">
-
+          <div
+            class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
+          >
+            <img src="asset/images/icons/Vector (3).png" alt="" />
+            <h5 class="font-bold text-[16px]">Community Engagement & Advocacy</h5>
+            <p class="opacity-50 text-[16px]">
+              Advocate for student needs and collaborate with stakeholders to
+              create a supportive educational environment.
+            </p>
           </div>
         </div>
       </div>
-    </div>
-    <div class="absolute i16">
-      <img src="assets/images/designs/Vector4.png" alt="">
-      <div class="mask2"></div>
-    </div>
 
-  </section>
+      <div class="absolute bottom-0 left-0">
+        <img src="asset/images/designs/Vector7.png" alt="" />
+      </div>
+      <div class="absolute bottom-5 right-0 translate-x-3 hidden md:block">
+        <img src="asset/images/designs/Vector.png" alt="" class="scale-75" />
+      </div>
+      <div class="absolute top-1/3 left-1/3 scale-75">
+        <img src="asset/images/designs/Vector (1).png" alt="" />
+      </div>
+      <div class="absolute top-28 -left-1 hidden md:block">
+        <img src="asset/images/designs/who_we_are_i_l.png" alt="" />
+      </div>
+    </section>
 
-  <footer class="container">
-    <div class="content">
-      <h1>Join our community. Support, Promote, Advocate. Get Started Today.</h1>
-      <p>Make a difference in your school today!</p>
-      <div class="buttons">
-        <button class="button1">Join the community</button>
-        <div class="button2">
-          <button>Learn more</button>
-          <img src="assets/images/designs/Vector 7.png" alt="" />
+    <!-- Founders -->
+     <section id="founders" class="bg-white py-24 relative container md:py-16 dark:bg-dark dark:text-white">
+      <h1 class="font-bold text-3xl text-center mb-10 md:mb-16">
+        The Brains Behind Eureka.
+      </h1>
+      <div class="flex flex-col items center justify-between gap-10 md:flex-row">
+        <!-- Marv -->
+        <div class="w-full md:w-1/2 max-w-xl flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+          <div class="img-container relative">
+            <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
+            <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+              <img src="asset/images/Marv.png" alt="" class="w-full h-full">
+            </div>
+          </div>
+          <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
+            <h1 class="font-semibold text-xl">Ejeh Marvelous</h1>
+            <p class="opacity-80 font-light text-lg">Founder</p>
+            <div class="h-[1.2px] w-full bg-primary"></div>
+            <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?</p>
+          </div>
+        </div>
+        <!-- Oche -->
+        <div class="w-full md:w-1/2 max-w-xl flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+          <div class="img-container relative">
+            <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
+            <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+              <img src="asset/images/Oche.png" alt="" class="w-full h-full">
+            </div>
+          </div>
+          <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
+            <h1 class="font-semibold text-xl">Oche Solomon</h1>
+            <p class="opacity-80 font-light text-lg">Co-Founder</p>
+            <div class="h-[1.2px] w-full bg-primary"></div>
+            <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?</p>
+          </div>
         </div>
       </div>
+      
+      <div class="absolute top-0 left-10 md:left-[20rem]">
+        <img src="asset/images/designs/purple_top_i.png" alt="">
+      </div>
+     </section>
 
-    </div>
-    <div class="absolute i10">
-      <img src="assets/images/designs/x.png" alt="">
-    </div>
-    <div class="absolute i11">
-      <img src="assets/images/designs/Frame2.png" alt="">
-    </div>
-    <div class="absolute i12">
-      <img src="assets/images/designs/Frame3.png" alt="">
-      <div class="mask1"></div>
-    </div>
-    <div class="absolute i13">
-      <img src="assets/images/designs/Vector9.png" alt="">
-    </div>
-    <div class="absolute i14">
-      <img src="assets/images/designs/arrows-down-gold-HiEHHhkurD.png" alt="">
-    </div>
-    <div class="absolute i15">
-      <img src="assets/images/designs/Vector10.png" alt="">
-    </div>
-  </footer>
+    
+    <!-- Download Section -->
+    <section id="download" class="relative">
+      <div class="morphism bg-secondary py-20 relative dark:bg-dark dark:text-white">
+      <div class="container w-full text-center relative flex flex-col items-center">
+        <h1 class="font-bold text-3xl">Download Eureka App Now!</h1>
+        <p class="opacity-50 mt-5">
+          Prepare and take your exams with confidence using our comprehensive platform
+        </p>
 
-  
-</body>
+        <div class="flex items-center justify-center gap-8 gap-y-4 flex-col md:flex-row text-white mt-14 max-w-lg ">
+          <button class="bg-primary rounded-2xl w-52 p-3 px-5 inline-flex gap-3 items-center transition-all duration-150 ease-in-out hover:bg-opacity-80 hover:scale-105">
+            <img src="asset/images/playStore.png" alt=" ">
+            <div class="flex flex-col gap-1 items-start">
+              <p class="text-xs font-light">Get it on</p>
+              <h1 class="text-sm font-normal">Google Play</h1>
+            </div>
+          </button>
+          <button class="bg-primary rounded-2xl w-52 p-3 px-5 inline-flex gap-3 items-center transition-all duration-150 ease-in-out hover:bg-opacity-80 hover:scale-105">
+            <img src="asset/images/appStore.png" alt=" ">
+            <div class="flex flex-col gap-1 items-start">
+              <p class="text-xs font-light">Get it on</p>
+              <h1 class="text-sm font-normal">Google Play</h1>
+            </div>
+          </button>
+        </div>
+        <div class="absolute top-8 left-0 scale-75 md:top-0 md:left-6 md:scale-90">        
+          <img src="asset/images/designs/downloadCurve.png" alt="">
+        </div>
+      </div>
+      
+      <div class="absolute bottom-0 right-0 hidden md:block">        
+        <img src="asset/images/designs/elipse.png" alt="">
+      </div>
+      </div>
 
-</html>
+      <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10">
+        <div class="particle-container h-full w-full ">
+          <div class="particle">
+            <img src="asset/images/particle1.png" alt="">
+          </div>
+          <div class="particle">
+            <img src="asset/images/particle2.png" alt="">
+          </div>
+          <div class="particle">
+            <img src="asset/images/particle3.png" alt="">
+          </div>         
+      </div> 
+      </div> 
+     </section>
+
+    <!-- Events -->
+    <section id="events" class="py-10 container">
+      <div
+        class="container-box flex flex-col justify-between items-start gap-10 lg:flex-row dark:text-white">      
+        <div class="w-full md:w-1/2 md:max-w-80 flex flex-col gap-4 mt-0 md:mt-20">
+          <h2 class="script-font">Engagement</h2>
+          <h1 class="text-2xl font-bold">Our Events</h1>
+          <p class="text-lg opacity-50">
+            Explore upcoming events and experiences.Eureka's OurEvents is more
+            than just a calendar – it's a portal to a world of exploration,
+            discovery, and endless fun. So, join the adventure, unleash your
+            curiosity, and get ready to learn like never before!
+          </p>
+          <button
+            class="bg-primary w-fit mt-10 px-8 py-3 font-semibold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
+          >
+            Become an Advocate
+          </button>
+        </div>
+
+       <div class="w-full lg:w-2/3">
+        <div class="w-full flex flex-col items-center gap-5 md:flex-row justify-end">
+          <div id="cardContainer" class="w-full max-w-96">
+          <div class="event-card default" id="card1">
+            <h3 class="font-bold text-2xl">Virtual Escape Rooms</h3>
+            <p class="font-light text-sm text-justify">
+              Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
+            </p>
+            <div class="hidden-content mt-2">
+              <p class="font-light text-sm text-justify">
+                Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
+              </p>
+            </div>
+            <div class="relative inline-flex justify-end translate-x-8">
+              <img src="asset/images/people-playing-wooden-tower-game 1.png" alt="" class="w-10/12 object-cover" />
+            </div>
+          </div>
+      
+          <div class="event-card default " id="card2">
+            <h3 class="font-bold text-2xl">Virtual Escape Rooms</h3>
+            <p class="font-light text-sm text-justify">
+              Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
+            </p>
+            <div class="hidden-content mt-2">
+              <p class="font-light text-sm text-justify">
+                Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
+              </p>
+            </div>
+            <div class="relative inline-flex justify-end translate-x-8">
+              <img src="asset/images/people-playing-wooden-tower-game 1.png" alt="" class="w-10/12 object-cover" />
+            </div>
+          </div>
+          </div>
+      
+          <div id="cardContainer" class="w-full max-w-96">
+          <div class="event-card" id="card3">
+            <h3 class="font-bold text-2xl">Virtual Escape Rooms</h3>
+            <p class="font-light text-sm text-justify">
+              Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
+            </p>
+            <div class="hidden-content mt-2">
+              <p class="font-light text-sm text-justify">
+                Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
+              </p>
+            </div>
+            <div class="relative inline-flex justify-end translate-x-8">
+              <img src="asset/images/people-playing-wooden-tower-game 1.png" alt="" class="w-10/12 object-cover" />
+            </div>
+          </div>
+      
+          <div class="event-card" id="card4">
+            <h3 class="font-bold text-2xl">Virtual Escape Rooms</h3>
+            <p class="font-light text-sm text-justify">
+              Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
+            </p>
+            <div class="hidden-content mt-2">
+              <p class="font-light text-sm text-justify">
+                Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
+              </p>
+            </div>
+            <div class="relative inline-flex justify-end translate-x-8">
+              <img src="asset/images/people-playing-wooden-tower-game 1.png" alt="" class="w-10/12 object-cover" />
+            </div>
+          </div>
+          </div>
+        </div>
+       </div>
+        
+    
+
+    </section>
+
+    @endsection
+   
