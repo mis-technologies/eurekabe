@@ -16,7 +16,7 @@
         <link href="assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="assets/css/tailwind.min.css">
 
-        @vite(\Nwidart\Modules\Module::getAssets())
+        {{-- @vite(\Nwidart\Modules\Module::getAssets()) --}}
 
     </head>
 
