@@ -7,6 +7,26 @@ use Modules\Common\Models\School;
 
 class Exam extends Model
 {
+
+    protected $fillable = [
+        'school_id', 
+        'title',
+        'duration',
+        'subject_id', 
+        'exam_name',
+        'exam_fee', 
+        'instruction',
+        'totalmark',
+        'pass_percentage',
+        'start_date',
+        'end_date', 
+        'status', 
+        'created_by', 
+        'updated_by',
+        'value',
+    ];
+
+    
     protected $guarded = [];
 
     public function school()
@@ -24,10 +44,7 @@ class Exam extends Model
         return $this->hasMany(Question::class, 'exam_id');
     }
 
-    // public function results()
-    // {
-    //     return $this->hasMany(Result::class, 'exam_id');
-    // }
+   
 
    
     public function passark()
