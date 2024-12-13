@@ -77,6 +77,7 @@ class ExamResource extends Resource
     {
         return $table
             ->columns([
+                
                 Tables\Columns\TextColumn::make('title')
                     ->label('Exam Name')
                     ->sortable()
