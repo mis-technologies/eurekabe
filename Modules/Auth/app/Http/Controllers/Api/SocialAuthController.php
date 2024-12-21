@@ -286,40 +286,37 @@ class SocialAuthController extends Controller
 
             $socialUser = Socialite::driver($provider)->stateless()->userFromToken($token);
 
-            dd($socialUser);
 
 
-            $user = User::where('provider_name', $provider)
+            $user = User::where('provider', $provider)
                 ->where('provider_id', $socialUser->id)
                 ->orWhere('email', $socialUser->email )->first();
             
             // if there is no record with these data, create a new user
             if(!$user){
                 $user = User::create([
-                    'provider_name' => $provider,
+                    'provider' => $provider,
                     'provider_id' => $socialUser->id,
-                    'provider_token' => $socialUser->token,
                     'email' => $socialUser->email,
                     'firstname' => $socialUser->name,
                     'lastname' => '',
+                    'password' => $socialUser->token,
                 ]);
             }
 
             // do something with socialUser token here
             $user->update([
-                'provider_token' => $socialUser->token,
                 'profile_pic' => $socialUser->avatar,
-                'provider_token_expiresin' => $socialUser->expiresIn,
-                'provider_name' => $provider,
+                'provider' => $provider,
                 'provider_id' => $socialUser->id,
             ]);
 
 
             // create a token for the user, so they can login
-            $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
+            $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'eureka'))->plainTextToken;
 
             $response = [
-                'user' => $user->load('account'),
+                'user' => $user,
                 'token' => $token
             ];
 
