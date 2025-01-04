@@ -4,10 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eureka</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eureka</title>
+    <title>Eureka EdTech</title>
     <link rel="stylesheet" href="{{ asset('asset/styles/output.css')}}" />
     <link rel="stylesheet" href="{{ asset('asset/styles/main.css')}}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,7 +32,7 @@
       crossorigin="anonymous"
     ></script>
      <!-- App favicon -->
-     <link rel="shortcut icon" href="{{ asset('asset/images/favicon.ico')}}" />
+     <link rel="shortcut icon" href="{{ asset('asset/images/favicon.png')}}" />
 
     <!-- Scripts -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
@@ -47,8 +44,9 @@
     <header class="sticky top-0 left-0 z-50 bg-secondary dark:bg-dark transition-all duration-1000">
       <nav class="flex justify-between items-center py-5 container">
         <a class="translate-y-1" href="/">
-          <img src="{{ asset('asset/images/logo.png')}}" alt="Eureka" class="" />
+          <img id="logo" src="{{ asset('asset/images/logo.png')}}" alt="Eureka EdTech" class="" />
         </a>
+        
 
         <div
           class="relative flex items-center min-w-[75%] justify-between gap-20"
@@ -257,5 +255,56 @@
        </div>
 
 </body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+const themeToggle = document.querySelector('#theme-toggle'); // Example toggle button
+const logo = document.querySelector('#logo'); // The logo element
+
+// Check and set initial theme
+const currentTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+
+if (currentTheme === 'dark') {
+logo.src = '{{ asset("asset/images/white_logo.png") }}'; // Dark logo
+} else {
+logo.src = '{{ asset("asset/images/logo-dark.png") }}'; // Light logo
+}
+
+// Toggle theme on button click
+themeToggle.addEventListener('click', () => {
+const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+document.documentElement.setAttribute('data-theme', theme);
+localStorage.setItem('theme', theme);
+
+// Change logo based on theme
+if (theme === 'dark') {
+    logo.src = '{{ asset("asset/images/white_logo.png") }}'; // Dark logo
+} else {
+    logo.src = '{{ asset("asset/images/logo-dark.png") }}'; // Light logo
+}
+});
+});
+</script>
+
+<style>
+  /* Light Theme (Default) */
+:root {
+--bg-color: #ffffff;
+--text-color: #000000;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+--bg-color: #000000;
+--text-color: #ffffff;
+}
+
+body {
+background-color: var(--bg-color);
+color: var(--text-color);
+transition: all 0.3s ease;
+}
+</style>
 
 </html>
