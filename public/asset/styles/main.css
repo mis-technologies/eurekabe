@@ -8,7 +8,7 @@
 
 :root {
   /* Colors */
-  --primary: #0279b9;
+  --primary: #3b88ff;
   --secondary: #f4f4f4;
   --accent: #fcbf49;
   --pp: #a60874;
@@ -28,6 +28,10 @@
   --lato: "Lato", sans-serif;
   --roboto: "Roboto", sans-serif;
   --script: "Caveat", cursive;
+
+  /* transition */
+  --transition-duration: 0.5s;
+  --transition-timing: ease-in-out;
 }
 
 * {
@@ -64,6 +68,24 @@
   position: absolute;
 }
 
+html,
+.switchIcon,
+.eurekaLogo {
+  transition: background-color var(--transition-duration)
+      var(--transition-timing),
+    color var(--transition-duration) var(--transition-timing),
+    transform var(--transition-duration) var(--transition-timing);
+}
+
+.switchIcon {
+  transition: transform var(--transition-duration) var(--transition-timing);
+}
+
+.custom-textarea {
+  overflow: hidden;
+  resize: none;
+}
+
 body {
   width: 100%;
   max-width: 1440px;
@@ -71,6 +93,10 @@ body {
   margin-inline: auto;
   position: relative;
   font-family: var(--open-sans);
+  transition: background-color var(--transition-duration)
+      var(--transition-timing),
+    color var(--transition-duration) var(--transition-timing),
+    transform var(--transition-duration) var(--transition-timing);
 }
 
 /* Nav BAr */
@@ -83,6 +109,14 @@ body {
 #nav-bar ul li.active a,
 #mobileNav ul li.active a {
   color: var(--primary);
+}
+
+.cloud-in {
+  animation: slideIn 0.9s ease-in-out;
+}
+
+.cloud-out {
+  animation: slideOut 1s ease-in-out;
 }
 
 /* Morphisim  */
@@ -105,6 +139,7 @@ body {
   background: #fcaf00;
   position: relative;
 }
+
 .overlapped::after {
   content: "";
   position: absolute;
@@ -115,6 +150,40 @@ body {
   background: #fcaf00;
   z-index: -1;
 }
+
+.slider-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.slider-track {
+  display: flex;
+  gap: 16px;
+  transform: translateX(0);
+}
+
+.slide {
+  min-width: calc(100% / 1); 
+  box-sizing: border-box;
+}
+
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    z-index: 10;
+    visibility: hidden;
+}
+
+.slider-container:hover .prev,
+.slider-container:hover .next {
+    visibility: visible;
+}
+
 
 /* Blog active class */
 #header ul li.active {
@@ -173,7 +242,7 @@ body {
 
 .event-card {
   width: 100%;
-  background: #0279b980;
+  background: rgba(59, 136, 255, 0.7);
   color: #fff;
   padding-inline: 2rem;
   padding-block-start: 2em;
@@ -190,7 +259,8 @@ body {
 }
 
 .event-card:nth-child(odd) {
-  background: #a6087480;
+  background: rgba(166, 8, 116, 0.8); /* rgba format*/
+  /* background: #a6087480; HEX format */
 }
 
 .default {
@@ -209,12 +279,24 @@ body {
   display: none;
 }
 
-/* text animation sign up page */
+/* text animation sign up or registration page */
 .text-flip-container {
   perspective: 900px;
 }
 
+.text-flip-container2 {
+  perspective: 900px;
+}
+
 #text-container {
+  transition: transform 0.5s, background-color 0.5s, color 0.5s;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform-origin: center;
+  display: inline-block;
+}
+
+#text-container2 {
   transition: transform 0.5s, background-color 0.5s, color 0.5s;
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -252,7 +334,7 @@ body {
   display: none;
 }
 
-/* Slider dots for sign up page */
+/* Slider dots for sign up/registration page */
 .dot {
   background: #cecaca;
   width: 10px;
@@ -327,6 +409,7 @@ body {
   animation: slide1 1.5s infinite;
 }
 
+
 @media (max-width: 768px) {
   #cardContainer {
     height: fit-content;
@@ -343,6 +426,18 @@ body {
   .collapsed {
     height: fit-content;
   }
+  .slide {
+    min-width: calc(100% / 3); 
+    box-sizing: border-box;
+  }
+
+  #signUpPage {
+    background-image: url("../images/team.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
 }
 
 @media (min-width: 1024px) {
@@ -359,6 +454,13 @@ body {
 
   .collapsed {
     height: 250px;
+  }
+  .slide {
+    min-width: calc(100% / 3); 
+    box-sizing: border-box;
+  }
+  #signUpPage {
+    background-image: none;
   }
 }
 
@@ -377,6 +479,13 @@ body {
 
   .collapsed {
     height: 230px;
+  }
+  .slide {
+    min-width: calc(100% / 4); 
+    box-sizing: border-box;
+  }
+  #signUpPage {
+    background: none;
   }
 }
 
@@ -456,4 +565,26 @@ body {
 
 .fade-in {
   animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-150%) translateY(-100%) scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(100) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(-50%) translateY(-70%) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-800%) translateY(-150%) scale(0.1);
+    opacity: 0;
+  }
 }

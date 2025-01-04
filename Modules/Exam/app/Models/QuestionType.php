@@ -13,10 +13,18 @@ class QuestionType extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 
     protected static function newFactory()
     {
         //return QuestionTypeFactory::new();
+    }
+
+    public function question()
+    {
+        return $this->hasMany(Question::class, 'question_type_id');
     }
 }

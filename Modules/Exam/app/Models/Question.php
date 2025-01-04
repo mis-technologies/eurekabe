@@ -37,4 +37,15 @@ class Question extends Model
     {
         //return QuestionFactory::new();
     }
+
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class, 'exam_id');
+    }
+
+
+    public function questionType()
+    {
+        return $this->belongsTo(QuestionType::class, 'question_type_id');
+    }
 }

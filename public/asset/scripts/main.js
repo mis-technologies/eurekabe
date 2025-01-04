@@ -89,23 +89,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // popUp Function called inother functions
+  // popUp Function called in other functions
   function popUp() {
     const submitPopup = document.getElementById("submit_popup");
     const submitLoader = document.getElementById("submit_loader");
     const submitSuccess = document.getElementById("submit_success");
+    const closePopup = document.getElementById("close_popup");
+    const redirectHome = document.getElementById("redirect_home");
 
-    if (submitPopup && submitLoader && submitSuccess) {
+    if (
+      submitPopup &&
+      submitLoader &&
+      submitSuccess &&
+      closePopup &&
+      redirectHome
+    ) {
       submitPopup.classList.add("show");
       submitLoader.style.display = "block";
+
+      // Reset all forms
+      const forms = document.querySelectorAll("form");
+      forms.forEach((form) => form.reset());
 
       setTimeout(() => {
         submitLoader.style.display = "none";
         submitSuccess.style.display = "block";
 
-        setTimeout(() => {
+        closePopup.addEventListener("click", () => {
+          submitPopup.classList.remove("show");
+          submitSuccess.style.display = "none";
+        });
+
+        redirectHome.addEventListener("click", () => {
           window.location.href = "index.html";
-        }, 2000);
+        });
       }, 1000);
     } else {
       console.error("Popup elements not found.");
@@ -137,9 +154,22 @@ document.addEventListener("DOMContentLoaded", () => {
       return allFilled;
     };
 
+    const checkFormSelect = (form) => {
+      const selects = form.querySelectorAll("select[required]");
+      let allFilled = true;
+
+      selects.forEach((select) => {
+        if (select.value === "") {
+          allFilled = false;
+        }
+      });
+
+      return allFilled;
+    };
+
     // Function to change button state if the form validates
     const toggleButtonState = (form, button) => {
-      if (checkFormInputs(form)) {
+      if (checkFormInputs(form) && checkFormSelect(form)) {
         button.disabled = false;
       } else {
         button.disabled = true;
@@ -148,18 +178,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (firstForm && secondForm && imageContainer && formContainer) {
       // Add input event listeners to first form
-      firstForm.querySelectorAll("input[required]").forEach((input) => {
-        input.addEventListener("input", () =>
-          toggleButtonState(firstForm, continueButton)
-        );
-      });
+      firstForm
+        .querySelectorAll("input[required], select[required]")
+        .forEach((element) => {
+          element.addEventListener("change", () =>
+            toggleButtonState(firstForm, continueButton)
+          );
+          element.addEventListener("input", () =>
+            toggleButtonState(firstForm, continueButton)
+          );
+        });
 
       // Add input event listeners to second form
-      secondForm.querySelectorAll("input[required]").forEach((input) => {
-        input.addEventListener("input", () =>
-          toggleButtonState(secondForm, applyButton)
-        );
-      });
+      secondForm
+        .querySelectorAll("input[required], select[required]")
+        .forEach((element) => {
+          element.addEventListener("change", () =>
+            toggleButtonState(secondForm, applyButton)
+          );
+          element.addEventListener("input", () =>
+            toggleButtonState(secondForm, applyButton)
+          );
+        });
 
       // Transition to second form on clicking continueButton
       const transitioned = () => {
@@ -191,6 +231,36 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!applyButton.disabled) {
           popUp();
         }
+      });
+    }
+
+    // Function to handle dots
+    if (dot1 && dot2) {
+      dot1.addEventListener("click", () => {
+        if (secondForm.classList.contains("hidden")) return;
+
+        firstForm.classList.remove("hidden");
+        secondForm.classList.add("hidden");
+        dot1.classList.add("active");
+        dot2.classList.remove("active");
+      });
+
+      dot2.addEventListener("click", () => {
+        if (!checkFormInputs(firstForm)) return;
+
+        firstForm.classList.add("hidden");
+        secondForm.classList.remove("hidden");
+        secondForm.classList.add("fade-in");
+        dot1.classList.remove("active");
+        dot2.classList.add("active");
+
+        secondForm.addEventListener(
+          "animationend",
+          () => {
+            secondForm.classList.remove("fade-in");
+          },
+          { once: true }
+        );
       });
     }
   }
@@ -232,6 +302,42 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 400);
           }
         });
+      }, 3000);
+    }
+  }
+
+  // Text Animation 2
+  function initializeTextAnimation2() {
+    const textContainer = document.getElementById("text-container2");
+
+    if (textContainer) {
+      const texts = [
+        { text: "an Advocate.", colorClass: "color1" },
+        { text: "a Spokesman.", colorClass: "color2" },
+        { text: "a Patron.", colorClass: "color3" },
+      ];
+      let currentIndex = 0;
+      let forwardFlip = true;
+
+      setInterval(() => {
+        if (textContainer) {
+          textContainer.classList.add(
+            forwardFlip ? "flip-forward" : "flip-backward"
+          );
+
+          setTimeout(() => {
+            currentIndex = (currentIndex + 1) % texts.length;
+            textContainer.textContent = texts[currentIndex].text;
+            textContainer.classList.remove("color1", "color2", "color3");
+            textContainer.classList.add(texts[currentIndex].colorClass);
+
+            if (currentIndex === texts.length - 1) {
+              forwardFlip = !forwardFlip;
+            }
+
+            textContainer.classList.remove("flip-forward", "flip-backward");
+          }, 400);
+        }
       }, 3000);
     }
   }
@@ -331,7 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Call once to set initial state
+    handleResize();
   }
 
   // Toggle DarkMode
@@ -342,40 +448,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const dot = document.querySelector(".switchIcon");
     const lightIcon = document.getElementById("lightIcon");
     const darkIcon = document.getElementById("darkIcon");
-    // const fbI = document.getElementById("fbI");
-    // const waI = document.getElementById("waI");
-    // const twI = document.getElementById("twI");
-    // const tgI = document.getElementById("tgI");
-    // const inI = document.getElementById("inI");
+    const cloud = document.getElementById("cloud");
 
     // Load the user's preference from localStorage
     if (localStorage.getItem("darkMode") === "enabled") {
       htmlElement.classList.add("dark");
       themeToggle.checked = true;
-      // logo.src = "/images/white_logo.png";
       dot.style.transform = "translateX(-120%)";
       lightIcon.style.display = "block";
       darkIcon.style.display = "none";
-      logos.forEach((logo) => (logo.src = "/images/white_logo.png"));
-      // fbI.src = "/images/socials/mingcute_facebook-line_d.png";
-      // waI.src = "/images/socials/ic_baseline-whatsapp_d.png";
-      // twI.src = "/images/socials/mingcute_twitter-line_d.png";
-      // tgI.src = "/images/socials/telegram_d.png";
-      // inI.src = "/images/socials/mdi_instagram_d.png";
+      logos.forEach((logo) => (logo.src = "./images/white_logo.png"));
     } else {
       htmlElement.classList.remove("dark");
       themeToggle.checked = false;
-      // logo.src = "/images/logo.png";
-      logos.forEach((logo) => (logo.src = "/images/logo.png"));
+      logos.forEach((logo) => (logo.src = "./images/logo.png"));
       dot.style.transform = "translateX(0)";
       lightIcon.style.display = "none";
       darkIcon.style.display = "block";
-
-      // fbI.src = "/images/socials/mingcute_facebook-line.png";
-      // waI.src = "/images/socials/ic_baseline-whatsapp.png";
-      // twI.src = "/images/socials/mingcute_twitter-line.png";
-      // tgI.src = "/images/socials/telegram.png";
-      // inI.src = "/images/socials/mdi_instagram.png";
     }
 
     // Toggle the theme
@@ -383,23 +472,32 @@ document.addEventListener("DOMContentLoaded", () => {
       if (themeToggle.checked) {
         htmlElement.classList.add("dark");
         localStorage.setItem("darkMode", "enabled");
-        // logo.src = "/images/white_logo.png";
         logos.forEach((logo) => (logo.src = "/images/white_logo.png"));
         dot.style.transform = "translateX(-120%)";
-        lightIcon.style.display = "block";
-        darkIcon.style.display = "none";
+        cloud.classList.remove("cloud-out");
+        cloud.classList.add("cloud-in");
+
+        setTimeout(() => {
+          lightIcon.style.display = "block";
+          darkIcon.style.display = "none";
+        }, 100);
       } else {
         htmlElement.classList.remove("dark");
         localStorage.setItem("darkMode", "disabled");
-        // logo.src = "/images/logo.png";
         logos.forEach((logo) => (logo.src = "/images/logo.png"));
         dot.style.transform = "translateX(0)";
-        lightIcon.style.display = "none";
-        darkIcon.style.display = "block";
+        cloud.classList.remove("cloud-in");
+        cloud.classList.add("cloud-out");
+
+        setTimeout(() => {
+          lightIcon.style.display = "none";
+          darkIcon.style.display = "block";
+        }, 400);
       }
     });
   }
 
+  // Initialize the 3D movement
   function initializeBgParticleMovement() {
     const particles = document.querySelectorAll(".particle");
     const container = document.querySelector(".particle-container");
@@ -426,7 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
         x += particle.velocityX;
         y += particle.velocityY;
 
-        // Bounce off walls
+        // Bounce container
         if (x <= 0 || x >= containerWidth - particle.clientWidth) {
           particle.velocityX *= -1;
         }
@@ -444,10 +542,109 @@ document.addEventListener("DOMContentLoaded", () => {
     animate();
   }
 
+  // Function to initialize auto-resize for textareas
+  function initializeAutoResize() {
+    function autoResize(textarea) {
+      textarea.style.height = "auto"; // Reset height to auto to calculate new height correctly
+      textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on scrollHeight
+    }
+
+    const textareas = document.querySelectorAll(".custom-textarea");
+    textareas.forEach((textarea) => {
+      textarea.addEventListener("input", () => autoResize(textarea));
+      // Initialize the textarea height on page load
+      autoResize(textarea);
+    });
+  }
+
+  // Auto play slider
+  function initializeAutoPlaySlider() {
+    const track = document.querySelector(".slider-track");
+    const slides = document.querySelectorAll(".slide");
+    const prevBtn = document.querySelector(".prev");
+    const nextBtn = document.querySelector(".next");
+  
+    const slideWidth = slides[0].offsetWidth;
+    let currentIndex = 0;
+    let autoplayInterval;
+  
+    // Clone first and last slides for seamless looping
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[slides.length - 1].cloneNode(true);
+  
+    // Add clones to the track
+    track.appendChild(firstClone);
+    track.insertBefore(lastClone, slides[0]);
+  
+    const totalSlides = slides.length + 2; // Include clones
+  
+    // Adjust the initial position to account for the lastClone
+    track.style.transform = `translateX(-${slideWidth}px)`;
+  
+    function moveToSlide(index, animate = true) {
+      if (animate) {
+        track.style.transition = "transform 0.3s ease-in-out";
+      } else {
+        track.style.transition = "none";
+      }
+      track.style.transform = `translateX(-${index * slideWidth}px)`;
+      currentIndex = index;
+    }
+  
+    function goToNextSlide() {
+      moveToSlide(currentIndex + 1);
+  
+      if (currentIndex + 1 === totalSlides - 1) {
+        setTimeout(() => {
+          moveToSlide(1, false); // Jump to first real slide without animation
+        }, 300); // Match the transition duration
+      }
+    }
+  
+    function goToPrevSlide() {
+      moveToSlide(currentIndex - 1);
+  
+      if (currentIndex - 1 === 0) {
+        setTimeout(() => {
+          moveToSlide(totalSlides - 2, false); // Jump to last real slide without animation
+        }, 300); // Match the transition duration
+      }
+    }
+  
+    function startAutoplay() {
+      autoplayInterval = setInterval(goToNextSlide, 3000);
+    }
+  
+    function stopAutoplay() {
+      clearInterval(autoplayInterval);
+    }
+  
+    prevBtn.addEventListener("click", () => {
+      stopAutoplay();
+      goToPrevSlide();
+      startAutoplay();
+    });
+  
+    nextBtn.addEventListener("click", () => {
+      stopAutoplay();
+      goToNextSlide();
+      startAutoplay();
+    });
+  
+    window.addEventListener("resize", () => {
+      moveToSlide(currentIndex, false);
+    });
+  
+    // Start autoplay
+    startAutoplay();
+  }
+  
+
   // Initialize functions
   initializeNavBar();
   initializeRegistrationPage();
   initializeTextAnimation();
+  initializeTextAnimation2();
   initializePopUp("contactForm");
   initializePopUp("faq");
   initializePopUp("signInForm");
@@ -456,4 +653,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeScrollToTop();
   initializeDarkMode();
   initializeBgParticleMovement();
+  initializeAutoResize();
+  initializeAutoPlaySlider();
 });

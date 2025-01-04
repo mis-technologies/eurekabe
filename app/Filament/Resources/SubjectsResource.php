@@ -43,7 +43,7 @@ class SubjectsResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                Forms\Components\TextInput::make('short_details')
+                Forms\Components\Textarea::make('short_details')
                     ->label('Short Details')
                     ->required()
                     ->maxLength(255),

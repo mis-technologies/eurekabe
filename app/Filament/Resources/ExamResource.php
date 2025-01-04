@@ -34,7 +34,7 @@ class ExamResource extends Resource
 
 
 
-                Forms\Components\TextInput::make('instruction')
+                Forms\Components\Textarea::make('instruction')
                     ->label('Instructions')
                     ->required()
                     ->maxLength(1000),
@@ -61,6 +61,12 @@ class ExamResource extends Resource
                 Forms\Components\TextInput::make('duration')
                     ->label('Duration')
                     ->numeric()
+                    ->required(),
+
+                    Forms\Components\TextInput::make('value')
+                    ->label('Value')
+                    ->numeric()
+                    ->default(2)
                     ->required(),
 
                 Forms\Components\Select::make('status')

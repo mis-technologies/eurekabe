@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UsersResource\Pages;
 use App\Filament\Resources\UsersResource\RelationManagers;
-use App\Models\Users;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UsersResource extends Resource
 {
-    protected static ?string $model = Users::class;
+    protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
@@ -23,7 +23,23 @@ class UsersResource extends Resource
     {
         return $form
             ->schema([
-                //
+
+
+                Forms\Components\TextInput::make('firstname')
+                ->label('First Name')
+                ->required()
+                ->maxLength(255),
+
+                Forms\Components\TextInput::make('lastname')
+                ->label('Last Name')
+                ->required()
+                ->maxLength(255),
+
+
+                Forms\Components\TextInput::make('email')
+                ->label('Email')
+                ->required()
+                ->maxLength(255),
             ]);
     }
 
@@ -32,6 +48,40 @@ class UsersResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\TextColumn::make('id')
+                ->label('#')
+                ->sortable()
+                ->searchable(),
+
+                Tables\Columns\TextColumn::make('firstname')
+                ->label('First Name')
+                ->sortable()
+                ->searchable(),
+
+                Tables\Columns\TextColumn::make('lastname')
+                ->label('Last Name')
+                ->sortable()
+                ->searchable(),
+
+                Tables\Columns\TextColumn::make('username')
+                ->label('Username')
+                ->sortable()
+                ->searchable(),
+
+                Tables\Columns\TextColumn::make('email')
+                ->label('Email')
+                ->sortable()
+                ->searchable(),
+
+                Tables\Columns\TextColumn::make('role')
+                ->label('Role')
+                ->sortable()
+                ->searchable(),
+
+                Tables\Columns\TextColumn::make('role')
+                ->label('Role')
+                ->sortable()
+                ->searchable(),
             ])
             ->filters([
                 //
