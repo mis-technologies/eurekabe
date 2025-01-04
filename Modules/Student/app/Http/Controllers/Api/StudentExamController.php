@@ -4,6 +4,7 @@ namespace Modules\Student\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Modules\Exam\Models\Exam;
 use Modules\Exam\Models\ExamFeedback;
 use Modules\Exam\Models\Question;
@@ -20,8 +21,8 @@ class StudentExamController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        $exams = StudentExam::whereUserId($user->id)->get();
+        $user = Auth::user();
+        $exams = StudentExam::whereUserId($user->id)->get()->load('exam');
         return response()->json([
             'success' => true,
             'message' => 'Student exams retrieved',
@@ -34,8 +35,7 @@ class StudentExamController extends Controller
     */
     public function start(Request $request, Exam $exam)
     {
-        $user = auth()->user();
-
+        $user = Auth::user();
         $questions = Question::whereExamId($exam->id)->inRandomOrder()->limit(20)->get();
         $payload = [
             'exam_id' => $exam->id,
@@ -68,7 +68,7 @@ class StudentExamController extends Controller
     */
     public function show(Request $request, $id)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         if (!$exam = StudentExam::whereUserId($user->id)->where('id', $id)->first()) {
             return response()->json([
                 'success' => false,
@@ -165,7 +165,7 @@ class StudentExamController extends Controller
     */
     public function getExamResult(Request $request, $id)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         if (!$exam = StudentExam::whereUserId($user->id)->where('id', $id)->first()) {
             return response()->json([
                 'success' => false,
@@ -185,7 +185,7 @@ class StudentExamController extends Controller
     */
     public function addExamToFavorite(Request $request)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         if (!$exam = Exam::find($request->exam_id)) {
             return response()->json([
                 'success' => false,
@@ -216,7 +216,7 @@ class StudentExamController extends Controller
             'rating' => ['required', 'integer', 'max:5', 'min:1']
         ]);
         
-        $user = auth()->user();
+        $user = Auth::user();
         if (!$studentExam = StudentExam::whereUserId($user->id)->where('id', $id)->first()) {
             return response()->json([
                 'success' => false,

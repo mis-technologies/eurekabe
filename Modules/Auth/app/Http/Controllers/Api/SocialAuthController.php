@@ -275,4 +275,128 @@ class SocialAuthController extends Controller
         }
     }
 
+
+
+    public function loginSocialUserWithGoogleToken(Request $request){
+        try {
+            $provider = "google"; // or $request->input('provider_name') for multiple providers
+
+            // get the provider's user. (In the provider server)
+            $token = $request->input('access_token');
+
+            $socialUser = Socialite::driver($provider)->stateless()->userFromToken($token);
+
+
+
+            $user = User::where('provider', $provider)
+                ->where('provider_id', $socialUser->id)
+                ->orWhere('email', $socialUser->email )->first();
+            
+            // if there is no record with these data, create a new user
+            if(!$user){
+                $user = User::create([
+                    'provider' => $provider,
+                    'provider_id' => $socialUser->id,
+                    'email' => $socialUser->email,
+                    'firstname' => $socialUser->name,
+                    'lastname' => '',
+                    'password' => $socialUser->token,
+                ]);
+            }
+
+            // do something with socialUser token here
+            $user->update([
+                'profile_pic' => $socialUser->avatar,
+                'provider' => $provider,
+                'provider_id' => $socialUser->id,
+            ]);
+
+
+            // create a token for the user, so they can login
+            $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'eureka'))->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login successful',
+                'data' =>  $response
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $exception->getMessage()
+            ]);
+           
+        }
+    }
+
+
+
+
+    // public function loginSocialUserWithGoogleToken(Request $request)
+    // {
+    //     try {
+    //         $provider = "google"; // or $request->input('provider_name') for multiple providers
+    
+    //         // get the provider's user. (In the provider server)
+    //         $token = $request->input('access_token');
+    
+    //         // Make an HTTP request to the Google API to get user info
+    //         $client = new Client();
+    //         $response = $client->get('https://www.googleapis.com/oauth2/v1/userinfo', [
+    //             'headers' => [
+    //                 'Authorization' => 'Bearer ' . $token,
+    //             ],
+    //         ]);
+    
+    //         $socialUser = json_decode($response->getBody()->getContents());
+    
+    //         $user = User::where('provider_name', $provider)
+    //             ->where('provider_id', $socialUser->id)
+    //             ->orWhere('email', $socialUser->email)->first();
+    
+    //         // if there is no record with these data, create a new user
+    //         if (!$user) {
+    //             $user = User::create([
+    //                 'provider_name' => $provider,
+    //                 'provider_id' => $socialUser->id,
+    //                 'provider_token' => $token,
+    //                 'email' => $socialUser->email,
+    //                 'firstname' => $socialUser->given_name,
+    //                 'lastname' => $socialUser->family_name,
+    //             ]);
+    //         }
+    
+    //         // do something with socialUser token here
+    //         $user->update([
+    //             'provider_token' => $token,
+    //             'profile_pic' => $socialUser->picture,
+    //             'provider_name' => $provider,
+    //             'provider_id' => $socialUser->id,
+    //         ]);
+    
+    //         // create a token for the user, so they can login
+    //         $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
+    
+    //         $response = [
+    //             'user' => $user->load('account'),
+    //             'token' => $token
+    //         ];
+    
+    //         return response()->json([
+    //             'status' => 'success',
+    //             'message' => 'Login successful',
+    //             'data' => $response
+    //         ]);
+    //     } catch (\Exception $exception) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => $exception->getMessage()
+    //         ]);
+    //     }
+    // }
 }

@@ -22,7 +22,4 @@ Broadcast::channel('{channel}', function ($user, $channel) {
 
 
 
-
-
-
 Broadcast::routes(['middleware' => ['auth:sanctum']]);

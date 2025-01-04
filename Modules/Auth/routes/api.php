@@ -5,6 +5,7 @@ use Modules\Auth\Http\Controllers\Api\EmailController;
 use Modules\Auth\Http\Controllers\Api\LoginController;
 use Modules\Auth\Http\Controllers\Api\PasswordController;
 use Modules\Auth\Http\Controllers\Api\RegisterController;
+use Modules\Auth\Http\Controllers\Api\SocialAuthController;
 
 /*
  *--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         Route::get('email/verify/{id}', [EmailController::class, 'verifyLink'])->name('email.verifylink');
         Route::post('email/verify', [EmailController::class, 'verifyCode'])->name('email.verifycode');
         Route::post('email/resend-code', [EmailController::class, 'resendCode'])->name('email.resendcode');
-        // Route::post('social/login', 'SocialAuthController@loginSocialUser');
+        Route::post('social/login-google', [SocialAuthController::class, 'loginSocialUserWithGoogleToken']);
         // Route::post('phone/verify', 'PhoneVerificationController@verify')->name('verify.phone');
 
     });
