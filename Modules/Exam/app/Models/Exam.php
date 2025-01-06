@@ -4,6 +4,7 @@ namespace Modules\Exam\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\Common\Models\School;
+use Modules\File\Models\File;
 
 class Exam extends Model
 {
@@ -20,6 +21,7 @@ class Exam extends Model
         'pass_percentage',
         'start_date',
         'end_date', 
+        'image',
         'status', 
         'created_by', 
         'updated_by',
@@ -53,8 +55,13 @@ class Exam extends Model
     }
 
    
-    // public function upcomming($examid)
-    // {
-    //     return $this->where('id', $examid)->where('status', 1)->where('start_date', '>', \Carbon\Carbon::now()->toDateString())->first();
-    // }
+    public function getImageAttribute()
+    {
+       $entity =  get_class($this);
+        $examCoverImage = File::where('entity', $entity )->where('entity_id', $this->id)->where('identifier', 'cover_image')->first();
+        if (!$examCoverImage ) {
+            return asset('assets/images/noimage.jpg');
+        }
+        return $examCoverImage->url;
+    }
 }
