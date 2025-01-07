@@ -37,16 +37,16 @@ class StudentController extends Controller
 
     public function getAccount(Request $request)
     {
-        try {
-            $user = User::find(Auth::user()->id);
-            return response()->json([
-                'success' => true,
-                'message' => 'LoggedIn User retrieved successfully',
-                'data' => $user->load('school')
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        // try {
+        //     $user = User::find(Auth::user()->id);
+        //     return response()->json([
+        //         'success' => true,
+        //         'message' => 'LoggedIn User retrieved successfully',
+        //         'data' => $user->load('school')
+        //     ]);
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => $e->getMessage()], 500);
+        // }
     }
 
 
@@ -101,7 +101,6 @@ class StudentController extends Controller
                 $files = request()->files;
                 foreach ($files as $key => $value) {
                     // FileFacade::deleteFile($user->media()->where('identifier', $key)->get() ); //delete previous
-                    // dd($key);
                     FileFacade::defaultUpload($value, $user, identifier:$key);
                 }
             }

@@ -47,7 +47,7 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan migrate:fresh",
+            "@php artisan migrate",
             "@php artisan db:seed",
             "@php artisan module:seed -a",
             "@php artisan optimize:clear",

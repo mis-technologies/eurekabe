@@ -36,14 +36,8 @@ class File extends Model
     public function getUrlAttribute(){
         $path = rawurlencode($this->path);
         $fileLink =  Storage::disk($this->disk)->url($path);
+        // dd($fileLink);
         return $fileLink;
     }
-
-
-    // public function getUrlAttribute(){
-    //     $path = rawurlencode($this->path);
-    //     $fileLink =  Storage::disk($this->disk)->url($path);
-    //     return $fileLink;
-    // }
     
 }
