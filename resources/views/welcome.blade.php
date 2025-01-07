@@ -105,9 +105,9 @@
     </div>
 
       <!-- Hero Icons -->
-      <div class="hidden md:block absolute top-28 -left-1">
+      {{-- <div class="hidden md:block absolute top-28 -left-1">
         <img src="{{ asset('asset/images/designs/hero_blue_arrow.png')}}" alt="" />
-      </div>    
+      </div>     --}}
        
       <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10 md:w-2/3">
         <div class="particle-container h-full w-full ">
