@@ -78,7 +78,8 @@ class ConversationController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Message sent successfully',
+            'message' => 'Conversation started successfully',
+            'data' => $conversation
         ],200);
     }
 
