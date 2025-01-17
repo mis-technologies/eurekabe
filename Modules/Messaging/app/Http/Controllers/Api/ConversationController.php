@@ -21,7 +21,13 @@ class ConversationController extends Controller
     public function getConversations()
     {
         $user = auth()->user();
-        $conversations = Conversation::whereUserId($user->id)->paginate(3);
+        $conversations = Conversation::where(function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                  ->orWhere(function ($query) use ($user) {
+                      $query->where('entity', 'App\Models\User')
+                            ->where('entity_id', $user->id);
+                  });
+        })->paginate(30);
         return response()->json([
             'status' => 'success',
             'message' => 'User conversations retreived successfully',
