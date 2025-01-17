@@ -61,25 +61,24 @@ class ConversationController extends Controller
         );
 
        
-        $message = Message::create([
-            'conversation_id' => $conversation->id, 
-            'user_id' => $authUser->id, 
-            'to_user_id' => $validated['recipient_id'], 
-            'text' => $validated['text'] 
-        ]);
+        // $message = Message::create([
+        //     'conversation_id' => $conversation->id, 
+        //     'user_id' => $authUser->id, 
+        //     'to_user_id' => $validated['recipient_id'], 
+        //     'text' => $validated['text'] 
+        // ]);
 
 
-        if( $request->files->count() ){
-            $files = $request->files;
-            foreach ($files as $key => $value) {
-                FileFacade::defaultUpload($value, $message, identifier: $key);  
-            }
-        }
+        // if( $request->files->count() ){
+        //     $files = $request->files;
+        //     foreach ($files as $key => $value) {
+        //         FileFacade::defaultUpload($value, $message, identifier: $key);  
+        //     }
+        // }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Message sent successfully',
-            'data' => $message
         ],200);
     }
 
