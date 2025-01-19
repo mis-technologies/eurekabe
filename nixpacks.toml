@@ -3,4 +3,4 @@ COMPOSER_ALLOW_SUPERUSER="1"
 [phases.build]
 cmds = ["composer install --no-dev", "npm install", "npm run build"]
 [phases.start]
-cmds = ["node /assets/scripts/prestart.mjs /assets/nginx.template.conf /nginx.conf && (php-fpm -y /assets/php-fpm.conf & nginx -c /nginx.conf & while true; do php artisan schedule:run; sleep 60; done)"]
+cmds = ["php artisan schedule:run"]
