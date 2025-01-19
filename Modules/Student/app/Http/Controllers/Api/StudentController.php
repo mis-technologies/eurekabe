@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Common\Models\School;
 use Modules\File\Facades\FileFacade;
+use Modules\File\Models\File;
 use Modules\Student\Models\Student;
 
 class StudentController extends Controller
@@ -100,7 +101,7 @@ class StudentController extends Controller
             if( request()->files->count() ){
                 $files = request()->files;
                 foreach ($files as $key => $value) {
-                    // FileFacade::deleteFile($user->media()->where('identifier', $key)->get() ); //delete previous
+                    FileFacade::deleteFile(File::where('identifier', $key)->where('user_id', $user->id)->get() ); //delete previous
                     FileFacade::defaultUpload($value, $user, identifier:$key);
                 }
             }
