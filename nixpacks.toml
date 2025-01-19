@@ -1,6 +1,4 @@
 [variables]
 COMPOSER_ALLOW_SUPERUSER="1"
-cmds = ["php artisan schedule:run"]
 [phases.build]
 cmds = ["composer install --no-dev", "npm install", "npm run build"]
-[phases.start]
