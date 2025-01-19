@@ -5,6 +5,7 @@ namespace Modules\Messaging\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Modules\File\Facades\FileFacade;
 use Modules\Messaging\Models\Conversation;
 use Modules\Messaging\Events\MessageSentEvent;
@@ -20,7 +21,7 @@ class ConversationController extends Controller
      */
     public function getConversations()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $conversations = Conversation::where(function ($query) use ($user) {
             $query->where('user_id', $user->id)
                   ->orWhere(function ($query) use ($user) {
@@ -45,7 +46,7 @@ class ConversationController extends Controller
     public function startConversation(StartConversationRequest $request)
     {
         $validated = $request->validated();
-        $authUser = auth()->user();
+        $authUser =  Auth::user();
         if( $validated['recipient_type'] == 'user' ){
             $validated['entity'] = 'App\Models\User';
             $validated['entity_id'] = $validated['recipient_id'];
@@ -143,7 +144,7 @@ class ConversationController extends Controller
      */
     public function sendMessage(Request $request, $id)
     {
-        $authUser = auth()->user();
+        $authUser =  Auth::user();
         if(!$conversation = Conversation::find($id) ){
             return response()->json([
                 'status' => 'error',
@@ -185,7 +186,7 @@ class ConversationController extends Controller
      */
     public function deleteConversationMessage($id)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $mes = Message::whereUserId( $user->id)->whereId($id)->first();
         $mes->delete();
         return response()->json([
