@@ -73,7 +73,7 @@ class FileFacade
 
             // Ensure the directory exists
             if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
+                mkdir($destinationPath, 0777, true);
             }
 
             // Move the file to the public/uploads directory
