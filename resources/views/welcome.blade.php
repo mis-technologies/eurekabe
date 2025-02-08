@@ -430,10 +430,10 @@
             <h1 class="font-semibold text-xl">Ejeh Marvelous</h1>
             <p class="opacity-80 font-light text-lg">Founder</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            <p class="text-sm font-normal ">
+            {{-- <p class="text-sm font-normal ">
               I am a Principal software engineer and digital entrepreneur with 8 years of experience. 
                I build impactful, user-focused products. I thrive in creative environments and bring strong leadership, communication, and problem-solving skills to every project.
-            </p>
+            </p> --}}
           </div>
         </div>
         <!-- Oche -->
@@ -448,7 +448,9 @@
             <h1 class="font-semibold text-xl">Oche Solomon</h1>
             <p class="opacity-80 font-light text-lg">Co-Founder</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?</p>
+            {{-- <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?
+
+            </p> --}}
           </div>
         </div>
         <!-- Airon -->
@@ -463,9 +465,10 @@
             <h1 class="font-semibold text-xl">Aaron Aniebiet</h1>
             <p class="opacity-80 font-light text-lg">Software Engineer</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            <p class="text-sm font-normal ">
-              Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of Eureka EduTech, he develops user-centric platforms that transform education. With a background in Physics and Computer Science, he focuses on creating innovative, accessible solutions that empower students and educators.
-            </p>
+            {{-- <p class="text-sm font-normal ">
+              Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of Eurek
+              a EduTech, he develops user-centric platforms that transform education. With a background in Physics and Computer Science, he focuses on creating innovative, accessible solutions that empower students and educators.
+            </p> --}}
           </div>
         </div>
         <!-- Richard -->
@@ -480,9 +483,9 @@
             <h1 class="font-semibold text-xl">Richard John</h1>
             <p class="opacity-80 font-light text-lg">UX/UI Designer</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            <p class="text-sm font-normal ">
+            {{-- <p class="text-sm font-normal ">
               I am a designer with 5 years of experience in branding and art, and 3 years in UX research. Passionate about solving real-world problems, I combine creativity and dedication to deliver impactful solutions that enhance client value and make a difference.
-            </p>
+            </p> --}}
           </div>
         </div>
       </div>
