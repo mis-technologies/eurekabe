@@ -228,7 +228,7 @@
       <!-- Footer Socials -->
        <div class="container flex flex-col items-center justify-between py-7 md:flex-row gap-y-10 dark:text-white">
         <img id="logo" src="{{ asset('asset/images/logo.png')}}" alt="Eureka EdTech" class="" />
-        <p class="opacity-50 text-sm text-center">&copy; 2024 Eureka. All rights reveserved. For inquries. contact: info@eureka.com</p>
+        <p class="opacity-50 text-sm text-center">&copy; 2024 Eureka. All rights reveserved. For inquries. contact: info@eurekaedu.academy</p>
         <div class="flex items-center gap-6">
           <a
           href="https://whatapp.com"
