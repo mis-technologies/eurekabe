@@ -61,7 +61,7 @@
               <a href="#events">Event</a>
             </li>            
             <li class="font-sans font-bold hover:text-primary">
-              <a href="./program.html">Blog</a>
+              <a href="/blog">Blog</a>
             </li>
             <li class="font-sans font-bold hover:text-primary">
               <a href="./faq.html">FAQ</a>
@@ -149,7 +149,7 @@
             <a href="./faq.html">FAQ</a>
           </li>
           <li class="font-sans font-bold hover:text-primary">
-            <a href="./program.html">Blog</a>
+            <a href="/blog">Blog</a>
           </li>
           </ul>
           <button
