@@ -11,7 +11,7 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
 >
   <img
     id="register-image"
-    src="./images//team.png"
+    src="{{ asset('asset/images/team.png')}}"
     alt="Register"
     class="max-h-full w-full object-cover"
   />
@@ -24,7 +24,7 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
       experience.
     </p>
     <a
-      href="/register.html"
+      href="/registerForm"
       class="text-[#006BE5] font-bold text-[20px] p-2 px-24 rounded-[25px] border-2 border-[#006BE5] cursor-pointer hover:bg-[#006BE5] hover:text-white transition ease-in-out duration-150"
     >
       SIGN UP
@@ -97,7 +97,7 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
   id="submit_loader"
 >
   <div class="flex items-center justify-center h-full w-full">
-    <img src="./images/loader.gif" class="object-cover" alt="preloader" />
+    <img src="{{ asset('asset/images/loader.gif')}}" class="object-cover" alt="preloader" />
   </div>
 </div>
 <!-- Popup  -->
@@ -115,6 +115,6 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
 </div>
 </div>
 
-<script src="./src/scripts/main.js"></script>
+<script src="{{ asset('asset/src/scripts/main.js')}}"></script>
 
 @endsection
