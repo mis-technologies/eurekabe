@@ -64,10 +64,10 @@
               <a href="/blog">Blog</a>
             </li>
             <li class="font-sans font-bold hover:text-primary">
-              <a href="./faq.html">FAQ</a>
+              <a href="/faq">FAQ</a>
             </li>
             <li class="font-sans font-bold hover:text-primary">
-              <a href="./contact.html">Contact Us</a>
+              <a href="/contact">Contact Us</a>
             </li>
           </ul> 
 
@@ -76,7 +76,7 @@
           <button
             class="hidden md:block bg-primary p-3 lg:px-4 xl:px-6 max-w-28 xl:max-w-none rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105"
           >
-            <a href="register.html"> Become an Advocate </a>
+            <a href="/requestForm"> Become an Advocate </a>
           </button>
         </div>
 
@@ -143,10 +143,10 @@
           </li>
           
           <li class="font-sans font-bold hover:text-primary">
-            <a href="./contact.html">Contact Us</a>
+            <a href="/contact">Contact Us</a>
           </li>
           <li class="font-sans font-bold hover:text-primary">
-            <a href="./faq.html">FAQ</a>
+            <a href="/faq">FAQ</a>
           </li>
           <li class="font-sans font-bold hover:text-primary">
             <a href="/blog">Blog</a>
@@ -155,7 +155,7 @@
           <button
             class="bg-primary mt-3 p-3 px-6 rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105"
           >
-            <a href="register.html"> Become an Advocate </a>
+            <a href="/requestForm"> Become an Advocate </a>
           </button>
         </div>
 
