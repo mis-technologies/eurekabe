@@ -16,6 +16,8 @@ class ExploreStudentController extends Controller
     {
         // Initialize query builder for School
         $query = User::query();
+
+        $query->where('role', 'student');
        
         // Searching (e.g., search by name or description)
         if ($request->has('search')) {
@@ -30,6 +32,11 @@ class ExploreStudentController extends Controller
         if ($request->has('sort_by') && in_array($request->get('sort_by'), ['name', 'created_at'])) {
             $sortOrder = $request->get('sort_order', 'asc'); // default to ascending order
             $query->orderBy($request->get('sort_by'), $sortOrder);
+        }
+
+        // Filter by school
+        if ($request->has('school_id')) {
+            $query->where('school_id', $request->get('school_id'));
         }
 
         // Pagination

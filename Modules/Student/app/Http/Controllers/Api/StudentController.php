@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Common\Models\School;
 use Modules\File\Facades\FileFacade;
+use Modules\File\Models\File;
 use Modules\Student\Models\Student;
 
 class StudentController extends Controller
@@ -37,16 +38,16 @@ class StudentController extends Controller
 
     public function getAccount(Request $request)
     {
-        // try {
-        //     $user = User::find(Auth::user()->id);
-        //     return response()->json([
-        //         'success' => true,
-        //         'message' => 'LoggedIn User retrieved successfully',
-        //         'data' => $user->load('school')
-        //     ]);
-        // } catch (\Exception $e) {
-        //     return response()->json(['error' => $e->getMessage()], 500);
-        // }
+        try {
+            $user = User::find(Auth::user()->id);
+            return response()->json([
+                'success' => true,
+                'message' => 'LoggedIn User retrieved successfully',
+                'data' => $user->load('school')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
 
@@ -100,7 +101,7 @@ class StudentController extends Controller
             if( request()->files->count() ){
                 $files = request()->files;
                 foreach ($files as $key => $value) {
-                    // FileFacade::deleteFile($user->media()->where('identifier', $key)->get() ); //delete previous
+                    FileFacade::deleteFile(File::where('identifier', $key)->where('user_id', $user->id)->get() ); //delete previous
                     FileFacade::defaultUpload($value, $user, identifier:$key);
                 }
             }

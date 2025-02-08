@@ -5,6 +5,7 @@ namespace Modules\Messaging\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Modules\File\Facades\FileFacade;
 use Modules\Messaging\Models\Conversation;
 use Modules\Messaging\Events\MessageSentEvent;
@@ -20,8 +21,14 @@ class ConversationController extends Controller
      */
     public function getConversations()
     {
-        $user = auth()->user();
-        $conversations = Conversation::whereUserId($user->id)->paginate(3);
+        $user = Auth::user();
+        $conversations = Conversation::where(function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                  ->orWhere(function ($query) use ($user) {
+                      $query->where('entity', 'App\Models\User')
+                            ->where('entity_id', $user->id);
+                  });
+        })->paginate(30);
         return response()->json([
             'status' => 'success',
             'message' => 'User conversations retreived successfully',
@@ -39,7 +46,7 @@ class ConversationController extends Controller
     public function startConversation(StartConversationRequest $request)
     {
         $validated = $request->validated();
-        $authUser = auth()->user();
+        $authUser =  Auth::user();
         if( $validated['recipient_type'] == 'user' ){
             $validated['entity'] = 'App\Models\User';
             $validated['entity_id'] = $validated['recipient_id'];
@@ -61,25 +68,25 @@ class ConversationController extends Controller
         );
 
        
-        $message = Message::create([
-            'conversation_id' => $conversation->id, 
-            'user_id' => $authUser->id, 
-            'to_user_id' => $validated['recipient_id'], 
-            'text' => $validated['text'] 
-        ]);
+        // $message = Message::create([
+        //     'conversation_id' => $conversation->id, 
+        //     'user_id' => $authUser->id, 
+        //     'to_user_id' => $validated['recipient_id'], 
+        //     'text' => $validated['text'] 
+        // ]);
 
 
-        if( $request->files->count() ){
-            $files = $request->files;
-            foreach ($files as $key => $value) {
-                FileFacade::defaultUpload($value, $message, identifier: $key);  
-            }
-        }
+        // if( $request->files->count() ){
+        //     $files = $request->files;
+        //     foreach ($files as $key => $value) {
+        //         FileFacade::defaultUpload($value, $message, identifier: $key);  
+        //     }
+        // }
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Message sent successfully',
-            'data' => $message
+            'message' => 'Conversation started successfully',
+            'data' => $conversation
         ],200);
     }
 
@@ -137,7 +144,7 @@ class ConversationController extends Controller
      */
     public function sendMessage(Request $request, $id)
     {
-        $authUser = auth()->user();
+        $authUser =  Auth::user();
         if(!$conversation = Conversation::find($id) ){
             return response()->json([
                 'status' => 'error',
@@ -179,7 +186,7 @@ class ConversationController extends Controller
      */
     public function deleteConversationMessage($id)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $mes = Message::whereUserId( $user->id)->whereId($id)->first();
         $mes->delete();
         return response()->json([
