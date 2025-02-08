@@ -1,3 +1,13 @@
 {
-    "Admin": true
+    "Admin": false,
+    "Auth": true,
+    "Student": true,
+    "Common": true,
+    "Payment": true,
+    "Exam": true,
+    "Advocate": true,
+    "Explore": true,
+    "Messaging": true,
+    "Test": true,
+    "File": true
 }

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>WebSocket Test with Laravel Reverb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        #messages {
+            width: 60%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+
+        #inputSection {
+            margin-top: 10px;
+        }
+
+        #inputSection input, #configSection input {
+            width: 300px;
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+
+        #inputSection button {
+            padding: 5px 10px;
+        }
+
+        #configSection {
+            width: 30%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            height: auto;
+        }
+
+        #configSection h3 {
+            margin-top: 0;
+        }
+
+        #configSection label {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>WebSocket Test with Laravel Reverb</h1>
+        <div id="messages">
+            <!-- Messages will be displayed here -->
+        </div>
+
+        <div id="inputSection">
+            <input type="text" id="messageInput" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send Message</button>
+        </div>
+    </div>
+
+    <div id="configSection">
+        <h3>WebSocket Configuration</h3>
+
+        <label for="hostInput">Host:</label>
+        <input type="text" id="hostInput" placeholder="Enter WebSocket host" value="godwinincrisz.xyz">
+
+        <label for="portInput">Port:</label>
+        <input type="text" id="portInput" placeholder="Enter WebSocket port" value="3001">
+
+        <label for="bearerTokenInput">Bearer Token:</label>
+        <input type="text" id="bearerTokenInput" placeholder="Enter Bearer Token" value="1|4sdCFPErdCNMigJFKgLEjyQu5saexiiGXbvHaCJ2995daa53">
+
+        <label for="enabledTransportsInput">Enabled Transports:</label>
+        <input type="text" id="enabledTransportsInput" placeholder="Enter transports (e.g., ws, wss)" value="ws">
+
+        <label for="channelInput">Channel Name:</label>
+        <input type="text" id="channelInput" placeholder="Enter channel name" value="private-1">
+
+        <button onclick="initializePusher()">Apply Configuration</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pusher-js@8.4.0-rc2/dist/web/pusher.min.js"></script>
+    <script>
+        let pusher, channel;
+
+        function initializePusher() {
+            const wsHost = document.getElementById('hostInput').value;
+            const wsPort = document.getElementById('portInput').value;
+            const bearerToken = document.getElementById('bearerTokenInput').value;
+            const enabledTransports = document.getElementById('enabledTransportsInput').value.split(',').map(transport => transport.trim());
+            const channelName = document.getElementById('channelInput').value;
+
+            // Initialize Pusher with dynamic configuration
+            Pusher.logToConsole = true;
+
+            pusher = new Pusher("fovplylsfhqiyhq79yyp", {
+                wsHost: wsHost,
+                wsPort: wsPort,
+                wssPort: wsPort,
+                cluster: "mt1",
+                forceTLS: false,
+                disableStats: true,
+                enabledTransports: enabledTransports,
+                auth: {
+                    headers: {
+                        Authorization: `Bearer ${bearerToken}`,
+                    }
+                },
+                authorizer: (channel, options) => {
+                    return {
+                        authorize: (socketId, callback) => {
+                            fetch('api/broadcasting/auth', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${bearerToken}`,
+                                    "Accept": "application/vnd.api+json"
+                                },
+                                body: JSON.stringify({
+                                    socket_id: socketId,
+                                    channel_name: channel.name
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    callback(false, data);
+                                })
+                                .catch(error => {
+                                    callback(true, error);
+                                });
+                        }
+                    };
+                }
+            });
+
+            setupPusherEvents(channelName);
+        }
+
+        function setupPusherEvents(channelName) {
+            // Log connection state changes
+            pusher.connection.bind('state_change', function (states) {
+                console.log('Connection state changed:', states);
+            });
+
+            pusher.connection.bind('connected', function () {
+                console.log('WebSocket connected successfully');
+            });
+
+            pusher.connection.bind('disconnected', function () {
+                console.log('WebSocket disconnected');
+            });
+
+            pusher.connection.bind('failed', function (err) {
+                console.error('WebSocket connection failed:', err);
+            });
+
+            pusher.connection.bind('error', function (err) {
+                console.error('WebSocket error:', err);
+            });
+
+            // Subscribe to the dynamic channel
+            channel = pusher.subscribe(channelName);
+
+            channel.bind('pusher:subscription_succeeded', function () {
+                console.log(`Successfully subscribed to the channel: ${channelName}`);
+            });
+
+            channel.bind('pusher:subscription_error', function (err) {
+                console.error(`Subscription error for channel ${channelName}:`, err);
+            });
+
+            // Log received events and messages
+            channel.bind('Conversation', function (data) {
+                const messageDiv = document.getElementById('messages');
+                const newMessage = document.createElement('div');
+                newMessage.textContent = `Message: ${data.data.recent_message.text}`;
+                messageDiv.appendChild(newMessage);
+            });
+        }
+
+        // Send a message and log the response
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            const bearerToken = document.getElementById('bearerTokenInput').value;
+
+            fetch('/api/v1/messaging/conversations/2/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Authorization': `Bearer ${bearerToken}`,
+                    "Accept": "application/vnd.api+json"
+                },
+                body: JSON.stringify({ text: message })
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    const messageDiv = document.getElementById('messages');
+                    const newMessage = document.createElement('div');
+                    newMessage.textContent = `Message: ${message}`;
+                    messageDiv.appendChild(newMessage);
+                }
+            }).catch(error => {
+                console.error('Error sending message:', error);
+            });
+        }
+    </script>
+</body>
+
+</html>

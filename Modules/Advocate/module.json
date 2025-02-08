@@ -1,0 +1,11 @@
+{
+    "name": "Advocate",
+    "alias": "advocate",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Advocate\\Providers\\AdvocateServiceProvider"
+    ],
+    "files": []
+}

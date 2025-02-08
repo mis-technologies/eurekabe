@@ -1,37 +1,20 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth group" data-sidebar="brand" dir="ltr">
-    <head>
-        <meta charset="utf-8" />
-        <title>Robotech - Admin & Dashboard Template</title>
-        <meta  name="viewport"  content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <meta  content="Tailwind Multipurpose Admin & Dashboard Template"  name="description"/>
-        <meta content="" name="Mannatthemes" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico" />
-        
-        <!-- Css -->
-        <!-- Main Css -->
-        <link rel="stylesheet" href="assets/libs/icofont/icofont.min.css">
-        <link href="assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
-        <link rel="stylesheet" href="assets/css/tailwind.min.css">
 
-    </head>
+@extends('admin::layouts.master')
+
+@section('content')
     
-    <body data-layout-mode="light"  data-sidebar-size="default" data-theme-layout="vertical" class="bg-[#EEF0FC] dark:bg-gray-900">
     
         <!-- leftbar-tab-menu -->
-        
 
         <div class="min-h-full z-[99]  fixed inset-y-0 print:hidden bg-gradient-to-t from-[#6f3dc3] from-10% via-[#603dc3] via-40% to-[#5c3dc3] to-100% dark:bg-[#603dc3] main-sidebar duration-300 group-data-[sidebar=dark]:bg-[#603dc3] group-data-[sidebar=brand]:bg-brand group-[.dark]:group-data-[sidebar=brand]:bg-[#603dc3]">
             <div class=" text-center border-b bg-[#603dc3] border-r h-[64px] flex justify-center items-center brand-logo dark:bg-[#603dc3] dark:border-slate-700/40 group-data-[sidebar=dark]:bg-[#603dc3] group-data-[sidebar=dark]:border-slate-700/40 group-data-[sidebar=brand]:bg-brand group-[.dark]:group-data-[sidebar=brand]:bg-[#603dc3] group-data-[sidebar=brand]:border-slate-700/40">
                 <a class='logo' href='index.html'>
                     <span>
-                        <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm h-8 align-middle inline-block">
+                        <img src="{{ asset('assets/images/logo-sm.png')}}" alt="logo-small" class="logo-sm h-8 align-middle inline-block">
                     </span>
                     <span>
-                        <img src="assets/images/logo.png" alt="logo-large" class="logo-lg h-[28px] logo-light hidden dark:inline-block ms-1 group-data-[sidebar=dark]:inline-block group-data-[sidebar=brand]:inline-block">
-                        <img src="assets/images/logo.png" alt="logo-large"
+                        <img src="{{ asset('assets/images/logo.png" alt="logo-large')}}" class="logo-lg h-[28px] logo-light hidden dark:inline-block ms-1 group-data-[sidebar=dark]:inline-block group-data-[sidebar=brand]:inline-block">
+                        <img src="{{ asset('assets/images/logo.png" alt="logo-large')}}"
                             class="logo-lg h-[28px] logo-dark inline-block dark:hidden ms-1 group-data-[sidebar=dark]:hidden group-data-[sidebar=brand]:hidden">
                     </span>
                 </a>
@@ -908,7 +891,7 @@
                         <a href="javascript:void(0);" class="dropdown-item">
                           <div class="flex">
                             <img class="object-cover rounded-full h-8 w-8 shrink-0 me-3"
-                              src="assets/images/users/avatar-3.png" alt="logo" />
+                              src="{{ asset('assets/images/users/avatar-3.png" alt="logo" />
                             <div class="flex-grow flex-1 ms-0.5 overflow-hidden">
                               <p class="text-sm font-medium text-gray-900 truncate
                                 dark:text-gray-300">Your order is placed</p>
@@ -941,7 +924,7 @@
                         <a href="javascript:void(0);" class="dropdown-item">
                           <div class="flex">
                             <img class="object-cover rounded-full h-8 w-8 shrink-0 me-3"
-                              src="assets/images/users/avatar-9.png" alt="logo" />
+                              src="{{ asset('assets/images/users/avatar-9.png" alt="logo" />
                             <div class="flex-grow flex-1 ms-0.5 overflow-hidden">
                               <p class="text-sm font-medium  text-gray-900 truncate
                                 dark:text-gray-300">Meeting with designers</p>
@@ -966,7 +949,7 @@
                      data-fc-autoclose="both" data-fc-type="dropdown">
                     <img
                       class="h-8 w-8 rounded-full"
-                      src="assets/images/users/avatar-1.png"
+                      src="{{ asset('assets/images/users/avatar-1.png"
                       alt="user photo"
                       />
                     <span class="ltr:ms-2 rtl:ms-0 rtl:me-2 hidden text-left xl:block">
@@ -1160,7 +1143,7 @@
                                     <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
                                         
                                         <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-6 xl:col-span-3">
-                                            <img src="assets/images/widgets/wallet.png" alt="" class="w-full h-auto">                                    
+                                            <img src="{{ asset('assets/images/widgets/wallet.png" alt="" class="w-full h-auto">                                    
                                         </div>
                                         <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-6 xl:col-span-8 text-end self-center">
                                             <button class="px-4 py-1 font-medium text-white transition duration-200 ease-in-out delay-200 skew-y-6 bg-brand-600 border-b-4 border-brand-700 rounded shadow-lg shadow-brand-600/50 hover:skew-y-0 hover:border-brand-700">Withdrawal</button>
@@ -1178,7 +1161,7 @@
                                 <div class="flex-auto p-4">
                                     <div class="grid grid-cols-12 gap-4">
                                         <div class="col-span-12 sm:col-span-4">
-                                            <img src="assets/images/widgets/user.png" alt="" class="h-auto w-full">
+                                            <img src="{{ asset('assets/images/widgets/user.png" alt="" class="h-auto w-full">
                                         </div><!--end col--> 
                                         <div class="col-span-12 sm:col-span-8 self-center">
                                             <h4 class="font-medium flex-1 self-center mb-2 md:mb-0 dark:text-slate-400 text-xl">A Guide to Analyze and Optimize Your Online Business</h4>
@@ -1402,7 +1385,7 @@
                                                     <!-- 1 -->
                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                         <td class="p-3 text-base font-medium whitespace-nowrap dark:text-white">
-                                                            <img src="assets/images/products/01.png" alt="" class="me-2 h-10 inline-block">Robotech Camera EDM 5D(White)
+                                                            <img src="{{ asset('assets/images/products/01.png" alt="" class="me-2 h-10 inline-block">Robotech Camera EDM 5D(White)
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             $50 <del class="text-gray-400">$90</del>
@@ -1421,7 +1404,7 @@
                                                     <!-- 2 -->
                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                         <td class="p-3 text-base font-medium whitespace-nowrap dark:text-white">
-                                                            <img src="assets/images/products/03.png" alt="" class="me-2 h-10 inline-block">Robotech VR 5D (Black)
+                                                            <img src="{{ asset('assets/images/products/03.png" alt="" class="me-2 h-10 inline-block">Robotech VR 5D (Black)
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             $39 <del class="text-gray-400">$99</del>
@@ -1440,7 +1423,7 @@
                                                     <!-- 3 -->
                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                         <td class="p-3 text-base font-medium whitespace-nowrap dark:text-white">
-                                                            <img src="assets/images/products/02.png" alt="" class="me-2 h-10 inline-block">Robotech Shoes Max-Zon
+                                                            <img src="{{ asset('assets/images/products/02.png" alt="" class="me-2 h-10 inline-block">Robotech Shoes Max-Zon
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             $49 <del class="text-gray-400">$88</del>
@@ -1459,7 +1442,7 @@
                                                     <!-- 4 -->
                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                         <td class="p-3 text-base font-medium whitespace-nowrap dark:text-white">
-                                                            <img src="assets/images/products/04.png" alt="" class="me-2 h-10 inline-block">Robotech Mask N99 [ISI]
+                                                            <img src="{{ asset('assets/images/products/04.png" alt="" class="me-2 h-10 inline-block">Robotech Mask N99 [ISI]
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             $5 <del class="text-gray-400">$9</del>
@@ -1478,7 +1461,7 @@
                                                     <!-- 5 -->
                                                     <tr class="bg-white  dark:bg-gray-900">
                                                         <td class="p-3 text-base font-medium whitespace-nowrap dark:text-white">
-                                                            <img src="assets/images/products/01.png" alt="" class="me-2 h-10 inline-block">Robotech Camera EDM 5D(White)
+                                                            <img src="{{ asset('assets/images/products/01.png" alt="" class="me-2 h-10 inline-block">Robotech Camera EDM 5D(White)
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                             $50 <del class="text-gray-400">$90</del>
@@ -1527,17 +1510,7 @@
                 </div><!--end container-->
             </div>
         </div>
+    </div>
+    @endsection
 
-        <!-- JAVASCRIPTS -->
-        <!-- <div class="menu-overlay"></div> -->
-        <script src="assets/libs/lucide/umd/lucide.min.js"></script>
-        <script src="assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="assets/libs/@frostui/tailwindcss/frostui.js"></script>
-
-        <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="assets/js/pages/analytics-index.init.js"></script>
-        <script src="assets/js/app.js"></script>
-        <!-- JAVASCRIPTS -->
-    </body>
-</html>
+  

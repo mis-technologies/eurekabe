@@ -101,6 +101,7 @@ return [
         | for example can change it to 'src' or 'App'
         */
         'app_folder' => 'app/',
+        // 'app_folder' => 'app/',
 
         /*
         |--------------------------------------------------------------------------
@@ -111,22 +112,22 @@ return [
         */
         'generator' => [
             // app/
-            'actions' => ['path' => 'app/Actions', 'generate' => true],
+            'actions' => ['path' => 'app/Actions', 'generate' => false],
             'casts' => ['path' => 'app/Casts', 'generate' => false],
             'channels' => ['path' => 'app/Broadcasting', 'generate' => false],
             'class' => ['path' => 'app/Classes', 'generate' => false],
             'command' => ['path' => 'app/Console', 'generate' => false],
-            'component-class' => ['path' => 'app/View/Components', 'generate' => true],
-            'emails' => ['path' => 'app/Emails', 'generate' => true],
-            'event' => ['path' => 'app/Events', 'generate' => true],
+            'component-class' => ['path' => 'app/View/Components', 'generate' => false],
+            'emails' => ['path' => 'app/Emails', 'generate' => false],
+            'event' => ['path' => 'app/Events', 'generate' => false],
             'enums' => ['path' => 'app/Enums', 'generate' => false],
-            'exceptions' => ['path' => 'app/Exceptions', 'generate' => true],
-            'jobs' => ['path' => 'app/Jobs', 'generate' => true],
+            'exceptions' => ['path' => 'app/Exceptions', 'generate' => false],
+            'jobs' => ['path' => 'app/Jobs', 'generate' => false],
             'helpers' => ['path' => 'app/Helpers', 'generate' => false],
             'interfaces' => ['path' => 'app/Interfaces', 'generate' => false],
-            'listener' => ['path' => 'app/Listeners', 'generate' => true],
-            'model' => ['path' => 'app/Models', 'generate' => true],
-            'notifications' => ['path' => 'app/Notifications', 'generate' => true],
+            'listener' => ['path' => 'app/Listeners', 'generate' => false],
+            'model' => ['path' => 'app/Models', 'generate' => false],
+            'notifications' => ['path' => 'app/Notifications', 'generate' => false],
             'observer' => ['path' => 'app/Observers', 'generate' => false],
             'policies' => ['path' => 'app/Policies', 'generate' => false],
             'provider' => ['path' => 'app/Providers', 'generate' => true],
@@ -166,6 +167,38 @@ return [
             'test-feature' => ['path' => 'tests/Feature', 'generate' => true],
             'test-unit' => ['path' => 'tests/Unit', 'generate' => true],
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auto Discover of Modules
+    |--------------------------------------------------------------------------
+    |
+    | Here you configure auto discover of module
+    | This is useful for simplify module providers.
+    |
+    */
+    'auto-discover' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Migrations
+        |--------------------------------------------------------------------------
+        |
+        | This option for register migration automatically.
+        |
+        */
+        'migrations' => true,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Translations
+        |--------------------------------------------------------------------------
+        |
+        | This option for register lang file automatically.
+        |
+        */
+        'translations' => false,
+
     ],
 
     /*
@@ -217,21 +250,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Caching
-    |--------------------------------------------------------------------------
-    |
-    | Here is the config for setting up the caching feature.
-    |
-    */
-    'cache' => [
-        'enabled' => env('MODULES_CACHE_ENABLED', false),
-        'driver' => env('MODULES_CACHE_DRIVER', 'file'),
-        'key' => env('MODULES_CACHE_KEY', 'laravel-modules'),
-        'lifetime' => env('MODULES_CACHE_LIFETIME', 60),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Choose what laravel-modules will register as custom namespaces.
     | Setting one to false will require you to register that part
     | in your own Service Provider class.
@@ -258,8 +276,6 @@ return [
         'file' => [
             'class' => FileActivator::class,
             'statuses-file' => base_path('modules_statuses.json'),
-            'cache-key' => 'activator.installed',
-            'cache-lifetime' => 604800,
         ],
     ],
 

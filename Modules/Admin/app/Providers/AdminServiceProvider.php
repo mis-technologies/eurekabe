@@ -11,6 +11,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected string $moduleNameLower = 'admin';
 
+    
     /**
      * Boot the application events.
      */
