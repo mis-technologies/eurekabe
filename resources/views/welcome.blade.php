@@ -413,13 +413,13 @@
     </section>
 
     <!-- Founders -->
-     <section id="founders" class="bg-white py-24 relative container md:py-16 dark:bg-dark dark:text-white">
+    <section id="founders" class="bg-white py-24 relative container md:py-16 dark:bg-dark dark:text-white">
       <h1 class="font-bold text-3xl text-center mb-10 md:mb-16">
         The Brains Behind Eureka.
       </h1>
-      <div class="flex flex-col items center justify-between gap-10 md:flex-row">
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
         <!-- Marv -->
-        <div class="w-full md:w-1/2 max-w-xl flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+        <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
           <div class="img-container relative">
             <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
             <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
@@ -430,11 +430,14 @@
             <h1 class="font-semibold text-xl">Ejeh Marvelous</h1>
             <p class="opacity-80 font-light text-lg">Founder</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?</p>
+            <p class="text-sm font-normal ">
+              I am a Principal software engineer and digital entrepreneur with 8 years of experience. 
+               I build impactful, user-focused products. I thrive in creative environments and bring strong leadership, communication, and problem-solving skills to every project.
+            </p>
           </div>
         </div>
         <!-- Oche -->
-        <div class="w-full md:w-1/2 max-w-xl flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+        <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
           <div class="img-container relative">
             <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
             <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
@@ -448,10 +451,44 @@
             <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?</p>
           </div>
         </div>
+        <!-- Airon -->
+        <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+          <div class="img-container relative">
+            <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
+            <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+              <img src="{{ asset('asset/images/Airon-removebg-preview.png')}}" alt="" class="w-full h-full">
+            </div>
+          </div>
+          <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
+            <h1 class="font-semibold text-xl">Aaron Aniebiet</h1>
+            <p class="opacity-80 font-light text-lg">Software Engineer</p>
+            <div class="h-[1.2px] w-full bg-primary"></div>
+            <p class="text-sm font-normal ">
+              Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of Eureka EduTech, he develops user-centric platforms that transform education. With a background in Physics and Computer Science, he focuses on creating innovative, accessible solutions that empower students and educators.
+            </p>
+          </div>
+        </div>
+        <!-- Richard -->
+        <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+          <div class="img-container relative">
+            <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
+            <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+              <img src="{{ asset('asset/images/Richard-removebg-preview.png')}}" alt="" class="w-full h-full">
+            </div>
+          </div>
+          <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
+            <h1 class="font-semibold text-xl">Richard John</h1>
+            <p class="opacity-80 font-light text-lg">UX/UI Designer</p>
+            <div class="h-[1.2px] w-full bg-primary"></div>
+            <p class="text-sm font-normal ">
+              I am a designer with 5 years of experience in branding and art, and 3 years in UX research. Passionate about solving real-world problems, I combine creativity and dedication to deliver impactful solutions that enhance client value and make a difference.
+            </p>
+          </div>
+        </div>
       </div>
       
       <div class="absolute top-0 left-10 md:left-[20rem]">
-        <img src="{{ asset('asset/images/designs/purple_top_i.png')}}" alt="">
+        <img src="./images/designs/purple_top_i.png" alt="">
       </div>
      </section>
 
