@@ -20,7 +20,7 @@ class FrontWebsiteController extends Controller
 
     public function blog()
     {
-        return view('pages.blog');
+        return view('pages.blogs');
     }
 
     public function requestForm()

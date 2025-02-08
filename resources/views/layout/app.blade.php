@@ -54,19 +54,19 @@
         >
         <!-- Nav Items -->
           <ul class="gap-3 relative items-center text-black dark:text-white hidden md:flex justify-between lg:gap-12">
-            <li class="font-sans font-bold hover:text-primary active">
+            <li class="font-sans font-bold hover:text-primary {{ Request::is('/') ? 'active' : '' }}">
               <a href="/">Home</a>
             </li>
-            <li class="font-sans font-bold hover:text-primary">
-              <a href="#events">Event</a>
+            <li class="font-sans font-bold hover:text-primary {{ Request::is('events') ? 'active' : '' }}">
+              <a href="/events">Events</a>
             </li>            
-            <li class="font-sans font-bold hover:text-primary">
+            <li class="font-sans font-bold hover:text-primary{{ Request::is('blog') ? 'active' : '' }}">
               <a href="/blog">Blog</a>
             </li>
-            <li class="font-sans font-bold hover:text-primary">
+            <li class="font-sans font-bold hover:text-primary {{ Request::is('faq') ? 'active' : '' }}">
               <a href="/faq">FAQ</a>
             </li>
-            <li class="font-sans font-bold hover:text-primary">
+            <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
               <a href="/contact">Contact Us</a>
             </li>
           </ul> 
@@ -132,23 +132,21 @@
           <ul
             class="flex flex-col gap-12 md:relative md:flex-row md:items-center text-black dark:text-white"
           >
-          <li class="font-sans font-bold hover:text-primary active">
+          <li class="font-sans font-bold hover:text-primary {{ Request::is('/') ? 'active' : '' }}">
             <a href="/">Home</a>
           </li>
-          <li class="font-sans font-bold hover:text-primary">
-            <a href="#about">About Us</a>
-          </li>
-          <li class="font-sans font-bold hover:text-primary">
-            <a href="#events">Event</a>
+         
+          <li class="font-sans font-bold hover:text-primar {{ Request::is('events') ? 'active' : '' }}y">
+            <a href="/events">Events</a>
           </li>
           
-          <li class="font-sans font-bold hover:text-primary">
+          <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
             <a href="/contact">Contact Us</a>
           </li>
-          <li class="font-sans font-bold hover:text-primary">
+          <li class="font-sans font-bold hover:text-primary {{ Request::is('faq') ? 'active' : '' }}">
             <a href="/faq">FAQ</a>
           </li>
-          <li class="font-sans font-bold hover:text-primary">
+          <li class="font-sans font-bold hover:text-primary {{ Request::is('blog') ? 'active' : '' }}">
             <a href="/blog">Blog</a>
           </li>
           </ul>
