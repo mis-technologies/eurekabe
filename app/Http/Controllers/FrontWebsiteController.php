@@ -25,7 +25,7 @@ class FrontWebsiteController extends Controller
 
     public function requestForm()
     {
-        return view('pages.faq');
+        return view('pages.requestForm');
     }
 
     public function contact()
