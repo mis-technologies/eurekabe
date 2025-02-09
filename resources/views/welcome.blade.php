@@ -463,7 +463,7 @@
           </div>
           <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
             <h1 class="font-semibold text-xl">Aaron Aniebiet</h1>
-            <p class="opacity-80 font-light text-lg">Software Engineer</p>
+            <p class="opacity-80 font-light text-lg">Co-Founder</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
             {{-- <p class="text-sm font-normal ">
               Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of Eurek
@@ -481,7 +481,7 @@
           </div>
           <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
             <h1 class="font-semibold text-xl">Richard John</h1>
-            <p class="opacity-80 font-light text-lg">UX/UI Designer</p>
+            <p class="opacity-80 font-light text-lg">Co-Founder</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
             {{-- <p class="text-sm font-normal ">
               I am a designer with 5 years of experience in branding and art, and 3 years in UX research. Passionate about solving real-world problems, I combine creativity and dedication to deliver impactful solutions that enhance client value and make a difference.
