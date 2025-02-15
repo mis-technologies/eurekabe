@@ -3,9 +3,7 @@
 namespace Modules\Exam\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Modules\Exam\Models\Question;
-use Modules\Exam\Models\QuestionOption;
 
 class QuestionsSeeder extends Seeder
 {
@@ -16,7 +14,7 @@ class QuestionsSeeder extends Seeder
      */
     public function run()
     {
-       $questions = array(
+        $questions = array(
             0 => array(
                 'id' => 6,
                 'exam_id' => 1,
@@ -2758,12 +2756,11 @@ mso-bidi-language:AR-SA">If y = 3 sin 4x, dy/dx equals</span><br>',
             ),
         );
 
-
         foreach ($questions as $question) {
             // unset($question['id']);
 
             Question::updateOrCreate([
-              'id' => $question['id']  
+                'id' => $question['id'],
             ], $question);
         }
     }

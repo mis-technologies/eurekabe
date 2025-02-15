@@ -338,6 +338,7 @@ class ExamsSeeder extends Seeder
                 'status' => 0,
                 'created_at' => '2023-11-11 04:21:34',
                 'updated_at' => '2023-11-12 19:57:22',
+                
             ),
         );
 

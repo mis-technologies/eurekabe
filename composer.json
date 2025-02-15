@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "cmgmyr/messenger": "^2.30",
+        "codewithkyrian/transformers": "^0.5.3",
         "filament/filament": "^3.2",
         "filament/infolists": "^3.2",
         "laravel/folio": "^1.1",
@@ -88,6 +89,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "codewithkyrian/transformers-libsloader": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true,
             "wikimedia/composer-merge-plugin": true
