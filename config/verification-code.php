@@ -1,4 +1,5 @@
 <?php
+use Modules\Auth\Notifications\VerificationCodeCreated;
 
 return [
     /*
@@ -59,7 +60,8 @@ return [
     |   - \Wotz\VerificationCode\Notifications\VerificationCodeCreatedInterface
     |
     */
-    'notification' => Wotz\VerificationCode\Notifications\VerificationCodeCreated::class,
+    // 'notification' => Wotz\VerificationCode\Notifications\VerificationCodeCreated::class,
+    'notification' => VerificationCodeCreated::class,
 
     /*
     |--------------------------------------------------------------------------
