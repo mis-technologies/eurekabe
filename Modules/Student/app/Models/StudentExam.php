@@ -2,12 +2,11 @@
 
 namespace Modules\Student\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Exam\Models\Exam;
 use Modules\Exam\Models\Question;
 use Modules\Student\Models\StudentExamResult;
-use Modules\Student\Database\Factories\StudentExamFactory;
 
 class StudentExam extends Model
 {
@@ -30,11 +29,11 @@ class StudentExam extends Model
         'attempts',
         'status',
         'started_at',
-        'ended_at'
+        'ended_at',
     ];
 
     protected $casts = [
-        'questions' => 'array'
+        'questions' => 'array',
     ];
 
     public function exam()
@@ -62,7 +61,7 @@ class StudentExam extends Model
         foreach ($submissions as $submission) {
             // If negative marking is enabled and the answer is incorrect, reduce marks
             if (!$submission->is_correct && $exam->negative_marking && $exam->reduce_mark) {
-                $negativeMarks += $exam->reduce_mark;  // Deduct negative marks per incorrect answer
+                $negativeMarks += $exam->reduce_mark; // Deduct negative marks per incorrect answer
             }
 
             // Increment total marks with the mark given to each question
@@ -77,7 +76,7 @@ class StudentExam extends Model
         // Calculate total possible marks and final score after accounting for negative marking
         $totalQuestions = count($this->questions);
         $totalPossibleMarks = $exam->totalmark;
-        $finalScore = max(0, $totalMarks - $negativeMarks);  // Ensure score doesn't go below zero
+        $finalScore = max(0, $totalMarks - $negativeMarks); // Ensure score doesn't go below zero
 
         // Calculate percentage of correct answers
         $correctPercentage = ($totalQuestions > 0) ? ($finalScore / $totalPossibleMarks) * 100 : 0;
@@ -87,19 +86,83 @@ class StudentExam extends Model
 
         // Return a detailed summary of the result
         return [
-            'total_questions'     => $totalQuestions,
-            'total_correct'       => $totalCorrect,
-            'total_marks_earned'  => $finalScore,
-            'total_possible_marks'=> $totalPossibleMarks,
-            'correct_percentage'  => $correctPercentage,
-            'passed'              => $isPassed ? 'Yes' : 'No',
-            'pass_percentage'     => $exam->pass_percentage,
-            'negative_marks'      => $negativeMarks,
-            'student_exam'        => $this->all(),
-            'exam_details'       => $exam,
+            'total_questions' => $totalQuestions,
+            'total_correct' => $totalCorrect,
+            'total_marks_earned' => $finalScore,
+            'total_possible_marks' => $totalPossibleMarks,
+            'correct_percentage' => $correctPercentage,
+            'passed' => $isPassed ? 'Yes' : 'No',
+            'pass_percentage' => $exam->pass_percentage,
+            'negative_marks' => $negativeMarks,
+            'student_exam' => $this,
+            'exam_details' => $exam,
         ];
     }
 
+    public function getExamReview()
+    {
+        // Fetch all submissions for this exam
+        $submissions = StudentExamResult::where('student_exam_id', $this->id)
+            // ->with(['question.options']) // Eager load questions and their options
+            ->get()
+            ->keyBy('question_id'); // Index by question_id for easier lookup
+
+        // Fetch all questions that were served to the student
+        $questions = Question::whereIn('id', $this->questions)
+            ->with('options')
+            ->get();
+
+        // dd($questions);
+        $reviewData = [];
+
+        foreach ($questions as $question) {
+            $submission = $submissions->get($question->id);
+
+            // dd($submission);
+
+            $questionReview = [
+                'question_id' => $question->id,
+                'question_text' => $question->question,
+                'question_type' => $question->options->isNotEmpty() ? 'multiple_choice' : 'essay',
+                'marks' => $question->marks ?? 1,
+                'is_attempted' => !is_null($submission),
+                'is_correct' => $submission ? $submission->is_correct : null,
+                'marks_obtained' => $submission ? $submission->mark : 0,
+            ];
+
+            // Handle multiple choice questions
+            if ($question->options->isNotEmpty()) {
+                $studentAnswer = $submission ? $submission->answer : null;
+
+                $questionReview['options'] = $question->options->map(function ($option) use ($studentAnswer)  {
+                    return [
+                        'id' => $option->id,
+                        'text' => $option->option,
+                        'is_correct' => $option->is_correct,
+                        'student_selected' => (int)$studentAnswer == $option->id
+
+                    ];
+                });
+
+                // $questionReview['student_answer'] = $submission ? $submission->answer : null;
+                // $questionReview['correct_answer'] = $question->options
+                //     ->where('is_correct', true)
+                //     ->pluck('id')
+                //     ->first();
+            }
+            // Handle essay questions
+            else {
+                $questionReview['student_answer'] = $submission ? $submission->answer_text : null;
+                $questionReview['grading_status'] = $submission ?
+                ($submission->is_correct === null ? 'pending' : 'graded') : 'not_attempted';
+            }
+
+            $reviewData[] = $questionReview;
+        }
+
+        return $reviewData;
+
+    }
     protected static function newFactory()
     {
         // return StudentExamFactory::new();

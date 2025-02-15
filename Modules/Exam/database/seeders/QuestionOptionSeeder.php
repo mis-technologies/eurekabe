@@ -7981,7 +7981,8 @@ class QuestionOptionSeeder extends Seeder
 
           foreach ($options as $option) {
               QuestionOption::updateOrCreate([
-                'option' => $option['option']
+                'option' => $option['option'],
+                'question_id' => $option['question_id'],
               ],[
                   'question_id' => $option['question_id'],
                   'option' => $option['option'],

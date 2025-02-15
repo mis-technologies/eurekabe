@@ -122,7 +122,10 @@ class StudentExamController extends Controller
                     }
 
                     // Create the StudentExamResult for this question
-                    StudentExamResult::create([
+                    StudentExamResult::updateOrCreate([
+                        'student_exam_id' => $studentExam->id,
+                        'question_id' => $question->id,
+                    ],[
                         'student_exam_id' => $studentExam->id,
                         'exam_id' => $studentExam->exam_id,
                         'user_id' => $studentExam->user_id,
@@ -173,6 +176,7 @@ class StudentExamController extends Controller
             ], 404);
         }
         $result = $exam->result();
+        $result['review'] = $exam->getExamReview();
         return response()->json([
             'success' => true,
             'message' => 'Student exam result retrieved',

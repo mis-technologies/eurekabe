@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignId('exam_id');
             $table->text('question');
+            $table->json('option')->nullable();
             $table->double('marks')->unsigned();
             $table->text('written_ans')->nullable()->comment('when exam type is written this field is fillable');
             $table->foreignId('question_type_id')->default(1);
