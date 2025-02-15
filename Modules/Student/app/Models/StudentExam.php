@@ -95,7 +95,7 @@ class StudentExam extends Model
             'pass_percentage' => $exam->pass_percentage,
             'negative_marks' => $negativeMarks,
             'student_exam' => $this->all(),
-            // 'exam_details' => $exam,
+            'exam_details' => $exam,
         ];
     }
 
