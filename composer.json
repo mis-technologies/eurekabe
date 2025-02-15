@@ -7,7 +7,6 @@
     "require": {
         "php": "^8.2",
         "cmgmyr/messenger": "^2.30",
-        "codewithkyrian/transformers": "^0.5.3",
         "filament/filament": "^3.2",
         "filament/infolists": "^3.2",
         "laravel/folio": "^1.1",
