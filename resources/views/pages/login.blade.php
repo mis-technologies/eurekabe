@@ -16,16 +16,16 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
     class="max-h-full w-full object-cover"
   />
   <div
-    class="bg-[#E4F1FF] max-w-md h-fit w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-6 px-8 text-center pb-10"
+    class="bg-[#E4F1FF] text-black max-w-xs h-fit w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-5 text-center flex flex-col items-center justify-center gap-3"
   >
-    <h1 class="text-[28px] font-bold">Don’t have an account yet?</h1>
-    <p class="text-[20px] opacity-80 mt-5 mb-12">
+    <h1 class="text-[20px] font-bold">Don’t have an account yet?</h1>
+    <p class="text-[14px] opacity-80">
       Let’s get you all set so you can start creating your first learning
       experience.
     </p>
     <a
-      href="/registerForm"
-      class="text-[#006BE5] font-bold text-[20px] p-2 px-24 rounded-[25px] border-2 border-[#006BE5] cursor-pointer hover:bg-[#006BE5] hover:text-white transition ease-in-out duration-150"
+      href="./register.html"
+      class="text-[#006BE5] font-bold text-[12px] p-2 px-24 rounded-[25px] border-2 border-[#006BE5] cursor-pointer hover:bg-[#006BE5] hover:text-white transition-all ease-in-out duration-200"
     >
       SIGN UP
     </a>
@@ -33,15 +33,13 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
 </div>
 
 <!-- Form Container-->
-<div
-  id="form-container"
-  class="w-full md:w-1/2 flex flex-col p-8 lg:px-12 pt-10 pb-0"
->
-<div class="bg-[#E4F1FF99] rounded-[20px] p-10 px-16 space-y-3">
+<div id="form-container" class="w-full md:w-1/2 flex flex-col p-8 lg:px-12 items-center justify-center gap-6">
+<div class="">
   <h1 class="font-bold text-[32px] text-center mt-4">Welcome back!</h1>
-  <p class="opacity-50 text-[20px] text-center mb-5">Log in to your HiLearn account.</p>
+  <p class="opacity-50 text-[20px] text-center mb-5">Log in to your Eureka account.</p>
+</div>
 
-  <form id="signInForm" class="flex flex-col gap-5 poppins text-[20px]">
+  <form id="signInForm" class="flex flex-col gap-5 poppins text-[20px] w-full max-w-lg">
     <div class="">
       <label class="block mb-1 font-semibold text-base" for="email"
         >Email</label
@@ -50,7 +48,7 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
         type="email"
         id="email"
         name="email"
-        class="w-full p-4 px-6 border-[#453F3F80] border-2 text-base rounded-[30px]"
+        class="w-full p-4 px-6 border-[#453F3F80] border-2 text-base rounded-[30px] bg-transparent"
         placeholder="Your Email Address"
         required
       />
@@ -64,14 +62,16 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
         type="password"
         id="password"
         name="password"
-        class="w-full p-4 px-6 border-[#453F3F80] border-2 text-base rounded-[30px]"
+        class="w-full p-4 px-6 border-[#453F3F80] border-2 text-base rounded-[30px] bg-transparent"
         placeholder="Enter a strong password"
         required
       />
     </div>
 
     <div class="flex items-center justify-between text-base font-medium">
-      <div class="inline-flex items-center gap-3"><input type="checkbox" name="remember" id="remember" class="w-6 h-6  via-gray-400" > <span>Remember me</span> </div>
+      <div class="inline-flex items-center gap-3">
+        <input type="checkbox" name="remember" id="remember" class="w-6 h-6  via-gray-400 cursor-pointer" > <span>Remember me</span> 
+      </div>
       <a href="/" class="text-primary">Forgot Password</a>
 
     </div>
@@ -86,7 +86,7 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
       </button>
     </div>
   </form>
-</div>
+
 </section>
 
 <!-- POPUP animation -->
@@ -114,7 +114,6 @@ class="flex flex-col md:flex-row-reverse gap-10 h-full w-full items-center justi
   </div>
 </div>
 </div>
-
 <script src="{{ asset('asset/src/scripts/main.js')}}"></script>
 
 @endsection

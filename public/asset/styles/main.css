@@ -111,6 +111,10 @@ body {
   color: var(--primary);
 }
 
+.active-mini-nav {
+  color: var(--primary);
+}
+
 .cloud-in {
   animation: slideIn 0.9s ease-in-out;
 }
@@ -485,7 +489,7 @@ body {
     box-sizing: border-box;
   }
   #signUpPage {
-    background: none;
+    background-image: none;
   }
 }
 
@@ -587,4 +591,16 @@ body {
     transform: translateX(-800%) translateY(-150%) scale(0.1);
     opacity: 0;
   }
+}
+
+
+/* Add transition for component loading */
+#header, #footer {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#header.component-loaded, 
+#footer.component-loaded {
+  opacity: 1;
 }

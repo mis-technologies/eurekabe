@@ -105,9 +105,9 @@
     </div>
 
       <!-- Hero Icons -->
-      {{-- <div class="hidden md:block absolute top-28 -left-1">
+      <div class="hidden md:block absolute top-28 -left-1">
         <img src="{{ asset('asset/images/designs/hero_blue_arrow.png')}}" alt="" />
-      </div>     --}}
+      </div>    
        
       <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10 md:w-2/3">
         <div class="particle-container h-full w-full ">
@@ -124,69 +124,49 @@
       </div> 
     </section>
 
-      <!-- Hero Icons -->
-      <div class="hidden md:block absolute top-28 -left-1">
-        <img src="{{ asset('asset/images/designs/hero_blue_arrow.png')}}" alt="" />
-      </div>    
-       
-      <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10">
-        <div class="particle-container h-full w-full ">
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle1.png')}}" alt="">
-          </div>
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle2.png')}}" alt="">
-          </div>
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle3.png')}}" alt="">
-          </div>         
-      </div> 
-      </div> 
-    </section>
-
-     <!--Partners  -->
-     <section class="container flex flex-col py-16 gap-12 dark:text-white">    
-      <div
-        class="flex flex-col items-center justify-between md:flex-row gap-y-10"
-      >
-        <h2 class="text-3xl font-bold text-center md:max-w-[20rem] md:text-left font-lato">
-          More than 50+ schools trust <span class="text-primary">Eureka</span>
-        </h2>
-        <div class="slider-container relative w-full max-w-xl">
-          <div class="slider-track flex transition-transform duration-300">
-              <div class="slide flex items-center justify-between">
-                  <img src="{{ asset('asset/images/partners/Black and White Collection 0.png')}}" alt="lorem" />
-                  <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-              </div>
-              <div class="slide flex items-center justify-between">
-                  <img src="{{ asset('asset/images/partners/Black and White Collection 1.png')}}" alt="lorem" />
-                  <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-              </div>
-              <div class="slide flex items-center justify-between">
-                  <img src="{{ asset('asset/images/partners/Black and White Collection 0.png')}}" alt="lorem" />
-                  <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-              </div>
-              <div class="slide flex items-center justify-between">
-                  <img src="{{ asset('asset/images/partners/Black and White Collection 1.png')}}" alt="lorem" />
-                  <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-              </div>
-              <div class="slide flex items-center justify-between">
-                  <img src="{{ asset('asset/images/partners/Black and White Collection 2.png')}}" alt="lorem" />
-                  <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-              </div>
-              <div class="slide flex items-center justify-between">
-                  <img src="{{ asset('asset/images/partners/Black and White Collection 3.png')}}" alt="lorem" />
-                  <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-              </div>
-          </div>
-          <button class="prev left-0 transform -translate-y-1/2 rounded-md p-3 z-10">❮</button>
-          <button class="next right-0 transform -translate-y-1/2 rounded-md p-3 z-10">❯</button>
-      </div>
+    <!--Partners  -->
+    <section class="container flex flex-col py-16 gap-12 dark:text-white">    
+    <div
+      class="flex flex-col items-center justify-between md:flex-row gap-y-10"
+    >
+      <h2 class="text-3xl font-bold text-center md:max-w-[20rem] md:text-left font-lato">
+        More than 50+ schools trust <span class="text-primary">Eureka</span>
+      </h2>
+      <div class="slider-container relative w-full max-w-xl">
+        <div class="slider-track flex transition-transform duration-300">
+            <div class="slide flex items-center justify-between">
+                <img src="{{ asset('asset/images/partners/Black and White Collection 0.png')}}" alt="lorem" />
+                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
+            </div>
+            <div class="slide flex items-center justify-between">
+                <img src="{{ asset('asset/images/partners/Black and White Collection 1.png')}}" alt="lorem" />
+                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
+            </div>
+            <div class="slide flex items-center justify-between">
+                <img src="{{ asset('asset/images/partners/Black and White Collection 0.png')}}" alt="lorem" />
+                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
+            </div>
+            <div class="slide flex items-center justify-between">
+                <img src="{{ asset('asset/images/partners/Black and White Collection 1.png')}}" alt="lorem" />
+                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
+            </div>
+            <div class="slide flex items-center justify-between">
+                <img src="{{ asset('asset/images/partners/Black and White Collection 2.png')}}" alt="lorem" />
+                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
+            </div>
+            <div class="slide flex items-center justify-between">
+                <img src="{{ asset('asset/images/partners/Black and White Collection 3.png')}}" alt="lorem" />
+                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
+            </div>
+        </div>
+        <button class="prev left-0 transform -translate-y-1/2 rounded-md p-3 z-10">❮</button>
+        <button class="next right-0 transform -translate-y-1/2 rounded-md p-3 z-10">❯</button>
+    </div>
+    
       
-        
-      </div>
-      <div class="h-[1.3px] w-full bg-primary"></div>
-    </section>
+    </div>
+    <div class="h-[1.3px] w-full bg-primary"></div>
+  </section>
 
     <!-- About Section -->
     <section id="about" class="relative overflow-hidden">
@@ -215,7 +195,7 @@
             leadership experience to shaping the direction of education in your
             school.
           </p>
-          <ul class="grid grid-cols-2 w-full gap-4 md:gap-x-12 mt-2">
+          <ul class="grid grid-cols-2 w-full gap-5 md:gap-x-12 mt-2">
             <li class="flex items-center gap-3">
               <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" /> 
               <p class="font-medium text-lg opacity-60"> Leadership experience</p>
@@ -277,9 +257,9 @@
     </section>
 
     <!-- Socials -->
-    <div class="container flex justify-center py-20 gap-12 flex-wrap dark:text-white">
+    <div class="container grid grid-cols-2 md:flex items-center justify-center py-20 gap-12 flex-wrap dark:text-white">
       <div
-        class="flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2"
+        class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2"
         id="fbI"
       >
         <img src="{{ asset('asset/images/socials/mingcute_facebook-line_d.png')}}" alt="" />
@@ -289,7 +269,7 @@
         </div>
       </div>
       <div
-        class="flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
         id="tgI"
       >
         <img src="{{ asset('asset/images/socials/telegram_d.png')}}" alt="" />
@@ -299,7 +279,7 @@
         </div>
       </div>
       <div
-        class="flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
         id="waI"
       >
         <img src="{{ asset('asset/images/socials/ic_baseline-whatsapp_d.png')}}" alt="" />
@@ -309,7 +289,7 @@
         </div>
       </div>
       <div
-        class="flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
         id="inI"
       >
         <img src="{{ asset('asset/images/socials/mdi_instagram_d.png')}}" alt="" />
@@ -318,7 +298,7 @@
           <p class="font-semibold opacity-50 text-[15px]">followers</p>
         </div>
       </div>
-      <div class="flex items-center gap-4 pr-4" id="twI">
+      <div class="scale-85 md:scale-100 flex items-center gap-4 pr-4" id="twI">
         <img src="{{ asset('asset/images/socials/mingcute_twitter-line_d.png')}}" alt="" />
         <div class="count">
           <h1 class="font-semibold text-2xl md:text-[36px]">3K+</h1>
@@ -371,9 +351,9 @@
               Lead in planning and executing school events, fostering a vibrant
               and inclusive community.
             </p>
-            <div class="absolute -bottom-1 right-0 scale-90 translate-y-1/4">
+            <!-- <div class="absolute -bottom-1 right-0 scale-90 translate-y-1/4">
               <img src="{{ asset('asset/images/designs/x.png')}}" alt="" />
-            </div>
+            </div> -->
           </div>
           <div
             class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
@@ -398,22 +378,22 @@
         </div>
       </div>
 
-      <div class="absolute bottom-0 left-0">
+      <!-- <div class="absolute bottom-0 left-0">
         <img src="{{ asset('asset/images/designs/Vector7.png')}}" alt="" />
-      </div>
+      </div> -->
       <div class="absolute bottom-5 right-0 translate-x-3 hidden md:block">
         <img src="{{ asset('asset/images/designs/Vector.png')}}" alt="" class="scale-75" />
       </div>
-      <div class="absolute top-1/3 left-1/3 scale-75">
+      <!-- <div class="absolute top-1/3 left-1/3 scale-75">
         <img src="{{ asset('asset/images/designs/Vector (1).png')}}" alt="" />
-      </div>
+      </div> -->
       <div class="absolute top-28 -left-1 hidden md:block">
         <img src="{{ asset('asset/images/designs/who_we_are_i_l.png')}}" alt="" />
       </div>
     </section>
 
     <!-- Founders -->
-    <section id="founders" class="bg-white py-24 relative container md:py-16 dark:bg-dark dark:text-white">
+     <section id="founders" class="bg-white py-24 relative container md:py-16 dark:bg-dark dark:text-white">
       <h1 class="font-bold text-3xl text-center mb-10 md:mb-16">
         The Brains Behind Eureka.
       </h1>
@@ -430,10 +410,9 @@
             <h1 class="font-semibold text-xl">Ejeh Marvelous</h1>
             <p class="opacity-80 font-light text-lg">Founder</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            {{-- <p class="text-sm font-normal ">
-              I am a Principal software engineer and digital entrepreneur with 8 years of experience. 
-               I build impactful, user-focused products. I thrive in creative environments and bring strong leadership, communication, and problem-solving skills to every project.
-            </p> --}}
+            <p class="text-sm font-normal ">
+              I am a software engineer and digital entrepreneur with 7 years of experience. As co-founder of Trafull and founder of Eureka Online CBT Software, I build impactful, user-focused products. I thrive in creative environments and bring strong leadership, communication, and problem-solving skills to every project.
+            </p>
           </div>
         </div>
         <!-- Oche -->
@@ -448,9 +427,7 @@
             <h1 class="font-semibold text-xl">Oche Solomon</h1>
             <p class="opacity-80 font-light text-lg">Co-Founder</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            {{-- <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?
-
-            </p> --}}
+            <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?</p>
           </div>
         </div>
         <!-- Airon -->
@@ -463,12 +440,11 @@
           </div>
           <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
             <h1 class="font-semibold text-xl">Aaron Aniebiet</h1>
-            <p class="opacity-80 font-light text-lg">Co-Founder</p>
+            <p class="opacity-80 font-light text-lg">Software Engineer</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            {{-- <p class="text-sm font-normal ">
-              Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of Eurek
-              a EduTech, he develops user-centric platforms that transform education. With a background in Physics and Computer Science, he focuses on creating innovative, accessible solutions that empower students and educators.
-            </p> --}}
+            <p class="text-sm font-normal ">
+              Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of Eureka EduTech, he develops user-centric platforms that transform education. With a background in Physics and Computer Science, he focuses on creating innovative, accessible solutions that empower students and educators.
+            </p>
           </div>
         </div>
         <!-- Richard -->
@@ -481,17 +457,17 @@
           </div>
           <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
             <h1 class="font-semibold text-xl">Richard John</h1>
-            <p class="opacity-80 font-light text-lg">Co-Founder</p>
+            <p class="opacity-80 font-light text-lg">UX/UI Designer</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
-            {{-- <p class="text-sm font-normal ">
+            <p class="text-sm font-normal ">
               I am a designer with 5 years of experience in branding and art, and 3 years in UX research. Passionate about solving real-world problems, I combine creativity and dedication to deliver impactful solutions that enhance client value and make a difference.
-            </p> --}}
+            </p>
           </div>
         </div>
       </div>
       
       <div class="absolute top-0 left-10 md:left-[20rem]">
-        <img src="./images/designs/purple_top_i.png" alt="">
+        <img src="{{ asset('asset/images/designs/purple_top_i.png')}}" alt="">
       </div>
      </section>
 
@@ -534,14 +510,14 @@
       <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10">
         <div class="particle-container h-full w-full ">
           <div class="particle">
-            <img src="{{ asset('asset/images/particle1.png')}}" alt="">
+            <img src="{{ asset('asset/images/particle1.png')}}" alt="" class="opacity-30 dark:opacity-60">
           </div>
           <div class="particle">
-            <img src="{{ asset('asset/images/particle2.png')}}" alt="">
+            <img src="{{ asset('asset/images/particle2.png')}}" alt="" class="opacity-30 dark:opacity-60">
           </div>
           <div class="particle">
-            <img src="{{ asset('asset/images/particle3.png')}}" alt="">
-          </div>         
+            <img src="{{ asset('asset/images/particle3.png')}}" alt="" class="opacity-30 dark:opacity-60">
+          </div>                  
       </div> 
       </div> 
      </section>

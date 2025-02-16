@@ -37,4 +37,9 @@ class FrontWebsiteController extends Controller
     {
         return view('pages.login');
     }
+
+    public function home()
+    {
+        return view('welcome');
+    }
 }

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Nav Bar Functionality
-  function initializeNavBar() {
+   // Nav Bar Functionality
+   function initializeNavBar() {
     const openMenu = document.getElementById("openMenu");
     const navBar = document.getElementById("mobileNav");
     const navLinks = document.querySelectorAll(
@@ -558,89 +558,97 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Auto play slider
-  function initializeAutoPlaySlider() {
-    const track = document.querySelector(".slider-track");
-    const slides = document.querySelectorAll(".slide");
-    const prevBtn = document.querySelector(".prev");
-    const nextBtn = document.querySelector(".next");
-  
-    const slideWidth = slides[0].offsetWidth;
-    let currentIndex = 0;
-    let autoplayInterval;
-  
-    // Clone first and last slides for seamless looping
-    const firstClone = slides[0].cloneNode(true);
-    const lastClone = slides[slides.length - 1].cloneNode(true);
-  
-    // Add clones to the track
-    track.appendChild(firstClone);
-    track.insertBefore(lastClone, slides[0]);
-  
-    const totalSlides = slides.length + 2; // Include clones
-  
-    // Adjust the initial position to account for the lastClone
-    track.style.transform = `translateX(-${slideWidth}px)`;
-  
-    function moveToSlide(index, animate = true) {
-      if (animate) {
-        track.style.transition = "transform 0.3s ease-in-out";
-      } else {
-        track.style.transition = "none";
-      }
-      track.style.transform = `translateX(-${index * slideWidth}px)`;
-      currentIndex = index;
-    }
-  
-    function goToNextSlide() {
-      moveToSlide(currentIndex + 1);
-  
-      if (currentIndex + 1 === totalSlides - 1) {
-        setTimeout(() => {
-          moveToSlide(1, false); // Jump to first real slide without animation
-        }, 300); // Match the transition duration
-      }
-    }
-  
-    function goToPrevSlide() {
-      moveToSlide(currentIndex - 1);
-  
-      if (currentIndex - 1 === 0) {
-        setTimeout(() => {
-          moveToSlide(totalSlides - 2, false); // Jump to last real slide without animation
-        }, 300); // Match the transition duration
-      }
-    }
-  
-    function startAutoplay() {
-      autoplayInterval = setInterval(goToNextSlide, 3000);
-    }
-  
-    function stopAutoplay() {
-      clearInterval(autoplayInterval);
-    }
-  
-    prevBtn.addEventListener("click", () => {
-      stopAutoplay();
-      goToPrevSlide();
-      startAutoplay();
-    });
-  
-    nextBtn.addEventListener("click", () => {
-      stopAutoplay();
-      goToNextSlide();
-      startAutoplay();
-    });
-  
-    window.addEventListener("resize", () => {
-      moveToSlide(currentIndex, false);
-    });
-  
-    // Start autoplay
-    startAutoplay();
-  }
-  
+ // Auto play slider
+function initializeAutoPlaySlider() {
+  const track = document.querySelector(".slider-track");
+  const slides = document.querySelectorAll(".slide");
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
 
-  // Initialize functions
+  // Check if elements exist before running the function
+  if (!track || slides.length === 0 || !prevBtn || !nextBtn) {
+    console.error("Slider elements not found or missing slides.");
+    return;
+  }
+
+  const slideWidth = slides[0]?.offsetWidth || 0; // Ensure slideWidth is valid
+  let currentIndex = 0;
+  let autoplayInterval;
+
+  // Clone first and last slides for seamless looping
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
+
+  // Add clones to the track
+  track.appendChild(firstClone);
+  track.insertBefore(lastClone, slides[0]);
+
+  const totalSlides = slides.length + 2; // Include clones
+
+  // Adjust the initial position to account for the lastClone
+  track.style.transform = `translateX(-${slideWidth}px)`;
+
+  function moveToSlide(index, animate = true) {
+    if (animate) {
+      track.style.transition = "transform 0.3s ease-in-out";
+    } else {
+      track.style.transition = "none";
+    }
+    track.style.transform = `translateX(-${index * slideWidth}px)`;
+    currentIndex = index;
+  }
+
+  function goToNextSlide() {
+    moveToSlide(currentIndex + 1);
+
+    if (currentIndex + 1 === totalSlides - 1) {
+      setTimeout(() => {
+        moveToSlide(1, false);
+      }, 300);
+    }
+  }
+
+  function goToPrevSlide() {
+    moveToSlide(currentIndex - 1);
+
+    if (currentIndex - 1 === 0) {
+      setTimeout(() => {
+        moveToSlide(totalSlides - 2, false);
+      }, 300);
+    }
+  }
+
+  function startAutoplay() {
+    autoplayInterval = setInterval(goToNextSlide, 3000);
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+
+  prevBtn.addEventListener("click", () => {
+    stopAutoplay();
+    goToPrevSlide();
+    startAutoplay();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    stopAutoplay();
+    goToNextSlide();
+    startAutoplay();
+  });
+
+  window.addEventListener("resize", () => {
+    moveToSlide(currentIndex, false);
+  });
+
+  startAutoplay();
+}
+
+// ✅ Ensure DOM is fully loaded before running
+document.addEventListener("DOMContentLoaded", () => {
+  initializeAutoPlaySlider();
+});
   initializeNavBar();
   initializeRegistrationPage();
   initializeTextAnimation();
@@ -655,4 +663,17 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeBgParticleMovement();
   initializeAutoResize();
   initializeAutoPlaySlider();
+});
+
+// Add this event listener at the BOTTOM of your existing main.js
+document.addEventListener('components-loaded', () => {
+  // Re-initialize functions that depend on components
+  initializeDarkMode();
+  initializeNavBar();
+  
+  document.querySelectorAll('.eurekaLogo').forEach(logo => {
+    logo.src = localStorage.getItem("darkMode") === "enabled" 
+      ? "{{ asset('asset/images/white_logo.png')}}" 
+      : "{{ asset('asset/images/logo.png')}}";
+  });
 });
