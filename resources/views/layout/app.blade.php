@@ -29,7 +29,7 @@
     <script defer src="{{ asset('asset/scripts/data.js')}}"></script>
     
      <!-- App favicon -->
-     <link rel="shortcut icon" href="{{ asset('asset/images/favicon.png')}}" />
+     <link rel="shortcut icon" href="{{asset('asset/images/favicon.png')}}" />
 
      
 
