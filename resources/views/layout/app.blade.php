@@ -283,7 +283,7 @@ document.documentElement.setAttribute('data-theme', currentTheme);
 if (currentTheme === 'dark') {
 logo.src = '{{ asset("asset/images/white_logo.png") }}'; // Dark logo
 } else {
-logo.src = '{{ asset("asset/images/logo-dark.png") }}'; // Light logo
+logo.src = '{{ asset("asset/images/logo.png") }}'; // Light logo
 }
 
 // Toggle theme on button click
