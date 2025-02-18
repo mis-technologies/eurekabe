@@ -176,7 +176,7 @@ class StudentExamController extends Controller
             ], 404);
         }
         $result = $exam->result();
-        // $result['review'] = $exam->getExamReview();
+        $result['review'] = $exam->getExamReview();
         return response()->json([
             'success' => true,
             'message' => 'Student exam result retrieved',
