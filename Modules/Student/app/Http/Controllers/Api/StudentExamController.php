@@ -32,7 +32,7 @@ class StudentExamController extends Controller
 
     /**
      * Store a newly created resource in storage.
-    */
+     */
     public function start(Request $request, Exam $exam)
     {
         $user = Auth::user();
@@ -65,7 +65,7 @@ class StudentExamController extends Controller
 
     /**
      * Show the specified resource.
-    */
+     */
     public function show(Request $request, $id)
     {
         $user = Auth::user();
@@ -85,7 +85,7 @@ class StudentExamController extends Controller
 
     /**
      * Update the specified resource in storage.
-    */
+     */
     public function submit(Request $request, StudentExam $studentExam)
     {
         // Get the submissions from the request
@@ -125,7 +125,7 @@ class StudentExamController extends Controller
                     StudentExamResult::updateOrCreate([
                         'student_exam_id' => $studentExam->id,
                         'question_id' => $question->id,
-                    ],[
+                    ], [
                         'student_exam_id' => $studentExam->id,
                         'exam_id' => $studentExam->exam_id,
                         'user_id' => $studentExam->user_id,
@@ -155,19 +155,34 @@ class StudentExamController extends Controller
             'points' => $pointsEarned,
         ]);
 
-        // Return a JSON response indicating success
+        //TODO: get student rank base on leaderboard over all students that have taken the exam
 
-        $result['review'] = $studentExam->getExamReview();
+        
+        // Get student rank based on leaderboard over all students that have taken the exam
+        $totalStudents = StudentLeaderBoard::whereExamId($studentExam->exam_id)->count();
+        $rank = StudentLeaderBoard::whereExamId($studentExam->exam_id)
+            ->where('points', '>', $pointsEarned)
+            ->count() + 1;
+
+        // Return a JSON response indicating success
         return response()->json([
             'success' => true,
             'message' => 'Exam submitted successfully',
-            'data' => ['result'=>$result, 'points_earned'=>$pointsEarned],
+            'data' => [
+                'result' => $result,
+                'points_earned' => $pointsEarned,
+                'rank' => [
+                    'my_rank' => $rank,
+                    'total_students' => $totalStudents,
+                ],
+                'review' => $studentExam->getExamReview(),
+            ],
         ]);
     }
 
     /**
      * Get result of exam.
-    */
+     */
     public function getExamResult(Request $request, $id)
     {
         $user = Auth::user();
@@ -188,7 +203,7 @@ class StudentExamController extends Controller
 
     /**
      * Add exam to favorite
-    */
+     */
     public function addExamToFavorite(Request $request)
     {
         $user = Auth::user();
@@ -211,17 +226,15 @@ class StudentExamController extends Controller
 
     }
 
-
-
     /**
      * Add exam to favorite
-    */
+     */
     public function addExamFeedback(Request $request, $id)
     {
         $request->validate([
-            'rating' => ['required', 'integer', 'max:5', 'min:1']
+            'rating' => ['required', 'integer', 'max:5', 'min:1'],
         ]);
-        
+
         $user = Auth::user();
         if (!$studentExam = StudentExam::whereUserId($user->id)->where('id', $id)->first()) {
             return response()->json([
@@ -233,13 +246,12 @@ class StudentExamController extends Controller
         $feedback = ExamFeedback::updateOrCreate([
             'user_id' => $user->id,
             'exam_id' => $studentExam->exam_id,
-        ],[
+        ], [
             'user_id' => $user->id,
             'exam_id' => $studentExam->exam_id,
-            'rating' =>  $request->rating,
+            'rating' => $request->rating,
             'feedback' => $request->feedback,
         ]);
-
 
         return response()->json([
             'success' => true,
@@ -251,7 +263,7 @@ class StudentExamController extends Controller
 
     /**
      * Remove the specified resource from storage.
-    */
+     */
     public function destroy($id)
     {
         return response()->json([]);
