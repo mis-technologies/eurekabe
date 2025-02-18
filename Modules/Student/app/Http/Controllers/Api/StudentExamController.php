@@ -156,6 +156,8 @@ class StudentExamController extends Controller
         ]);
 
         // Return a JSON response indicating success
+
+        $result['review'] = $studentExam->getExamReview();
         return response()->json([
             'success' => true,
             'message' => 'Exam submitted successfully',
