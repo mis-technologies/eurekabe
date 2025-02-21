@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('exam_id');
-            $table->integer('rating'); // max of 5
-            $table->string('feedback');
+            $table->integer('rating')->default(1); // max of 5
+            $table->string('feedback')->nullable();
             $table->timestamps();
         });
     }
