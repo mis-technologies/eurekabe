@@ -56,7 +56,7 @@ class MessageSentEventListener //implements ShouldQueue
 
         if($to){
             $to->notify((new Notification(emailContent: $mailContent, dbContent: $dbContent, channel: ['database'])));
-            event(new SocketEvent($conversation, "{$to->id}", 'Conversation'));
+            event(new SocketEvent($conversation, "{$to->email}", 'Conversation'));
             event(new SocketEvent( $to->unreadNotifications()->limit(1), "{$to->email}", 'Notification'));
             return;
         }

@@ -14,8 +14,8 @@ Broadcast::channel('{channel}', function ($user, $channel) {
     Log::info('user joined channel', [$user->email, $channel]);
 
     // return $user !== null;  // or some condition to authorize the user
-    $authorized = ( $user->id == $channel);
-    Log::info('user joined channel', [$user->id, $channel, $authorized]);
+    $authorized = ( $user->email == $channel);
+    Log::info('user joined channel', [$user->email, $channel, $authorized]);
     return $authorized;
 
 });
