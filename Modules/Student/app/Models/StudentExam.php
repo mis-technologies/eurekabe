@@ -94,7 +94,7 @@ class StudentExam extends Model
             'passed' => $isPassed ? 'Yes' : 'No',
             'pass_percentage' => $exam->pass_percentage,
             'negative_marks' => $negativeMarks,
-            'student_exam' => $this->all(),
+            'student_exam' => $this,
             'exam_details' => $exam,
         ];
     }
@@ -144,15 +144,12 @@ class StudentExam extends Model
                     ];
                 });
 
-                // $questionReview['student_answer'] = $submission ? $submission->answer : null;
-                // $questionReview['correct_answer'] = $question->options
-                //     ->where('is_correct', true)
-                //     ->pluck('id')
-                //     ->first();
+                
+               
             }
             // Handle essay questions
             else {
-                $questionReview['student_answer'] = $submission ? $submission->answer_text : null;
+                $questionReview['student_answer'] = $submission ? $submission->answer : null;
                 $questionReview['grading_status'] = $submission ?
                 ($submission->is_correct === null ? 'pending' : 'graded') : 'not_attempted';
             }

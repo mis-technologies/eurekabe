@@ -98,6 +98,7 @@ class StudentExamController extends Controller
         foreach ($submissions as $submission) {
             $questionId = $submission['question'];
             $userAnswer = $submission['answer'];
+            
 
             // Check if the question is part of the served questions
             if (in_array($questionId, $questionIds)) {
@@ -107,34 +108,53 @@ class StudentExamController extends Controller
 
                     // Determine the answer type (assume multiple choice if options exist, otherwise essay)
                     $answerType = $options->isNotEmpty() ? 1 : 2;
+                    $examType = $studentExam->exam->question_type;
 
                     // Initialize variables for correctness and marks
                     $isCorrect = false;
                     $mark = 0;
 
-                    if ($answerType === 1) {
+                    if ($examType === 1) {
                         // For multiple-choice, check if the submitted answer matches a correct option
                         $isCorrect = $options->where('is_correct', true)->pluck('id')->contains($userAnswer);
                         $mark = $isCorrect ? ($question->marks ?? 1) : 0;
+
+                        // Create the StudentExamResult for this question
+                        StudentExamResult::updateOrCreate([
+                            'student_exam_id' => $studentExam->id,
+                            'question_id' => $question->id,
+                        ], [
+                            'student_exam_id' => $studentExam->id,
+                            'exam_id' => $studentExam->exam_id,
+                            'user_id' => $studentExam->user_id,
+                            'question_id' => $question->id,
+                            'answer' => $userAnswer,
+                            'correct_answer' => $options->where('is_correct', true)->first()['option'],
+                            'mark' => $mark, // Store calculated mark
+                            'is_correct' => $isCorrect, // Store correctness for multiple-choice questions
+                        ]);
+
                     } else {
                         // For essay or written-type questions, mark and correctness may be handled manually later
                         $mark = 0; // By default 0 for written answers, may be graded later
+
+                        // Create the StudentExamResult for this question
+                        StudentExamResult::updateOrCreate([
+                            'student_exam_id' => $studentExam->id,
+                            'question_id' => $question->id,
+                        ], [
+                            'student_exam_id' => $studentExam->id,
+                            'exam_id' => $studentExam->exam_id,
+                            'user_id' => $studentExam->user_id,
+                            'question_id' => $question->id,
+                            'answer' => $userAnswer,
+                            'correct_answer' => "N/A", // No correct answer for written questions
+                            'mark' => $mark, // Store calculated mark
+                            'is_correct' => $isCorrect, // Store correctness for multiple-choice questions
+                        ]);
+
                     }
 
-                    // Create the StudentExamResult for this question
-                    StudentExamResult::updateOrCreate([
-                        'student_exam_id' => $studentExam->id,
-                        'question_id' => $question->id,
-                    ], [
-                        'student_exam_id' => $studentExam->id,
-                        'exam_id' => $studentExam->exam_id,
-                        'user_id' => $studentExam->user_id,
-                        'question_id' => $question->id,
-                        'answer' => $userAnswer,
-                        'correct_answer' => $options->where('is_correct', true)->first()['option'],
-                        'mark' => $mark, // Store calculated mark
-                        'is_correct' => $isCorrect, // Store correctness for multiple-choice questions
-                    ]);
                 }
             }
         }
@@ -157,7 +177,6 @@ class StudentExamController extends Controller
 
         //TODO: get student rank base on leaderboard over all students that have taken the exam
 
-        
         // Get student rank based on leaderboard over all students that have taken the exam
         $totalStudents = StudentLeaderBoard::whereExamId($studentExam->exam_id)->count();
         $rank = StudentLeaderBoard::whereExamId($studentExam->exam_id)
@@ -169,6 +188,7 @@ class StudentExamController extends Controller
             'success' => true,
             'message' => 'Exam submitted successfully',
             'data' => [
+                'exam_type' => $examType == 1 ? 'mcq' : 'essay',
                 'result' => $result,
                 'points_earned' => $pointsEarned,
                 'rank' => [
