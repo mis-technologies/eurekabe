@@ -51,6 +51,7 @@ class StudentExam extends Model
 
         // Fetch the exam details
         $exam = Exam::find($this->exam_id);
+        $examType = $exam->question_type;
 
         // Initialize counters for correct answers, total marks, and negative marking
         $totalMarks = 0;
@@ -86,6 +87,7 @@ class StudentExam extends Model
 
         // Return a detailed summary of the result
         return [
+            'exam_type' => $examType == 1 ? 'mcq' : 'essay',
             'total_questions' => $totalQuestions,
             'total_correct' => $totalCorrect,
             'total_marks_earned' => $finalScore,
@@ -144,7 +146,7 @@ class StudentExam extends Model
                     ];
                 });
 
-                
+
                
             }
             // Handle essay questions

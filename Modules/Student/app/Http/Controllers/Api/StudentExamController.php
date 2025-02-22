@@ -188,7 +188,6 @@ class StudentExamController extends Controller
             'success' => true,
             'message' => 'Exam submitted successfully',
             'data' => [
-                'exam_type' => $examType == 1 ? 'mcq' : 'essay',
                 'result' => $result,
                 'points_earned' => $pointsEarned,
                 'rank' => [
