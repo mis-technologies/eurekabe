@@ -8,5 +8,6 @@ cmds = ["composer install --no-dev"]
 cmds = [
   "php artisan storage:link",
   "chmod -R 775 storage bootstrap/cache",
+  "chmod -R 775 storage public/uploads",
   "php artisan optimize:clear"
 ]
