@@ -21,6 +21,7 @@ class UsersResource extends Resource
 
     public static function form(Form $form): Form
     {
+        // dd('here');
         return $form
             ->schema([
 
@@ -32,7 +33,7 @@ class UsersResource extends Resource
 
                 Forms\Components\TextInput::make('lastname')
                 ->label('Last Name')
-                ->required()
+                // ->required()
                 ->maxLength(255),
 
 

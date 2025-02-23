@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\Common\Models\School;
 
 class FrontWebsiteController extends Controller
 {
@@ -25,7 +26,8 @@ class FrontWebsiteController extends Controller
 
     public function requestForm()
     {
-        return view('pages.requestForm');
+        $data['schools']= School::latest()->get();
+        return view('pages.requestForm', $data);
     }
 
     public function contact()
@@ -37,4 +39,6 @@ class FrontWebsiteController extends Controller
     {
         return view('pages.login');
     }
+
+
 }

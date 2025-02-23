@@ -50,8 +50,15 @@ class User extends Authenticatable implements FilamentUser
         'tsc',
         'provider',
         'provider_id',
+        'gender',
+        'level',
+        'cgpa',
+        'leading_experience',
+        'position',
+        'leading_attribute',
+        'refereed_by',
     ];
-    
+
 
     /**
      * The attributes that should be hidden for serialization.

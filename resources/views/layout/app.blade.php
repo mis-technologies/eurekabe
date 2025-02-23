@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Eureka EdTech</title>
-    <link rel="stylesheet" href="{{ asset('asset/styles/output.css')}}" />
-    <link rel="stylesheet" href="{{ asset('asset/styles/main.css')}}" />
+    <link rel="stylesheet" href="/asset/styles/output.css" />
+    <link rel="stylesheet" href="/asset/styles/main.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,17 +26,39 @@
     src="https://kit.fontawesome.com/b4b8be07f5.js"
     crossorigin="anonymous"
     ></script>
-    <script defer src="{{ asset('asset/scripts/main.js')}}"></script>
+    <script defer src="/asset/scripts/main.js"></script>
     <script
     defer
       src="https://kit.fontawesome.com/b4b8be07f5.js"
       crossorigin="anonymous"
     ></script>
      <!-- App favicon -->
-     <link rel="shortcut icon" href="{{ asset('asset/images/favicon.png')}}" />
+     <link rel="shortcut icon" href="/asset/images/favicon.png" />
 
     <!-- Scripts -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <style>
+        #articlesList.active {
+            display: flex;
+        }
+
+        #articlesList {
+            display: none;
+        }
+
+        #articleDetail {
+            display: none;
+        }
+
+        #articleDetail.active {
+            display: block;
+        }
+
+        .tab.active {
+            color: #3b88ff;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body class="transition-all duration-1000 dark:bg-dark">
@@ -44,9 +67,9 @@
     <header class="sticky top-0 left-0 z-50 bg-secondary dark:bg-dark transition-all duration-1000">
       <nav class="flex justify-between items-center py-5 container">
         <a class="translate-y-1" href="/">
-          <img id="logo" src="{{ asset('asset/images/logo.png')}}" alt="Eureka EdTech" class="" />
+          <img id="logo" src="/asset/images/logo.png" alt="Eureka EdTech" class="" />
         </a>
-        
+
 
         <div
           class="relative flex items-center min-w-[75%] justify-between gap-20"
@@ -59,7 +82,7 @@
             </li>
             <li class="font-sans font-bold hover:text-primary {{ Request::is('events') ? 'active' : '' }}">
               <a href="/events">Events</a>
-            </li>            
+            </li>
             <li class="font-sans font-bold hover:text-primary{{ Request::is('blog') ? 'active' : '' }}">
               <a href="/blog">Blog</a>
             </li>
@@ -69,10 +92,10 @@
             <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
               <a href="/contact">Contact Us</a>
             </li>
-          </ul> 
+          </ul>
 
            <!-- Toggle Switch formerly here-->
-          
+
           <button
             class="hidden md:block bg-primary p-3 lg:px-4 xl:px-6 max-w-28 xl:max-w-none rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105"
           >
@@ -107,8 +130,8 @@
               <!-- Switch Icon -->
               <div class="switchIcon absolute right-1 top-1 rounded-full transition-all ease-in-out h-7 w-7">
                 <div id="lightIcon" class="relative">
-                  <img src="{{ asset('asset/images/icons/Toggle.png')}}" alt=" ">
-                  <img src="{{ asset('asset/images/icons/clouds.png')}}" alt="" class="absolute scale-75 -right-2 top-1/2 -/2 cloud-in" id="cloud">
+                  <img src="/asset/images/icons/Toggle.png" alt=" ">
+                  <img src="/asset/images/icons/clouds.png" alt="" class="absolute scale-75 -right-2 top-1/2 -/2 cloud-in" id="cloud">
                 </div>
                 <div id="darkIcon" class="bg-white w-full h-full rounded-full hidden transition-all duration-500">
                   <div class="bg-dark w-full h-full rounded-full -translate-x-2 relative">
@@ -122,7 +145,7 @@
               </div>
           </div>
          </label>
-           
+
 
         <!-- Mobile Nav Bar -->
         <div
@@ -135,11 +158,11 @@
           <li class="font-sans font-bold hover:text-primary {{ Request::is('/') ? 'active' : '' }}">
             <a href="/">Home</a>
           </li>
-         
+
           <li class="font-sans font-bold hover:text-primar {{ Request::is('events') ? 'active' : '' }}y">
             <a href="/events">Events</a>
           </li>
-          
+
           <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
             <a href="/contact">Contact Us</a>
           </li>
@@ -194,7 +217,7 @@
                 Learn more
               </button>
               <img
-                src="asset/images/designs/Vector 7.png"
+                src="/asset/images/designs/Vector 7.png"
                 alt=""
                 class="w-1/3 h-auto mt-2"
               />
@@ -203,52 +226,52 @@
         </div>
         <!-- Footer Icons -->
         <div class="absolute top-1/2 left-10 md:top-1/4 md:left-[15%]">
-          <img src="asset/images/designs/Frame2.png" alt="" />
+          <img src="/asset/images/designs/Frame2.png" alt="" />
         </div>
         <div class="hidden md:block absolute right-32 top-1/3 scale-75">
-          <img src="asset/images/designs/footer-icon2.png" alt="" />
+          <img src="/asset/images/designs/footer-icon2.png" alt="" />
         </div>
-  
+
       </div>
       <div class="absolute top-0 left-0 h-full bg-slate-0 w-full ">
         <div class="particle-container h-full w-full ">
           <div class="particle">
-            <img src="asset/images/particle1.png" alt="">
+            <img src="/asset/images/particle1.png" alt="">
           </div>
           <div class="particle">
-            <img src="asset/images/particle2.png" alt="">
+            <img src="/asset/images/particle2.png" alt="">
           </div>
           <div class="particle">
-            <img src="asset/images/particle3.png" alt="">
-          </div>         
-      </div> 
-      </div> 
+            <img src="/asset/images/particle3.png" alt="">
+          </div>
+      </div>
+      </div>
       </footer>
-  
+
       <!-- Footer Socials -->
        <div class="container flex flex-col items-center justify-between py-7 md:flex-row gap-y-10 dark:text-white">
-        <img id="logo" src="{{ asset('asset/images/logo.png')}}" alt="Eureka EdTech" class="" />
+        <img id="logo" src="/asset/images/logo.png" alt="Eureka EdTech" class="" />
         <p class="opacity-50 text-sm text-center">&copy; 2024 Eureka. All rights reveserved. For inquries. contact: info@eurekaedu.academy</p>
         <div class="flex items-center gap-6">
           <a
           href="https://whatapp.com"
-          target="_blank"        
+          target="_blank"
           ><i class="fab fa-whatsapp font-bold text-3xl"></i
-        ></a>   
+        ></a>
         <a
           href="https://x.com"
-          target="_blank"     
+          target="_blank"
           ><i class="fab fa-x-twitter font-bold text-3xl"></i></i
         ></a>
         <a
           href="https://telegram.com"
-          target="_blank"        
-          ><i class="fab fa-telegram-plane font-bold text-3xl"></i></a>       
+          target="_blank"
+          ><i class="fab fa-telegram-plane font-bold text-3xl"></i></a>
         <a
           href="https://linkedin.com"
-          target="_blank"        
+          target="_blank"
           ><i class="fab fa-linkedin-in font-bold text-3xl"></i
-        ></a>       
+        ></a>
         </div>
        </div>
 
@@ -264,9 +287,9 @@ const currentTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', currentTheme);
 
 if (currentTheme === 'dark') {
-logo.src = '{{ asset("asset/images/white_logo.png") }}'; // Dark logo
+logo.src = '/asset/images/white_logo.png'; // Dark logo
 } else {
-logo.src = '{{ asset("asset/images/logo-dark.png") }}'; // Light logo
+logo.src = '/asset/images/logo-dark.png'; // Light logo
 }
 
 // Toggle theme on button click
@@ -277,9 +300,9 @@ localStorage.setItem('theme', theme);
 
 // Change logo based on theme
 if (theme === 'dark') {
-    logo.src = '{{ asset("asset/images/white_logo.png") }}'; // Dark logo
+    logo.src = '/asset/images/white_logo.png'; // Dark logo
 } else {
-    logo.src = '{{ asset("asset/images/logo-dark.png") }}'; // Light logo
+    logo.src = '/asset/images/logo-dark.png'; // Light logo
 }
 });
 });

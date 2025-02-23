@@ -24,7 +24,7 @@ Route::namespace('Api')->prefix('v1')->group(function () {
     // GUEST
     Route::prefix('auth')->group(function () {
         Route::post('login', [LoginController::class, 'login']);
-        Route::post('register', [RegisterController::class, 'register']);
+        // Route::post('register', [RegisterController::class, 'register']);
         Route::post('password/forgot', [PasswordController::class, 'forgetPassword']);
         Route::post('password/reset', [PasswordController::class, 'resetPassword']);
         Route::get('email/verify/{id}', [EmailController::class, 'verifyLink'])->name('email.verifylink');
