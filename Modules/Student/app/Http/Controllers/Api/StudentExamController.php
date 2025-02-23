@@ -245,6 +245,20 @@ class StudentExamController extends Controller
 
     }
 
+    // getFavoriteExams
+    public function getFavoriteExams()
+    {
+        $user = Auth::user();
+        $favoriteExamIds = StudentFavoriteExam::whereUserId($user->id)->pluck('exam_id');
+        // return exams and paginate it
+        $exams = Exam::whereIn('id', $favoriteExamIds)->paginate(20);
+        return response()->json([
+            'success' => true,
+            'message' => 'Favorite exams retrieved',
+            'data' => $exams,
+        ]);
+    }
+
     /**
      * Add exam to favorite
      */

@@ -20,10 +20,6 @@ class FileFacade
         	$current = Carbon::now()->format('YmdHs');
 	        $fileExtension = $file->getClientOriginalExtension();
 
-	        // regular filename
-	        // $nnn =str_replace( $fileExtension,  '.' .$fileExtension,  Str::slug($file->getClientOriginalName()) );
-	        // $fileName = strtoupper($nnn);
-
 	        // unique filename with timestamp
 	        $nnn =str_replace( $fileExtension, '-'.$current . '.' .$fileExtension,  Str::slug($file->getClientOriginalName()) );
 	        $fileName = strtoupper($nnn);
