@@ -1,4 +1,12 @@
 [variables]
 COMPOSER_ALLOW_SUPERUSER="1"
 [phases.build]
-cmds = ["composer install --no-dev", "npm install", "npm run build"]
+cmds = ["composer install --no-dev", "npm install"]
+[phases.setup]
+cmds = ["composer install --no-dev"]
+[phases.start]
+cmds = [
+  "php artisan storage:link",
+  "chmod -R 775 storage bootstrap/cache",
+  "php artisan optimize:clear"
+]

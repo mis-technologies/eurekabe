@@ -13,93 +13,93 @@ use Modules\File\Models\File as FileEntity;
 class FileFacade
 {
 
-    // public static function defaultUpload($file, $entity = null, $disk=null, $dir=null, $identifier= null ) {
-    //     try {
-
-    //         $storageDisk = $disk ?? config('filesystems.default');
-    //         $entityClass = get_class($entity);
-    //         $current = Carbon::now()->format('YmdHs');
-    //         $fileExtension = $file->getClientOriginalExtension();
-
-    //         // unique filename with timestamp
-    //         $nnn =str_replace( $fileExtension, '-'.$current . '.' .$fileExtension,  Str::slug($file->getClientOriginalName()) );
-    //         $fileName = strtoupper($nnn);
-
-    //         // $path = Storage::disk($storageDisk)->putFileAs($dir, $file, $fileName );
-
-    //          // Define the directory path
-    //         $path = 'uploads/' . $dir;
-    //         $destinationPath = public_path($path);
-
-    //         // Move the file to the public/uploads directory
-    //         $file->move($destinationPath, $fileName);
-
-    //         $user = Auth::user();
-    //         $media= FileEntity::create([
-    //             'user_id' => $user->id,
-    //             'disk' =>  $storageDisk,
-    //             'entity' => $entityClass,
-    //             'entity_id' => $entity->id,
-    //             'filename' => $fileName,
-    //             'identifier' => $identifier,
-    //             'path' => $destinationPath,
-    //             'extension' => $file->guessClientExtension() ?? '',
-    //             'mime' => $file->getClientMimeType(),
-    //             'size' => $file->getSize(),
-    //         ]);
-
-    //         return $media;
-
-    //     } catch (\Exception $e) {
-    //         dd($e);
-    //     }
-    // }
-
-    public static function defaultUpload($file, $entity = null, $disk = null, $dir = null, $identifier = null)
-    {
+    public static function defaultUpload($file, $entity = null, $disk=null, $dir=null, $identifier= null ) {
         try {
+
             $storageDisk = $disk ?? config('filesystems.default');
             $entityClass = get_class($entity);
             $current = Carbon::now()->format('YmdHs');
             $fileExtension = $file->getClientOriginalExtension();
 
             // unique filename with timestamp
-            $nnn = str_replace($fileExtension, '-' . $current . '.' . $fileExtension, Str::slug($file->getClientOriginalName()));
+            $nnn =str_replace( $fileExtension, '-'.$current . '.' .$fileExtension,  Str::slug($file->getClientOriginalName()) );
             $fileName = strtoupper($nnn);
 
-            // Define the directory path
-            $dir = 'uploads/' . $dir;
-            $destinationPath = public_path($dir);
+            // $path = Storage::disk($storageDisk)->putFileAs($dir, $file, $fileName );
 
-            // Ensure the directory exists
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
-            }
+             // Define the directory path
+            $path = 'uploads/' . $dir;
+            $destinationPath = public_path($path);
 
             // Move the file to the public/uploads directory
             $file->move($destinationPath, $fileName);
 
-            // dd($dir, $fileName);
-
             $user = Auth::user();
-            $media = FileEntity::create([
+            $media= FileEntity::create([
                 'user_id' => $user->id,
-                'disk' => 'public',
+                'disk' =>  $storageDisk,
                 'entity' => $entityClass,
                 'entity_id' => $entity->id,
                 'filename' => $fileName,
                 'identifier' => $identifier,
-                'path' => $dir . '/' . $fileName,
+                'path' => $destinationPath,
                 'extension' => $file->guessClientExtension() ?? '',
                 'mime' => $file->getClientMimeType(),
-                'size' => filesize($destinationPath . '/' . $fileName),
+                'size' => $file->getSize(),
             ]);
 
             return $media;
+
         } catch (\Exception $e) {
-            throw $e; // Rethrow the exception
+            dd($e);
         }
     }
+
+    // public static function defaultUpload($file, $entity = null, $disk = null, $dir = null, $identifier = null)
+    // {
+    //     try {
+    //         $storageDisk = $disk ?? config('filesystems.default');
+    //         $entityClass = get_class($entity);
+    //         $current = Carbon::now()->format('YmdHs');
+    //         $fileExtension = $file->getClientOriginalExtension();
+
+    //         // unique filename with timestamp
+    //         $nnn = str_replace($fileExtension, '-' . $current . '.' . $fileExtension, Str::slug($file->getClientOriginalName()));
+    //         $fileName = strtoupper($nnn);
+
+    //         // Define the directory path
+    //         $dir = 'uploads/' . $dir;
+    //         $destinationPath = public_path($dir);
+
+    //         // Ensure the directory exists
+    //         if (!file_exists($destinationPath)) {
+    //             mkdir($destinationPath, 0777, true);
+    //         }
+
+    //         // Move the file to the public/uploads directory
+    //         $file->move($destinationPath, $fileName);
+
+    //         // dd($dir, $fileName);
+
+    //         $user = Auth::user();
+    //         $media = FileEntity::create([
+    //             'user_id' => $user->id,
+    //             'disk' => 'public',
+    //             'entity' => $entityClass,
+    //             'entity_id' => $entity->id,
+    //             'filename' => $fileName,
+    //             'identifier' => $identifier,
+    //             'path' => $dir . '/' . $fileName,
+    //             'extension' => $file->guessClientExtension() ?? '',
+    //             'mime' => $file->getClientMimeType(),
+    //             'size' => filesize($destinationPath . '/' . $fileName),
+    //         ]);
+
+    //         return $media;
+    //     } catch (\Exception $e) {
+    //         throw $e; // Rethrow the exception
+    //     }
+    // }
 
     // public static function deleteFile($files, $disk=null) {
     public static function deleteFile($files, $disk = null)
