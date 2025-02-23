@@ -19,6 +19,8 @@
     <!-- Forms -->
     <div id="form-container" class="w-full h-full md:w-1/2 flex flex-col p-8 lg:px-12 rounded-lg pt-28 pb-0">
         <div class="h-fit overflow-y-scroll hide-scrollbar flex flex-col justify-start px-1">
+
+
             <!-- form one -->
             <form id="signUpForm" class="form mb-5">
                 <h3 class="text-xl lg:text-3xl font-bold mb-10 tracking-wider lg:text-start text-flip-container">
@@ -92,6 +94,16 @@
 
             <!-- Form two -->
             <form id="second-form" class="form hidden">
+
+                @if ($errors->any())
+                <div class="mb-4">
+                    <ul class="list-disc list-inside text-red-600">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <h3 class="text-xl lg:text-3xl font-bold mb-10 tracking-wider lg:text-start text-flip-container2">
                     Join the community and <br />become
                     <span class="text-primary" id="text-container2">an Advocate.</span>
@@ -177,6 +189,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    const dashboardUrl = "{{ route('advocate.dashboard') }}";
+</script>
 
 <script src="/asset/src/scripts/main.js"></script>
 

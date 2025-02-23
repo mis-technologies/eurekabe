@@ -16,6 +16,8 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
 
+
+
         $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
@@ -30,6 +32,7 @@ class RegisterController extends Controller
             'leading_attribute' => ['required', 'string'],
             'refereed_by' => ['required', 'in:Friends,Family,Social,Event'],
         ]);
+
 
         $verificationCode = self::generateVerificationCode();
 
@@ -50,7 +53,6 @@ class RegisterController extends Controller
             'refereed_by' => $request->refereed_by,
         ]);
 
-
         try {
             Mail::to($user->email)->send(new EmailVerification($verificationCode));
 
@@ -60,7 +62,8 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return response()->json(['Request', $request->all()]);
+        return response()->json(['Request', Auth::user()->id]);
+        // return response()->json(['Request', $request->all()]);
 
     }
 

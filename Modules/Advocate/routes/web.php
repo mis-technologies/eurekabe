@@ -17,3 +17,5 @@ use Modules\Advocate\Http\Controllers\AdvocateController;
 Route::group([], function () {
     // Route::resource('advocate', AdvocateController::class)->names('advocate');
 });
+
+Route::view('dashboard', 'index')->name('advocate.dashboard');

@@ -116,12 +116,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 submitSuccess.style.display = "block";
 
                 closePopup.addEventListener("click", () => {
-                    submitPopup.classList.remove("show");
-                    submitSuccess.style.display = "none";
+                    // submitPopup.classList.remove("show");
+                    // submitSuccess.style.display = "none";
+                    window.location.href = dashboardUrl;
                 });
 
                 redirectHome.addEventListener("click", () => {
-                    window.location.href = "index.html";
+                    window.location.href = dashboardUrl;
                 });
             }, 1000);
         } else {
