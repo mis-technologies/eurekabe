@@ -120,6 +120,8 @@ class StudentExamController extends Controller
                         $mark = $isCorrect ? ($question->marks ?? 1) : 0;
 
                         // Create the StudentExamResult for this question
+                        $correct_option = $options->where('is_correct', true)->first();
+                        $correct_answer = $correct_option ? $correct_option['option'] : null;
                         StudentExamResult::updateOrCreate([
                             'student_exam_id' => $studentExam->id,
                             'question_id' => $question->id,
@@ -129,7 +131,7 @@ class StudentExamController extends Controller
                             'user_id' => $studentExam->user_id,
                             'question_id' => $question->id,
                             'answer' => $userAnswer,
-                            'correct_answer' => $options->where('is_correct', true)->first()['option'],
+                            'correct_answer' => $correct_answer, // Store correct answer for multiple-choice questions
                             'mark' => $mark, // Store calculated mark
                             'is_correct' => $isCorrect, // Store correctness for multiple-choice questions
                         ]);
