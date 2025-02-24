@@ -104,7 +104,7 @@ dd($email);
                 <img src="/asset/images/mail_sent.gif" alt="" />
                 <div class="flex flex-col items-center w-full text-primary gap-3 dark:text-white">
                     <button><a href="/">Go to Home</a></button>
-                    <h1 class="font-bold text-center text-3xl pb-2">Verification Success! We will review your application and get back to you.</h1>
+                    <h1 class="font-bold text-center text-3xl pb-2">Verification Successful! We will review your application and get back to you.</h1>
                 </div>
             </div>
         </div>
