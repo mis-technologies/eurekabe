@@ -118,11 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 closePopup.addEventListener("click", () => {
                     // submitPopup.classList.remove("show");
                     // submitSuccess.style.display = "none";
-                    window.location.href = dashboardUrl;
+                    window.location.href = verificationUrl;
                 });
 
                 redirectHome.addEventListener("click", () => {
-                    window.location.href = dashboardUrl;
+                    window.location.href = verificationUrl;
                 });
             }, 1000);
         } else {
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //     }
     // }
 
-
+    // Registration Page Transition
     function initializeRegistrationPage() {
         const applyButton = document.getElementById("apply-button");
         const continueButton = document.getElementById("continue-button");
@@ -451,6 +451,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             // Show popup after successful submission
                             popUp();
+                            localStorage.setItem("registrationFormData", JSON.stringify(formData));
+                            console.log("Form data saved to localStorage");
                         })
                         .catch(error => {
                             console.error("Error:", error);

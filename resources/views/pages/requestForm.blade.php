@@ -33,11 +33,7 @@
                     <input id="full_name" type="text" required placeholder="John Doe"
                         class="p-2 px-5 border rounded-full w-full bg-transparent" />
                 </div>
-                <div class="mb-4">
-                    <label class="block text-black font-semibold dark:text-white">Email</label>
-                    <input id="email" type="email" required placeholder="johndoe@gmail.com"
-                        class="p-2 px-5 border rounded-full w-full bg-transparent" />
-                </div>
+
                 <div class="mb-4">
                     <label class="block text-black font-semibold dark:text-white">Password</label>
                     <input id="password" type="password" required placeholder="Your.8.Character@Password!"
@@ -110,6 +106,12 @@
                 </h3>
 
                 <div class="mb-4">
+                    <label class="block text-black font-semibold dark:text-white">Email</label>
+                    <input id="email" type="email" required placeholder="johndoe@gmail.com"
+                        class="p-2 px-5 border rounded-full w-full bg-transparent" />
+                </div>
+
+                <div class="mb-4">
                     <label class="block text-black font-semibold dark:text-white">Do you have a leadership experience in
                         the
                         institution?</label>
@@ -178,7 +180,7 @@
         <div class="flex-col flex items-center justify-center gap-10 h-full w-full">
             <img src="/asset/images/mail_sent.gif" alt="" />
             <div class="flex flex-col items-center w-full text-primary gap-3 dark:text-white">
-                <button class="" id="redirect_home">Go to Home</button>
+                <button class="" id="redirect_home">Click to Verify Email</button>
                 {{-- <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded" id="redirect_home">Go to
                     Home</button> --}}
                 {{-- <button class="" id="">Go to Home</button> --}}
@@ -191,7 +193,7 @@
 </div>
 
 <script>
-    const dashboardUrl = "{{ route('advocate.dashboard') }}";
+    const verificationUrl = "/verify-email";
 </script>
 
 <script src="/asset/src/scripts/main.js"></script>
