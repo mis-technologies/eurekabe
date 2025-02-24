@@ -7,6 +7,7 @@
     <title>Eureka EdTech</title>
     <link rel="stylesheet" href="{{ asset('asset/styles/output.css')}}" />
     <link rel="stylesheet" href="{{ asset('asset/styles/main.css')}}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontWebsiteController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,7 +16,14 @@ Route::get('/faq', [FrontWebsiteController::class, 'faq'])->name('pages.faq');
 Route::get('/contact', [FrontWebsiteController::class, 'contact'])->name('pages.contact');
 Route::get('/requestForm', [FrontWebsiteController::class, 'requestForm'])->name('pages.requestForm');
 
+// Onboarding
 
+Route::prefix('advocate')->group(function () {
+    Route::post('/register', [RegisterController::class, 'register'])->name('pages.register');
+});
+Route::get('/verify-email',[RegisterController::class, 'verifyEmail'] )->name('pages.verify.email');
+Route::post('/verify',[RegisterController::class, 'verify'] )->name('verify');
+Route::post('resend-email', [RegisterController::class, 'resendEmail'])->name('resend.email');
 
 Route::get('/upload', function () {
     return view('upload');
