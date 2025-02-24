@@ -27,6 +27,8 @@ class School extends Model
     ];
 
     protected $dates = ['deleted_at'];
+    // appends advocate
+    public $appends = ['advocate'];
 
     public function exams()
     {
@@ -36,6 +38,20 @@ class School extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('role');
+    }
+
+    public function getAdvocateAttribute(){
+        if(! $advocate = User::where('school_id', $this->id)->where('role', 'advocate')->first()){
+            $advocate = User::where('email', 'advocate@eureka.live')->first();
+
+        }
+        return [
+            'id' => $advocate->id,
+            'firstname' => $advocate->firstname,
+            'lastname' =>$advocate->lastname,
+            'email' => $advocate->email
+        ];
+
     }
 }
 
