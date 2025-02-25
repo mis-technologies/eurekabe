@@ -242,15 +242,15 @@
       <img src="{{ asset('asset/images/logo.png')}}" alt="" class="eurekaLogo md:-translate-x-5 eurekaLogo">
       <div class="text-sm text-center">
         <p class="text-[rgba(0, 0. 0. 0.5)]">
-          <a class="underline text-primary" href="privacy.html">Our Privacy policy </a> 
+          <a class="underline text-primary" href="/privacy-policy">Our Privacy policy </a> 
             and 
-          <a class="underline text-primary" href="terms-and-condition.html"> Terms & condition </a>
+          <a class="underline text-primary" href="/terms-condition"> Terms & condition </a>
         </p>
-        <p class="opacity-50"> &copy; 2024 Eureka. All rights reveserved. For inquries. contact: info@eureka.com</p>
+        <p class="opacity-50"> &copy; 2024 Eureka. All rights reveserved. For inquries. contact: info@eurekaedu.academy</p>
       </div>
       <div class="flex items-center gap-6">
         <a
-        href="https://whatapp.com"
+        href="https://chat.whatsapp.com/K9wtsP5rWam1FecyTLRhpA"
         target="_blank"        
         ><i class="fab fa-whatsapp font-bold text-3xl"></i
       ></a>   
@@ -258,15 +258,19 @@
         href="https://x.com"
         target="_blank"     
         ><i class="fab fa-x-twitter font-bold text-3xl"></i></a>
+        <a
+        href="https://www.instagram.com/invites/contact/?igsh=1c0iisduw4fa2&utm_content=u06o6hh"
+        target="_blank"><i class="fab fa-instagram font-bold text-3xl"></i></a>    
+
       <a
-        href="https://telegram.com"
-        target="_blank"        
-        ><i class="fab fa-telegram-plane font-bold text-3xl"></i></a>       
-      <a
-        href="https://linkedin.com"
+        href="https://www.linkedin.com/company/eurekaexam"
         target="_blank"        
         ><i class="fab fa-linkedin-in font-bold text-3xl"></i
       ></a>       
+      <a
+      href="https://www.youtube.com/your_channel"
+      target="_blank"        
+  ><i class="fab fa-youtube font-bold text-3xl"></i></a>  
       </div>
      </div>
 

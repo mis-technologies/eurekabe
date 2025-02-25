@@ -408,7 +408,7 @@
           </div>
           <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
             <h1 class="font-semibold text-xl">Ejeh Marvelous</h1>
-            <p class="opacity-80 font-light text-lg">CEO</p>
+            <p class="opacity-80 font-light text-lg">CEO & Co-Founder</p>
             <div class="h-[1.2px] w-full bg-primary"></div>
             {{-- <p class="text-sm font-normal ">
               I am a software engineer and digital entrepreneur with 7 years of experience. As co-founder of Trafull and founder of Eureka Online CBT Software, I build impactful, user-focused products. I thrive in creative environments and bring strong leadership, communication, and problem-solving skills to every project.
@@ -436,8 +436,8 @@
         <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
           <div class="img-container relative">
             <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
-            <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-              <img src="{{ asset('asset/images/Airon-removebg-preview.png')}}" alt="" class="w-full h-full">
+            <div class=" border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+              <img src="{{ asset('asset/images/Aaron.jpeg')}}" alt="" class="w-full h-full">
             </div>
           </div>
           <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">

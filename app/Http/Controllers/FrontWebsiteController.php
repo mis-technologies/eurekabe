@@ -44,4 +44,9 @@ class FrontWebsiteController extends Controller
     {
         return view('welcome');
     }
+
+    public function policyPrivacy()
+    {
+        return view('pages.policy-privacy');
+    }
 }
