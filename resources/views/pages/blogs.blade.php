@@ -53,7 +53,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -74,7 +74,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -95,7 +95,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -116,7 +116,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -137,7 +137,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -158,7 +158,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -184,7 +184,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -205,7 +205,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -226,7 +226,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -247,7 +247,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -268,7 +268,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -289,7 +289,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -315,7 +315,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -336,7 +336,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -357,7 +357,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -378,7 +378,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -399,7 +399,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -420,7 +420,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -446,7 +446,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -467,7 +467,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -488,7 +488,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -509,7 +509,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -535,7 +535,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -556,7 +556,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -577,7 +577,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -598,7 +598,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -619,7 +619,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -640,7 +640,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -666,7 +666,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -687,7 +687,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -708,7 +708,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -729,7 +729,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -750,7 +750,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
@@ -771,7 +771,7 @@
                     <p class="opacity-50 text-[13px]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
-                    <a href="https://mistech.io"
+                    <a href="{{route('pages.article')}}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
