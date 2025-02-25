@@ -8,6 +8,14 @@ use Modules\Common\Models\School;
 class FrontWebsiteController extends Controller
 {
     //
+
+    public function article()
+    {
+        // dd('here');
+
+        // $blogContent = Blog::findOrFail($id);
+        return view('pages.article');
+    }
     public function events()
     {
         return view('pages.event');
