@@ -90,11 +90,13 @@
        <div
        class="flex flex-col items-center justify-center gap-4 md:hidden z-10"
      >
+     <a href="{{ $homePageData['herosection']['community_url']}}">
        <button
          class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
        >
          Join the community
        </button>
+      </a>
        <div class="flex flex-col items-center justify-center">
          <p class="font-bold font-sans text-lg">It’s absolutely free.</p>
          <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt="" />
@@ -130,34 +132,17 @@
       class="flex flex-col items-center justify-between md:flex-row gap-y-10"
     >
       <h2 class="text-3xl font-bold text-center md:max-w-[20rem] md:text-left font-lato">
-        More than 50+ schools trust <span class="text-primary">Eureka</span>
+        {!! str_replace('Eureka', '<span class="text-primary">Eureka</span>', $homePageData['pathnersection']['title']) !!}
       </h2>
       <div class="slider-container relative w-full max-w-xl">
         <div class="slider-track flex transition-transform duration-300">
-            <div class="slide flex items-center justify-between">
-                <img src="{{ asset('asset/images/partners/Black and White Collection 0.png')}}" alt="lorem" />
-                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-            </div>
-            <div class="slide flex items-center justify-between">
-                <img src="{{ asset('asset/images/partners/Black and White Collection 1.png')}}" alt="lorem" />
-                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-            </div>
-            <div class="slide flex items-center justify-between">
-                <img src="{{ asset('asset/images/partners/Black and White Collection 0.png')}}" alt="lorem" />
-                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-            </div>
-            <div class="slide flex items-center justify-between">
-                <img src="{{ asset('asset/images/partners/Black and White Collection 1.png')}}" alt="lorem" />
-                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-            </div>
-            <div class="slide flex items-center justify-between">
-                <img src="{{ asset('asset/images/partners/Black and White Collection 2.png')}}" alt="lorem" />
-                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-            </div>
-            <div class="slide flex items-center justify-between">
-                <img src="{{ asset('asset/images/partners/Black and White Collection 3.png')}}" alt="lorem" />
-                <h5 class="font-bold ml-1 italic font-lato">LogoIpsum</h5>
-            </div>
+          @foreach ($homePageData['pathnersection']['schools'] as $school)
+          <div class="slide flex items-center justify-between">
+            <img src="{{ $school['img_url'] }}" alt="{{ $school['school_name'] }}" />
+            <h5 class="font-bold ml-1 italic font-lato">{{ $school['school_name'] }}</h5>
+        </div>
+          @endforeach
+
         </div>
         <button class="prev left-0 transform -translate-y-1/2 rounded-md p-3 z-10">❮</button>
         <button class="next right-0 transform -translate-y-1/2 rounded-md p-3 z-10">❯</button>
@@ -175,7 +160,7 @@
       >
         <div class="relative w-full md:w-1/2 z-10">
           <img
-            src="{{ asset('asset/images/low-angle-multiracial-college-students BW 1.png')}}"
+            src="{{ $homePageData['whoarewe']['img_url'] }}"
             alt=""
             class="w-full h-auto"
           />
@@ -186,52 +171,29 @@
           />
         </div>
         <div class="w-full md:w-1/2 flex flex-col gap-3">
-          <h2 class="script-font" style="color:#4F92FE">Who we are</h2>
+          <h2 class="script-font" style="color:#4F92FE"> {{ $homePageData['whoarewe']['title'] }}</h2>
           <h1 class="text-2xl font-bold md:text-3xl">
-            Join us: Embrace the power of Advocacy
+            {{ $homePageData['whoarewe']['desc'] }}
           </h1>
           <p class="opacity-60 text-xl">
-            Discover the benefits of becoming an Advocate, from gaining
-            leadership experience to shaping the direction of education in your
-            school.
+            {{ $homePageData['whoarewe']['content'] }}
           </p>
           <ul class="grid grid-cols-2 w-full gap-5 md:gap-x-12 mt-2">
+            @foreach ($homePageData['whoarewe']['points'] as $point)
             <li class="flex items-center gap-3">
               <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" /> 
-              <p class="font-medium text-lg opacity-60"> Leadership experience</p>
+              <p class="font-medium text-lg opacity-60">{{ $point }}</p>
             </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" />
-              <p class="font-medium text-lg opacity-60">Diversity
-                advocacy</p> 
-            </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" /> 
-              <p class="font-medium text-lg opacity-60">Community
-                building</p>
-            </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" />
-              <p class="font-medium text-lg opacity-60">Impactful
-                contributions</p>
-            </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" />
-              <p class="font-medium text-lg opacity-60">Communication skills</p>
-              
-            </li>
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" />
-              <p class="font-medium text-lg opacity-60">Influence
-                expansion</p>
-            </li>
+            @endforeach
           </ul>
           <div class="flex flex-col items-center justify-center gap-4 mt-10">
+            <a href="{{ $homePageData['whoarewe']['community_url'] }}">
             <button
               class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
             >
               Join the community
             </button>
+            <a/>
             <div class="flex flex-col items-center justify-center">
               <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt=""/>
             </dv>

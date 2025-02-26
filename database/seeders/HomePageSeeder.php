@@ -15,7 +15,7 @@ class HomePageSeeder extends Seeder
      */
     public function run()
     {
-        HomePage::firstOrCreate(
+        HomePage::updateOrCreate(
             ['id' => 1], // Assuming you want to check by id, you can change this to any unique field
             [
                 'herosection' => json_encode([
@@ -32,24 +32,33 @@ class HomePageSeeder extends Seeder
                         'img8' => 'asset/images/hero/model8.png',
                     ],
                     'community_url' => 'https://chat.whatsapp.com/K9wtsP5rWam1FecyTLRhpA',
-                    
                 ]),
+
 
                 'pathnersection' => json_encode([
                     'title' => 'More than 50+ schools trust Eureka',
-                    'schools_label' => [
-                        'img_url' => [
-                            'asset/images/partners/Black and White/1.png',
-                            'asset/images/partners/Black and White/1.png',
-                            'asset/images/partners/Black and White/1.png',
-                            'asset/images/partners/Black and White/1.png',
-                            'asset/images/partners/Black and White/1.png',
-                            'asset/images/partners/Black and White/1.png',
-                            'asset/images/partners/Black and White/1.png',
-                            'asset/images/partners/Black and White/1.png',
+                        'schools' => [
+                            [
+                                'school_name' => 'Greenwood High School',
+                                'img_url' => 'asset/images/partners/img1.png',
+                            ],
+                            [
+                                'school_name' => 'Springfield Academy',
+                                'img_url' => 'asset/images/partners/img2.png',
+                            ],
+                            [
+                                'school_name' => 'Riverside College',
+                                'img_url' => 'asset/images/partners/img3.png',
+                            ],
+                            [
+                                'school_name' => 'Hilltop International',
+                                'img_url' => 'asset/images/partners/img4.png',
+                            ],
                         ],
-                    ],
+                 
                 ]),
+
+
                 'whoarewe' => json_encode([
                     'title' => 'Who We Are',
                     'desc' => ' Join us: Embrace the power of Advocacy ',

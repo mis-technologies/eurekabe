@@ -10,8 +10,6 @@ use App\Models\HomePage;
 class FrontWebsiteController extends Controller
 {
     // home page
-
-    
     public function home()
     {
         // Fetch the first record from the HomePage model
@@ -28,7 +26,6 @@ class FrontWebsiteController extends Controller
                 'teamsection' => json_decode($homePage->teamsection, true),
                 'downloadsection' => json_decode($homePage->downloadsection, true),
                 'engagementsection' => json_decode($homePage->engagementsection, true),
-               
             ];
 
             // Prepend APP_URL to image paths
@@ -36,8 +33,8 @@ class FrontWebsiteController extends Controller
             foreach ($homePageData['herosection']['img_url'] as $key => $value) {
                 $homePageData['herosection']['img_url'][$key] = $appUrl . '/' . $value;
             }
-            foreach ($homePageData['pathnersection']['schools_label']['img_url'] as &$image) {
-                $image = $appUrl . '/' . $image;
+            foreach ($homePageData['pathnersection']['schools'] as &$school) {
+                $school['img_url'] = $appUrl . '/' . $school['img_url'];
             }
             foreach ($homePageData['whoarewe'] as $key => $value) {
                 if ($key === 'img_url' || $key === 'community_url') {
@@ -77,16 +74,10 @@ class FrontWebsiteController extends Controller
                 ],
                 'pathnersection' => [
                     'title' => 'No data available',
-                    'schools_label' => [
-                        'img_url' => [
-                            '',
-                            '',
-                            '',
-                            '',
-                            '',
-                            '',
-                            '',
-                            '',
+                    'schools' => [
+                        [
+                            'school_name' => '',
+                            'img_url' => '',
                         ],
                     ],
                 ],
@@ -118,12 +109,14 @@ class FrontWebsiteController extends Controller
                 ],
             ];
         }
-
         // dd($homePageData);
 
         // Pass the data to the view
         return view('welcome', compact('homePageData'));
     }
+
+    
+ 
 
     public function article()
     {
