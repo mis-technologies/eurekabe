@@ -151,7 +151,7 @@
               <a href="/faq">FAQ</a>
             </li>
             <li class="font-sans font-bold hover:text-primary {{ Request::is('blog') ? 'active' : '' }} ">
-              <a href="/blog">Blog</a>
+              <a href="/blogs">Blog</a>
             </li>
           </ul>
           <button
@@ -188,17 +188,21 @@
         <div
           class="flex flex-col justify-center items-center gap-5 w-full md:mt-10 md:flex-row md:items-start md:gap-16"
         >
+        <a href="https://chat.whatsapp.com/K9wtsP5rWam1FecyTLRhpA" target="_blank">
           <button
             class="w-fit bg-primary px-5 py-3 font-bold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
           >
             Join the community
           </button>
+        </a>
           <div class="flex flex-col items-center">
+            <a href="/contact-us">
             <button
               class="w-fit px-14 py-2 font-bold text-primary border-2 border-primary rounded-[2rem] cursor-pointer hover:bg-primary hover:text-white"
             >
               Learn more
             </button>
+          </a>
             <img
               src="{{ asset('asset/images/designs/Vector 7.png')}}"
               alt=""

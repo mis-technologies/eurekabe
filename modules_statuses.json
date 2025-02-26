@@ -9,5 +9,6 @@
     "Explore": true,
     "Messaging": true,
     "Test": true,
-    "File": true
+    "File": true,
+    "FrontWebsite": true
 }

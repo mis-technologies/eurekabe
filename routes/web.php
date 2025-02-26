@@ -6,9 +6,7 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontWebsiteController::class, 'home']);
 
 Route::get('/blog', [FrontWebsiteController::class, 'blog'])->name('pages.blogs');
 Route::get('/article', [FrontWebsiteController::class, 'article'])->name('pages.article');

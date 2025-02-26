@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ExamResource\Pages;
 use Modules\Exam\Models\Exam;
 use Modules\Exam\Models\Subject;
+use Modules\Common\Models\School;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -27,12 +28,22 @@ class ExamResource extends Resource
 
                 Forms\Components\Select::make('subject_id')
                     ->label('Subject')
-                    ->options(Subject::all()->pluck('name', 'id')->toArray()) // Fetch all subjects
+                    ->options(function () {
+                        return Subject::all()->pluck('name', 'id')->filter()->toArray();
+                    })
                     ->required()
                     ->searchable()
                     ->placeholder('Select a Subject'),
 
-
+                Forms\Components\Select::make('school_id')
+                    ->label('School')
+                    ->options(function () {
+                        return School::all()->pluck('name', 'id')->filter()->toArray();
+                    })
+                    ->nullable()
+                    ->required()
+                    ->searchable()
+                    ->placeholder('Select a School'),
 
                 Forms\Components\Textarea::make('instruction')
                     ->label('Instructions')
@@ -63,12 +74,12 @@ class ExamResource extends Resource
                     ->numeric()
                     ->required(),
 
-                    Forms\Components\TextInput::make('value')
+                Forms\Components\TextInput::make('value')
                     ->label('Value')
                     ->numeric()
                     ->default(2)
                     ->required(),
-
+                   
                 Forms\Components\Select::make('status')
                     ->label('Status')
                     ->options([
@@ -83,7 +94,6 @@ class ExamResource extends Resource
     {
         return $table
             ->columns([
-                
                 Tables\Columns\TextColumn::make('title')
                     ->label('Exam Name')
                     ->sortable()
@@ -91,6 +101,11 @@ class ExamResource extends Resource
 
                 Tables\Columns\TextColumn::make('instruction')
                     ->label('Instructions')
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('school.name')
+                    ->label('School')
                     ->sortable()
                     ->searchable(),
 
@@ -112,6 +127,10 @@ class ExamResource extends Resource
                 Tables\Columns\TextColumn::make('totalmark')
                     ->label('Total Marks')
                     ->sortable(),
+            ])
+            ->defaultSort('created_at', 'desc') // Add this line to sort by created_at in descending order
+            ->actions([
+                Tables\Actions\EditAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
