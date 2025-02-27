@@ -1,9 +1,11 @@
 <?php
-namespace App\Http\Controllers;
+namespace Modules\Exam\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
 use Modules\Common\Actions\OpenRouter;
+use App\Http\Controllers\Controller;
+
 
 class AIExamController extends Controller
 {
@@ -33,8 +35,11 @@ class AIExamController extends Controller
                     $allQuestions = array_merge($allQuestions, $batchQuestions);
                 }
 
+                // Intercept and max execution time here and increase it
+                ini_set('max_execution_time', 300000);
+
                 // Prevent exceeding API limits
-                usleep(500000); // 0.5 second delay between requests
+                usleep(0); // 0.5 second delay between requests
             }
 
             return response()->json([
@@ -90,13 +95,7 @@ class AIExamController extends Controller
 
     private function processResponse($response)
     {
-        // Decode JSON response
-        $decoded = json_decode($response, true);
-
-        // Validate JSON format
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception('JSON decode error: ' . json_last_error_msg());
-        }
+        $decoded = OpenRouter::processResponse($response);
 
         // Add status field and reformat
         return array_map(fn($question) => array_merge($question, ['status' => 0]), $decoded);
