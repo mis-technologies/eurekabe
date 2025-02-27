@@ -358,7 +358,7 @@
                     <img src="{{ asset('asset/images/particle3.png')}}" alt="" class="opacity-30 dark:opacity-60">
                 </div>
             </div>
-            <!-- <div class="particle-container h-full w-full">
+           <div class="particle-container h-full w-full">
         <li class="particle bg-[#070d5a] bg-opacity-50 w-48 h-48 rounded-full list-none"></li>
         <li class="particle bg-[#070d5a] bg-opacity-50 w-52 h-52 rounded-full list-none"></li>
         <li class="particle bg-[#070d5a] bg-opacity-50 w-64 h-64 rounded-full list-none"></li>
