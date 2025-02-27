@@ -32,7 +32,7 @@
                 @else
                     @foreach ($events as $event)
                         @if($event->type == 'in_person')
-                        <div class="relative flex lg:h-[600px] overflow:hidden">
+                        <div style="margin-bottom: 250px" class="relative flex lg:h-[600px] overflow:hidden">
                             <!-- BG Image -->
                             <div class="w-full h-full relative">
                                 <!-- Toggle Button -->
@@ -98,21 +98,27 @@
                 @else
                     @foreach ($events as $event)
                         @if($event->type == 'virtual')
-                        <div class="relative flex lg:h-[600px] overflow:hidden">
+                        <div style="margin-bottom: 250px" class="relative flex lg:h-[600px] overflow:hidden">
                             <!-- BG Image -->
                             <div class="w-full h-full relative">
+                                <!-- Toggle Button -->
+                                <div onclick="toggleDetails()" class="toggler absolute -top-10 -left-100 h-10 w-1000 shadow bg-danger-600 overflow-hidden rounded-xl p-4 cursor-pointer">
+                                    Show more details
+                                    <i class="fa fa-eye"></i>
+                                    <i class="fa fa-close hidden"></i>
+                                </div>
                                 <img class="w-full h-full object-cover rounded-2xl -z-20" src="/{{ $event->getRawOriginal('image') }}" alt="image here">
                                 <div class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0"></div>
                                 <!-- event logo -->
                                 @foreach ($event['sponsors'] as $sponsor)
-                                <div class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
+                                <div class=" toggleUp hidden md:block absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
                                     <img class="w-auto h-full object-cover mx-auto" src="{{ $sponsor['logo_url'] }}" alt="logo">
                                 </div>
                                 @endforeach
                             </div>
 
                             <!-- Event type-->
-                            <div class="absolute top-10 left-10 h-10 text-white flex items-center">
+                            <div class="toggleUp hidden md:flex absolute top-10 left-10 h-10 text-white flex items-center">
                                 <div class="flex">
                                     @foreach ($event['speakers'] as $speaker)
                                     <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100">
@@ -126,7 +132,7 @@
                             </div>
 
                             <!-- Event Detail card -->
-                            <div class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
+                            <div class=" toggleUp  absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
                                 <div class="flex items-center gap-2 mb-4 font-roboto">
                                     <span class="text-primary text-2xl font-semibold">{{ $event->price }} </span>
                                     <span class="text-sm">in total prizes</span>
