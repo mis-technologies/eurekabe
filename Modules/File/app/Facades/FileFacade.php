@@ -24,7 +24,7 @@ class FileFacade
 	        $nnn =str_replace( $fileExtension, '-'.$current . '.' .$fileExtension,  Str::slug($file->getClientOriginalName()) );
 	        $fileName = strtoupper($nnn);
 
-	        // $path = Storage::putFileAs('resource', $file, $fileName ); //specify sub dir
+            $dir = 'uploads' . $dir;
 	        $path = Storage::disk($storageDisk)->putFileAs($dir, $file, $fileName );
             $user = Auth::user();
 	        $media= FileEntity::create([

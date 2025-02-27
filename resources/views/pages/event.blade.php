@@ -27,319 +27,119 @@
         <section id="eventsList">
             <!-- In person events -->
             <div id="physical" class="content space-y-20 gap-6 md:container">
-                <!-- Event one -->
-                <div class="relative flex lg:h-[600px] overflow:hidden">
-                    <!-- BG Image -->
-                    <div class="w-full h-full relative">
-                        <img class="w-full h-full object-cover rounded-2xl -z-20" src="/asset/images/programs/002.jpg"
-                            alt="image here">
-                        <div
-                            class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0">
-                        </div>
-                        <!-- event logo -->
-                        <div
-                            class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
-                            <img class="w-auto h-full object-cover mx-auto"
-                                src="/asset/images/partners/Black and White Collection 1.png" alt="logo">
-                        </div>
-                    </div>
-
-                    <!-- Event type-->
-                    <div class="absolute top-10 left-10 h-10 text-white flex items-center">
-                        <div class="flex">
-                            <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100 ">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
+                @if($events->isEmpty())
+                    <p>No data available</p>
+                @else
+                    @foreach ($events as $event)
+                        @if($event->type == 'in_person')
+                        <div class="relative flex lg:h-[600px] overflow:hidden">
+                            <!-- BG Image -->
+                            <div class="w-full h-full relative">
+                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="{{ $event->image }}" alt="image here">
+                                <div class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0"></div>
+                                <!-- event logo -->
+                                @foreach ($event['sponsors'] as $sponsor)
+                                <div class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
+                                    <img class="w-auto h-full object-cover mx-auto" src="{{ $sponsor['logo_url'] }}" alt="logo">
+                                </div>
+                                @endforeach
                             </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-pink-100 -translate-x-1/2">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-green-100 -translate-x-full">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                        </div>
-                        <div
-                            class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-green-300 text-green-500">
-                            <span class="uppercase"> Upcoming </span>
-                        </div>
-                    </div>
 
-                    <!-- Event Detail card -->
-                    <div
-                        class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
-                        <div class="flex items-center gap-2 mb-4 font-roboto">
-                            <span class="text-primary text-2xl font-semibold">N200,000 NGN </span>
-                            <span class="text-sm">in total prizes</span>
-                        </div>
-                        <div class="">
-                            <h3 class="font-bold text-4xl font-roboto mb-5">Sport B Hackathon</h3>
-                            <div class="flex flex-col gap-4">
-                                <p class="dark:text-gray-100">19 Feb - 20 Feb 2025 | 48 hours</p>
-                                <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">Nigeria,
-                                    NG</span>
+                            <!-- Event type-->
+                            <div class="absolute top-10 left-10 h-10 text-white flex items-center">
+                                <div class="flex">
+                                    @foreach ($event['speakers'] as $speaker)
+                                    <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100">
+                                        <img src="{{ $speaker['img_url'] }}" alt="" class="w-full h-auto object-cover">
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <div class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-green-300 text-green-500">
+                                    <span class="uppercase"> {{ $event->status }} </span>
+                                </div>
                             </div>
-                            <button onclick="showEventDetail()"
-                                class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 ${event.upcoming ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black"}'>
-                                View details
-                            </button>
 
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Event two -->
-                <div class="relative flex lg:h-[600px] overflow:hidden">
-                    <!-- BG Image -->
-                    <div class="w-full h-full relative">
-                        <img class="w-full h-full object-cover rounded-2xl -z-20" src="/asset/images/programs/politics.jpg"
-                            alt="image here">
-                        <div
-                            class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0">
-                        </div>
-                        <!-- event logo -->
-                        <div
-                            class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
-                            <img class="w-auto h-full object-cover mx-auto"
-                                src="/asset/images/partners/Black and White Collection 0.png" alt="logo">
-                        </div>
-                    </div>
-
-                    <!-- Event type-->
-                    <div class="absolute top-10 left-10 h-10 text-white flex items-center">
-                        <div class="flex">
-                            <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100 ">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-pink-100 -translate-x-1/2">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-green-100 -translate-x-full">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
+                            <!-- Event Detail card -->
+                            <div class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
+                                <div class="flex items-center gap-2 mb-4 font-roboto">
+                                    <span class="text-primary text-2xl font-semibold">{{ $event->price }} </span>
+                                    <span class="text-sm">in total prizes</span>
+                                </div>
+                                <div class="">
+                                    <h3 class="font-bold text-4xl font-roboto mb-5">{{ $event->title }}</h3>
+                                    <div class="flex flex-col gap-4">
+                                        <p class="dark:text-gray-100">{{ \Carbon\Carbon::parse($event->start_datetime)->format('d M') }} - {{ \Carbon\Carbon::parse($event->end_datetime)->format('d M Y') }} | {{ $event->duration }} hours</p>
+                                        <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">{{ $event->location }}</span>
+                                    </div>
+                                    <button onclick="showEventDetail()"
+                                        class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 {{ $event->status == "UPCOMING" ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black" }}'>
+                                        View details
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div
-                            class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-green-300 text-green-500">
-                            <span class="uppercase"> Upcoming </span>
-                        </div>
-                    </div>
-
-                    <!-- Event Detail card -->
-                    <div
-                        class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
-                        <div class="flex items-center gap-2 mb-4 font-roboto">
-                            <span class="text-primary text-2xl font-semibold">N200,000 NGN </span>
-                            <span class="text-sm">in total prizes</span>
-                        </div>
-                        <div class="">
-                            <h3 class="font-bold text-4xl font-roboto mb-5">Mr Brain Hackathon</h3>
-                            <div class="flex flex-col gap-4">
-                                <p class="dark:text-gray-100">20 Feb - 22 Feb 2025 | 18 hours</p>
-                                <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">Nigeria,
-                                    NG</span>
-                            </div>
-                            <button onclick="showEventDetail()"
-                                class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 ${event.upcoming ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black"}'>
-                                View details
-                            </button>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Event three -->
-                <div class="relative flex lg:h-[600px] overflow:hidden">
-                    <!-- BG Image -->
-                    <div class="w-full h-full relative">
-                        <img class="w-full h-full object-cover rounded-2xl -z-20" src="/asset/images/programs/ladies.png"
-                            alt="image here">
-                        <div
-                            class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0">
-                        </div>
-                        <!-- event logo -->
-                        <div
-                            class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
-                            <img class="w-auto h-full object-cover mx-auto"
-                                src="/asset/images/partners/Black and White Collection 3.png" alt="logo">
-                        </div>
-                    </div>
-
-                    <!-- Event type-->
-                    <div class="absolute top-10 left-10 h-10 text-white flex items-center">
-                        <div class="flex">
-                            <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100 ">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-pink-100 -translate-x-1/2">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-green-100 -translate-x-full">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                        </div>
-                        <div
-                            class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-green-300 text-green-500">
-                            <span class="uppercase"> Upcoming </span>
-                        </div>
-                    </div>
-
-                    <!-- Event Detail card -->
-                    <div
-                        class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
-                        <div class="flex items-center gap-2 mb-4 font-roboto">
-                            <span class="text-primary text-2xl font-semibold">N200,000,000 NGN </span>
-                            <span class="text-sm">in total prizes</span>
-                        </div>
-                        <div class="">
-                            <h3 class="font-bold text-4xl font-roboto mb-5">MISTECH TEAM HANGOUT</h3>
-                            <div class="flex flex-col gap-4">
-                                <p class="dark:text-gray-100">26 DEC 2025 | 8 hours</p>
-                                <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">Abuja,
-                                    abj</span>
-                            </div>
-                            <button onclick="showEventDetail()"
-                                class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 ${event.upcoming ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black"}'>
-                                View details
-                            </button>
-
-                        </div>
-                    </div>
-
-                </div>
-
+                        @endif
+                    @endforeach
+                @endif
             </div>
 
-            <!-- Virtual -->
+          
+            <!-- Virtual events -->
             <div id="virtual" class="content space-y-20 gap-6 md:container">
-                <!-- Event one -->
-                <div class="relative flex lg:h-[600px] overflow:hidden">
-                    <!-- BG Image -->
-                    <div class="w-full h-full relative">
-                        <img class="w-full h-full object-cover rounded-2xl -z-20" src="/asset/images/programs/man.png"
-                            alt="image here">
-                        <div
-                            class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0">
-                        </div>
-                        <!-- event logo -->
-                        <div
-                            class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
-                            <img class="w-auto h-full object-cover mx-auto"
-                                src="/asset/images/partners/Black and White Collection 1.png" alt="logo">
-                        </div>
-                    </div>
-
-                    <!-- Event type-->
-                    <div class="absolute top-10 left-10 h-10 text-white flex items-center">
-                        <div class="flex">
-                            <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100 ">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
+                @if($events->isEmpty())
+                    <p>No data available</p>
+                @else
+                    @foreach ($events as $event)
+                        @if($event->type == 'virtual')
+                        <div class="relative flex lg:h-[600px] overflow:hidden">
+                            <!-- BG Image -->
+                            <div class="w-full h-full relative">
+                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="{{ $event->image }}" alt="image here">
+                                <div class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0"></div>
+                                <!-- event logo -->
+                                @foreach ($event['sponsors'] as $sponsor)
+                                <div class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
+                                    <img class="w-auto h-full object-cover mx-auto" src="{{ $sponsor['logo_url'] }}" alt="logo">
+                                </div>
+                                @endforeach
                             </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-pink-100 -translate-x-1/2">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-green-100 -translate-x-full">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                        </div>
-                        <div
-                            class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-green-300 text-green-500">
-                            <span class="uppercase"> Upcoming </span>
-                        </div>
-                    </div>
 
-                    <!-- Event Detail card -->
-                    <div
-                        class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
-                        <div class="flex items-center gap-2 mb-4 font-roboto">
-                            <span class="text-primary text-2xl font-semibold">N200,000 NGN </span>
-                            <span class="text-sm">in total prizes</span>
-                        </div>
-                        <div class="">
-                            <h3 class="font-bold text-4xl font-roboto mb-5">Programmers Hackathon</h3>
-                            <div class="flex flex-col gap-4">
-                                <p class="dark:text-gray-100">19 Feb - 20 Feb 2025 | 48 hours</p>
-                                <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">Nigeria,
-                                    NG</span>
+                            <!-- Event type-->
+                            <div class="absolute top-10 left-10 h-10 text-white flex items-center">
+                                <div class="flex">
+                                    @foreach ($event['speakers'] as $speaker)
+                                    <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100">
+                                        <img src="{{ $speaker['img_url'] }}" alt="" class="w-full h-auto object-cover">
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <div class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-green-300 text-green-500">
+                                    <span class="uppercase"> {{ $event->status }} </span>
+                                </div>
                             </div>
-                            <button onclick="showEventDetail()"
-                                class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 ${event.upcoming ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black"}'>
-                                View details
-                            </button>
 
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Event two -->
-                <div class="relative flex lg:h-[600px] overflow:hidden">
-                    <!-- BG Image -->
-                    <div class="w-full h-full relative">
-                        <img class="w-full h-full object-cover rounded-2xl -z-20" src="/asset/images/team.png"
-                            alt="image here">
-                        <div
-                            class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0">
-                        </div>
-                        <!-- event logo -->
-                        <div
-                            class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
-                            <img class="w-auto h-full object-cover mx-auto"
-                                src="/asset/images/partners/Black and White Collection 1.png" alt="logo">
-                        </div>
-                    </div>
-
-                    <!-- Event type-->
-                    <div class="absolute top-10 left-10 h-10 text-white flex items-center">
-                        <div class="flex">
-                            <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100 ">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-pink-100 -translate-x-1/2">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full border-[2px] border-primary bg-green-100 -translate-x-full">
-                                <img src="/asset/images/Marv.png" alt="" class="w-full h-auto object-cover">
+                            <!-- Event Detail card -->
+                            <div class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
+                                <div class="flex items-center gap-2 mb-4 font-roboto">
+                                    <span class="text-primary text-2xl font-semibold">{{ $event->price }} </span>
+                                    <span class="text-sm">in total prizes</span>
+                                </div>
+                                <div class="">
+                                    <h3 class="font-bold text-4xl font-roboto mb-5">{{ $event->title }}</h3>
+                                    <div class="flex flex-col gap-4">
+                                        <p class="dark:text-gray-100">{{ \Carbon\Carbon::parse($event->start_datetime)->format('d M') }} - {{ \Carbon\Carbon::parse($event->end_datetime)->format('d M Y') }} | {{ $event->duration }} hours</p>
+                                        <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">{{ $event->location }}</span>
+                                    </div>
+                                    <button onclick="showEventDetail()"
+                                        class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 {{ $event->status == "UPCOMING" ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black" }}'>
+                                        View details
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-dark">
-                            <span class="uppercase"> Past </span>
-                        </div>
-                    </div>
-
-                    <!-- Event Detail card -->
-                    <div
-                        class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
-                        <div class="flex items-center gap-2 mb-4 font-roboto">
-                            <span class="text-primary text-2xl font-semibold">N200,000 NGN </span>
-                            <span class="text-sm">in total prizes</span>
-                        </div>
-                        <div class="">
-                            <h3 class="font-bold text-4xl font-roboto mb-5">Eureka Tori Season</h3>
-                            <div class="flex flex-col gap-4">
-                                <p class="dark:text-gray-100">19 Feb - 20 Feb 2025 | 48 hours</p>
-                                <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">Nigeria,
-                                    NG</span>
-                            </div>
-                            <button onclick="showEventDetail()"
-                                class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 ${event.upcoming ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black"}'>
-                                View details
-                            </button>
-
-                        </div>
-                    </div>
-
-                </div>
-
+                        @endif
+                    @endforeach
+                @endif
             </div>
         </section>
     </div>
@@ -368,7 +168,7 @@
                         <li>Joseph</li>
                     </ul>
                 </div>
-                <div class="bg-primary bg-opacity-20 p-4 rounded-lg">
+                <div class="bg-primary bg-opacity-20 p-4 rounded-lg')}}">
                     <h3 class="text-xl font-bold mb-2">Special Bonus:</h3>
                     <p>Free ticket to main Consensus conference</p>
                 </div>

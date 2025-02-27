@@ -1,0 +1,11 @@
+{
+    "name": "FrontWebsite",
+    "alias": "frontwebsite",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\FrontWebsite\\Providers\\FrontWebsiteServiceProvider"
+    ],
+    "files": []
+}
