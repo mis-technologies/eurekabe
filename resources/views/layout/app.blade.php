@@ -161,12 +161,8 @@
 
     <!-- Footer Section -->
     <!-- Footer Section -->
-    <footer class="bg-secondary relative dark:bg-dark dark:text-white" id="communityFooter">
+    <footer class="bg-secondary relative dark:bg-dark dark:text-white">
         <div class="morphism z-10 bg-secondary py-20 relative dark:bg-dark dark:text-white ">
-            <button
-                class=" closeJoinCommunity absolute top-0 right-0 text-black dark:text-white font-bold text-3xl p-5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90"
-                >&times;
-            </button>
             <div class="container w-full flex flex-col items-center mx-auto md:max-w-2xl gap-7 text-center z-[3]">
                 <h1 class="text-xl font-bold font-lato md:text-3xl">
                     Join our community. Support, Promote, Advocate. Get Started Today.
@@ -191,8 +187,8 @@
             </div>
             <!-- Footer Icons -->
             <!-- <div class="absolute top-1/2 left-10 md:top-1/4 md:left-[15%]">
-                <img src="./images/designs/Frame2.png" alt="" />
-                </div> -->
+        <img src="./images/designs/Frame2.png" alt="" />
+      </div> -->
             <div class="hidden md:block absolute right-32 top-1/3 scale-75">
                 <img src="{{ asset('asset/images/designs/footer-icon2.png')}}" alt="" />
             </div>
@@ -220,7 +216,7 @@
 
 
     <!-- Footer Socials -->
-    <div id="communityFooterr" class="container flex flex-col items-center justify-between py-7 md:flex-row gap-y-10 dark:text-white">
+    <div class="container flex flex-col items-center justify-between py-7 md:flex-row gap-y-10 dark:text-white">
         <img src="{{ asset('asset/images/logo.png')}}" alt="" class="eurekaLogo md:-translate-x-5 eurekaLogo">
         <div class="text-sm text-center">
             <p class="text-[rgba(0, 0. 0. 0.5)]">
@@ -239,13 +235,6 @@
     </div>
 
 </body>
-
-<script>
-    document.querySelector(".closeJoinCommunity").addEventListener("click", function () {
-        document.getElementById("communityFooter").style.display = "none";
-        document.getElementById("communityFooterr").style.display = "none";
-    });
-</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
