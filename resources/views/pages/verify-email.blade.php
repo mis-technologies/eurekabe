@@ -89,10 +89,10 @@ dd($email);
     // dd($verified);
 @endphp
 
-@if($verified == true)
+@if($verified == false)
 
 
-    <div class="submit_popup z-10 show" id="submit_popup">
+    <div class="submit_popup z-9999 show" id="submit_popup">
 
         <!-- Popup -->
         <div style="display: block" class="submit_success container bg-white rounded-xl w-full h-fit max-w-[300px] md:max-w-[580px] items-center justify-center translate-y-5 py-12 dark:bg-dark relative"
@@ -138,7 +138,7 @@ dd($email);
         }
     });
 </script>
-{{-- 
+{{--
 <script>
     const dashboardUrl = "{{ route('advocate.dashboard') }}";
 </script> --}}
