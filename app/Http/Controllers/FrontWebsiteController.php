@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Modules\Common\Models\School;
 use App\Models\HomePage;
+use App\Models\Event;
+use App\Models\Blog;
+use Carbon\Carbon;
 
 
 class FrontWebsiteController extends Controller
@@ -115,6 +118,48 @@ class FrontWebsiteController extends Controller
         return view('welcome', compact('homePageData'));
     }
 
+    public function events()
+    {
+        $appUrl = config('app.url');
+    
+        // Fetch all events from the database
+        $events = Event::all()->map(function ($event) use ($appUrl) {
+            $event->image = $appUrl . '/' . $event->image;
+            $event->speakers = collect(json_decode($event->speakers))->map(function ($speaker) use ($appUrl) {
+                $speaker->img_url = $appUrl . '/' . $speaker->img_url;
+                return $speaker;
+            });
+            $event->sponsors = collect(json_decode($event->sponsors))->map(function ($sponsor) use ($appUrl) {
+                $sponsor->logo_url = $appUrl . '/' . $sponsor->logo_url;
+                return $sponsor;
+            });
+    
+            // Calculate duration
+            $start = \Carbon\Carbon::parse($event->start_datetime);
+            $end = \Carbon\Carbon::parse($event->end_datetime);
+            $event->duration = $start->diffInHours($end);
+    
+            return $event;
+        });
+
+        // dd($events->toArray());
+    
+        // Pass the events data to the Blade view
+        return view('pages.event', compact('events'));
+    }
+
+
+    
+
+    
+
+    
+
+    
+
+ 
+ 
+   
     
  
 
@@ -125,10 +170,8 @@ class FrontWebsiteController extends Controller
         // $blogContent = Blog::findOrFail($id);
         return view('pages.article');
     }
-    public function events()
-    {
-        return view('pages.event');
-    }
+   
+
 
 
     public function faq()

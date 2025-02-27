@@ -198,7 +198,7 @@
               <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt=""/>
             </dv>
           </div>
-        </div>
+        </div
       </div>
       <!-- <div class="absolute top-24 left-0 hidden md:block">
         <img src="{{ asset('asset/images/designs/who_we_are_i_l.png')}}" alt="" />

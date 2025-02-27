@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\HomePageSeeder;
 use App\Models\HomePage;
+use Database\Seeders\EventSeeder;
+use App\Models\Event;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +20,6 @@ class DatabaseSeeder extends Seeder
     {
        $this->call(UserSeeder::class);
        $this->call(HomePageSeeder::class);
+       $this->call(EventSeeder::class);
     }
 }
