@@ -47,13 +47,13 @@
 
                                 <!-- Event Sponsors -->
                                 @foreach ($event['sponsors'] as $sponsor)
-                                <div class="toggleUp absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
+                                <div class="toggleUp hidden md:block absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
                                     <img class="w-auto h-full object-cover mx-auto" src="{{ $sponsor['logo_url'] }}" alt="logo">
                                 </div>
                                 @endforeach
 
                                 <!-- Event Type -->
-                                <div class="toggleUp absolute top-10 left-10 h-10 text-white flex items-center">
+                                <div class="toggleUp hidden md:flex absolute top-10 left-10 h-10 text-white flex items-center">
                                     <div class="flex">
                                         @foreach ($event['speakers'] as $speaker)
                                         <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100">
@@ -84,12 +84,7 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
-
-
                         @endif
                     @endforeach
                 @endif
