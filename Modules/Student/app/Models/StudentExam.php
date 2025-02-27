@@ -34,6 +34,8 @@ class StudentExam extends Model
 
     protected $casts = [
         'questions' => 'array',
+        'started_at' => 'datetime',
+        'ended_at' => 'datetime',
     ];
 
     public function exam()
@@ -98,6 +100,7 @@ class StudentExam extends Model
             'negative_marks' => $negativeMarks,
             'student_exam' => $this,
             'exam_details' => $exam,
+            'time_taken' => $this->started_at ? $this->started_at->diffInSeconds($this->ended_at) : null,
         ];
     }
 
