@@ -78,14 +78,14 @@ class Conversation extends Model
                 'name' => $entityUser->name,
                 'profile_pic' => $entityUser->image,
                 'recent_message' => $recentMessage->text ?? 'New conversation',
-                'recent_message_created_at' => $recentMessage->created_at ?? $this->created_at,
+                'recent_message_created_at' => $recentMessage->created_at ?? $this->created_at->diffForHumans(),
             ];
         } else {
             return [
                 'name' => $user->name,
                 'profile_pic' => $user->image,
                 'recent_message' => $recentMessage->text ?? 'New conversation',
-                'recent_message_created_at' => $recentMessage->created_at ?? $this->created_at,
+                'recent_message_created_at' => $recentMessage->created_at ?? $this->created_at->diffForHumans(),
             ];
         }
 
