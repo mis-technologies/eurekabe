@@ -48,8 +48,8 @@ class SocketEvent implements ShouldBroadcastNow
     public function broadcastOn()
     {
         
-        // return new Channel($this->channel);
-        return new PrivateChannel($this->channel); 
+        return new Channel($this->channel);
+        // return new PrivateChannel($this->channel); 
 
     }
 
