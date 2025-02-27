@@ -140,7 +140,7 @@ dd($email);
 </script>
 
 <script>
-    const dashboardUrl = "{{ route('advocate.dashboard') }}";
+    const dashboardUrl = "/";
 </script>
 
 <script src="/asset/src/scripts/main.js"></script>

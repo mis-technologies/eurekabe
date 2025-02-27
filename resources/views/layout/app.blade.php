@@ -58,7 +58,11 @@
             color: #3b88ff;
             font-weight: bold;
         }
+
     </style>
+
+
+
 </head>
 
 <body class="transition-all duration-1000 dark:bg-dark">

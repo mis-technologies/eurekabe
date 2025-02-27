@@ -35,55 +35,67 @@
                         <div class="relative flex lg:h-[600px] overflow:hidden">
                             <!-- BG Image -->
                             <div class="w-full h-full relative">
-                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="{{ $event->image }}" alt="image here">
+                                <!-- Toggle Button -->
+                                <div onclick="toggleDetails()" class="toggler absolute -top-10 -left-100 h-10 w-1000 shadow bg-danger-600 overflow-hidden rounded-xl p-4 cursor-pointer">
+                                    Show more details
+                                    <i class="fa fa-eye"></i>
+                                    <i class="fa fa-close hidden"></i>
+                                </div>
+
+                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="/{{$event->getRawOriginal('image')}}" alt="image here">
                                 <div class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0"></div>
-                                <!-- event logo -->
+
+                                <!-- Event Sponsors -->
                                 @foreach ($event['sponsors'] as $sponsor)
-                                <div class="absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
+                                <div class="toggleUp absolute -top-10 -right-10 h-24 w-52 shadow bg-gray-200 dark:bg-dark2 overflow-hidden rounded-xl p-4">
                                     <img class="w-auto h-full object-cover mx-auto" src="{{ $sponsor['logo_url'] }}" alt="logo">
                                 </div>
                                 @endforeach
+
+                                <!-- Event Type -->
+                                <div class="toggleUp absolute top-10 left-10 h-10 text-white flex items-center">
+                                    <div class="flex">
+                                        @foreach ($event['speakers'] as $speaker)
+                                        <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100">
+                                            <img src="{{ $speaker['img_url'] }}" alt="" class="w-full h-auto object-cover">
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-green-300 text-green-500">
+                                        <span class="uppercase"> {{ $event->status }} </span>
+                                    </div>
+                                </div>
+
+                                <!-- Event Detail Card -->
+                                <div class="toggleUp absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
+                                    <div class="flex items-center gap-2 mb-4 font-roboto">
+                                        <span class="text-primary text-2xl font-semibold">{{ $event->price }} </span>
+                                        <span class="text-sm">in total prizes</span>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-4xl font-roboto mb-5">{{ $event->title }}</h3>
+                                        <div class="flex flex-col gap-4">
+                                            <p class="dark:text-gray-100">{{ \Carbon\Carbon::parse($event->start_datetime)->format('d M') }} - {{ \Carbon\Carbon::parse($event->end_datetime)->format('d M Y') }} | {{ $event->duration }} hours</p>
+                                            <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">{{ $event->location }}</span>
+                                        </div>
+                                        <button onclick="showEventDetail()" class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 {{ $event->status == "UPCOMING" ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black" }}'>
+                                            View details
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Event type-->
-                            <div class="absolute top-10 left-10 h-10 text-white flex items-center">
-                                <div class="flex">
-                                    @foreach ($event['speakers'] as $speaker)
-                                    <div class="w-10 h-10 rounded-full border-[2px] border-primary bg-red-100">
-                                        <img src="{{ $speaker['img_url'] }}" alt="" class="w-full h-auto object-cover">
-                                    </div>
-                                    @endforeach
-                                </div>
-                                <div class="p-1 px-4 rounded-xl font-semibold font-roboto bg-opacity-20 bg-green-300 text-green-500">
-                                    <span class="uppercase"> {{ $event->status }} </span>
-                                </div>
-                            </div>
 
-                            <!-- Event Detail card -->
-                            <div class="absolute top-1/4 md:-left-[10%] h-2/3 w-full md:w-[45%] bg-gray-200 dark:bg-dark2 rounded-2xl md:rounded-3xl p-6 dark:text-white">
-                                <div class="flex items-center gap-2 mb-4 font-roboto">
-                                    <span class="text-primary text-2xl font-semibold">{{ $event->price }} </span>
-                                    <span class="text-sm">in total prizes</span>
-                                </div>
-                                <div class="">
-                                    <h3 class="font-bold text-4xl font-roboto mb-5">{{ $event->title }}</h3>
-                                    <div class="flex flex-col gap-4">
-                                        <p class="dark:text-gray-100">{{ \Carbon\Carbon::parse($event->start_datetime)->format('d M') }} - {{ \Carbon\Carbon::parse($event->end_datetime)->format('d M Y') }} | {{ $event->duration }} hours</p>
-                                        <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">{{ $event->location }}</span>
-                                    </div>
-                                    <button onclick="showEventDetail()"
-                                        class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 {{ $event->status == "UPCOMING" ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black" }}'>
-                                        View details
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
+
+
                         @endif
                     @endforeach
                 @endif
             </div>
 
-          
+
             <!-- Virtual events -->
             <div id="virtual" class="content space-y-20 gap-6 md:container">
                 @if($events->isEmpty())
@@ -94,7 +106,7 @@
                         <div class="relative flex lg:h-[600px] overflow:hidden">
                             <!-- BG Image -->
                             <div class="w-full h-full relative">
-                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="{{ $event->image }}" alt="image here">
+                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="/{{ $event->getRawOriginal('image') }}" alt="image here">
                                 <div class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0"></div>
                                 <!-- event logo -->
                                 @foreach ($event['sponsors'] as $sponsor)
@@ -179,6 +191,22 @@
         </div>
     </section>
 </div>
+
+<!-- JavaScript for Toggle Functionality -->
+<script>
+    function toggleDetails() {
+        let elements = document.querySelectorAll('.toggleUp');
+        let eyeIcon = document.querySelector('.fa-eye');
+        let closeIcon = document.querySelector('.fa-close');
+
+        elements.forEach(el => {
+            el.classList.toggle('hidden');
+        });
+
+        eyeIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+    }
+    </script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
    const tabs = document.querySelectorAll(".filter-btn"); // Select <li> instead of <a>
