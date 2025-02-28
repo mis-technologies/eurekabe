@@ -31,6 +31,8 @@ class Exam extends Model
     
     protected $guarded = [];
 
+    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at'];
+
     public function school()
     {
         return $this->belongsTo(School::class, 'school_id');
@@ -63,5 +65,34 @@ class Exam extends Model
             return asset('assets/images/noimage.jpg');
         }
         return $examCoverImage->url;
+    }
+
+    public function getRatingAttribute()
+    {
+        $ratings = ExamFeedback::where('exam_id', $this->id)->average('rating');
+        return $ratings;
+    }
+
+    public function getFeedbackCountAttribute()
+    {
+        $ratings = ExamFeedback::where('exam_id', $this->id)->count();
+        return $ratings;
+    }
+
+    public function getQuestionsCountAttribute()
+    {
+        $questions = Question::where('exam_id', $this->id)->count();
+        return $questions;
+    }
+
+    public function getCreatedByAttribute()
+    {
+        $user = School::where('id', $this->school_id)->first();
+        return $user->name ?? 'Anonymous'; 
+    }
+
+    public function getLastUpdatedAtAttribute()
+    {
+        return $this->created_at->format('d M Y');
     }
 }
