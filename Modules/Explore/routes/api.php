@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function () {
         Route::get('interests', [ExploreController::class, 'interests']);
         Route::apiResource('exams', ExploreExamController::class);
         Route::post('exams/{id}/favorites', [ExploreExamController::class, 'addExamToFavorite']);
+        Route::get('exams/{id}/feedbacks', [ExploreExamController::class, 'getExamFeedbacks']);
         Route::apiResource('schools', ExploreSchoolController::class);
         Route::apiResource('students', ExploreStudentController::class);
     });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Modules\Exam\Models\Exam;
 use Illuminate\Http\Request;
 use Modules\Common\Models\School;
+use Modules\Exam\Models\ExamFeedback;
 use Modules\Exam\Models\Subject;
 use Modules\Student\Models\StudentFavoriteExam;
 
@@ -164,6 +165,25 @@ class ExploreExamController extends Controller
             'data' => $favorite,
         ]);
 
+    }
+
+
+    // method to retrieve exam feedbacks
+    public function getExamFeedbacks($exam_id)
+    {
+        $exam = Exam::find($exam_id);
+        if (!$exam) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exam not found',
+            ], 404);
+        }
+
+        $feedbacks = ExamFeedback::where('exam_id', $exam->id)->paginate(50);
+        return response()->json([
+            'success' => true,
+            'data' => $feedbacks,
+        ]);
     }
 
 
