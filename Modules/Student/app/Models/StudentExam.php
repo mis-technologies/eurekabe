@@ -100,7 +100,7 @@ class StudentExam extends Model
             'negative_marks' => $negativeMarks,
             'student_exam' => $this,
             'exam_details' => $exam,
-            'time_taken' => $this->started_at ? $this->started_at->diffInSeconds($this->ended_at) : null,
+            'time_taken' => $this->started_at ? $this->started_at->diffInMinutes($this->ended_at) : 2,
         ];
     }
 
