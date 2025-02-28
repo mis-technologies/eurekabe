@@ -77,7 +77,7 @@ class Conversation extends Model
             return [
                 'name' => $entityUser->name,
                 'profile_pic' => $entityUser->image,
-                'username' => $entityUser->username,
+                'username' => $entityUser->username ??  $entityUser->lastname,
                 'recent_message' => $recentMessage->text ?? 'New conversation',
                 'recent_message_created_at' => $recentMessage->created_at ?? $this->created_at->diffForHumans(),
             ];
@@ -85,7 +85,7 @@ class Conversation extends Model
             return [
                 'name' => $user->name,
                 'profile_pic' => $user->image,
-                'username' => $user->username,
+                'username' => $user->username ?? $user->lastname,
                 'recent_message' => $recentMessage->text ?? 'New conversation',
                 'recent_message_created_at' => $recentMessage->created_at ?? $this->created_at->diffForHumans(),
             ];
