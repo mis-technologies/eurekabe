@@ -134,7 +134,16 @@ class ConversationController extends Controller
                 'message' => 'Conversation not found',
             ], 400); //
         }
+
+        
+        
+        // I should mark all conversations within the chat sent to the current logged in user, fetching the messages as read
+        if ($conversation->entity == get_class(new User())) {
+            $conversation->messages()->where('to_user_id', Auth::user()->id)->update(['read_at' => now()]);
+        }
+
         $messages = $conversation->messages()->latest()->paginate(50);
+
         return response()->json([
             'status' => 'success',
             'message' => 'User conversation messages retrieved successfully',
