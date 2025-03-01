@@ -20,7 +20,7 @@ class RegisterController extends Controller
         $params = $request->validated();
         $params['password'] = Hash::make( $params['password'] );
         $user = User::create($params);
-
+        $user->generateUsername();
     
         VerificationCode::send($user->email);
         

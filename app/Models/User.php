@@ -10,6 +10,8 @@ use Modules\Common\Models\School;
 use Modules\File\Models\File;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Support\Str;
+
 
 
 class User extends Authenticatable implements FilamentUser
@@ -113,5 +115,22 @@ class User extends Authenticatable implements FilamentUser
     public function getNameAttribute()
     {
         return "{$this->firstname} {$this->lastname}";
+    }
+
+    private function generateSlug($name)
+    {
+        if (static::whereUsername($slug = Str::slug($name, '-'))->exists()) {
+            $user = static::latest('id')->first();
+            return "{$slug}" . $user->id + rand();
+        }
+        return $slug;
+    }
+
+    public function generateUsername()
+    {
+        if (!$this->username) {
+            $this->username = $this->generateSlug($this->firstname . $this->lastname);
+            $this->save();
+        }
     }
 }
