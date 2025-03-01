@@ -4,7 +4,9 @@ namespace Modules\Exam\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\Common\Models\School;
+use Modules\Common\Models\Student;
 use Modules\File\Models\File;
+use Modules\Student\Models\StudentExam;
 
 class Exam extends Model
 {
@@ -31,7 +33,7 @@ class Exam extends Model
     
     protected $guarded = [];
 
-    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at'];
+    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag'];
 
     public function school()
     {
@@ -94,5 +96,26 @@ class Exam extends Model
     public function getLastUpdatedAtAttribute()
     {
         return $this->created_at->format('d M Y');
+    }
+
+    public function getTagAttribute()
+    {
+        $attempts = StudentExam::where('exam_id', $this->id)->count();
+
+        if ($attempts > 100) {
+            return 'Most Engaged';
+        }
+        if ($attempts > 50) {
+            return 'Popular';
+        }
+        if ($attempts > 10) {
+            return 'Trending';
+        }
+        
+        if ($attempts > 5) {
+            return 'Upcoming';
+        }
+
+        return 'New';
     }
 }
