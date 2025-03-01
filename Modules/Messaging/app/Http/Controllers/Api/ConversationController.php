@@ -69,16 +69,31 @@ class ConversationController extends Controller
         // );
 
         // First check if a conversation exists in either direction
+        // $existingConversation = Conversation::where(function ($query) use ($authUser, $validated) {
+        //     $query->where([
+        //         'user_id' => $authUser->id,
+        //         'entity_id' => $validated['entity_id'],
+        //         'entity' => $validated['entity'],
+        //     ])->orWhere([
+        //         'user_id' => $validated['entity_id'],
+        //         'entity_id' => $authUser->id,
+        //         'entity' => $validated['entity'],
+        //     ]);
+        // })->first();
+
         $existingConversation = Conversation::where(function ($query) use ($authUser, $validated) {
-            $query->where([
-                'user_id' => $authUser->id,
-                'entity_id' => $validated['entity_id'],
-                'entity' => $validated['entity'],
-            ])->orWhere([
-                'user_id' => $validated['entity_id'],
-                'entity_id' => $authUser->id,
-                'entity' => $validated['entity'],
-            ]);
+            // First set of conditions as a group
+            $query->where(function ($q) use ($authUser, $validated) {
+                $q->where('user_id', $authUser->id)
+                  ->where('entity_id', $validated['entity_id'])
+                  ->where('entity', $validated['entity']);
+            })
+            // OR second set of conditions as a group
+            ->orWhere(function ($q) use ($authUser, $validated) {
+                $q->where('user_id', $validated['entity_id'])
+                  ->where('entity_id', $authUser->id)
+                  ->where('entity', $validated['entity']);
+            });
         })->first();
 
         // If no conversation exists, then create a new one
