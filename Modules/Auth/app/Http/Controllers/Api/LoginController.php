@@ -42,20 +42,11 @@ class LoginController extends Controller
                 'message' => 'Please check your inbox for email verification'
             ], 403);
         }
-
        
-
+        $user->generateUsername();
         $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
-
-
         $user = User::where('email', $request->email )->first();
-
-        
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
+        $response = [ 'user' => $user, 'token' => $token ];
         return response([
             'status' => 'success',
             'message' => 'Login successful',
