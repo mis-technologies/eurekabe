@@ -88,6 +88,8 @@ class StudentExam extends Model
         $isPassed = $correctPercentage >= $exam->pass_percentage;
 
         // Return a detailed summary of the result
+        $time_taken = $this->started_at ? (double)($this->started_at->diffInSeconds($this->ended_at) / 60.0) : 2.00;
+
         return [
             'exam_type' => $examType == 1 ? 'mcq' : 'essay',
             'total_questions' => $totalQuestions,
@@ -100,7 +102,7 @@ class StudentExam extends Model
             'negative_marks' => $negativeMarks,
             'student_exam' => $this,
             'exam_details' => $exam,
-            'time_taken' => $this->started_at ? number_format($this->started_at->diffInMinutes($this->ended_at), 2) : '2.00',
+            'time_taken' => $time_taken
         ];
     }
 
