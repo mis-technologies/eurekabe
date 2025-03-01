@@ -55,6 +55,9 @@ class MessageSentEventListener //implements ShouldQueue
 
 
         if($to){
+
+            // set the is_own in recent message inside conversation to false
+            $conversation['recent_message']['is_own'] = false;
             $to->notify((new Notification(emailContent: $mailContent, dbContent: $dbContent, channel: ['database'])));
             event(new SocketEvent($conversation, "chat.{$conversation->id}", 'Conversation'));
             event(new SocketEvent( $to->unreadNotifications()->limit(1), "{$to->email}", 'Notification'));
