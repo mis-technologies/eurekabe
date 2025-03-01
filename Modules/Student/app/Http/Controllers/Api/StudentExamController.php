@@ -171,7 +171,10 @@ class StudentExamController extends Controller
         if ($result['passed'] === 'Yes') {
             $pointsEarned += 10; // Example: Add bonus points for passing
         }
-        StudentLeaderBoard::create([
+        StudentLeaderBoard::updateOrCreate([
+            'user_id' => $studentExam->user_id,
+            'exam_id' => $studentExam->exam_id,
+        ],[
             'user_id' => $studentExam->user_id,
             'exam_id' => $studentExam->exam_id,
             'points' => $pointsEarned,
