@@ -33,7 +33,7 @@ class Exam extends Model
     
     protected $guarded = [];
 
-    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at'];
+    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag'];
 
     public function school()
     {

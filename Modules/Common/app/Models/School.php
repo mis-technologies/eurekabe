@@ -28,7 +28,7 @@ class School extends Model
 
     protected $dates = ['deleted_at'];
     // appends advocate
-    public $appends = ['advocate'];
+    public $appends = ['advocate', 'student_count'];
 
     public function exams()
     {
