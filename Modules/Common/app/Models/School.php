@@ -28,7 +28,7 @@ class School extends Model
 
     protected $dates = ['deleted_at'];
     // appends advocate
-    public $appends = ['advocate'];
+    public $appends = ['advocate', 'student_count'];
 
     public function exams()
     {
@@ -52,6 +52,10 @@ class School extends Model
             'email' => $advocate->email
         ];
 
+    }
+
+    public function getStudentCountAttribute(){
+        return User::where('school_id', $this->id)->where('role', 'student')->count();
     }
 }
 
