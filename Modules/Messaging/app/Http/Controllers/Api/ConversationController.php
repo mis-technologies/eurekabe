@@ -55,32 +55,6 @@ class ConversationController extends Controller
         }
 
         //start conversation here if it doesn't exists before
-        // $conversation = Conversation::updateOrCreate(
-        //     [
-        //         'user_id' => $authUser->id,
-        //         'entity_id' =>  $validated['entity_id'],
-        //         'entity' => $validated['entity']
-        //     ],
-        //     [
-        //         'entity_id' =>  $validated['entity_id'],
-        //         'entity' => $validated['entity'],
-        //         'user_id' => $authUser->id
-        //     ],
-        // );
-
-        // First check if a conversation exists in either direction
-        // $existingConversation = Conversation::where(function ($query) use ($authUser, $validated) {
-        //     $query->where([
-        //         'user_id' => $authUser->id,
-        //         'entity_id' => $validated['entity_id'],
-        //         'entity' => $validated['entity'],
-        //     ])->orWhere([
-        //         'user_id' => $validated['entity_id'],
-        //         'entity_id' => $authUser->id,
-        //         'entity' => $validated['entity'],
-        //     ]);
-        // })->first();
-
         $existingConversation = Conversation::where(function ($query) use ($authUser, $validated) {
             // First set of conditions as a group
             $query->where(function ($q) use ($authUser, $validated) {
