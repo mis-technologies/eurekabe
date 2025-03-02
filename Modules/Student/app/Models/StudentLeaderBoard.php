@@ -19,6 +19,7 @@ class StudentLeaderBoard extends Model
     protected $fillable = [
         'user_id',
         'exam_id',
+        'challenge_id',
         'points',
     ];
 
@@ -30,6 +31,11 @@ class StudentLeaderBoard extends Model
     public function exam()
     {
         return $this->belongsTo(Exam::class);
+    }
+
+    public function challenge()
+    {
+        return $this->belongsTo(StudentChallenge::class,   'challenge_id');
     }
 
     // protected static function newFactory(): StudentLeaderBoardFactory

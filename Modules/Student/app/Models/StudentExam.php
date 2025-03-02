@@ -23,6 +23,7 @@ class StudentExam extends Model
     protected $fillable = [
         'exam_id',
         'user_id',
+        'challenge_id', // if exam is a challenge
         'payment_required',
         'questions',
         'is_paid',

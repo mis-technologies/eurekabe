@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('exam_id')->nullable();
             $table->foreignId('user_id')->nullable();
+            $table->foreignId('challenge_id')->nullable(); // if exam is part of a challenge
             $table->boolean('payment_required')->default(false);
             $table->boolean('is_paid')->nullable(); //If the exam requires payment before results can be released'
             $table->integer('attempts')->nullable();

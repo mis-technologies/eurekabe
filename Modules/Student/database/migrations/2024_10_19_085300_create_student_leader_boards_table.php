@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('student_leader_boards', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('exam_id');
-            $table->integer('points');  // Points awarded for this submission
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('exam_id')->nullable();
+            $table->foreignId('challenge_id')->nullable(); // if its a challenge
+            $table->integer('points')->default(0);  // Points awarded for this submission
             $table->timestamps();  // Automatically captures created_at (date of submission)
     
             // Foreign keys
