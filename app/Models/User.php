@@ -10,12 +10,18 @@ use Modules\Common\Models\School;
 use Modules\File\Models\File;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 
 
 class User extends Authenticatable implements FilamentUser
 {
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     use HasFactory, Notifiable, HasApiTokens;
 
     /**
@@ -59,6 +65,7 @@ class User extends Authenticatable implements FilamentUser
         'position',
         'leading_attribute',
         'refereed_by',
+        'deleted_at'
     ];
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DeleteUserNotification;
+use App\Mail\DeleteUserVerification;
 use App\Mail\EmailVerification;
 use App\Models\User;
 use Carbon\Carbon;
@@ -29,6 +31,26 @@ class RegisterController extends Controller
         if (!$email) {
             return redirect()->route('pages.verify.email')->withErrors(['email' => 'No email found in session.']);
         }
+
+        if ($request->delete == 'delete') {
+
+
+            $user = User::where('email', $email)->first();
+
+            if ($user->ver_code == $request->ver_code) {
+                // $user->update(['deleted_at' => Carbon::now()]);
+
+                Mail::to($user->email)->send(new DeleteUserNotification());
+                $user->delete();
+                $verified = session()->put('deleteVerified', true);
+
+                return redirect()->route('pages.verify.user-request')->with('success', 'Account deleted successfully.');
+            }
+
+            return redirect()->route('pages.verify.email')->withErrors(['ver_code' => 'Invalid verification code.']);
+        }
+
+
 
         $user = User::where('email', $request->email)->first();
         // $user = User::where('email', 'xLDclintonace09@gmail.com')->first();
@@ -140,8 +162,12 @@ class RegisterController extends Controller
             'email' => ['required', 'email', 'exists:users,email'],
         ]);
 
+        // User::withoutGlobalScopes()->withTrashed()->where('email', $request->email)->restore();
+
+        // return back();
         $user = User::where('email', $request->email)->first();
 
+        // dd($user);
         if (!$user) {
             return redirect()->back()->withErrors(['email' => 'Account not found or not existing.']);
         }
@@ -154,9 +180,9 @@ class RegisterController extends Controller
         ]);
 
         try {
-            Mail::to($user->email)->send(new EmailVerification($verificationCode));
+            Mail::to($user->email)->send(new DeleteUserVerification($verificationCode));
         } catch (\Throwable $th) {
-            // Handle the exception
+            return redirect()->route('verifyUserRequest')->withErrors(['email' => 'Failed to send verification code.']);
         }
 
         return redirect()->route('verifyUserRequest')->with('success', 'Verification code sent to your email.');

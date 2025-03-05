@@ -117,7 +117,7 @@
                         tempore, numquam unde natus quidem tenetur aliquam cum dolore ex iste.</p>
                     <h6 class="font-bold text-[11px]">11 Npvember, 2023</h6>
                     <a href="{{route('pages.article')}}"
-                        class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
+                        class="bg-primary rounded-[5px]  p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">
                         <span>Read article </span>
                         <span class="border-2 border-white rounded-full inline-flex items-center w-4 h-4"><i
                                 class="fa-solid fa-arrow-right text-[9px]"></i></span>
