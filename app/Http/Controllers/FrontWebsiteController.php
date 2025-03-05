@@ -206,4 +206,6 @@ class FrontWebsiteController extends Controller
     {
         return view('pages.privacy-policy');
     }
+
+   
 }

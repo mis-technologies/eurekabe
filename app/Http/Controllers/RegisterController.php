@@ -128,4 +128,9 @@ class RegisterController extends Controller
         $verificationCode = rand(100000, 999999);
         return $verificationCode;
     }
+
+    public function deleteAccount()
+    {
+        return view('pages.delete-account');
+    }
 }

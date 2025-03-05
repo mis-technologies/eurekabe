@@ -29,6 +29,8 @@ Route::get('/upload', function () {
     return view('upload');
 });
 
+Route::post('delete-account', [RegisterController::class, 'deleteAccount'])->name('page.delete-account');
+
 // Route::post('/upload', function (Request $request){
 //     $request->validate([
 //         'file' => 'required|file|mimes:jpg,png,pdf,docx|max:2048',
