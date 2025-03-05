@@ -27,10 +27,10 @@ class DeleteUserNotification extends Mailable
     public function build(): self
     {
         // Compose the email content directly in the text body
-        return $this->subject('Email Verification')
-                    ->view('mails.verf-email-before-delete')
+        return $this->subject('Deleted Notification')
+                    ->view('mails.user-deleted')
                     ->with([
-                        'verificationCode' => $this->verificationCode,
+                        'Thanks' => 'User Deleted',
 
                     ]);
     }
