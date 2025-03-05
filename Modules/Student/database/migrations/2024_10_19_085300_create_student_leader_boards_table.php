@@ -18,10 +18,7 @@ return new class extends Migration
             $table->foreignId('challenge_id')->nullable(); // if its a challenge
             $table->integer('points')->default(0);  // Points awarded for this submission
             $table->timestamps();  // Automatically captures created_at (date of submission)
-    
-            // Foreign keys
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('exam_id')->references('id')->on('exams')->onDelete('cascade');
+
         });
     }
 
