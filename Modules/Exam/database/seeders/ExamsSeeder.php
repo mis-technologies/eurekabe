@@ -100,6 +100,7 @@ class ExamsSeeder extends Seeder
                 'status' => 0
             ],
 
+            
             [
                 'subject_id' => 5,
                 'title' => 'General Knowledge',

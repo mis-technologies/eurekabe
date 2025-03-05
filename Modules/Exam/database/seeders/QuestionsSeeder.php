@@ -552,8 +552,198 @@ class QuestionsSeeder extends Seeder
                     ['option' => '860', 'is_correct' => false],
                 ],
             ],
-        
-
+            [
+               'exam_id' => 1,
+                'question' => 'What will be the resultant force on a body
+            of mass 50 kg when it moves with a
+            uniform velocity of 10 m/s?<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => '500 N', 'is_correct' => false],
+                    ['option' => '0 N', 'is_correct' => true],
+                    ['option' => '5 N', 'is_correct' => false],
+                    ['option' => '15 N', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'A riffle bullet weighing 7 g leaves the
+            barrel of riffle with a velocity of 300 m/s. If
+            the riffle recoils with a velocity of 1 m/s,
+            find the mass of the riffle.<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => '. 2.1 kg', 'is_correct' => true],
+                    ['option' => '1.2 kg', 'is_correct' => false],
+                    ['option' => '3.4 kg', 'is_correct' => false],
+                    ['option' => '2.3 kg', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'Determine the dimension of density.<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => 'ML-3', 'is_correct' => true],
+                    ['option' => 'ML2T-2', 'is_correct' => false],
+                    ['option' => 'ML2', 'is_correct' => false],
+                    ['option' => 'MLT-2', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'Which of the following is not a possible unit
+                for velocity? <br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => 'centimetres / month', 'is_correct' => false],
+                    ['option' => 'millimetres / kilowatt', 'is_correct' => true],
+                    ['option' => 'decimeters / kilosecond', 'is_correct' => false],
+                    ['option' => 'kilometres / millisecond', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'Which of the Newton’s law state that, “when a
+            body is acted upon by a force, its resulting
+            acceleration is directly proportional to the
+            force and inversely proportional to the
+            mass”?<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => '. first Newton’s law', 'is_correct' => false],
+                    ['option' => 'second Newton’s law', 'is_correct' => true],
+                    ['option' => 'third Newton’s law', 'is_correct' => false],
+                    ['option' => 'fourth Newton’s law', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'The force acting on a body moving with a
+                uniform velocity is<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => 'uniform', 'is_correct' => false],
+                    ['option' => 'constant', 'is_correct' => false],
+                    ['option' => 'zero', 'is_correct' => true],
+                    ['option' => 'unknown', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => '. Which of the following units cannot be used
+            to measure speed?<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => 'ms-1', 'is_correct' => false],
+                    ['option' => 'kms -1', 'is_correct' => false],
+                    ['option' => 'mh-1', 'is_correct' => false],
+                    ['option' => 'kgs -1', 'is_correct' => true],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'The acceleration of a body falling under
+            gravity on the surface of the earth is <br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => 'constant', 'is_correct' => true],
+                    ['option' => 'increasing', 'is_correct' => false],
+                    ['option' => 'decreasing', 'is_correct' => false],
+                    ['option' => 'varies', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'A car moves from rest with an acceleration
+            of 0.2 m/s2. Find its velocity when it has
+            moved a distance of 50 m.<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => '4.47 m/s', 'is_correct' => true],
+                    ['option' => '10.0 m/s', 'is_correct' => false],
+                    ['option' => '250.0 m/s', 'is_correct' => false],
+                    ['option' => '. 5.45 m/s', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'A ball is released from a height of 20 m.
+            Calculate the velocity with which it hits the
+            ground<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => '12 m/s', 'is_correct' => false],
+                    ['option' => '22.6 m/s', 'is_correct' => false],
+                    ['option' => '20.0 m/s', 'is_correct' => true],
+                    ['option' => '35.6 m/s', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'A body moving with a constant velocity
+            along a straight line PQR takes 30 s to go
+            from P to Q and 10 s to go from Q to R. If
+            PR = 4 m, Find PQ. <br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => '3 m', 'is_correct' => true],
+                    ['option' => '1 m', 'is_correct' => false],
+                    ['option' => '2 m', 'is_correct' => false],
+                    ['option' => '4 m', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'A motor car is uniformly retarded and
+            brought to rest from a velocity 36 km/h in
+            5 s. Find the distance covered during this
+            period.<br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => '25 m', 'is_correct' => true],
+                    ['option' => '20 m', 'is_correct' => false],
+                    ['option' => '18 m', 'is_correct' => false],
+                    ['option' => '18.5 m', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'The thermometric property of a thermocouple is the change in _______. <br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => 'Equivalent resistance', 'is_correct' => false],
+                    ['option' => 'Electromotive force', 'is_correct' => true],
+                    ['option' => 'Current', 'is_correct' => false],
+                    ['option' => 'Pressure', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'The difference observed in solids, liquids and
+            gas may be accounted for by   <br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => 'the spacing and forces acting between the molecules', 'is_correct' => true],
+                    ['option' => 'their relative masses', 'is_correct' => false],
+                    ['option' => 'the different molecules in each of them', 'is_correct' => false],
+                    ['option' => 'their melting point', 'is_correct' => false],
+                ],
+            ],
+            [
+               'exam_id' => 1,
+                'question' => 'The relationship between volume and
+            pressure is investigated when temperature
+            and amount of gas are kept constant is
+            known as <br>',
+                'marks' => 1.0,
+                'options' => [
+                    ['option' => 'ideal gas law', 'is_correct' => false],
+                    ['option' => 'Avogadro’s law', 'is_correct' => false],
+                    ['option' => 'Charles law', 'is_correct' => false],
+                    ['option' => 'Boyle’s law', 'is_correct' => true],
+                ],
+            ],
 
             // Maths
             [
@@ -1063,9 +1253,9 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
 
-            // Chemistry
+            //TODO:  Chemistry
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'A chemical reaction is said to be at equilibrium at. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1075,7 +1265,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Predict the spontaneity of a chemical process if &amp;Delta;G&lt;sup&gt;o&lt;/sup&gt; = 141.7 and K = 1.4 x 10&lt;sup&gt;-25&lt;/sup&gt; at 298K. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1085,7 +1275,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Estimate the boiling point of water given &amp;Delta;H&lt;sup&gt;o&lt;/sup&gt; = 44.01KJmol&lt;sup&gt;-1&lt;/sup&gt; and &amp;Delta;S&lt;sup&gt;o&lt;/sup&gt; = 118.3 J/Kmol&lt;sup&gt;-1&lt;/sup&gt;. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1095,7 +1285,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the following statements is true for the effect of catalyst on equilibrium. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1105,7 +1295,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the following principles is used in predicting changes in equilibrium concentrations? <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1115,7 +1305,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'The following reaction is at equilibrium. &lt;br /&gt; C&lt;sub&gt;l2&lt;/sub&gt; (g) + 3F&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; 2ClF&lt;sub&gt;3&lt;/sub&gt; (g) &lt;br /&gt; How will the system respond if the volume is increased at constant Temperature <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1125,7 +1315,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'The following reaction is at equilibrium. &lt;br /&gt; CF&lt;sub&gt;2&lt;/sub&gt; Br&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; CF&lt;sub&gt;2&lt;/sub&gt; (g) + 2Br(g) &amp;Delta;H= 424 kJ mol&lt;sup&gt;–1&lt;/sup&gt; &lt;br /&gt; How will the system respond if the temperature is decreased?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1135,7 +1325,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Consider this equation: 2CO(g) + O&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; 2CO&lt;sub&gt;2&lt;/sub&gt; (g) &lt;br /&gt; Suppose the equation is rewritten as CO(g) + 1⁄2O&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; CO&lt;sub&gt;2&lt;/sub&gt; (g)<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1145,7 +1335,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Identify the INCORRECT statement below regarding chemical equilibrium. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1155,7 +1345,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'In which of the following reactions will the point of equilibrium shift to the left when the pressure on the system is increased? <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1165,7 +1355,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => '<div>s)</div><div>What happens when a catalyst is added to a system at equilibrium</div>',
                 'marks' => 1.2,
                 'options' => [
@@ -1175,7 +1365,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'The reaction A &amp;harr; B has an equilibrium constant of K = 10&lt;sup&gt;–4&lt;/sup&gt; . Which of the following statements is always correct? A: The reaction will have 50% product B and 50% reactant<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1185,7 +1375,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the following statements most accurately relates the properties of a liquid at room temperature with its vapour pressure?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1195,7 +1385,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the following is true for the composition of equilibrium mixture. If &amp;Delta;G = 0 and&lt;i&gt; K&lt;/i&gt; = 1 the mixture is.<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1205,7 +1395,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the following is true for the composition of equilibrium mixture. If &amp;Delta;G = 0 and&lt;i&gt; K&lt;/i&gt; = 1 the mixture is.<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1215,7 +1405,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Calculate the value of K at 298K for the following reaction N&lt;sub&gt;2&lt;/sub&gt; (g) + 3H&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; 2NH&lt;sub&gt;3&lt;/sub&gt; (g) &lt;br /&gt; Given &amp;Delta;G = -32.96KJmol-1<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1225,7 +1415,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Of the following reactions, which of the reaction process is only spontaneous at high temperatures<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1235,7 +1425,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'O&lt;sub&gt;2&lt;/sub&gt; (g) &amp;rarr;2CO(g) &lt;br /&gt; How does the spontaneity of this process depend upon temperature?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1245,7 +1435,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'condition of a predation process describes an endothermic process with an increase in system entropy, ?G will be negative if. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1255,7 +1445,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'At 25&lt;sup&gt;?&lt;/sup&gt;C, a reaction has a Gibb\'s free energy change of +45kJ. If the enthalpy change of the reaction is +35kJ, what is the entropy change of the reaction?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1265,7 +1455,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Energy can neither be created nor destroyed but can be converted from one form to other is inferred from. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1275,7 +1465,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'From the eqution 2NO&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; N&lt;sub&gt;2&lt;/sub&gt; O&lt;sub&gt;4&lt;/sub&gt; (g) &lt;br /&gt; When the value of the reaction quotient before any reaction occurs is zero (0 ) at 25 °C, the concentration changes so that at equilibrium, [NO&lt;sub&gt;2&lt;/sub&gt; ] = 0.016 M and [N&lt;sub&gt;2&lt;/sub&gt; O&lt;sub&gt;4&lt;/sub&gt; ] = 0.042 M. &lt;br /&gt; What is the value of the equilibrium constant for the reaction?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1285,7 +1475,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => '<div><span style="color: rgb(33, 37, 41); font-size: 1rem; -webkit-tap-highlight-color: transparent;">A </span><span style="color: rgb(33, 37, 41); font-size: 1rem; -webkit-tap-highlight-color: transparent; -webkit-option-size-adjust: 100%;">1.00-L flask containing 0.0500 mol of NO(g), 0.0155 mol of Cl2(g), and 0.500 mol of NOCl &lt;br /&gt; 2NO(g) + Cl&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; 2NOCl(g) &lt;i&gt;K&lt;sub&gt;c&lt;/sub&gt; &lt;/i&gt; = 4.6 × 104 &lt;br /&gt;</span><span style="color: rgb(33, 37, 41); font-size: 1rem; -webkit-tap-highlight-color: transparent; -webkit-option-size-adjust: 100%;"> Calculate the reaction quotient and determine the direction of the equilibrium shift</span><br></div>',
                 'marks' => 1.2,
                 'options' => [
@@ -1295,7 +1485,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the statements defines the&lt;b&gt; activity&lt;/b&gt; of a substance<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1305,7 +1495,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'A system in which reactants and products are found in two or more phases is a<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1315,7 +1505,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'One of the following is an example of heterogeneous equilibria<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1325,7 +1515,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'A chemical reaction is said to be at equilibrium at. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1335,7 +1525,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Predict the spontaneity of a chemical process if &amp;Delta;G&lt;sup&gt;o&lt;/sup&gt; = 141.7 and K = 1.4 x 10&lt;sup&gt;-25&lt;/sup&gt; at 298K.<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1345,7 +1535,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Estimate the boiling point of water given &amp;Delta;H&lt;sup&gt;o&lt;/sup&gt; = 44.01KJmol&lt;sup&gt;-1&lt;/sup&gt; and &amp;Delta;S&lt;sup&gt;o&lt;/sup&gt; = 118.3 J/Kmol&lt;sup&gt;-1&lt;/sup&gt;. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1355,7 +1545,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the following statements is true for the effect of catalyst on equilibrium. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1365,7 +1555,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'hich of the following principles is used in predicting changes in equilibrium concentrations? <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1375,7 +1565,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'The following reaction is at equilibrium. &lt;br /&gt; C&lt;sub&gt;l2&lt;/sub&gt; (g) + 3F&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; 2ClF&lt;sub&gt;3&lt;/sub&gt; (g) &lt;br /&gt; How will the system respond if the volume is increased at constant temperature?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1385,7 +1575,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'The following reaction is at equilibrium. &lt;br /&gt; CF&lt;sub&gt;2&lt;/sub&gt; Br&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; CF&lt;sub&gt;2&lt;/sub&gt; (g) + 2Br(g) &amp;Delta;H= 424 kJ mol&lt;sup&gt;–1&lt;/sup&gt; &lt;br /&gt; How will the system respond if the temperature is decreased?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1395,7 +1585,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Consider this equation: 2CO(g) + O&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; 2CO&lt;sub&gt;2&lt;/sub&gt; (g) &lt;br /&gt; Suppose the equation is rewritten as CO(g) + 1⁄2O&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; CO&lt;sub&gt;2&lt;/sub&gt; (g) with an equilibrium constant Kc\'. What is the relationship between Kc and Kc\'? <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1405,7 +1595,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'ntify the INCORRECT statement below regarding chemical equilibrium. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1415,7 +1605,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'In which of the following reactions will the point of equilibrium shift to the left when the pressure on the system is increased? <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1425,7 +1615,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'What happens when a catalyst is added to a system at equilibrium?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1435,7 +1625,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'The reaction A &amp;harr; B has an equilibrium constant of K = 10&lt;sup&gt;–4&lt;/sup&gt; . Which of the following statements is always correct? <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1445,7 +1635,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the following statements most accurately relates the properties of a liquid at room temperature with its vapour pressure?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1455,7 +1645,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'For a reversible reaction, the equilibrium lies to the.<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1465,7 +1655,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Which of the following is true for the composition of equilibrium mixture. If &amp;Delta;G = 0 and&lt;i&gt; K&lt;/i&gt; = 1 the mixture is. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1475,7 +1665,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Calculate the value of K at 298K for the following reaction N&lt;sub&gt;2&lt;/sub&gt; (g) + 3H&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; 2NH&lt;sub&gt;3&lt;/sub&gt; (g) &lt;br /&gt; Given &amp;Delta;G = -32.96KJmol-1.<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1484,7 +1674,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Of the following reactions, which of the reaction process is only spontaneous at high temperatures? <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1494,7 +1684,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'The incomplete combustion of carbon is described by the following equation &lt;br /&gt; 2C(s) + O&lt;sub&gt;2&lt;/sub&gt; (g) &amp;rarr;2CO(g) &lt;br /&gt; How does the spontaneity of this process depend upon temperature? <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1504,7 +1694,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'If &amp;Delta;H is negative and &amp;Delta;S is positive, this condition describes.<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1514,7 +1704,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'A condition of a predation process describes an endothermic process with an increase in system entropy, ?G will be negative if. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1524,7 +1714,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'At 25&lt;sup&gt;?&lt;/sup&gt;C, a reaction has a Gibb\'s free energy change of +45kJ. If the enthalpy change of the reaction is +35kJ, what is the entropy change of the reaction?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1534,7 +1724,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'Energy can neither be created nor destroyed but can be converted from one form to other is inferred from. <br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1544,7 +1734,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'From the equation 2NO&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; N&lt;sub&gt;2&lt;/sub&gt; O&lt;sub&gt;4&lt;/sub&gt; (g) &lt;br /&gt; When the value of the reaction quotient before any reaction occurs is zero (0 ) at 25 °C, the concentration changes so that at equilibrium, [NO&lt;sub&gt;2&lt;/sub&gt; ] = 0.016 M and N&lt;sub&gt;2&lt;/sub&gt; O&lt;sub&gt;4&lt;/sub&gt; ] = 0.042 M. &lt;br /&gt; What is the value of the equilibrium constant for the reaction?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1554,7 +1744,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 7,
+                'exam_id' => 2,
                 'question' => 'For the reaction, 2SO&lt;sub&gt;2&lt;/sub&gt; (g) + O&lt;sub&gt;2&lt;/sub&gt; (g) &amp;harr; 2SO&lt;sub&gt;3&lt;/sub&gt; (g) the concentrations at equilibrium are &lt;br /&gt; [SO&lt;sub&gt;2&lt;/sub&gt; ] = 0.90 M, [O&lt;sub&gt;2&lt;/sub&gt; ] = 0.35 M, and [SO&lt;sub&gt;3&lt;/sub&gt; ] = 1.1 M. What is the value of the equilibrium constant, &lt;i&gt;K&lt;sub&gt;c&lt;/sub&gt; &lt;/i&gt; ?<br>',
                 'marks' => 1.2,
                 'options' => [
@@ -1563,575 +1753,8 @@ class QuestionsSeeder extends Seeder
                     ['option' => '<i>K<sub>c</sub> </i> = 4.3', 'is_correct' => true],
                 ],
             ],
-
-            // General 
             [
-                'exam_id' => 8,
-                'question' => 'One of the following is considered to be part of environmental problems in Nigeria<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Noncompliance to the rule of law', 'is_correct' => false],
-                    ['option' => 'Military intervention', 'is_correct' => false],
-                    ['option' => 'Abuse of power', 'is_correct' => false],
-                    ['option' => 'Deforestation', 'is_correct' => true],
-                ],
-            ],
-            
-            [
-                'exam_id' => 8,
-                'question' => 'All the following are environmental problems except on<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Planting', 'is_correct' => true],
-                    ['option' => 'Soil erosion', 'is_correct' => false],
-                    ['option' => 'Dumping of Wasted product', 'is_correct' => false],
-                    ['option' => 'Oil pollution', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The greatest threats of the forest in Nigeria have been<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Maintenance of wild life', 'is_correct' => false],
-                    ['option' => 'Excess rain fall', 'is_correct' => false],
-                    ['option' => 'Bush burning', 'is_correct' => true],
-                    ['option' => 'Lack of forest policy', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'A peoples� perception of the world is as result of their<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Life', 'is_correct' => false],
-                    ['option' => 'Ideas', 'is_correct' => false],
-                    ['option' => 'World', 'is_correct' => false],
-                    ['option' => 'Practical observation', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => '<div>Various ideas are put together to give us a picture of Nigerians perception of ____</div><div><br></div>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'The world', 'is_correct' => true],
-                    ['option' => 'Africa', 'is_correct' => false],
-                    ['option' => 'The noon', 'is_correct' => false],
-                    ['option' => 'Heaven', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'In many Nigeria languages, the name given to God normally _____him as creator<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Portray', 'is_correct' => true],
-                    ['option' => 'Recognizes', 'is_correct' => false],
-                    ['option' => 'Qualifies', 'is_correct' => false],
-                    ['option' => 'All of the above', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Self-reliance according to August(_____) implies a decision by oneself<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => '1928', 'is_correct' => false],
-                    ['option' => '1929', 'is_correct' => false],
-                    ['option' => '1979', 'is_correct' => true],
-                    ['option' => '1980', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => '<div>country is said to be self-reliance if the following criteria</div><div>is met except one</div>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Educational balanced', 'is_correct' => false],
-                    ['option' => 'Economically sound', 'is_correct' => false],
-                    ['option' => 'Inability to feed her citizen', 'is_correct' => true],
-                    ['option' => 'Politically stable', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The following are characteristics features of self-reliance<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Competence', 'is_correct' => false],
-                    ['option' => 'Confidence', 'is_correct' => false],
-                    ['option' => 'Originality', 'is_correct' => false],
-                    ['option' => 'All of the above', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The heavenly part is the home of the following except one<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'The stars', 'is_correct' => false],
-                    ['option' => 'Ocean', 'is_correct' => true],
-                    ['option' => 'Sun', 'is_correct' => false],
-                    ['option' => 'Moon', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The unification of both northern and southern protectorates is called ___<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Unity in diversity', 'is_correct' => false],
-                    ['option' => 'Amalgamation', 'is_correct' => true],
-                    ['option' => 'United Nigeria', 'is_correct' => false],
-                    ['option' => 'Nigeria as a nation', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => '<div>The following clans can be located in the savannah zone of</div><div>Nigeria except one</div>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Nose', 'is_correct' => false],
-                    ['option' => 'Hausa', 'is_correct' => false],
-                    ['option' => 'Ijaw', 'is_correct' => true],
-                    ['option' => 'Gwari', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'What is cultural pattern?<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Cultural features', 'is_correct' => false],
-                    ['option' => 'Acculturation', 'is_correct' => false],
-                    ['option' => 'Enculturation', 'is_correct' => false],
-                    ['option' => 'Mode of conduct and behaviour', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'In your own opinion, do you think corruption is an important value in Nigeria society<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'True', 'is_correct' => false],
-                    ['option' => 'False', 'is_correct' => true],
-                    ['option' => 'None of the above', 'is_correct' => false],
-                    ['option' => 'All of the above', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Listed below are four components of culture except<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Economic system', 'is_correct' => false],
-                    ['option' => 'Belief system', 'is_correct' => false],
-                    ['option' => 'Kinship system', 'is_correct' => true],
-                    ['option' => 'Political system', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Language determines perception and shape the world view of people<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'True', 'is_correct' => true],
-                    ['option' => 'False', 'is_correct' => false],
-                    ['option' => 'None of the above', 'is_correct' => false],
-                    ['option' => 'All of the above', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Language determines perception and shape the world view of people Of<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Language', 'is_correct' => false],
-                    ['option' => 'Symbol', 'is_correct' => true],
-                    ['option' => 'Tradition', 'is_correct' => false],
-                    ['option' => 'Culture', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => '<div>Knowledge</div><div>_____is one of the Greek philosophers that preaches justice</div>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Socrates', 'is_correct' => true],
-                    ['option' => 'Adamu', 'is_correct' => false],
-                    ['option' => 'Peter', 'is_correct' => false],
-                    ['option' => 'Isiah', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The following ethnic group can be traced to the forest zone except one<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Hausa', 'is_correct' => true],
-                    ['option' => 'Igbo', 'is_correct' => false],
-                    ['option' => 'Yoruba', 'is_correct' => false],
-                    ['option' => 'Ekitis', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'General Yakubu Gowom (Rt) created ____ states in Nigeria<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => '14', 'is_correct' => false],
-                    ['option' => '12', 'is_correct' => true],
-                    ['option' => '36', 'is_correct' => false],
-                    ['option' => '18', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'No culture is superior to the other since each is adapted to its own<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Technology', 'is_correct' => false],
-                    ['option' => 'Purpose', 'is_correct' => false],
-                    ['option' => 'Environment', 'is_correct' => true],
-                    ['option' => 'Culture', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Culture is a system of knowledge more or less shared by the member of a __<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Household', 'is_correct' => false],
-                    ['option' => 'Society', 'is_correct' => true],
-                    ['option' => 'Extended family', 'is_correct' => false],
-                    ['option' => 'Nuclear famil', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Nok culture is so far the oldest iron working in ____<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'West Africa', 'is_correct' => true],
-                    ['option' => 'African', 'is_correct' => false],
-                    ['option' => 'Nigeria', 'is_correct' => false],
-                    ['option' => 'Europe', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => ' <span style="color: rgb(33, 37, 41); font-size: 1rem; -webkit-tap-highlight-color: transparent; -webkit-option-size-adjust: 100%;">In the year _____ an object (Roped pot on a sand) was</span><div>unearthened by one Isiah Anozie in a village called Igbo-Ukwu</div>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => '1927', 'is_correct' => false],
-                    ['option' => '1928', 'is_correct' => false],
-                    ['option' => '1930', 'is_correct' => false],
-                    ['option' => '1938', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'All sort of abstraction design were made use of by the artist as the ornamentation of the surface. This statement is accredited to____<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Nok culture', 'is_correct' => false],
-                    ['option' => 'Igbo-Ukwu', 'is_correct' => true],
-                    ['option' => 'Ife culture', 'is_correct' => false],
-                    ['option' => 'Benin culture', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'One of the characteristics of ____culture is that attention was not paid to human figure<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Ife', 'is_correct' => false],
-                    ['option' => 'Igbo-Ukwu', 'is_correct' => true],
-                    ['option' => 'Nupe', 'is_correct' => false],
-                    ['option' => 'Benin', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Archaeological excavation with the prove of radiocarbon dating support the fact that the ancient city of Ille- Ife had been in existence before<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => '500AD', 'is_correct' => false],
-                    ['option' => '600AD', 'is_correct' => false],
-                    ['option' => '700AD', 'is_correct' => false],
-                    ['option' => '800AD', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'One of the function of culture is procreation. What is procreation?<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'To procure', 'is_correct' => false],
-                    ['option' => 'To recreate', 'is_correct' => false],
-                    ['option' => 'To give birth', 'is_correct' => true],
-                    ['option' => 'To manufacture', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Ife art came into limelight when a German Ethnologist, Leo Frobenius in ____excavated a good number of artifact<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => '1905', 'is_correct' => false],
-                    ['option' => '1910', 'is_correct' => true],
-                    ['option' => '1915', 'is_correct' => false],
-                    ['option' => '1920', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => '<div>Historical, ethnological and archaeological accounts of the ancient city of Ille-Ife showed that there was an</div><div>organized kingdom with substantial urban settlement with evidence of ____industries</div>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Food', 'is_correct' => false],
-                    ['option' => 'Wood', 'is_correct' => false],
-                    ['option' => 'Iron', 'is_correct' => false],
-                    ['option' => 'Brass', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Culture is not genetically transmitted but rather it is ____<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Learned', 'is_correct' => true],
-                    ['option' => 'Transferred', 'is_correct' => false],
-                    ['option' => 'Transposed', 'is_correct' => false],
-                    ['option' => 'Accumulated', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Culture changes in response to ___ needs and to ecological demands as evidence in the manner of dresses, hairstyle and pattern of behaviour of the people<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Society', 'is_correct' => true],
-                    ['option' => 'Industry', 'is_correct' => false],
-                    ['option' => 'People', 'is_correct' => false],
-                    ['option' => 'Family', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'What is Ethnocentrism?<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Superior culture', 'is_correct' => false],
-                    ['option' => 'Inferior culture', 'is_correct' => false],
-                    ['option' => 'Favour of the culture of ones own society', 'is_correct' => true],
-                    ['option' => 'Diffusion of traits of culture', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Nok terracotta pieces was found deep in alluvial deposit accidentally through the activities of the Tin miners in<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => '1920', 'is_correct' => false],
-                    ['option' => '1930', 'is_correct' => false],
-                    ['option' => '1935', 'is_correct' => false],
-                    ['option' => '1940', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The method in which the Nok sculptures were produced is commonly referred too as<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Carving', 'is_correct' => false],
-                    ['option' => 'Molding', 'is_correct' => false],
-                    ['option' => 'Additive', 'is_correct' => true],
-                    ['option' => 'Subtractive', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The phonecians were noted sea traders and manufactures<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Bronze', 'is_correct' => true],
-                    ['option' => 'Copper', 'is_correct' => false],
-                    ['option' => 'Gold', 'is_correct' => false],
-                    ['option' => 'Shells', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Double coincidence of wants means____<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'To locate buyers easily', 'is_correct' => false],
-                    ['option' => 'Ready market to sell off items', 'is_correct' => false],
-                    ['option' => 'Difficulty of bringing two people of different needs', 'is_correct' => true],
-                    ['option' => 'Difficult in disposing goods', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'African culture exchange grains and other agricultural products such as the following except one<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Rice', 'is_correct' => false],
-                    ['option' => 'Yam', 'is_correct' => false],
-                    ['option' => 'Apple', 'is_correct' => true],
-                    ['option' => 'Beans', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Listed below are factors that militate against the attainment of self-reliance except one<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Agriculture and food crisis', 'is_correct' => false],
-                    ['option' => 'Education crisis', 'is_correct' => false],
-                    ['option' => 'Food factor', 'is_correct' => false],
-                    ['option' => 'Civilization', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Moral obligation of citizens according to Johnson (1988) is the standards of behaviour and duties which is perform by____<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Men', 'is_correct' => false],
-                    ['option' => 'Women', 'is_correct' => false],
-                    ['option' => 'Citizens', 'is_correct' => true],
-                    ['option' => 'Children', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Most ethnic group in Nigeria were politically organized into empires and kingdom independent of one another. Listed below are some of the group except One<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Sokoto caliphate', 'is_correct' => false],
-                    ['option' => 'Oyo empire', 'is_correct' => false],
-                    ['option' => 'Ibibio Kingdom', 'is_correct' => true],
-                    ['option' => 'Benin kingdom', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The Hausa Fulani were noted ----- in the pre-colonial period<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Hunters and traders', 'is_correct' => false],
-                    ['option' => 'Farmers and traders', 'is_correct' => false],
-                    ['option' => 'Travelers', 'is_correct' => true],
-                    ['option' => 'Fisher men', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The Yoruba people lived in large town under the leadership of ____<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Chiefs', 'is_correct' => false],
-                    ['option' => 'Obas', 'is_correct' => true],
-                    ['option' => 'Obis', 'is_correct' => false],
-                    ['option' => 'Ochefije', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Power is not ____distributed in Nigeria<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Equally', 'is_correct' => false],
-                    ['option' => 'Equitably', 'is_correct' => true],
-                    ['option' => 'Passionately', 'is_correct' => false],
-                    ['option' => 'Rightly', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The largest community that had not central authority before 1800 was the __<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Hausa', 'is_correct' => false],
-                    ['option' => 'Igbo', 'is_correct' => true],
-                    ['option' => 'Nupe', 'is_correct' => false],
-                    ['option' => 'Bornu Empire', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'What right does the Nigeria constitution recognizes?<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Justice', 'is_correct' => false],
-                    ['option' => 'Political', 'is_correct' => false],
-                    ['option' => 'Judical', 'is_correct' => true],
-                    ['option' => 'Social', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Trade by barter was the earliest form of____<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Business', 'is_correct' => false],
-                    ['option' => 'Trade', 'is_correct' => true],
-                    ['option' => 'Transaction', 'is_correct' => false],
-                    ['option' => 'Occupation', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'The problem of barter led to the discovery of items that was regarded as currency such as the following Except <br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Shells', 'is_correct' => false],
-                    ['option' => 'Bronze', 'is_correct' => false],
-                    ['option' => 'Copper', 'is_correct' => false],
-                    ['option' => 'currency note', 'is_correct' => true],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Which part of Nigeria resisted conquest<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Middle belt', 'is_correct' => false],
-                    ['option' => 'Southern region', 'is_correct' => true],
-                    ['option' => 'Northern region', 'is_correct' => false],
-                    ['option' => 'Lokoja people', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Nigeria maintains a parallel system of traditional governance whichinclude_____<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Emirate council', 'is_correct' => false],
-                    ['option' => 'Kinship council', 'is_correct' => false],
-                    ['option' => 'Chieftaincy and emirates', 'is_correct' => true],
-                    ['option' => 'Traditional council', 'is_correct' => false],
-                ],
-            ],
-            [
-                'exam_id' => 8,
-                'question' => 'Social justice is a condition where ____ exist<br>',
-                'marks' => 1.2,
-                'options' => [
-                    ['option' => 'Opportunity and respect', 'is_correct' => false],
-                    ['option' => 'Human dignity', 'is_correct' => false],
-                    ['option' => 'Truth', 'is_correct' => false],
-                    ['option' => 'Fairness, equal opportunity and respect for human dignity', 'is_correct' => true],
-                ],
-            ],
-
-
-            // TODO: Organic Chemistry
-            [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
                 font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
                 &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2147,7 +1770,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
                 font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
                 &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2163,7 +1786,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<p class="MsoNormal">What is the name of the reaction that converts alkenes or
                 alkynes into alkanes by the addition of hydrogen in the presence of a catalyst,
                 a fundamental process in organic chemistry?<o:p></o:p></p>',
@@ -2176,7 +1799,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
                 font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
                 &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2193,7 +1816,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
             font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
             &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2208,7 +1831,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
             font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
             &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2223,7 +1846,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
             font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
             &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2239,7 +1862,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
             font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
             &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2255,7 +1878,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<p class="MsoNormal">Who is the American chemist famous for his research on
             synthetic polymers and the invention of nylon, a significant development in the
             field of organic chemistry?<o:p></o:p></p>',
@@ -2268,7 +1891,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<p class="MsoNormal">Which Nobel laureate in chemistry is known for his work on
             the synthesis of complex natural products and the discovery of the structure of
             DNA, alongside Francis Crick and Rosalind Franklin?<o:p></o:p></p>',
@@ -2281,7 +1904,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
             font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
             &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2297,7 +1920,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<p class="MsoNormal">Who is known for the discovery of the structure of DNA and
             is famous for the double helix model, a fundamental contribution to the
             understanding of genetics and biochemistry?<o:p></o:p></p>',
@@ -2310,7 +1933,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<p class="MsoNormal">What is the name of the reaction that converts an ester and
             an alcohol into a carboxylic acid and another alcohol, often used in the
             synthesis of soap?<o:p></o:p></p>',
@@ -2323,7 +1946,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<p class="MsoNormal">Who is the American chemist known for his contributions to
             the development of metathesis reactions, which have important applications in
             the synthesis of complex organic molecules?<o:p></o:p></p>',
@@ -2336,7 +1959,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 10,
+              'exam_id' => 2,
                 'question' => '<span style="font-size:11.0pt;line-height:115%;
             font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:SimSun;mso-bidi-font-family:
             &quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:ZH-CN;
@@ -2352,205 +1975,574 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
 
+            // TODO: General
+            [
+                'exam_id' => 5,
+                'question' => 'One of the following is considered to be part of environmental problems in Nigeria<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Noncompliance to the rule of law', 'is_correct' => false],
+                    ['option' => 'Military intervention', 'is_correct' => false],
+                    ['option' => 'Abuse of power', 'is_correct' => false],
+                    ['option' => 'Deforestation', 'is_correct' => true],
+                ],
+            ],
 
-            // TODO: Physics
             [
-                'exam_id' => 11,
-                'question' => 'What will be the resultant force on a body
-            of mass 50 kg when it moves with a
-            uniform velocity of 10 m/s?<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'All the following are environmental problems except on<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => '500 N', 'is_correct' => false],
-                    ['option' => '0 N', 'is_correct' => true],
-                    ['option' => '5 N', 'is_correct' => false],
-                    ['option' => '15 N', 'is_correct' => false],
+                    ['option' => 'Planting', 'is_correct' => true],
+                    ['option' => 'Soil erosion', 'is_correct' => false],
+                    ['option' => 'Dumping of Wasted product', 'is_correct' => false],
+                    ['option' => 'Oil pollution', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'A riffle bullet weighing 7 g leaves the
-            barrel of riffle with a velocity of 300 m/s. If
-            the riffle recoils with a velocity of 1 m/s,
-            find the mass of the riffle.<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'The greatest threats of the forest in Nigeria have been<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => '. 2.1 kg', 'is_correct' => true],
-                    ['option' => '1.2 kg', 'is_correct' => false],
-                    ['option' => '3.4 kg', 'is_correct' => false],
-                    ['option' => '2.3 kg', 'is_correct' => false],
+                    ['option' => 'Maintenance of wild life', 'is_correct' => false],
+                    ['option' => 'Excess rain fall', 'is_correct' => false],
+                    ['option' => 'Bush burning', 'is_correct' => true],
+                    ['option' => 'Lack of forest policy', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'Determine the dimension of density.<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'A peoples� perception of the world is as result of their<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => 'ML-3', 'is_correct' => true],
-                    ['option' => 'ML2T-2', 'is_correct' => false],
-                    ['option' => 'ML2', 'is_correct' => false],
-                    ['option' => 'MLT-2', 'is_correct' => false],
+                    ['option' => 'Life', 'is_correct' => false],
+                    ['option' => 'Ideas', 'is_correct' => false],
+                    ['option' => 'World', 'is_correct' => false],
+                    ['option' => 'Practical observation', 'is_correct' => true],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'Which of the following is not a possible unit
-                for velocity? <br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => '<div>Various ideas are put together to give us a picture of Nigerians perception of ____</div><div><br></div>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => 'centimetres / month', 'is_correct' => false],
-                    ['option' => 'millimetres / kilowatt', 'is_correct' => true],
-                    ['option' => 'decimeters / kilosecond', 'is_correct' => false],
-                    ['option' => 'kilometres / millisecond', 'is_correct' => false],
+                    ['option' => 'The world', 'is_correct' => true],
+                    ['option' => 'Africa', 'is_correct' => false],
+                    ['option' => 'The noon', 'is_correct' => false],
+                    ['option' => 'Heaven', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'Which of the Newton’s law state that, “when a
-            body is acted upon by a force, its resulting
-            acceleration is directly proportional to the
-            force and inversely proportional to the
-            mass”?<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'In many Nigeria languages, the name given to God normally _____him as creator<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => '. first Newton’s law', 'is_correct' => false],
-                    ['option' => 'second Newton’s law', 'is_correct' => true],
-                    ['option' => 'third Newton’s law', 'is_correct' => false],
-                    ['option' => 'fourth Newton’s law', 'is_correct' => false],
+                    ['option' => 'Portray', 'is_correct' => true],
+                    ['option' => 'Recognizes', 'is_correct' => false],
+                    ['option' => 'Qualifies', 'is_correct' => false],
+                    ['option' => 'All of the above', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'The force acting on a body moving with a
-                uniform velocity is<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'Self-reliance according to August(_____) implies a decision by oneself<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => 'uniform', 'is_correct' => false],
-                    ['option' => 'constant', 'is_correct' => false],
-                    ['option' => 'zero', 'is_correct' => true],
-                    ['option' => 'unknown', 'is_correct' => false],
+                    ['option' => '1928', 'is_correct' => false],
+                    ['option' => '1929', 'is_correct' => false],
+                    ['option' => '1979', 'is_correct' => true],
+                    ['option' => '1980', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => '. Which of the following units cannot be used
-            to measure speed?<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => '<div>country is said to be self-reliance if the following criteria</div><div>is met except one</div>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => 'ms-1', 'is_correct' => false],
-                    ['option' => 'kms -1', 'is_correct' => false],
-                    ['option' => 'mh-1', 'is_correct' => false],
-                    ['option' => 'kgs -1', 'is_correct' => true],
+                    ['option' => 'Educational balanced', 'is_correct' => false],
+                    ['option' => 'Economically sound', 'is_correct' => false],
+                    ['option' => 'Inability to feed her citizen', 'is_correct' => true],
+                    ['option' => 'Politically stable', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'The acceleration of a body falling under
-            gravity on the surface of the earth is <br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'The following are characteristics features of self-reliance<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => 'constant', 'is_correct' => true],
-                    ['option' => 'increasing', 'is_correct' => false],
-                    ['option' => 'decreasing', 'is_correct' => false],
-                    ['option' => 'varies', 'is_correct' => false],
+                    ['option' => 'Competence', 'is_correct' => false],
+                    ['option' => 'Confidence', 'is_correct' => false],
+                    ['option' => 'Originality', 'is_correct' => false],
+                    ['option' => 'All of the above', 'is_correct' => true],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'A car moves from rest with an acceleration
-            of 0.2 m/s2. Find its velocity when it has
-            moved a distance of 50 m.<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'The heavenly part is the home of the following except one<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => '4.47 m/s', 'is_correct' => true],
-                    ['option' => '10.0 m/s', 'is_correct' => false],
-                    ['option' => '250.0 m/s', 'is_correct' => false],
-                    ['option' => '. 5.45 m/s', 'is_correct' => false],
+                    ['option' => 'The stars', 'is_correct' => false],
+                    ['option' => 'Ocean', 'is_correct' => true],
+                    ['option' => 'Sun', 'is_correct' => false],
+                    ['option' => 'Moon', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'A ball is released from a height of 20 m.
-            Calculate the velocity with which it hits the
-            ground<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'The unification of both northern and southern protectorates is called ___<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => '12 m/s', 'is_correct' => false],
-                    ['option' => '22.6 m/s', 'is_correct' => false],
-                    ['option' => '20.0 m/s', 'is_correct' => true],
-                    ['option' => '35.6 m/s', 'is_correct' => false],
+                    ['option' => 'Unity in diversity', 'is_correct' => false],
+                    ['option' => 'Amalgamation', 'is_correct' => true],
+                    ['option' => 'United Nigeria', 'is_correct' => false],
+                    ['option' => 'Nigeria as a nation', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'A body moving with a constant velocity
-            along a straight line PQR takes 30 s to go
-            from P to Q and 10 s to go from Q to R. If
-            PR = 4 m, Find PQ. <br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => '<div>The following clans can be located in the savannah zone of</div><div>Nigeria except one</div>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => '3 m', 'is_correct' => true],
-                    ['option' => '1 m', 'is_correct' => false],
-                    ['option' => '2 m', 'is_correct' => false],
-                    ['option' => '4 m', 'is_correct' => false],
+                    ['option' => 'Nose', 'is_correct' => false],
+                    ['option' => 'Hausa', 'is_correct' => false],
+                    ['option' => 'Ijaw', 'is_correct' => true],
+                    ['option' => 'Gwari', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'A motor car is uniformly retarded and
-            brought to rest from a velocity 36 km/h in
-            5 s. Find the distance covered during this
-            period.<br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'What is cultural pattern?<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => '25 m', 'is_correct' => true],
-                    ['option' => '20 m', 'is_correct' => false],
-                    ['option' => '18 m', 'is_correct' => false],
-                    ['option' => '18.5 m', 'is_correct' => false],
+                    ['option' => 'Cultural features', 'is_correct' => false],
+                    ['option' => 'Acculturation', 'is_correct' => false],
+                    ['option' => 'Enculturation', 'is_correct' => false],
+                    ['option' => 'Mode of conduct and behaviour', 'is_correct' => true],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'The thermometric property of a thermocouple is the change in _______. <br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'In your own opinion, do you think corruption is an important value in Nigeria society<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => 'Equivalent resistance', 'is_correct' => false],
-                    ['option' => 'Electromotive force', 'is_correct' => true],
-                    ['option' => 'Current', 'is_correct' => false],
-                    ['option' => 'Pressure', 'is_correct' => false],
+                    ['option' => 'True', 'is_correct' => false],
+                    ['option' => 'False', 'is_correct' => true],
+                    ['option' => 'None of the above', 'is_correct' => false],
+                    ['option' => 'All of the above', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'The difference observed in solids, liquids and
-            gas may be accounted for by   <br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'Listed below are four components of culture except<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => 'the spacing and forces acting between the molecules', 'is_correct' => true],
-                    ['option' => 'their relative masses', 'is_correct' => false],
-                    ['option' => 'the different molecules in each of them', 'is_correct' => false],
-                    ['option' => 'their melting point', 'is_correct' => false],
+                    ['option' => 'Economic system', 'is_correct' => false],
+                    ['option' => 'Belief system', 'is_correct' => false],
+                    ['option' => 'Kinship system', 'is_correct' => true],
+                    ['option' => 'Political system', 'is_correct' => false],
                 ],
             ],
             [
-                'exam_id' => 11,
-                'question' => 'The relationship between volume and
-            pressure is investigated when temperature
-            and amount of gas are kept constant is
-            known as <br>',
-                'marks' => 1.0,
+                'exam_id' => 5,
+                'question' => 'Language determines perception and shape the world view of people<br>',
+                'marks' => 1.2,
                 'options' => [
-                    ['option' => 'ideal gas law', 'is_correct' => false],
-                    ['option' => 'Avogadro’s law', 'is_correct' => false],
-                    ['option' => 'Charles law', 'is_correct' => false],
-                    ['option' => 'Boyle’s law', 'is_correct' => true],
+                    ['option' => 'True', 'is_correct' => true],
+                    ['option' => 'False', 'is_correct' => false],
+                    ['option' => 'None of the above', 'is_correct' => false],
+                    ['option' => 'All of the above', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Language determines perception and shape the world view of people Of<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Language', 'is_correct' => false],
+                    ['option' => 'Symbol', 'is_correct' => true],
+                    ['option' => 'Tradition', 'is_correct' => false],
+                    ['option' => 'Culture', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => '<div>Knowledge</div><div>_____is one of the Greek philosophers that preaches justice</div>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Socrates', 'is_correct' => true],
+                    ['option' => 'Adamu', 'is_correct' => false],
+                    ['option' => 'Peter', 'is_correct' => false],
+                    ['option' => 'Isiah', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'The following ethnic group can be traced to the forest zone except one<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Hausa', 'is_correct' => true],
+                    ['option' => 'Igbo', 'is_correct' => false],
+                    ['option' => 'Yoruba', 'is_correct' => false],
+                    ['option' => 'Ekitis', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'General Yakubu Gowom (Rt) created ____ states in Nigeria<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => '14', 'is_correct' => false],
+                    ['option' => '12', 'is_correct' => true],
+                    ['option' => '36', 'is_correct' => false],
+                    ['option' => '18', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'No culture is superior to the other since each is adapted to its own<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Technology', 'is_correct' => false],
+                    ['option' => 'Purpose', 'is_correct' => false],
+                    ['option' => 'Environment', 'is_correct' => true],
+                    ['option' => 'Culture', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Culture is a system of knowledge more or less shared by the member of a __<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Household', 'is_correct' => false],
+                    ['option' => 'Society', 'is_correct' => true],
+                    ['option' => 'Extended family', 'is_correct' => false],
+                    ['option' => 'Nuclear famil', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Nok culture is so far the oldest iron working in ____<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'West Africa', 'is_correct' => true],
+                    ['option' => 'African', 'is_correct' => false],
+                    ['option' => 'Nigeria', 'is_correct' => false],
+                    ['option' => 'Europe', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => ' <span style="color: rgb(33, 37, 41); font-size: 1rem; -webkit-tap-highlight-color: transparent; -webkit-option-size-adjust: 100%;">In the year _____ an object (Roped pot on a sand) was</span><div>unearthened by one Isiah Anozie in a village called Igbo-Ukwu</div>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => '1927', 'is_correct' => false],
+                    ['option' => '1928', 'is_correct' => false],
+                    ['option' => '1930', 'is_correct' => false],
+                    ['option' => '1938', 'is_correct' => true],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'All sort of abstraction design were made use of by the artist as the ornamentation of the surface. This statement is accredited to____<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Nok culture', 'is_correct' => false],
+                    ['option' => 'Igbo-Ukwu', 'is_correct' => true],
+                    ['option' => 'Ife culture', 'is_correct' => false],
+                    ['option' => 'Benin culture', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'One of the characteristics of ____culture is that attention was not paid to human figure<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Ife', 'is_correct' => false],
+                    ['option' => 'Igbo-Ukwu', 'is_correct' => true],
+                    ['option' => 'Nupe', 'is_correct' => false],
+                    ['option' => 'Benin', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Archaeological excavation with the prove of radiocarbon dating support the fact that the ancient city of Ille- Ife had been in existence before<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => '500AD', 'is_correct' => false],
+                    ['option' => '600AD', 'is_correct' => false],
+                    ['option' => '700AD', 'is_correct' => false],
+                    ['option' => '800AD', 'is_correct' => true],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'One of the function of culture is procreation. What is procreation?<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'To procure', 'is_correct' => false],
+                    ['option' => 'To recreate', 'is_correct' => false],
+                    ['option' => 'To give birth', 'is_correct' => true],
+                    ['option' => 'To manufacture', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Ife art came into limelight when a German Ethnologist, Leo Frobenius in ____excavated a good number of artifact<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => '1905', 'is_correct' => false],
+                    ['option' => '1910', 'is_correct' => true],
+                    ['option' => '1915', 'is_correct' => false],
+                    ['option' => '1920', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => '<div>Historical, ethnological and archaeological accounts of the ancient city of Ille-Ife showed that there was an</div><div>organized kingdom with substantial urban settlement with evidence of ____industries</div>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Food', 'is_correct' => false],
+                    ['option' => 'Wood', 'is_correct' => false],
+                    ['option' => 'Iron', 'is_correct' => false],
+                    ['option' => 'Brass', 'is_correct' => true],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Culture is not genetically transmitted but rather it is ____<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Learned', 'is_correct' => true],
+                    ['option' => 'Transferred', 'is_correct' => false],
+                    ['option' => 'Transposed', 'is_correct' => false],
+                    ['option' => 'Accumulated', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Culture changes in response to ___ needs and to ecological demands as evidence in the manner of dresses, hairstyle and pattern of behaviour of the people<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Society', 'is_correct' => true],
+                    ['option' => 'Industry', 'is_correct' => false],
+                    ['option' => 'People', 'is_correct' => false],
+                    ['option' => 'Family', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'What is Ethnocentrism?<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Superior culture', 'is_correct' => false],
+                    ['option' => 'Inferior culture', 'is_correct' => false],
+                    ['option' => 'Favour of the culture of ones own society', 'is_correct' => true],
+                    ['option' => 'Diffusion of traits of culture', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Nok terracotta pieces was found deep in alluvial deposit accidentally through the activities of the Tin miners in<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => '1920', 'is_correct' => false],
+                    ['option' => '1930', 'is_correct' => false],
+                    ['option' => '1935', 'is_correct' => false],
+                    ['option' => '1940', 'is_correct' => true],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'The method in which the Nok sculptures were produced is commonly referred too as<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Carving', 'is_correct' => false],
+                    ['option' => 'Molding', 'is_correct' => false],
+                    ['option' => 'Additive', 'is_correct' => true],
+                    ['option' => 'Subtractive', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'The phonecians were noted sea traders and manufactures<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Bronze', 'is_correct' => true],
+                    ['option' => 'Copper', 'is_correct' => false],
+                    ['option' => 'Gold', 'is_correct' => false],
+                    ['option' => 'Shells', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Double coincidence of wants means____<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'To locate buyers easily', 'is_correct' => false],
+                    ['option' => 'Ready market to sell off items', 'is_correct' => false],
+                    ['option' => 'Difficulty of bringing two people of different needs', 'is_correct' => true],
+                    ['option' => 'Difficult in disposing goods', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'African culture exchange grains and other agricultural products such as the following except one<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Rice', 'is_correct' => false],
+                    ['option' => 'Yam', 'is_correct' => false],
+                    ['option' => 'Apple', 'is_correct' => true],
+                    ['option' => 'Beans', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Listed below are factors that militate against the attainment of self-reliance except one<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Agriculture and food crisis', 'is_correct' => false],
+                    ['option' => 'Education crisis', 'is_correct' => false],
+                    ['option' => 'Food factor', 'is_correct' => false],
+                    ['option' => 'Civilization', 'is_correct' => true],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Moral obligation of citizens according to Johnson (1988) is the standards of behaviour and duties which is perform by____<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Men', 'is_correct' => false],
+                    ['option' => 'Women', 'is_correct' => false],
+                    ['option' => 'Citizens', 'is_correct' => true],
+                    ['option' => 'Children', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Most ethnic group in Nigeria were politically organized into empires and kingdom independent of one another. Listed below are some of the group except One<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Sokoto caliphate', 'is_correct' => false],
+                    ['option' => 'Oyo empire', 'is_correct' => false],
+                    ['option' => 'Ibibio Kingdom', 'is_correct' => true],
+                    ['option' => 'Benin kingdom', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'The Hausa Fulani were noted ----- in the pre-colonial period<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Hunters and traders', 'is_correct' => false],
+                    ['option' => 'Farmers and traders', 'is_correct' => false],
+                    ['option' => 'Travelers', 'is_correct' => true],
+                    ['option' => 'Fisher men', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'The Yoruba people lived in large town under the leadership of ____<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Chiefs', 'is_correct' => false],
+                    ['option' => 'Obas', 'is_correct' => true],
+                    ['option' => 'Obis', 'is_correct' => false],
+                    ['option' => 'Ochefije', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Power is not ____distributed in Nigeria<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Equally', 'is_correct' => false],
+                    ['option' => 'Equitably', 'is_correct' => true],
+                    ['option' => 'Passionately', 'is_correct' => false],
+                    ['option' => 'Rightly', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'The largest community that had not central authority before 1800 was the __<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Hausa', 'is_correct' => false],
+                    ['option' => 'Igbo', 'is_correct' => true],
+                    ['option' => 'Nupe', 'is_correct' => false],
+                    ['option' => 'Bornu Empire', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'What right does the Nigeria constitution recognizes?<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Justice', 'is_correct' => false],
+                    ['option' => 'Political', 'is_correct' => false],
+                    ['option' => 'Judical', 'is_correct' => true],
+                    ['option' => 'Social', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Trade by barter was the earliest form of____<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Business', 'is_correct' => false],
+                    ['option' => 'Trade', 'is_correct' => true],
+                    ['option' => 'Transaction', 'is_correct' => false],
+                    ['option' => 'Occupation', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'The problem of barter led to the discovery of items that was regarded as currency such as the following Except <br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Shells', 'is_correct' => false],
+                    ['option' => 'Bronze', 'is_correct' => false],
+                    ['option' => 'Copper', 'is_correct' => false],
+                    ['option' => 'currency note', 'is_correct' => true],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Which part of Nigeria resisted conquest<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Middle belt', 'is_correct' => false],
+                    ['option' => 'Southern region', 'is_correct' => true],
+                    ['option' => 'Northern region', 'is_correct' => false],
+                    ['option' => 'Lokoja people', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Nigeria maintains a parallel system of traditional governance whichinclude_____<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Emirate council', 'is_correct' => false],
+                    ['option' => 'Kinship council', 'is_correct' => false],
+                    ['option' => 'Chieftaincy and emirates', 'is_correct' => true],
+                    ['option' => 'Traditional council', 'is_correct' => false],
+                ],
+            ],
+            [
+                'exam_id' => 5,
+                'question' => 'Social justice is a condition where ____ exist<br>',
+                'marks' => 1.2,
+                'options' => [
+                    ['option' => 'Opportunity and respect', 'is_correct' => false],
+                    ['option' => 'Human dignity', 'is_correct' => false],
+                    ['option' => 'Truth', 'is_correct' => false],
+                    ['option' => 'Fairness, equal opportunity and respect for human dignity', 'is_correct' => true],
                 ],
             ],
 
 
             //TODO: Use of English
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal"><span style="mso-spacerun:\'yes\';font-family:Calibri;mso-fareast-font-family:SimSun;
             mso-bidi-font-family:\'Times New Roman\';font-size:11.0000pt;"> Choose the option nearest in meaning to the underlined statement or words:</span><span style="mso-spacerun:\'yes\';font-family:Calibri;mso-fareast-font-family:SimSun;
             mso-bidi-font-family:\'Times New Roman\';font-size:11.0000pt;"><o:p></o:p></span></p><p class="MsoNormal"><span style="mso-spacerun:\'yes\';font-family:Calibri;mso-fareast-font-family:SimSun;
@@ -2566,7 +2558,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal"><span style="mso-spacerun:\'yes\';font-family:Calibri;mso-fareast-font-family:SimSun;
             mso-bidi-font-family:\'Times New Roman\';font-size:11.0000pt;">Choose the option nearest in meaning to the underlined statement or words:</span><span style="mso-spacerun:\'yes\';font-family:Calibri;mso-fareast-font-family:SimSun;
             mso-bidi-font-family:\'Times New Roman\';font-size:11.0000pt;"><o:p></o:p></span></p><p class="MsoNormal"><span style="mso-spacerun:\'yes\';font-family:Calibri;mso-fareast-font-family:SimSun;
@@ -2581,7 +2573,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal">Choose the option nearest in meaning to the
             underlined words :<o:p></o:p></p>
 
@@ -2599,7 +2591,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal"> Choose the
             option nearest in meaning to the underlined words :<o:p></o:p></p>
 
@@ -2614,7 +2606,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal"> Choose the
             option nearest in meaning to the underlined words :<o:p></o:p></p>
 
@@ -2630,7 +2622,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal"> Choose the
             option nearest in meaning to the underlined words :<o:p></o:p></p>
 
@@ -2646,7 +2638,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal"> Choose the
             option nearest in meaning to the underlined words :<o:p></o:p></p>
 
@@ -2664,7 +2656,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal"> Fill in the blank
             spaces in the following sentences making use of the best of the five options<o:p></o:p></p>
 
@@ -2680,7 +2672,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal">Choose the option that best conveys the meaning of the
             underlined portion in the following sentence;<o:p></o:p></p>
 
@@ -2698,7 +2690,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal">Choose the option that best conveys the meaning of the
             underlined portion in the following sentence;<o:p></o:p></p><p class="MsoNormal"><o:p> </o:p></p><p class="MsoNormal">
 
@@ -2714,7 +2706,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal">Choose the option that best conveys the meaning of the
             underlined portion in the following sentence;<o:p></o:p></p>
 
@@ -2731,7 +2723,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal">Choose the option that best conveys the meaning of the
             underlined portion in the following sentence;<o:p></o:p></p>
 
@@ -2749,7 +2741,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal">Complete each of the following sentences by choosing the
             option that most suitably fills the space;<o:p></o:p></p>
 
@@ -2766,7 +2758,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal">Complete each of the following sentences by choosing the
             option that most suitably fills the space;<o:p></o:p></p>
 
@@ -2781,7 +2773,7 @@ class QuestionsSeeder extends Seeder
                 ],
             ],
             [
-                'exam_id' => 13,
+                'exam_id' => 3,
                 'question' => '<p class="MsoNormal">Complete each of the following sentences by choosing the
             option that most suitably fills the space;<o:p></o:p></p>
 
@@ -2800,9 +2792,8 @@ class QuestionsSeeder extends Seeder
             ],
         ];
 
-
         foreach ($questions as $question) {
-            
+
             $newQuestion = Question::updateOrCreate([
                 'question' => $question['question'],
             ], [
@@ -2810,7 +2801,7 @@ class QuestionsSeeder extends Seeder
                 'question' => $question['question'],
                 'marks' => $question['marks'],
             ]);
-            
+
             foreach ($question['options'] as $option) {
                 QuestionOption::updateOrCreate([
                     'question_id' => $newQuestion->id,
