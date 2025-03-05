@@ -30,7 +30,7 @@
             @endif
 
             <!-- Verify Email Form -->
-            <form action="{{ route('verify') }}" method="POST" class="form mb-5">
+            <form action="{{route('verify.delete-useraccount')}}" method="POST" class="form mb-5">
                 @csrf
                 <h3 class="text-xl lg:text-3xl font-bold mb-10 tracking-wider lg:text-start text-flip-container">
                    Submit Delete Account Form
@@ -47,7 +47,7 @@
                       Submit
                     </button>
                 </div>
-            </form>
+            </form
 
            
           
@@ -55,38 +55,6 @@
     </div>
 </section>
 
-@if(session()->get('verified') == true)
-    <div class="submit_popup z-10 show" id="submit_popup">
-        <!-- Popup -->
-        <div class="submit_success container bg-white rounded-xl w-full h-fit max-w-[300px] md:max-w-[580px] items-center justify-center translate-y-5 py-12 dark:bg-dark relative" id="submit_success">
-            <button class="absolute top-0 right-0 text-black dark:text-white font-bold text-3xl p-5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90" onclick="window.location='/'">&times;</button>
-            <div class="flex-col flex items-center justify-center gap-10 h-full w-full">
-                <img src="/asset/images/mail_sent.gif" alt="" />
-                <div class="flex flex-col items-center w-full text-primary gap-3 dark:text-white">
-                    <button><a href="/">Go to Home</a></button>
-                    <h1 class="font-bold text-center text-3xl pb-2">Verification Successful! We will review your application and get back to you.</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const storedData = localStorage.getItem("registrationFormData");
-        if (storedData) {
-            const formData = JSON.parse(storedData);
-            if (formData.email) {
-                document.getElementById("emailInput").value = formData.email;
-                document.getElementById("emailInput2").value = formData.email;
-            }
-        }
-    });
-</script>
-
-<script>
-    const dashboardUrl = "/";
-</script>
 
 <script src="/asset/src/scripts/main.js"></script>
 

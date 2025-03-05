@@ -30,6 +30,9 @@ Route::get('/upload', function () {
 });
 
 Route::post('delete-account', [RegisterController::class, 'deleteAccount'])->name('page.delete-account');
+Route::post('Verify-delete-useraccount', [RegisterController::class, 'VerifyDeleteUserAccount'])->name('verify.delete-useraccount');
+Route::get('/verify-user-request', [RegisterController::class, 'verifyUserRequest'])->name('verifyUserRequest');
+
 
 // Route::post('/upload', function (Request $request){
 //     $request->validate([

@@ -133,4 +133,37 @@ class RegisterController extends Controller
     {
         return view('pages.delete-account');
     }
+
+    public function VerifyDeleteUserAccount(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email', 'exists:users,email'],
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return redirect()->back()->withErrors(['email' => 'Account not found or not existing.']);
+        }
+
+        $verificationCode = self::generateVerificationCode();
+
+        $user->update([
+            'ver_code' => $verificationCode,
+            'ver_code_sent_at' => Carbon::now(),
+        ]);
+
+        try {
+            Mail::to($user->email)->send(new EmailVerification($verificationCode));
+        } catch (\Throwable $th) {
+            // Handle the exception
+        }
+
+        return redirect()->route('verifyUserRequest')->with('success', 'Verification code sent to your email.');
+    }
+
+    public function verifyUserRequest()
+    {
+        return view('pages.verify-user-request');
+    }
 }
