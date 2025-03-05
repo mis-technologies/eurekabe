@@ -44,7 +44,7 @@ class RegisterController extends Controller
                 $user->delete();
                 $verified = session()->put('deleteVerified', true);
 
-                return redirect()->route('pages.verify-user-request')->with('success', 'Account deleted successfully.');
+                return redirect()->route('pages.verifyUserRequest')->with('success', 'Account deleted successfully.');
             }
 
             return redirect()->route('pages.verify.email')->withErrors(['ver_code' => 'Invalid verification code.']);
@@ -161,6 +161,8 @@ class RegisterController extends Controller
         $request->validate([
             'email' => ['required', 'email', 'exists:users,email'],
         ]);
+
+        // $verified = session()->put('deleteVerified', false);
 
         // User::withoutGlobalScopes()->withTrashed()->where('email', $request->email)->restore();
 
