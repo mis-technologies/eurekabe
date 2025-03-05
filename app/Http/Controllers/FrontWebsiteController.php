@@ -204,6 +204,6 @@ class FrontWebsiteController extends Controller
 
     public function policyPrivacy()
     {
-        return view('pages.policy-privacy');
+        return view('pages.privacy-policy');
     }
 }

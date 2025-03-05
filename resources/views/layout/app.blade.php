@@ -80,6 +80,7 @@
                     <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
                         <a href="/contact">Contact Us</a>
                     </li>
+                     
                 </ul>
 
                 <!-- Toggle Switch formerly here-->
@@ -240,6 +241,10 @@
             <a href="https://x.com" target="_blank"><i class="fab fa-x-twitter font-bold text-3xl"></i></i></a>
             <a href="https://telegram.com" target="_blank"><i class="fab fa-telegram-plane font-bold text-3xl"></i></a>
             <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in font-bold text-3xl"></i></a>
+        </div>
+        <div class="mt-4 md:mt-0">
+            <a href="/policy-privacy" class="text-sm text-primary hover:underline">Privacy Policy</a>
+            
         </div>
     </div>
 

@@ -68,7 +68,7 @@
       <!-- Contact Us -->
       <div class="flex flex-col gap-2">
         <h2 class="text-2xl font-bold">Contact Us</h2>
-        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <a href="mailto:contact@example.com" class="underline text-primary italic" > eurekaexam@gmail.com. </a></p>
+        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <a href="mailto:info@eurekaedu.academy" class="underline text-primary italic">info@eurekaedu.academy</a></p>
         </div>
       </div>
       
