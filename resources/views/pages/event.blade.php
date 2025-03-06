@@ -4,7 +4,7 @@
 <div class="container py-20">
     <!-- Events List Container -->
     <div id="eventListContainer" class="container">
-        <!-- Headins section -->
+        <!-- Headings section -->
         <div class="mb-20 space-y-6">
             <h2 class="w-fit p-1 px-4 rounded-xl font-semibold font-roboto text-accent bg-accent bg-opacity-20 mx-auto">
                 Events</h2>
@@ -12,8 +12,7 @@
 
             <!-- Mini Nav -->
             <div class="flex items-center gap-4">
-                <ul
-                    class="flex gap-2 rounded-full transition-all duration-200 border border-dark dark:border-white mx-auto">
+                <ul class="flex gap-2 rounded-full transition-all duration-200 border border-dark dark:border-white mx-auto">
                     <li class="filter-btn px-5 py-2 rounded-full">
                         <a href="#physical" class="tab">In Person</a>
                     </li>
@@ -36,7 +35,7 @@
                             <!-- BG Image -->
                             <div class="w-full h-full relative">
                                 <!-- Toggle Button -->
-                                <div onclick="toggleDetails()" class="toggler absolute -top-10 -left-100 h-10 w-1000 shadow bg-danger-600 overflow-hidden rounded-xl p-4 cursor-pointer">
+                                <div onclick="toggleDetails()" style="color: #4F92FE" class="toggler absolute -top-10 -left-100 h-10 w-1000 shadow bg-danger-600 overflow-hidden rounded-xl p-4 cursor-pointer">
                                     Show more details
                                     <i class="fa fa-eye"></i>
                                     <i class="fa fa-close hidden"></i>
@@ -78,7 +77,7 @@
                                             <p class="dark:text-gray-100">{{ \Carbon\Carbon::parse($event->start_datetime)->format('d M') }} - {{ \Carbon\Carbon::parse($event->end_datetime)->format('d M Y') }} | {{ $event->duration }} hours</p>
                                             <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">{{ $event->location }}</span>
                                         </div>
-                                        <button onclick="showEventDetail()" class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 {{ $event->status == "UPCOMING" ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black" }}'>
+                                        <button onclick="showEventDetail({{ json_encode($event) }})" class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 {{ $event->status == "UPCOMING" ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black" }}'>
                                             View details
                                         </button>
                                     </div>
@@ -89,7 +88,6 @@
                     @endforeach
                 @endif
             </div>
-
 
             <!-- Virtual events -->
             <div id="virtual" class="content space-y-20 gap-6 md:container">
@@ -102,7 +100,7 @@
                             <!-- BG Image -->
                             <div class="w-full h-full relative">
                                 <!-- Toggle Button -->
-                                <div onclick="toggleDetails()" class="toggler absolute -top-10 -left-100 h-10 w-1000 shadow bg-danger-600 overflow-hidden rounded-xl p-4 cursor-pointer">
+                                <div onclick="toggleDetails()"  style="color: #4F92FE" class="toggler absolute -top-10 -left-100 h-10 w-1000 shadow bg-danger-600 overflow-hidden rounded-xl p-4 cursor-pointer">
                                     Show more details
                                     <i class="fa fa-eye"></i>
                                     <i class="fa fa-close hidden"></i>
@@ -143,8 +141,7 @@
                                         <p class="dark:text-gray-100">{{ \Carbon\Carbon::parse($event->start_datetime)->format('d M') }} - {{ \Carbon\Carbon::parse($event->end_datetime)->format('d M Y') }} | {{ $event->duration }} hours</p>
                                         <span class="rounded-full w-fit px-2 text-gray-100 bg-gray-600 uppercase">{{ $event->location }}</span>
                                     </div>
-                                    <button onclick="showEventDetail()"
-                                        class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 {{ $event->status == "UPCOMING" ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black" }}'>
+                                    <button onclick="showEventDetail({{ json_encode($event) }})" class='border-2 border-dark dark:border-white rounded-lg p-2 px-14 font-semibold mt-10 transition-all duration-200 {{ $event->status == "UPCOMING" ? "bg-primary hover:bg-transparent" : "hover:bg-white hover:text-black" }}'>
                                         View details
                                     </button>
                                 </div>
@@ -164,28 +161,13 @@
                 ← Back to Events
             </button>
             <div id="detailContent" class="bg-secondary dark:bg-dark2 dark:text rounded-xl p-8 shadow-md">
-                <h1 class="text-3xl font-bold mb-4">EasyA Consensus Hong Kong Hackathon</h1>
-                <div class="text-primary text-xl font-bold mb-4">N200,000 NGN</div>
-                <div class="mb-6">
-                    <p class="text-gray-500">20 Feb 2025 | 4 hours</p>
-                    <p class="text-gray-500">NIGERIA, NG</p>
-                </div>
-                <div class="prose mb-6">
-                    <p>This February, we\'re taking over Hong Kong with our epic Consensus Hong Kong Hackathon...</p>
-                </div>
-                <div class="bg-primary bg-opacity-20 p-4 rounded-lg mb-6">
-                    <h3 class="text-xl font-bold mb-2">Featured Speakers:</h3>
-                    <ul class="list-disc pl-6">
-                        <li>Michael Marvelous</li>
-                        <li>Cliton Brown Sugar</li>
-                        <li>Joseph</li>
-                    </ul>
-                </div>
-                <div class="bg-primary bg-opacity-20 p-4 rounded-lg')}}">
-                    <h3 class="text-xl font-bold mb-2">Special Bonus:</h3>
-                    <p>Free ticket to main Consensus conference</p>
-                </div>
-                <button class="mt-6 w-full bg-primary text-white py-3 rounded-lg hover:bg-opacity-50 transition-all">
+                <h1 id="eventTitle" class="text-3xl font-bold mb-4"></h1>
+                <div id="eventPrice" class="text-primary text-xl font-bold mb-4"></div>
+                <div id="eventDateLocation" class="mb-6"></div>
+                <div id="eventDescription" class="prose mb-6"></div>
+                <div id="eventSpeakers" class="bg-primary bg-opacity-20 p-4 rounded-lg mb-6"></div>
+                <div id="eventBonus" class="bg-primary bg-opacity-20 p-4 rounded-lg"></div>
+                <button class="register-now-button mt-6 w-full bg-primary text-white py-3 rounded-lg hover:bg-opacity-50 transition-all">
                     Register Now
                 </button>
             </div>
@@ -207,48 +189,63 @@
         eyeIcon.classList.toggle('hidden');
         closeIcon.classList.toggle('hidden');
     }
-    </script>
+
+    function showEventDetail(event) {
+        document.getElementById('eventTitle').innerText = event.title;
+        document.getElementById('eventPrice').innerText = event.price + ' in total prizes';
+        document.getElementById('eventDateLocation').innerHTML = `<p class="text-gray-500">${new Date(event.start_datetime).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ${new Date(event.end_datetime).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })} | ${event.duration} hours</p><p class="text-gray-500">${event.location}</p>`;
+        document.getElementById('eventDescription').innerHTML = `<p>${event.description}</p>`;
+        document.getElementById('eventBonus').innerHTML = event.special_bonus;
+        
+       
+        let speakersHtml = '<h3 class="text-xl font-bold mb-2">Featured Speakers:</h3><ul class="list-disc pl-6">';
+        event.speakers.forEach(speaker => {
+            speakersHtml += `<li>${speaker.name}</li>`;
+        });
+        speakersHtml += '</ul>';
+        document.getElementById('eventSpeakers').innerHTML = speakersHtml;
+
+      // Set the onclick attribute of the Register Now button to open the event registration link
+      document.querySelector('.register-now-button').setAttribute('onclick', `window.open('${event.reg_link}', '_blank');`);
+
+        document.getElementById('eventListContainer').classList.add('hidden');
+        document.getElementById('eventDetail').classList.remove('hidden');
+    }
+
+    function showEventList() {
+        document.getElementById('eventListContainer').classList.remove('hidden');
+        document.getElementById('eventDetail').classList.add('hidden');
+    }
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-   const tabs = document.querySelectorAll(".filter-btn"); // Select <li> instead of <a>
-   const sections = document.querySelectorAll(".content");
+        const tabs = document.querySelectorAll(".filter-btn"); // Select <li> instead of <a>
+        const sections = document.querySelectorAll(".content");
 
-   function showSection(id) {
-     sections.forEach(section => {
-       section.style.display = section.id === id ? "block" : "none";
-     });
+        function showSection(id) {
+            sections.forEach(section => {
+                section.style.display = section.id === id ? "block" : "none";
+            });
 
-     tabs.forEach(tab => {
-       const anchor = tab.querySelector("a"); // Get the <a> inside <li>
-       tab.classList.toggle("bg-primary", anchor.getAttribute("href") === `#${id}`);
-     });
-   }
+            tabs.forEach(tab => {
+                const anchor = tab.querySelector("a"); // Get the <a> inside <li>
+                tab.classList.toggle("bg-primary", anchor.getAttribute("href") === `#${id}`);
+            });
+        }
 
-   const currentHash = window.location.hash.substring(1);
-   showSection(currentHash || "physical");
+        const currentHash = window.location.hash.substring(1);
+        showSection(currentHash || "physical");
 
-   tabs.forEach(tab => {
-     tab.addEventListener("click", function (event) {
-       event.preventDefault(); // Prevent default anchor behavior
-       const targetId = this.querySelector("a").getAttribute("href").substring(1);
-       showSection(targetId);
-       history.replaceState(null, null, `#${targetId}`); // Update URL without page reload
-     });
-   });
- });
-
-       // Show event detail
-       const eventListContainer = document.getElementById("eventsList");
-       const eventDetailContainer = document.getElementById("eventDetail");
-
-       const showEventDetail = () => {
-         eventListContainer.classList.add("hidden");
-         eventDetailContainer.classList.remove("hidden");
-       };
-       const showEventList = () => {
-         eventListContainer.classList.remove("hidden");
-         eventDetailContainer.classList.add("hidden");
-       };
+        tabs.forEach(tab => {
+            tab.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent default anchor behavior
+                const targetId = this.querySelector("a").getAttribute("href").substring(1);
+                showSection(targetId);
+                history.replaceState(null, null, `#${targetId}`); // Update URL without page reload
+            });
+        });
+    });
 </script>
 
 @endsection
