@@ -326,6 +326,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const imageContainer = document.getElementById("image-container");
         const dot1 = document.getElementById("dot1");
         const dot2 = document.getElementById("dot2");
+        const buttonText = document.getElementById("button-text");
+
 
         let firstFormData = {};
 
@@ -437,11 +439,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // Merge both forms' data
                     const formData = { ...firstFormData, ...secondFormData };
+                    buttonText.textContent = "Processing...";
 
                     console.log("Submitting data:", formData); // Debugging
 
                     // Send data to the backend
-                    fetch("advocate/register", {  
+                    fetch("advocate/register", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -460,7 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         })
                         .catch(error => {
                             console.error("Error:", error);
-                            // alert("An error occurred while submitting the form.");
+                            alert(error.message || "An error occurred while submitting the form.");
                         });
                 }
             });

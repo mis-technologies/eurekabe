@@ -148,7 +148,7 @@
                     <button id="apply-button" type="button"
                         class="bg-primary w-full text-white px-4 py-2 mt-5 rounded-full disabled:bg-[#D9D9D9] disabled:text-gray-500 disabled:cursor-not-allowed"
                         disabled>
-                        Apply
+                        <span id="button-text">Apply</span>
                     </button>
                 </div>
             </form>
@@ -194,6 +194,7 @@
 
 <script>
     const verificationUrl = "/verify-email";
+   
 </script>
 
 <script src="/asset/src/scripts/main.js"></script>

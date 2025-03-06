@@ -68,6 +68,7 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
 
+
         $request->validate([
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
@@ -109,7 +110,8 @@ class RegisterController extends Controller
             Mail::to($user->email)->send(new EmailVerification($verificationCode));
 
         } catch (\Throwable $th) {
-            //throw $th;
+
+            return response()->json(['error' => 'Failed to send verification email.'], 500);
         }
 
         // Auth::login($user);
@@ -192,6 +194,8 @@ class RegisterController extends Controller
 
     public function verifyUserRequest()
     {
+        // $verified = session()->put('verified', false);
+        // return back();
         return view('pages.verify-user-request');
     }
 }
