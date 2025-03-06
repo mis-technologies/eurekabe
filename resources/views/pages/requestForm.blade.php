@@ -153,6 +153,8 @@
                 </div>
             </form>
 
+            <div id="error-container" class="text-red-500 mt-2"></div>
+
             <!-- Dots -->
             <div class="flex justify-center mt-4 mb-8">
                 <span id="dot1" class="dot active"></span>
@@ -194,7 +196,18 @@
 
 <script>
     const verificationUrl = "/verify-email";
-   
+
+    function displayValidationErrors(errors) {
+    let errorContainer = document.getElementById("error-container");
+    errorContainer.innerHTML = ""; // Clear previous errors
+
+    Object.keys(errors).forEach(field => {
+        let errorText = document.createElement("p");
+        errorText.classList.add("text-red-500");
+        errorText.innerText = `${field}: ${errors[field].join(", ")}`;
+        errorContainer.appendChild(errorText);
+    });
+}
 </script>
 
 <script src="/asset/src/scripts/main.js"></script>

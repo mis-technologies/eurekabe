@@ -452,18 +452,27 @@ document.addEventListener("DOMContentLoaded", () => {
                         },
                         body: JSON.stringify(formData)
                     })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log("Success:", data);
+                        .then(response => response.json().then(data => ({ status: response.status, body: data }))) // Extract status
+                        .then(({ status, body }) => {
+                            if (status === 201) {
+                                console.log("Success:", body);
 
-                            // Show popup after successful submission
-                            popUp();
-                            localStorage.setItem("registrationFormData", JSON.stringify(formData));
-                            console.log("Form data saved to localStorage");
+                                popUp();
+                                localStorage.setItem("registrationFormData", JSON.stringify(formData));
+                                console.log("Form data saved to localStorage");
+                            } else if (status === 422) {
+                                console.error("Validation Errors:", body.errors);
+                                // alert(body.error || "An error occurred.");
+                                displayValidationErrors(body.errors); // Show errors on UI
+                            } else {
+                                console.error("Error:", body);
+                                alert(body.error || "An error occurred.");
+                            }
                         })
                         .catch(error => {
-                            console.error("Error:", error);
-                            alert(error.message || "An error occurred while submitting the form.");
+                            console.error("Fetch Error:", error);
+                            // displayValidationErrors(body.errors);
+                            alert("An error occurred while submitting the form.");
                         });
                 }
             });
