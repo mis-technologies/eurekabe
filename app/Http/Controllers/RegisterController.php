@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 
 
@@ -69,21 +70,23 @@ class RegisterController extends Controller
     {
 
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            // 'email' => ['required', 'string', 'email', 'max:255',],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'gender' => ['required', 'in:Male,Female,Other'],
             'school_id' => ['required', 'exists:schools,id'],
             'level' => ['required', 'integer', 'min:100', 'max:700'],
             'cgpa' => ['required', 'numeric', 'between:0.00,9.00'],
-
             'leading_experience' => ['required', 'string'],
             'position' => ['required', 'string'],
             'leading_attribute' => ['required', 'string'],
             'refereed_by' => ['required', 'in:Friends,Family,Social,Event'],
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
 
         $verificationCode = self::generateVerificationCode();
@@ -117,7 +120,7 @@ class RegisterController extends Controller
         // Auth::login($user);
 
         // return response()->json(['Request', Auth::user()->id]);
-        return response()->json(['Success', 'Advocate Registered Successfully']);
+        return response()->json(['Success', 'Advocate Registered Successfully'], 201);
 
     }
 
