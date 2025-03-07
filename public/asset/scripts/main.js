@@ -463,9 +463,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             } else if (status === 422) {
                                 console.error("Validation Errors:", body.errors);
                                 // alert(body.error || "An error occurred.");
-                                displayValidationErrors(body.errors); // Show errors on UI
+                                displayValidationErrors(body.errors);
+                                buttonText.textContent = "Apply again";
+
                             } else {
                                 console.error("Error:", body);
+                                buttonText.textContent = "Apply again";
+
                                 alert(body.error || "An error occurred.");
                             }
                         })
