@@ -72,7 +72,7 @@
                         <a href="/events">Events</a>
                     </li>
                     <li class="font-sans font-bold hover:text-primary{{ Request::is('blog') ? 'active' : '' }}">
-                        <a href="/blog">Blog</a>
+                        <a href="/blogs">Blog</a>
                     </li>
                     <li class="font-sans font-bold hover:text-primary {{ Request::is('faq') ? 'active' : '' }}">
                         <a href="/faq">FAQ</a>
@@ -160,7 +160,7 @@
                         <a href="/faq">FAQ</a>
                     </li>
                     <li class="font-sans font-bold hover:text-primary {{ Request::is('blog') ? 'active' : '' }}">
-                        <a href="/blog">Blog</a>
+                        <a href="/blogs">Blog</a>
                     </li>
                 </ul>
                 <button

@@ -13,31 +13,20 @@
       class="w-full p-1 pl-10 text-sm font-semibold outline-none bg-transparent" placeholder="Search a topic" />
   </div>
   <ul class="flex items-start justify-start w-full gap-3 overflow-x-scroll md:w-10/12 md:gap-10 md:justify-between md:items-center hide-scrollbar">
-    <li class="mini-nav cursor-pointer font-bold capitalize hover:text-primary opacity-80 whitespace-nowrap">
-      <a href="/blog.html#tech" class="tab">Trending Now</a>
-    </li>
-    <li class="mini-nav cursor-pointer font-bold capitalize hover:text-primary opacity-80">
-      <a href="/blog.html#dev" class="tab">Technology</a>
-    </li>
-    <li class="mini-nav cursor-pointer font-bold capitalize hover:text-primary opacity-80">
-      <a href="/blog.html#entertainment" class="tab">Entertainment</a>
-    </li>
-    <li class="mini-nav cursor-pointer font-bold capitalize hover:text-primary opacity-80">
-      <a href="/blog.html#marketing" class="tab">Marketing</a>
-    </li>
-    <li class="mini-nav cursor-pointer font-bold capitalize hover:text-primary opacity-80">
-      <a href="/blog.html#sports" class="tab">Sports</a>
-    </li>
-    <li class="mini-nav cursor-pointer font-bold capitalize hover:text-primary opacity-80">
-      <a href="/blog.html#politics" class="tab">Politics</a>
-    </li>
-  </ul>
+    @foreach($categories as $category)
+        <li class="mini-nav cursor-pointer font-bold capitalize hover:text-primary opacity-80 whitespace-nowrap">
+            <a href="{{ route('blogs', ['category_id' => $category->id]) }}" class="tab {{ $category->id == $blog->category_id ? 'active' : '' }}">
+                {{ $category->name }}
+            </a>
+        </li>
+    @endforeach
+</ul>
 </div>
 
 <div class="flex flex-col items-center gap-8 w-full max-w-[1024px] mx-auto px-6 dark:bg-dark-card dark:text-white pb-10">
  <!-- Back Button -->
  <div class="w-full">
-   <a href="{{route('pages.blogs')}}"
+   <a href="{{route('blogs')}}"
      class="text-primary uppercase font-bold hover:underline transition-all duration-300"
    >
      <!-- Back to ${category} Articles -->

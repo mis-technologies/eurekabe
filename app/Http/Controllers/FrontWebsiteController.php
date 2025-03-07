@@ -8,6 +8,8 @@ use App\Models\HomePage;
 use App\Models\Event;
 use App\Models\Blog;
 use Carbon\Carbon;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class FrontWebsiteController extends Controller
@@ -148,28 +150,34 @@ class FrontWebsiteController extends Controller
         return view('pages.event', compact('events'));
     }
 
-
-    
-
-    
-
-    
-
-    
-
- 
- 
-   
-    
- 
-
-    public function article()
+    public function blog(Request $request)
     {
-        // dd('here');
+        try {
+            $categories = Category::all();
+            $categoryId = $request->query('category_id', 1); // Default to category_id 1
+            $blogs = Blog::where('category_id', $categoryId)->get();
+        } catch (ModelNotFoundException $e) {
+            $categories = collect(); // Return an empty collection if no categories are found
+            $blogs = collect(); // Return an empty collection if no blogs are found
+            $categoryId = 1; // Default category ID
+        }
 
-        // $blogContent = Blog::findOrFail($id);
-        return view('pages.article');
+        return view('pages.blogs', compact('categories', 'blogs', 'categoryId'));
     }
+
+    public function show($id)
+    {
+        try {
+            $blog = Blog::findOrFail($id);
+            $categories = Category::all();
+        } catch (ModelNotFoundException $e) {
+            $blog = null; // Return null if no blog is found
+            $categories = collect(); // Return an empty collection if no categories are found
+        }
+
+        return view('pages.blog-detail', compact('blog', 'categories'));
+    }
+
    
 
 
@@ -179,10 +187,7 @@ class FrontWebsiteController extends Controller
         return view('pages.faq');
     }
 
-    public function blog()
-    {
-        return view('pages.blogs');
-    }
+   
 
     public function requestForm()
     {

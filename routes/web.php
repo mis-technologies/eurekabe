@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/', [FrontWebsiteController::class, 'home']);
 
-Route::get('/blog', [FrontWebsiteController::class, 'blog'])->name('pages.blogs');
-Route::get('/article', [FrontWebsiteController::class, 'article'])->name('pages.article');
+Route::get('/blogs', [FrontWebsiteController::class, 'blog'])->name('blogs');
+Route::get('/blogs/{id}', [FrontWebsiteController::class, 'show'])->name('blogs.show');
 Route::get('/events', [FrontWebsiteController::class, 'events'])->name('pages.events');
 Route::get('/faq', [FrontWebsiteController::class, 'faq'])->name('pages.faq');
 Route::get('/contact', [FrontWebsiteController::class, 'contact'])->name('pages.contact');
