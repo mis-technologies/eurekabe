@@ -20,7 +20,7 @@ Route::get('advocate/login', [AdvocateAuthController::class, 'showLoginForm'])->
 Route::post('advocate/login', [AdvocateAuthController::class, 'login'])->name('advocate.login.send');
 Route::get('advocate/apply', [AdvocateAuthController::class, 'showRegistrationForm'])->name('advocate.apply');
 Route::get('advocate/verify-email',[AdvocateAuthController::class, 'verifyEmail'] )->name('advocate.verify.email');
-Route::post('advocate/verify',[AdvocateAuthController::class, 'verify'] )->name('verify');
+Route::post('advocate/verify',[AdvocateAuthController::class, 'verify'] )->name('advocate.verify');
 Route::post('advocate/resend-email', [AdvocateAuthController::class, 'resendEmail'])->name('advocate.resend.email');
 Route::post('advocate/register', [AdvocateAuthController::class, 'register'])->name('advocate.apply.send');
 
