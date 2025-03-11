@@ -4,8 +4,8 @@
         <div>
             <script>
                 document.write(new Date().getFullYear())
-            </script>2025 © Konrix - <a href="../../index.html"
-                target="_blank">Coderthemes</a>
+            </script>2025 © Eureka - <a href="#"
+                target="_blank">MISTECH</a>
         </div>
     </div>
 </footer>

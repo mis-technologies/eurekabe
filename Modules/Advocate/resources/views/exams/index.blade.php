@@ -56,7 +56,7 @@
                                     <div class="flex items-center justify-between ">
                                         <a href="#" class="text-sm">
                                             <i class="mgc_calendar_line text-lg me-2"></i>
-                                            <span class="align-text-bottom">{{ $exam->created_at->format('i M Y') }}</span>
+                                            <span class="align-text-bottom">{{ $exam->created_at->format('d M Y') }}</span>
                                         </a>
 
                                         <a href="#" class="text-sm">

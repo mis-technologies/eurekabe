@@ -51,21 +51,21 @@
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="apps-tickets.html" class="menu-link">
+                                    <a href="#" class="menu-link">
                                         <span class="menu-icon"><i class="mgc_coupon_line"></i></span>
                                         <span class="menu-text"> Students </span>
                                     </a>
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="apps-file-manager.html" class="menu-link">
+                                    <a href="#" class="menu-link">
                                         <span class="menu-icon"><i class="mgc_folder_2_line"></i></span>
                                         <span class="menu-text">  Results </span>
                                     </a>
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="apps-kanban.html" class="menu-link">
+                                    <a href="#" class="menu-link">
                                         <span class="menu-icon"><i class="mgc_task_2_line"></i></span>
                                         <span class="menu-text">Messaging</span>
                                     </a>
@@ -75,11 +75,11 @@
                                     <a href="javascript:void(0)" data-fc-type="collapse"
                                         class="menu-link fc-collapse">
                                         <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
-                                        <span class="menu-text"> Project </span>
+                                        <span class="menu-text"> Eureka AI </span>
                                         <span class="menu-arrow"></span>
                                     </a>
 
-                                    <ul class="sub-menu hidden">
+                                    {{-- <ul class="sub-menu hidden">
                                         <li class="menu-item">
                                             <a href="apps-project-list.html" class="menu-link">
                                                 <span class="menu-text">List</span>
@@ -95,7 +95,7 @@
                                                 <span class="menu-text">Create</span>
                                             </a>
                                         </li>
-                                    </ul>
+                                    </ul> --}}
                                 </li>
 
                                 
