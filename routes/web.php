@@ -18,9 +18,9 @@ Route::get('/policy-privacy', [FrontWebsiteController::class, 'policyPrivacy'])-
 
 // Onboarding
 
-Route::prefix('advocate')->group(function () {
-    Route::post('/register', [RegisterController::class, 'register'])->name('pages.register');
-});
+// Route::prefix('advocate')->group(function () {
+//     Route::post('/register', [RegisterController::class, 'register'])->name('pages.register');
+// });
 Route::get('/verify-email',[RegisterController::class, 'verifyEmail'] )->name('pages.verify.email');
 Route::post('/verify',[RegisterController::class, 'verify'] )->name('verify');
 Route::post('resend-email', [RegisterController::class, 'resendEmail'])->name('resend.email');

@@ -150,6 +150,8 @@ class RegisterController extends Controller
     }
 
 
+    
+
     private static function generateVerificationCode()
     {
         $verificationCode = rand(100000, 999999);

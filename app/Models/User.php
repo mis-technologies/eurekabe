@@ -12,8 +12,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-
-
+use Modules\Student\Models\StudentExamResult;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -139,5 +138,14 @@ class User extends Authenticatable implements FilamentUser
             $this->username = $this->generateSlug($this->firstname . $this->lastname);
             $this->save();
         }
+    }
+
+    public function examResults (){
+        return $this->hasMany(StudentExamResult::class, 'exam_id');
+    }
+
+    public function isAdvocate()
+    {
+        return $this->role === 'advocate';
     }
 }

@@ -87,7 +87,7 @@
 
                 <button
                     class="hidden md:block bg-primary p-3 lg:px-4 xl:px-6 max-w-28 xl:max-w-none rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105">
-                    <a href="/requestForm"> Become an Advocate </a>
+                    <a href="{{ route('advocate.apply') }}"> Become an Advocate </a>
                 </button>
             </div>
 
@@ -165,7 +165,7 @@
                 </ul>
                 <button
                     class="bg-primary mt-3 p-3 px-6 rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105">
-                    <a href="/requestForm"> Become an Advocate </a>
+                    <a href="{{ route('advocate.apply') }}"> Become an Advocate </a>
                 </button>
             </div>
 
