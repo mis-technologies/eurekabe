@@ -5,7 +5,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "cmgmyr/messenger": "^2.30",
         "filament/filament": "^3.2",
         "filament/infolists": "^3.2",
