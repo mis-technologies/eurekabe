@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Admin\Http\Controllers\AdminAuthController;
 use Modules\Admin\Http\Controllers\AdminController;
 
 /*
@@ -14,6 +15,19 @@ use Modules\Admin\Http\Controllers\AdminController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('admin', AdminController::class)->names('admin');
+// Route::group([], function () {
+//     Route::resource('admin', AdminController::class)->names('admin');
+// });
+
+
+
+
+Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('admin/login', [AdminAuthController::class, 'login'])->name('admin.login.send');
+
+
+
+Route::group(['middleware'=> 'isadmin'], function () {
+    Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 });
