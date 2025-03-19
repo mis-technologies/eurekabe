@@ -32,7 +32,7 @@ class AdminSeeder extends Seeder
                 'interest' => 'Education, Technology',
                 'balance' => 1000.0,
                 'about' => 'Administrator for the system',
-                'address' => '123 Admin Street, Lagos, Nigeria',
+                'address' => '123 Admin Streett, Lagos, Nigeria',
                 'ev' => 1,
                 'sv' => 1,
                 'tv' => 1,
