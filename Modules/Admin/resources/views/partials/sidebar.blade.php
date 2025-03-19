@@ -44,14 +44,14 @@
 
 
                                 <li class="menu-item">
-                                    <a href="#" class="menu-link">
+                                    <a href="{{ route('admin.students')}}" class="menu-link">
                                         <span class="menu-icon"><i class="mgc_coupon_line"></i></span>
                                         <span class="menu-text"> Students </span>
                                     </a>
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="javascript:void(0)" data-fc-type="collapse"
+                                    <a href="{{route('admin.advocates')}}" data-fc-type="collapse"
                                         class="menu-link fc-collapse">
                                         <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
                                         <span class="menu-text"> Advocates </span>
