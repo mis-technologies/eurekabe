@@ -27,7 +27,8 @@ class AdminController extends Controller
         $id->update([
             'status' => !$id->status
         ]);
-        return back();
+        $notify[]=['success', 'Updated succesfully'];
+        return redirect()->back()->withNotify($notify);
    }
 
    public function allAdvocates()
