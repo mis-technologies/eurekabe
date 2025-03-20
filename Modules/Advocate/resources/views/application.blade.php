@@ -187,7 +187,7 @@
                     Home</button> --}}
                 {{-- <button class="" id="">Go to Home</button> --}}
 
-                <h1 class="font-bold text-center text-3xl pb-2">Registration Successful!</h1>
+                <h1 class="font-bold text-center text-3xl pb-2">Registration Details Saved! Proceed to verify email.</h1>
                 <!-- <p class="font-semibold text-center text-lg">We get back to you via email, thank you.</p> -->
             </div>
         </div>

@@ -13,12 +13,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
+use Modules\Admin\Emails\NotifyAdmin as EmailsNotifyAdmin;
+use Modules\Advocate\Emails\NotifyAdmin;
 use Modules\Common\Models\School;
 
 class AdvocateAuthController extends Controller
 {
 
     public function showLoginForm (){
+        $verified = session()->put('verified', false);
+
+        // $admin = User::where('role', 'admin')->latest()->first();
+
+        // $user = User::where('email', 'clintonace09@gmail.com')->first();
+
+        // Mail::to($admin->email)->send(new EmailsNotifyAdmin($user));
+
         return view('advocate::login');
     }
 
@@ -46,6 +56,10 @@ class AdvocateAuthController extends Controller
             if ($user->email_verified_at == null) {
                 Auth::logout();
                 return back()->withErrors(['email' => 'Your email is not verified.']);
+            }
+            if ($user->status== 0) {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Your not yet approved please hold for an approval mail.']);
             }
             return redirect()->route('advocate.dashboard');
         } else {
@@ -87,11 +101,14 @@ class AdvocateAuthController extends Controller
             return redirect()->route('pages.verify.email')->withErrors(['ver_code' => 'Invalid verification code.']);
         }
 
+        $admin = User::where('role', 'admin')->latest()->first();
+
         $user = User::where('email', $request->email)->first();
         if ($user->ver_code == $request->ver_code) {
             $user->email_verified_at = Carbon::now();
             $user->save();
             $verified = session()->put('verified', true);
+            Mail::to($admin->email)->send(new EmailsNotifyAdmin($user));
         }
 
         return back();
@@ -132,6 +149,7 @@ class AdvocateAuthController extends Controller
             'ver_code' => $verificationCode,
             'ver_code_sent_at' => Carbon::now(),
             'level' => $request->level,
+            'status' => 0,
             'cgpa' => $request->cgpa,
             'leading_experience' => $request->leading_experience,
             'position' => $request->position,
@@ -149,7 +167,7 @@ class AdvocateAuthController extends Controller
 
         // set to false session()->get('verified')
         session()->forget('verified');
-        
+
         return response()->json(['Success', 'Advocate Registered Successfully'], 201);
 
     }

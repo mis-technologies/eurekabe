@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
+use Modules\Admin\Emails\NotifyUser;
 
 class AdminController extends Controller
 {
@@ -22,10 +24,15 @@ class AdminController extends Controller
         return view('admin::students.index', $data);
    }
 
-   public function update(Request $request, User $id)
+   public function update(Request $request, $id)
    {
-        $id->update([
-            'status' => !$id->status
+        $user = User::find($id);
+        if ($user->status == 0) {
+
+            Mail::to($user->email)->send(new NotifyUser());
+        }
+        $user->update([
+            'status' => !$user->status
         ]);
         $notify[]=['success', 'Updated succesfully'];
         return redirect()->back()->withNotify($notify);

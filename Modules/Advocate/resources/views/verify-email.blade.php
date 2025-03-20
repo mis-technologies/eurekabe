@@ -34,7 +34,7 @@
                 @endif
 
             <!-- form one -->
-            <form action="{{route('verify')}}" method="POST" class="form mb-5">
+            <form action="{{route('advocate.verify')}}" method="POST" class="form mb-5">
 
                 @csrf
                 <h3 class="text-xl lg:text-3xl font-bold mb-10 tracking-wider lg:text-start text-flip-container">
@@ -62,7 +62,7 @@
                 <input type="hidden" name="email" id="emailInput2">
 
                 <button type="submit"
-                class="bg-primary w-full text-white px-4 py-2 mt-5 rounded-full disabled:bg-[#D9D9D9] disabled:text-gray-500 disabled:cursor-not-allowed">
+                class="bg-danger w-full text-white px-4 py-2 mt-5 rounded-full disabled:bg-[#D9D9D9] disabled:text-gray-500 disabled:cursor-not-allowed">
                 Resend code
             </button>
             </form>
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 @endif
 
