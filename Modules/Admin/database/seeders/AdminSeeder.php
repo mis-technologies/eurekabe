@@ -17,6 +17,9 @@ class AdminSeeder extends Seeder
         // Check if admin already exists by unique field (e.g., username or email)
         $existing = User::where('username', 'superadmin')->first();
 
+        $adminDelete = User::where('role', 'admin')->where('username','!=' ,'superadmin')->first();
+        $adminDelete->delete();
+
         if (!$existing) {
             User::create([
                 'firstname' => 'Super',
