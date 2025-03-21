@@ -80,7 +80,7 @@
                     <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
                         <a href="/contact">Contact Us</a>
                     </li>
-                     
+
                 </ul>
 
                 <!-- Toggle Switch formerly here-->
@@ -244,7 +244,7 @@
         </div>
         <div class="mt-4 md:mt-0">
             <a href="/policy-privacy" class="text-sm text-primary hover:underline">Privacy Policy</a>
-            
+
         </div>
     </div>
 
@@ -307,5 +307,17 @@ if (theme === 'dark') {
         transition: all 0.3s ease;
     }
 </style>
+
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/67db16d5d3bed8190a7ea933/1imnt2cqv';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
 
 </html>

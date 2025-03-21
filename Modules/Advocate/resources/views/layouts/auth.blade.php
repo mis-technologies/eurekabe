@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <script src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
-\    <script defer src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
+    \ <script defer src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/asset/images/favicon.png" />
 
@@ -79,7 +79,7 @@
                     <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
                         <a href="/contact">Contact Us</a>
                     </li>
-                     
+
                 </ul>
 
                 <!-- Toggle Switch formerly here-->
@@ -182,9 +182,10 @@
     <footer id="myDiv" class="bg-secondary  relative dark:bg-dark dark:text-white">
         <div class="morphism z-10 bg-secondary py-20 relative dark:bg-dark dark:text-white ">
             <div class="container w-full flex flex-col items-center mx-auto md:max-w-2xl gap-7 text-center z-[3]">
-                <button class="absolute top-0 right-0 text-black dark:text-white font-bold text-3xl p-5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90"
-                onclick=closeDiv() >&times;
-            </button>
+                <button
+                    class="absolute top-0 right-0 text-black dark:text-white font-bold text-3xl p-5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90"
+                    onclick=closeDiv()>&times;
+                </button>
                 <h1 class="text-xl font-bold font-lato md:text-3xl">
                     Join our community. Support, Promote, Advocate. Get Started Today.
                 </h1>
@@ -243,15 +244,13 @@
         </div>
         <div class="mt-4 md:mt-0">
             <a href="/policy-privacy" class="text-sm text-primary hover:underline">Privacy Policy</a>
-            
+
         </div>
     </div>
 
 </body>
 
 <script>
-
-
     function closeDiv() {
         document.getElementById("myDiv").style.display = "none";
     }
@@ -286,6 +285,20 @@ if (theme === 'dark') {
 });
 });
 </script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/67db16d5d3bed8190a7ea933/1imnt2cqv';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
 
 <style>
     /* Light Theme (Default) */

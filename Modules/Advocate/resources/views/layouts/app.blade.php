@@ -23,7 +23,7 @@
     <!-- Theme Config Js -->
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
-  
+
     <style type="text/css">
         .apexcharts-canvas {
             position: relative;
@@ -1394,6 +1394,20 @@
         </script>
 
     @stack('scripts')
+
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/67dc0b5b5c3ec5190c7a57f2/1impoooed';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 
 </html>
