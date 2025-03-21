@@ -243,7 +243,7 @@
             <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in font-bold text-3xl"></i></a>
         </div>
         <div class="mt-4 md:mt-0">
-            <a href="/policy-privacy" class="text-sm text-primary hover:underline">Privacy Policyy</a>
+            <a href="/policy-privacy" class="text-sm text-primary hover:underline">Privacy Policy</a>
 
         </div>
     </div>

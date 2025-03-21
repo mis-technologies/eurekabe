@@ -13,6 +13,6 @@ class AdminDatabaseSeeder extends Seeder
     {
         // $this->call([]);
 
-        $this->call(AdminSeeder::class);
+        // $this->call(AdminSeeder::class);
     }
 }

@@ -24,8 +24,7 @@ class AdminSeeder extends Seeder
             User::create([
                 'firstname' => 'Super',
                 'lastname' => 'Admin',
-                // 'email' => 'admin@eureka.test',
-                'email' => 'jopin54077@isorax.com',
+                'email' => 'admin@eureka.test',
                 'phone' => '08000000000',
                 'mobile' => '08000000000',
                 'email_verified_at' => Carbon::now(),
