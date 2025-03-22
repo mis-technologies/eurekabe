@@ -2,11 +2,12 @@
 
 namespace Modules\Exam\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\File\Models\File;
 use Modules\Common\Models\School;
 use Modules\Common\Models\Student;
-use Modules\File\Models\File;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Student\Models\StudentExam;
+use Modules\Student\Models\StudentExamResult;
 
 class Exam extends Model
 {
@@ -51,8 +52,6 @@ class Exam extends Model
     }
 
    
-
-   
     public function passark()
     {
         return ($this->totalmark * $this->pass_percentage) / 100;
@@ -62,7 +61,7 @@ class Exam extends Model
     public function getImageAttribute()
     {
        $entity =  get_class($this);
-        $examCoverImage = File::where('entity', $entity )->where('entity_id', $this->id)->where('identifier', 'cover_image')->first();
+        $examCoverImage = File::where('entity', $entity )->where('entity_id', $this->id)->where('identifier', 'image')->first();
         if (!$examCoverImage ) {
             return asset('assets/images/noimage.jpg');
         }
@@ -117,5 +116,12 @@ class Exam extends Model
         }
 
         return 'New';
+    }
+
+    public function examResults (){
+        return $this->hasMany(StudentExamResult::class, 'exam_id');
+    }
+    public function recentExamResults (){
+        return $this->hasMany(StudentExamResult::class, 'exam_id')->orderBy('created_at', 'desc')->limit(10);
     }
 }

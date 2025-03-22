@@ -80,14 +80,14 @@
                     <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
                         <a href="/contact">Contact Us</a>
                     </li>
-                     
+
                 </ul>
 
                 <!-- Toggle Switch formerly here-->
 
                 <button
                     class="hidden md:block bg-primary p-3 lg:px-4 xl:px-6 max-w-28 xl:max-w-none rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105">
-                    <a href="/requestForm"> Become an Advocate </a>
+                    <a href="{{ route('advocate.apply') }}"> Become an Advocate </a>
                 </button>
             </div>
 
@@ -165,7 +165,7 @@
                 </ul>
                 <button
                     class="bg-primary mt-3 p-3 px-6 rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105">
-                    <a href="/requestForm"> Become an Advocate </a>
+                    <a href="{{ route('advocate.apply') }}"> Become an Advocate </a>
                 </button>
             </div>
 
@@ -244,7 +244,7 @@
         </div>
         <div class="mt-4 md:mt-0">
             <a href="/policy-privacy" class="text-sm text-primary hover:underline">Privacy Policy</a>
-            
+
         </div>
     </div>
 
@@ -307,5 +307,17 @@ if (theme === 'dark') {
         transition: all 0.3s ease;
     }
 </style>
+
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/67db16d5d3bed8190a7ea933/1imnt2cqv';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
 
 </html>

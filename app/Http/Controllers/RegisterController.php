@@ -24,6 +24,7 @@ class RegisterController extends Controller
 
     public function verify(Request $request)
     {
+        // dd('here');
         $request->validate([
             'ver_code' => 'required|numeric|max_digits:6',
         ]);
@@ -148,6 +149,8 @@ class RegisterController extends Controller
 
         return back();
     }
+
+
 
 
     private static function generateVerificationCode()

@@ -58,15 +58,3 @@ class School extends Model
         return User::where('school_id', $this->id)->where('role', 'student')->count();
     }
 }
-
-
-// Attaching a User with a Specific Role:
-// $school->users()->attach($user->id, ['role' => 'advocate']);
-
-
-// Updating a User's Role:
-// $school->users()->updateExistingPivot($user->id, ['role' => 'follower']);
-
-
-// You can filter users based on their role in a specific school:
-//     $advocates = $school->users()->wherePivot('role', 'advocate')->get();

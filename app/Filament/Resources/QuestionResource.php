@@ -21,6 +21,8 @@ class QuestionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-question-mark-circle';
 
+    protected static ?string $navigationGroup = 'Exam';
+
     public static function form(Form $form): Form
     {
         return $form
