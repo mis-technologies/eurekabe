@@ -10,6 +10,7 @@ use App\Models\Blog;
 use Carbon\Carbon;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\Faq;
 
 
 class FrontWebsiteController extends Controller
@@ -155,7 +156,9 @@ class FrontWebsiteController extends Controller
         try {
             $categories = Category::all();
             $categoryId = $request->query('category_id', 1); // Default to category_id 1
-            $blogs = Blog::where('category_id', $categoryId)->get();
+            $blogs = Blog::where('category_id', $categoryId)
+                         ->where('status', 'PUBLISHED')
+                         ->get();
         } catch (ModelNotFoundException $e) {
             $categories = collect(); // Return an empty collection if no categories are found
             $blogs = collect(); // Return an empty collection if no blogs are found
@@ -168,7 +171,9 @@ class FrontWebsiteController extends Controller
     public function show($id)
     {
         try {
-            $blog = Blog::findOrFail($id);
+            $blog = Blog::where('id', $id)
+                        ->where('status', 'PUBLISHED')
+                        ->firstOrFail();
             $categories = Category::all();
         } catch (ModelNotFoundException $e) {
             $blog = null; // Return null if no blog is found
@@ -182,10 +187,18 @@ class FrontWebsiteController extends Controller
 
 
 
-    public function faq()
-    {
-        return view('pages.faq');
-    }
+     // Other methods...
+
+     public function faq()
+     {
+         try {
+             $faqs = Faq::all();
+         } catch (ModelNotFoundException $e) {
+             $faqs = collect(); // Return an empty collection if no FAQs are found
+         }
+ 
+         return view('pages.faq', compact('faqs'));
+     }
 
    
 

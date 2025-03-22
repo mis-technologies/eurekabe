@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             BlogSeeder::class,
         ]);
+        $this->call(FaqSeeder::class);
     }
 }
