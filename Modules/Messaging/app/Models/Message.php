@@ -45,9 +45,9 @@ class Message extends Model
     }
 
 
-    public function getCreatedAtAttribute(){
-        return Carbon::createFromDate($this->attributes['created_at'])->diffForHumans();
-    }
+    // public function getCreatedAtAttribute(){
+    //     return Carbon::createFromDate($this->attributes['created_at'])->diffForHumans();
+    // }
     
     public static function boot(){
         parent::boot();
