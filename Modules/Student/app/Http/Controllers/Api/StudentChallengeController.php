@@ -123,11 +123,10 @@ class StudentChallengeController extends Controller
 
     public function submitChallenge(Request $request, StudentChallenge $challenge)
     {
-        $studentExam = StudentExam::where('user_id', Auth::id())
-            ->where('exam_id', $challenge->exam_id)
-            ->where('status', StudentExam::STARTED)
+        $studentExam = StudentExam::where('exam_id', $challenge->exam_id)
+            // ->where('status', StudentExam::STARTED)
             ->first();
-            
+
         $studentExam->ended_at = now();
         $studentExam->status = StudentExam::SUBMITTED;
         $studentExam->save();
