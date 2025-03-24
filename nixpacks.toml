@@ -15,3 +15,6 @@ cmds = [
   "chmod -R 775 storage public/uploads",
   "php artisan optimize:clear"
 ]
+
+[volumes]
+storage = "/app/storage"
