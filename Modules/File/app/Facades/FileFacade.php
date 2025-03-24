@@ -67,9 +67,7 @@ class FileFacade
 
 
 
-
-
-    public static function defaultUploadv2($file, $entity = null, $disk = null, $dir = null, $identifier = null)
+    public static function publicFileUpload($file, $entity = null, $disk = null, $dir = null, $identifier = null)
     {
         try {
             $storageDisk = $disk ?? config('filesystems.default');
@@ -116,7 +114,7 @@ class FileFacade
     }
 
     // public static function deleteFile($files, $disk=null) {
-    public static function deleteFilev2($files, $disk = null)
+    public static function publicFileDelete($files, $disk = null)
     {
         try {
             $storageDisk = $disk ?? config('filesystems.default');

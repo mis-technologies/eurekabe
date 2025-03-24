@@ -51,8 +51,8 @@ class AdvocateExamController extends Controller
             $files = request()->files;
             foreach ($files as $key => $value) {
                 // dd($key);
-                FileFacade::deleteFile(File::where('identifier', $key)->where('entity_id', $exam->id)->get() ); //delete previous
-                FileFacade::defaultUpload($value, $exam, identifier:$key);
+                FileFacade::publicFileDelete(File::where('identifier', $key)->where('entity_id', $exam->id)->get() ); //delete previous
+                FileFacade::publicFileUpload($value, $exam, identifier:$key);
             }
         }
 
@@ -84,8 +84,8 @@ class AdvocateExamController extends Controller
             $files = request()->files;
             foreach ($files as $key => $value) {
                 // dd($key);
-                FileFacade::deleteFile(File::where('identifier', $key)->where('entity_id', $exam->id)->get() ); //delete previous
-                FileFacade::defaultUpload($value, $exam, identifier:$key);
+                FileFacade::publicFileDelete(File::where('identifier', $key)->where('entity_id', $exam->id)->get() ); //delete previous
+                FileFacade::publicFileUpload($value, $exam, identifier:$key);
             }
         }
 

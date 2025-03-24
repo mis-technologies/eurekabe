@@ -59,7 +59,7 @@ class Message extends Model
             if( request()['files'] ){
                 $files = request()['files'];
                 foreach ($files as $key => $value) {
-                    \Modules\File\Facades\FileFacade::defaultUpload($value, $message, identifier: $key);  
+                    \Modules\File\Facades\FileFacade::publicFileUpload($value, $message, identifier: $key);  
                 }
             }
             
