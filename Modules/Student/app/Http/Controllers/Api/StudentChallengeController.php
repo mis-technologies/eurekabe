@@ -52,8 +52,9 @@ class StudentChallengeController extends Controller
             'status' => StudentChallenge::STATUS_PENDING,
         ]);
 
-        $challenge->participants()->attach($user->id, ['status' => 'accepted']);
-        $challenge->participants()->attach($participantIds);
+        
+        $challenge->participants()->sync($user->id, ['status' => 'accepted']);
+        $challenge->participants()->sync($participantIds);
 
         return response()->json([
             'success' => true,
