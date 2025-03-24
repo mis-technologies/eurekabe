@@ -13,6 +13,8 @@ cmds = [
   "php artisan storage:link",
   "chmod -R 777 storage bootstrap/cache",
   "chmod -R 777 storage public/uploads",
+  "chmod -R 777 /app/public/uploads/",
+
   "php artisan optimize:clear"
 ]
 

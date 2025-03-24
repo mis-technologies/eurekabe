@@ -34,12 +34,12 @@ class File extends Model
     ];
 
     public function getUrlAttribute(){
-        $path = $this->path;
-        $fileLink =  Storage::disk($this->disk)->url($path);
+        // $path = $this->path;
+        // $fileLink =  Storage::disk($this->disk)->url($path);
 
         // v2 when file is moved to public folder
-        // $path = $this->path;
-        // $fileLink =  asset($path);
+        $path = $this->path;
+        $fileLink =  asset($path);
         
         return $fileLink;
     }
