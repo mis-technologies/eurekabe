@@ -87,7 +87,6 @@ class StudentChallengeController extends Controller
             ], 403);
         }
 
-        // $challenge->participants()->sync($participant->id, ['status' => 'accepted']);
         $challenge->participants()->sync([
             $participant->id => ['status' => 'accepted']
         ]);
@@ -97,6 +96,31 @@ class StudentChallengeController extends Controller
             'success' => true,
             'message' => 'Challenge accepted',
             'data' => $participant,
+        ]);
+    }
+
+    public function rejectChallenge(Request $request, StudentChallenge $challenge)
+    {
+        $user = Auth::user();
+        $participant = $challenge->participants()->where('user_id', $user->id)->first();
+
+        if (!$participant) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not a participant of this challenge',
+            ], 403);
+        }
+
+        $challenge->participants()->detach($participant->id);
+
+        // delete the challenge if the user is the only participant
+        if ($challenge->participants()->count() === 1  ) {
+            $challenge->delete();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Challenge rejected',
         ]);
     }
 
