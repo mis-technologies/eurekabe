@@ -105,9 +105,9 @@
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                         {{ $s?->school?->name}}</td>
-                                                    <td
-                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                        {{ $s?->interest}}</td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                            {{ implode(', ', (array) $s->interest) }}
+                                                        </td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                                                         @if($s?->status == 1)
