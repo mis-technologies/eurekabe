@@ -15,6 +15,9 @@ class StudentLeaderBoardController extends Controller
     {
         $startOfWeek = Carbon::now()->startOfWeek();
         $endOfWeek = Carbon::now()->endOfWeek();
+        $weekNumber = Carbon::now()->weekOfYear;
+        $year = Carbon::now()->year;
+
 
         $leaderboard = StudentLeaderBoard::with('user')
             ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
@@ -26,7 +29,13 @@ class StudentLeaderBoardController extends Controller
 
         return response()->json([
             'success' => true,
-            'leaderboard' => $leaderboard
+            'leaderboard' => $leaderboard,
+            'week_number' => $weekNumber,
+            'year' => $year,
+            'week_start' => $startOfWeek->toDateString(),
+            'week_end' => $endOfWeek->toDateString(),
+            'description' => "Week $weekNumber, $year leaderboard as of " . Carbon::now()->toFormattedDateString(),
+            
         ]);
     }
 
@@ -37,6 +46,8 @@ class StudentLeaderBoardController extends Controller
     {
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
+        $monthName = Carbon::now()->format('F');
+        $year = Carbon::now()->year;
 
         $leaderboard = StudentLeaderBoard::with('user')
             ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
@@ -46,10 +57,15 @@ class StudentLeaderBoardController extends Controller
             ->take(10)
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'leaderboard' => $leaderboard
-        ]);
+            return response()->json([
+                'success' => true,
+                'leaderboard' => $leaderboard,
+                'month' => $monthName,
+                'year' => $year,
+                'month_start' => $startOfMonth->toDateString(),
+                'month_end' => $endOfMonth->toDateString(),
+                'description' => "$monthName, $year leaderboard as of " . Carbon::now()->toFormattedDateString(),
+            ]);
     }
 
     /**
@@ -59,6 +75,7 @@ class StudentLeaderBoardController extends Controller
     {
         $startOfYear = Carbon::now()->startOfYear();
         $endOfYear = Carbon::now()->endOfYear();
+        $year = Carbon::now()->year;
 
         $leaderboard = StudentLeaderBoard::with('user')
             ->whereBetween('created_at', [$startOfYear, $endOfYear])
@@ -72,7 +89,12 @@ class StudentLeaderBoardController extends Controller
             
         return response()->json([
             'success' => true,
-            'leaderboard' => $leaderboard
+            'leaderboard' => $leaderboard,
+            'year' => $year,
+            'year_start' => $startOfYear->toDateString(),
+            'year_end' => $endOfYear->toDateString(),
+            'description' => "Year $year leaderboard as of " . Carbon::now()->toFormattedDateString(),
+
         ]);
     }
 }
