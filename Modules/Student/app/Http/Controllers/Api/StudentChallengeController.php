@@ -52,8 +52,8 @@ class StudentChallengeController extends Controller
             'status' => StudentChallenge::STATUS_PENDING,
         ]);
 
-        
-        $challenge->participants()->sync($user->id, ['status' => 'accepted']);
+
+        $challenge->participants()->attach($user->id, ['status' => 'accepted']);
         $challenge->participants()->sync($participantIds);
 
         return response()->json([
@@ -71,17 +71,16 @@ class StudentChallengeController extends Controller
         if (!$participant) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthorized',
+                'message' => 'You are not a participant of this challenge',
             ], 403);
         }
 
-        $participant->pivot->status = 'accepted';
-        $participant->pivot->save();
-
+        // $challenge->participants()->sync($participant->id, ['status' => 'accepted']);
+        // $participant = $challenge->participants()->where('user_id', $user->id)->first();
         return response()->json([
             'success' => true,
             'message' => 'Challenge accepted',
-            'data' => $challenge,
+            'data' => $participant,
         ]);
     }
 

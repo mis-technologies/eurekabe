@@ -131,7 +131,7 @@ class ConversationController extends Controller
             $conversation->messages()->where('to_user_id', Auth::user()->id)->update(['read_at' => now()]);
         }
 
-        $messages = $conversation->messages()->oldest()->paginate(50);
+        $messages = $conversation->messages()->latest()->paginate(50);
 
         return response()->json([
             'status' => 'success',
