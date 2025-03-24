@@ -76,7 +76,7 @@ class StudentChallengeController extends Controller
         }
 
         // $challenge->participants()->sync($participant->id, ['status' => 'accepted']);
-        // $participant = $challenge->participants()->where('user_id', $user->id)->first();
+        $participant = $challenge->participants()->where('user_id', $user->id)->first();
         return response()->json([
             'success' => true,
             'message' => 'Challenge accepted',
@@ -121,8 +121,13 @@ class StudentChallengeController extends Controller
         ]);
     }
 
-    public function submitChallenge(Request $request, StudentExam $studentExam)
+    public function submitChallenge(Request $request, StudentChallenge $challenge)
     {
+        $studentExam = StudentExam::where('user_id', Auth::id())
+            ->where('exam_id', $challenge->exam_id)
+            ->where('status', StudentExam::STARTED)
+            ->first();
+            
         $studentExam->ended_at = now();
         $studentExam->status = StudentExam::SUBMITTED;
         $studentExam->save();
