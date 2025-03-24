@@ -34,7 +34,7 @@ class Exam extends Model
     
     protected $guarded = [];
 
-    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag'];
+    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag', 'totalmark'];
 
     public function school()
     {
@@ -116,6 +116,17 @@ class Exam extends Model
         }
 
         return 'New';
+    }
+
+    // get exam totalmark from questions
+    public function getTotalmarkAttribute()
+    {
+        $questions = Question::where('exam_id', $this->id)->get();
+        $totalmark = 0;
+        foreach ($questions as $question) {
+            $totalmark += $question->marks;
+        }
+        return $totalmark;
     }
 
     public function examResults (){

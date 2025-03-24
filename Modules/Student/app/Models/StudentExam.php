@@ -83,7 +83,9 @@ class StudentExam extends Model
         $finalScore = max(0, $totalMarks - $negativeMarks); // Ensure score doesn't go below zero
 
         // Calculate percentage of correct answers
-        $correctPercentage = ($totalQuestions > 0) ? ($finalScore / $totalPossibleMarks) * 100 : 0;
+        // Safe version
+        $correctPercentage = ($totalPossibleMarks > 0) ? ($finalScore / $totalPossibleMarks) * 100 : 0;
+
 
         // Check if the student passed
         $isPassed = $correctPercentage >= $exam->pass_percentage;
