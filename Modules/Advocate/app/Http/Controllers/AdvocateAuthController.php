@@ -10,12 +10,16 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Modules\Admin\Emails\NotifyAdmin as EmailsNotifyAdmin;
 use Modules\Advocate\Emails\NotifyAdmin;
 use Modules\Common\Models\School;
+use Illuminate\Support\Str;
+use Modules\Advocate\Emails\PasswordReset;
 
 class AdvocateAuthController extends Controller
 {
@@ -109,6 +113,8 @@ class AdvocateAuthController extends Controller
             $user->save();
             $verified = session()->put('verified', true);
             Mail::to($admin->email)->send(new EmailsNotifyAdmin($user));
+
+            // dd($admin->email);
         }
 
         return back();
@@ -236,6 +242,99 @@ class AdvocateAuthController extends Controller
     public function verifyUserRequest()
     {
         return view('advocate::verify-user-request');
+    }
+
+    public function forgotPasswordPage()
+    {
+
+        return view('advocate::forgot-password');
+    }
+
+    public function resetPasswordView($token=null)
+    {
+
+        return view('advocate::reset-password-view',compact('token'));
+
+    }
+
+
+    public function resetPasswordLink(Request $request){
+            $request->validate([
+                'email'=>'required',
+            ]) ;
+            // dd($request->email);
+        $findUser = User::whereEmail($request->email)->first();
+
+        // dd(User::all());
+
+        // dd($findUser);
+        if(!$findUser){
+            return redirect()->back()->withErrors(['email' => 'Account not found or not existing.']);
+        }
+     $userToken = DB::table('password_reset_tokens')->where(['email'=> $request->email])->first();
+        if ($userToken ){
+            DB::table('password_reset_tokens')->where(['email'=> $request->email])->delete();
+                $token = Str::random(64);
+                    DB::table('password_reset_tokens')->insert([
+                    'email' => $request->email,
+                    'token' => $token,
+                    'created_at' => Carbon::now()
+                    ]);
+                    $userEmail = $request->email;
+                    $request->session()->put('userEmail', $userEmail);
+                    $details = [
+                        'user' => $findUser->email,
+                        'token' => $token,
+                    ];
+
+                    Mail::to($userEmail)->send(new PasswordReset($details));
+                    return redirect()->back()->withErrors(['email' => 'Password reset link sent, please check yout mail box']);
+        }
+
+                $token = Str::random(64);
+                DB::table('password_reset_tokens')->insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
+                ]);
+                $userEmail = $request->email;
+                $request->session()->put('userEmail', $userEmail);
+                $details = [
+                    'user' => $findUser->email,
+                     'token' => $token,
+                ];
+                Mail::to($userEmail)->send(new PasswordReset($details));
+
+                return redirect()->back()->withErrors(['email' => 'Password reset link sent, please check yout mail box']);
+
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $userToken = DB::table('password_reset_tokens')->where(['token'=> $request->token])->first();
+
+        if (!$userToken) {
+            return redirect()->back()->withErrors(['email' => 'Token invalidated Re-start the whole process.']);
+
+        }
+        $user = User::where('email', $userToken->email)->first();
+
+
+        if ($userToken) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+            DB::table('password_reset_tokens')->where(['email'=> $user->email])->delete();
+
+        return redirect()->back()->withErrors(['success' => 'Password Reset Successfully. Click on login to access dasboard.']);
+
+        }
+
+        return redirect()->back()->withErrors(['email' => 'User not found.']);
     }
 
     public function logout()

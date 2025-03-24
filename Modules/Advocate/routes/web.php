@@ -24,6 +24,13 @@ Route::post('advocate/verify',[AdvocateAuthController::class, 'verify'] )->name(
 Route::post('advocate/resend-email', [AdvocateAuthController::class, 'resendEmail'])->name('advocate.resend.email');
 Route::post('advocate/register', [AdvocateAuthController::class, 'register'])->name('advocate.apply.send');
 
+
+Route::get('advocate/forgot-password', [AdvocateAuthController::class, 'forgotPasswordPage'])->name('advocate.forgot.password');
+Route::post('advocate/reset-password-link', [AdvocateAuthController::class, 'resetPasswordLink'])->name('advocate.reset.password.link');
+
+Route::get('advocate/reset-password-view/{token?}', [AdvocateAuthController::class, 'resetPasswordView'])->name('advocate.reset.password.view');
+Route::post('advocate/change-password', [AdvocateAuthController::class, 'changePassword'])->name('advocate.change.password');
+
 Route::group(['middleware'=> 'advocate'], function () {
     Route::get('advocate/dashboard', [AdvocateController::class, 'dashboard'])->name('advocate.dashboard');
     Route::get('advocate/exams', [AdvocateExamController::class, 'index'])->name('advocate.exams.index');

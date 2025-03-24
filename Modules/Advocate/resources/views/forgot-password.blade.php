@@ -22,8 +22,8 @@
         <!-- Form Container-->
         <div id="form-container" class="w-full md:w-1/2 flex flex-col p-8 lg:px-12 items-center justify-center gap-6">
             <div class="">
-                <h1 class="font-bold text-[32px] text-center mt-4">Welcome back!</h1>
-                <p class="opacity-50 text-[20px] text-center mb-5">Log in to your Eureka account.</p>
+                <h1 class="font-bold text-[32px] text-center mt-4">Reset password!</h1>
+                <p class="opacity-50 text-[20px] text-center mb-5">A link will be sent to your mail address.</p>
             </div>
 
             <div>
@@ -39,7 +39,7 @@
                 @endif
             </div>
 
-            <form action="{{ route('advocate.login.send') }}" method="POST"
+            <form action="{{ route('advocate.reset.password.link') }}" method="POST"
                 class="flex flex-col gap-5 poppins text-[20px] w-full max-w-lg">
                 @csrf
                 @method('POST')
@@ -47,29 +47,13 @@
                     <label class="block mb-1 font-semibold text-base" for="email">Email</label>
                     <input type="email" id="email" name="email"
                         class="w-full p-4 px-6 border-[#453F3F80] border-2 text-base rounded-[30px] bg-transparent"
-                        placeholder="Your Email Address" required />
-                </div>
-
-                <div class="">
-                    <label class="block mb-1 font-semibold text-base" for="password">Password</label>
-                    <input type="password" id="password" name="password"
-                        class="w-full p-4 px-6 border-[#453F3F80] border-2 text-base rounded-[30px] bg-transparent"
-                        placeholder="Enter a strong password" required />
-                </div>
-
-                <div class="flex items-center justify-between text-base font-medium">
-                    <div class="inline-flex items-center gap-3">
-                        <input type="checkbox" name="remember" id="remember" class="w-6 h-6  via-gray-400 cursor-pointer">
-                        <span>Remember me</span>
-                    </div>
-                    <a href="{{route('advocate.forgot.password')}}" class="text-primary">Forgot Password</a>
-
+                        placeholder="Enter registered mail address" required />
                 </div>
 
                 <div class="w-full">
-                    <button type="submit" id="contactSubmit"
+                    <button type="submit"
                         class="w-full p-4 mt-3 bg-primary text-white text-base font-semibold rounded-[30px] cursor-pointer hover:opacity-80 hover:scale-105">
-                        Login
+                        Send
                     </button>
                 </div>
             </form>
