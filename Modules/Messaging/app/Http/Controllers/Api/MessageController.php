@@ -59,7 +59,7 @@ class MessageController extends Controller
         if( $request->files->count() ){
             $files = $request->files;
             foreach ($files as $key => $value) {
-                FileFacade::publicFileUpload($value, $message, identifier: $key);  
+                FileFacade::cloudinaryUpload($value, $message, identifier: $key);  
             }
         }
 
