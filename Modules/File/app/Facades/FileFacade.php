@@ -199,7 +199,7 @@ class FileFacade
         }
     }
 
-    public static function cloudinaryDelete($file)
+    public static function cloudinaryDelete($filename)
     {
         try {
             // Configure Cloudinary
@@ -215,7 +215,7 @@ class FileFacade
             ]);
 
             // Delete the file from Cloudinary
-            $publicId = pathinfo($file->filename, PATHINFO_FILENAME);
+            $publicId = pathinfo($filename, PATHINFO_FILENAME);
             $adminApi = new AdminApi();
             $adminApi->deleteAssets(['public_ids' => [$publicId]]);
 
