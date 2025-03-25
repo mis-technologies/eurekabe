@@ -1,35 +1,53 @@
+# Base PHP image with FPM
 FROM php:8.1-fpm
 
-# Install dependencies
+# Install required dependencies
 RUN apt-get update && apt-get install -y \
     cron \
     supervisor \
-    && docker-php-ext-install pdo pdo_mysql
-
-# Copy application files
-COPY . /var/www/html
+    git \
+    unzip \
+    curl \
+    zip \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install Composer dependencies
+# Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev
 
-# Install Node.js dependencies and build assets
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install
-RUN npm run build
+# Copy Laravel application files
+COPY . /var/www/html
 
-# Configure cron job
-RUN echo "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/laravel-scheduler
-RUN chmod 0644 /etc/cron.d/laravel-scheduler
-RUN crontab /etc/cron.d/laravel-scheduler
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Configure supervisor to manage cron
+# Install PHP dependencies
+RUN composer install --no-dev --prefer-dist --no-progress --no-interaction
+
+# Install Node.js and build frontend assets
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install \
+    && npm run build
+
+# Ensure cron job is added
+RUN echo "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" | crontab -
+
+# Copy Supervisor configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose port 9000 and start supervisor
+# Use named volumes for persistent storage
+VOLUME ["/var/www/html/storage", "/var/www/html/bootstrap/cache"]
+
+# Expose port for PHP-FPM
 EXPOSE 9000
-CMD ["/usr/bin/supervisord"]
+
+# Start Supervisor to manage processes
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
