@@ -2,6 +2,7 @@
 FROM php:8.3-fpm
 
 # Install required dependencies
+# Install required dependencies, including PHP intl extension
 RUN apt-get update && apt-get install -y \
     cron \
     supervisor \
@@ -12,8 +13,9 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libicu-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql
+    && docker-php-ext-install gd pdo pdo_mysql intl
 
 # Set working directory
 WORKDIR /var/www/html
