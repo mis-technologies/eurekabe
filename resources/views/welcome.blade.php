@@ -446,7 +446,7 @@
         </p>
 
         <div class="flex items-center justify-center gap-8 gap-y-4 flex-col md:flex-row text-white mt-14 max-w-lg ">
-          <a href="https://play.google.com/store" target="_blank">
+          <a href="https://play.google.com/store/apps/details?id=academy.eurekaedu.app" target="_blank">
           <button class="bg-primary rounded-2xl w-52 p-3 px-5 inline-flex gap-3 items-center transition-all duration-150 ease-in-out hover:bg-opacity-80 hover:scale-105">
             <img src="{{ asset('asset/images/playStore.png')}}" alt=" ">
             <div class="flex flex-col gap-1 items-start">

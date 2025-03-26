@@ -51,30 +51,42 @@
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="{{route('admin.advocates')}}" data-fc-type="collapse"
-                                        class="menu-link fc-collapse">
+                                    <a href="{{route('admin.advocates')}}" class="menu-link">
                                         <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
                                         <span class="menu-text"> Advocates </span>
                                         <span class="menu-arrow"></span>
                                     </a>
 
-                                    {{-- <ul class="sub-menu hidden">
-                                        <li class="menu-item">
-                                            <a href="apps-project-list.html" class="menu-link">
-                                                <span class="menu-text">List</span>
-                                            </a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="apps-project-detail.html" class="menu-link">
-                                                <span class="menu-text">Detail</span>
-                                            </a>
-                                        </li>
-                                        <li class="menu-item">
-                                            <a href="apps-project-create.html" class="menu-link">
-                                                <span class="menu-text">Create</span>
-                                            </a>
-                                        </li>
-                                    </ul> --}}
+                                    <a href="{{route('admin.pages.home')}}"  class="menu-link">
+                                        <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
+                                        <span class="menu-text"> Home Page </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+
+                                    {{-- <a href="{{route('admin.pages')}}" data-fc-type="collapse" class="menu-link fc-collapse">
+                                        <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
+                                        <span class="menu-text"> Event Page </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+
+                                    <a href="{{route('admin.pages')}}" data-fc-type="collapse" class="menu-link fc-collapse">
+                                        <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
+                                        <span class="menu-text"> Blog Page </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+
+                                    <a href="{{route('admin.pages')}}" data-fc-type="collapse" class="menu-link fc-collapse">
+                                        <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
+                                        <span class="menu-text"> Faq Page </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+
+                                    <a href="{{route('admin.pages')}}" data-fc-type="collapse" class="menu-link fc-collapse">
+                                        <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
+                                        <span class="menu-text"> Contact-US Page </span>
+                                        <span class="menu-arrow"></span>
+                                    </a> --}}
+
                                 </li>
 
 
