@@ -171,8 +171,19 @@ class StudentExam extends Model
         return $reviewData;
 
     }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
+
+
+
+
     protected static function newFactory()
     {
         // return StudentExamFactory::new();
     }
+
+
 }

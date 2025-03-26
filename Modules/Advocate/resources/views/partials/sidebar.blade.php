@@ -59,7 +59,7 @@
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="#" class="menu-link">
+                                    <a href="{{ route('advocate.results') }}" class="{{ (Route::is('advocate.results*')) ? 'active' : '' }} menu-link">
                                         <span class="menu-icon"><i class="mgc_folder_2_line"></i></span>
                                         <span class="menu-text">  Results </span>
                                     </a>

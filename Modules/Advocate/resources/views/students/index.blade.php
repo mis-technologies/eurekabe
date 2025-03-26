@@ -84,8 +84,7 @@
                                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                             @foreach ($students as $s)
                                                 <tr>
-                                                    <td
-                                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-200 dark:text-gray-200">
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-200 dark:text-gray-200">
                                                         {{ $loop->index +1 }}</td>
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">

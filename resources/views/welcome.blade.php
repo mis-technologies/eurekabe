@@ -4,6 +4,7 @@
 
     <!-- Hero Section -->
     <section id="hero" class="relative overflow-hidden">
+
       <div class="morphism z-10 bg-secondary dark:bg-dark dark:text-white py-10 pb-16">
       <div
         class="container flex flex-col md:flex-row justify-between h-full md:max-h-[37rem] gap-8"

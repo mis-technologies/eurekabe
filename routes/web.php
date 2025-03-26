@@ -63,3 +63,11 @@ Route::post('/upload', function (Request $request) {
 
     return redirect()->back()->with('success', 'File uploaded successfully')->with('file_url', $fileUrl);
 })->name('file.upload');
+
+
+
+use Livewire\Livewire;
+
+Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/livewire/update', $handle);
+});

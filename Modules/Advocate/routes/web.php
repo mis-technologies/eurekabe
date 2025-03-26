@@ -46,6 +46,7 @@ Route::group(['middleware'=> 'advocate'], function () {
 
     // Students
     Route::get('advocate/students', [AdvocateStudentController::class, 'getStudents'])->name('advocate.students.index');
+    Route::get('advocate/results', [AdvocateStudentController::class, 'allStudentResults'])->name('advocate.results');
 
     Route::get('advocate/exams/{exam}/questions/{question}', [AdvocateExamController::class, 'getQuestion'])->name('advocate.exams.question.show');
     Route::post('advocate/exams/{exam}/questions/{question}', [AdvocateExamController::class, 'updateQuestion'])->name('advocate.exams.question.update');

@@ -170,4 +170,5 @@ class AdvocateExamController extends Controller
             return redirect()->back()->withNotify($notify);
         }
     }
+
 }
