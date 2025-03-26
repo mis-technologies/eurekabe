@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Advocate\Http\Controllers\AdvocateAuthController;
 use Modules\Advocate\Http\Controllers\AdvocateController;
 use Modules\Advocate\Http\Controllers\AdvocateExamController;
+use Modules\Advocate\Http\Controllers\AdvocateStudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,9 @@ Route::group(['middleware'=> 'advocate'], function () {
     Route::get('advocate/exams/{exam}/questions/create', [AdvocateExamController::class, 'getCreateQuestion'])->name('advocate.exams.question.create');
     Route::post('advocate/exams/{exam}/questions/store', [AdvocateExamController::class, 'storeQuestion'])->name('advocate.exams.question.store');
 
+
+    // Students
+    Route::get('advocate/students', [AdvocateStudentController::class, 'getStudents'])->name('advocate.students.index');
 
     Route::get('advocate/exams/{exam}/questions/{question}', [AdvocateExamController::class, 'getQuestion'])->name('advocate.exams.question.show');
     Route::post('advocate/exams/{exam}/questions/{question}', [AdvocateExamController::class, 'updateQuestion'])->name('advocate.exams.question.update');

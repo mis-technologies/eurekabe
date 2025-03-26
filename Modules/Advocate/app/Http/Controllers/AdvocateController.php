@@ -51,6 +51,8 @@ class AdvocateController extends Controller
         return view('advocate::dashboard', compact('quick_infos', 'top_exams', 'top_students', 'stats'));
     }
 
+
+    
     
     
 }
