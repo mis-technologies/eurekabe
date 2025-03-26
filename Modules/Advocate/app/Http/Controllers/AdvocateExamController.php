@@ -171,4 +171,19 @@ class AdvocateExamController extends Controller
         }
     }
 
+
+    public function allExamResults()
+    {
+        $advocate = Auth::user();
+        $examIds = Exam::where('school_id', $advocate->school_id)->pluck('id');
+        $data['results'] = StudentExam::whereIn('exam_id', $examIds)->latest()->get();
+        return view('advocate::results.index', $data);
+    }
+
+    // getExamResults
+    public function getExamResults(Exam $exam)
+    {
+        $data['exam'] = $exam;
+        return view('advocate::exams.results', $data);
+    }
 }

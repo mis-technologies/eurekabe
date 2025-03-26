@@ -17,6 +17,17 @@ class StudentExamTable extends Component
         'status' => '',
     ];
 
+    // Add public properties for query parameters
+    public $student_id;
+    public $exam_id;
+
+        
+    public function mount($student_id = null, $exam_id = null)
+    {
+        $this->student_id = $student_id;
+        $this->exam_id = $exam_id;
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -91,6 +102,16 @@ class StudentExamTable extends Component
         });
     }
 
+     // Apply filters for student_id and exam_id
+     if ($this->student_id) {
+        $query->where('user_id', $this->student_id);
+    }
+
+    if ($this->exam_id) {
+        $query->where('exam_id', $this->exam_id);
+    }
+
+    
     // Apply status filter
     if ($this->filters['status']) {
         $query->where('status', $this->filters['status']);
