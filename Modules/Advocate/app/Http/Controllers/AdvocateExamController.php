@@ -32,6 +32,17 @@ class AdvocateExamController extends Controller
         return view('advocate::exams.create', compact('subjects'));
     }
 
+    public function aiCreate()
+    {
+        $advocate = Auth::user();
+
+        // dd($advocate);
+        $subjects = Subject::all();
+        $school_id = $advocate->school_id ?? 1;
+        return view('advocate::exams.ai_create', compact('subjects', 'school_id'));
+    }
+    
+
     public function storeExam(Request $request)
     {
 

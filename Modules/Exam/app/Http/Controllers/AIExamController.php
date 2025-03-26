@@ -139,6 +139,7 @@ class AIExamController extends Controller
             $exam->totalmark = array_sum(array_column($validated['questions'], 'marks'));
             $exam->value = 0;
             $exam->school_id = $validated['school_id'];
+            $exam->question_type = 1; 
             $exam->save();
 
             // Save Questions & Options

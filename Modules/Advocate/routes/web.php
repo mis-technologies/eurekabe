@@ -37,7 +37,7 @@ Route::group(['middleware'=> 'advocate'], function () {
     Route::get('advocate/dashboard', [AdvocateController::class, 'dashboard'])->name('advocate.dashboard');
     Route::get('advocate/exams', [AdvocateExamController::class, 'index'])->name('advocate.exams.index');
     
-    Route::get('advocate/exams/ai', [AdvocateAIExamController::class, 'aiCreate'])->name('advocate.ai_create_exam');
+    Route::get('advocate/exams/ai', [AdvocateExamController::class, 'aiCreate'])->name('advocate.ai_create_exam');
 
     Route::get('advocate/exams/create', [AdvocateExamController::class, 'create'])->name('advocate.exams.create');
     Route::post('advocate/exams/store', [AdvocateExamController::class, 'storeExam'])->name('advocate.exams.store');
