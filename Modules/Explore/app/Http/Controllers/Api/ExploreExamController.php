@@ -20,6 +20,11 @@ class ExploreExamController extends Controller
         // Initialize query builder for Exam
         $query = Exam::query();
 
+        $query->where('status', 1); // Only show exams that are active
+
+        // filter out do not have  questions
+        $query->whereHas('questions');
+
         // Filtering (e.g., by subject or level)
         if ($request->has('subject')) {
             if($subject = Subject::where('name', $request->get('subject'))->orWhere('id', $request->get('subject'))->first() ){
