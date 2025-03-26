@@ -1,13 +1,9 @@
 <div>
     <div class="flex justify-between mb-4">
-        <input
-            type="text"
-            wire:model.debounce.300ms="search"
-            placeholder="Search by Name, Email, Exam Title, or Subject..."
-            class="border p-2 rounded"
-        />
+        <input type="text" wire:model.lazy="search" placeholder="Search by Name, Email, Exam Title, or Subject..."
+            class="border p-2 rounded" />
 
-        <select wire:model="filters.status" class="border p-2 rounded">
+        <select wire:model.lazy="filters.status" class="border p-2 rounded">
             <option value="">All Statuses</option>
             <option value="started">Started</option>
             <option value="submitted">Submitted</option>
@@ -25,25 +21,25 @@
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                     @endif
                 </th>
-                <th wire:click="sortBy('user.name')" class="cursor-pointer">
+                <th class="cursor-pointer">
                     Student Name
                     @if ($sortField === 'user.name')
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                     @endif
                 </th>
-                <th wire:click="sortBy('user.email')" class="cursor-pointer">
+                <th class="cursor-pointer">
                     Email
                     @if ($sortField === 'user.email')
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                     @endif
                 </th>
-                <th wire:click="sortBy('exam.title')" class="cursor-pointer">
+                <th class="cursor-pointer">
                     Exam Title
                     @if ($sortField === 'exam.title')
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                     @endif
                 </th>
-                <th wire:click="sortBy('exam.subject')" class="cursor-pointer">
+                <th class="cursor-pointer">
                     Subject
                     @if ($sortField === 'exam.subject')
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
@@ -55,13 +51,13 @@
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                     @endif
                 </th>
-                <th wire:click="sortBy('total_marks_earned')" class="cursor-pointer">
+                <th class="cursor-pointer">
                     Total Marks Earned
                     @if ($sortField === 'total_marks_earned')
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                     @endif
                 </th>
-                <th wire:click="sortBy('passed')" class="cursor-pointer">
+                <th class="cursor-pointer">
                     Pass Exam
                     @if ($sortField === 'passed')
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
@@ -73,12 +69,18 @@
         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
             @forelse ($studentExams as $studentExam)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">{{ $studentExam->id }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">{{ $studentExam->user->name ?? 'N/A' }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">{{ $studentExam->user->email ?? 'N/A' }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">{{ $studentExam->exam->title ?? 'N/A' }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">{{ $studentExam->exam->subject->name ?? 'N/A' }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">{{ ucfirst($studentExam->status) }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
+                        {{ $studentExam->id }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
+                        {{ $studentExam->user->name ?? 'N/A' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
+                        {{ $studentExam->user->email ?? 'N/A' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
+                        {{ $studentExam->exam->title ?? 'N/A' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
+                        {{ $studentExam->exam->subject->name ?? 'N/A' }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
+                        {{ ucfirst($studentExam->status) }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
                         {{ $studentExam->result['total_marks_earned'] ?? 'N/A' }}
                     </td>
@@ -100,5 +102,9 @@
 
     <div class="mt-4">
         {{ $studentExams->links() }}
+    </div>
+
+    <div wire:loading>
+        <p>Loading...</p>
     </div>
 </div>

@@ -12,7 +12,7 @@
             <div class="lg:col-span-3">
                 <div class="card">
                     <div class="card-header">
-                        <h6 class="card-title">All Students</h6>
+                        <h6 class="card-title">All Results</h6>
                     </div>
 
 
@@ -23,11 +23,11 @@
             <div class="col-span-3">
                 <div class="card">
                     <div class="card-header flex justify-between">
-                        <h6 class="card-title">Students</h6>
+                        <h6 class="card-title">Exam Results</h6>
                         {{-- <a href="{{ route('advocate.exams.question.create', $exam->id) }}" class="btn bg-primary text-white">Add Question</a> --}}
                     </div>
                     <div class="overflow-x-auto p-6">
-                        <livewire:student-exam-table />
+                        @livewire('student-exam-table')
                     </div>
                 </div>
             </div>
