@@ -5,6 +5,7 @@ use Modules\Advocate\Http\Controllers\AdvocateAuthController;
 use Modules\Advocate\Http\Controllers\AdvocateController;
 use Modules\Advocate\Http\Controllers\AdvocateExamController;
 use Modules\Advocate\Http\Controllers\AdvocateStudentController;
+use Modules\Advocate\Http\Controllers\AdvocateAIExamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,9 @@ Route::post('advocate/change-password', [AdvocateAuthController::class, 'changeP
 Route::group(['middleware'=> 'advocate'], function () {
     Route::get('advocate/dashboard', [AdvocateController::class, 'dashboard'])->name('advocate.dashboard');
     Route::get('advocate/exams', [AdvocateExamController::class, 'index'])->name('advocate.exams.index');
+    
+    Route::get('advocate/exams/ai', [AdvocateAIExamController::class, 'aiCreate'])->name('advocate.ai_create_exam');
+
     Route::get('advocate/exams/create', [AdvocateExamController::class, 'create'])->name('advocate.exams.create');
     Route::post('advocate/exams/store', [AdvocateExamController::class, 'storeExam'])->name('advocate.exams.store');
     Route::get('advocate/exams/{exam}', [AdvocateExamController::class, 'show'])->name('advocate.exams.show');
