@@ -41,6 +41,7 @@ class File extends Model
         // $fileLink =  asset($path);
         // return $fileLink;
 
+       
         $path = rawurlencode($this->path);
         if($this->disk === 'cloudinary'){
             $fileLink =  $this->path;

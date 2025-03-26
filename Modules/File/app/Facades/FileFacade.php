@@ -12,6 +12,7 @@ use Modules\File\Models\File as FileEntity;
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 use Cloudinary\Api\Admin\AdminApi;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 
 class FileFacade
@@ -179,6 +180,8 @@ class FileFacade
                 'resource_type' => 'image'
             ]);
 
+            // $uploadResult = Cloudinary::uploadApi()->upload($file->getRealPath());
+
             $user = Auth::user();
             $media = FileEntity::create([
                 'user_id' => $user->id,
@@ -199,7 +202,7 @@ class FileFacade
         }
     }
 
-    public static function cloudinaryDelete($filename)
+    public static function cloudinaryDelete($files)
     {
         try {
             // Configure Cloudinary
@@ -214,13 +217,13 @@ class FileFacade
                 ]
             ]);
 
-            // Delete the file from Cloudinary
-            $publicId = pathinfo($filename, PATHINFO_FILENAME);
-            $adminApi = new AdminApi();
-            $adminApi->deleteAssets(['public_ids' => [$publicId]]);
+            foreach ($files as $file ) {
+                $publicId = $file->filename;
+                $adminApi = new AdminApi();
+                $adminApi->deleteAssets([$publicId]);
+                $file->delete();
+            }
 
-            // Delete the file record from the database
-            $file->delete();
 
         } catch (Exception $e) {
             throw $e;

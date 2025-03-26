@@ -8,7 +8,6 @@ use Illuminate\Support\Carbon;
 use Modules\Messaging\Models\Conversation;
 use App\Models\User;
 use Modules\File\Models\File;
-use Modules\Messaging\Events\MessageSentEvent;
 use Webpatser\Uuid\Uuid;
 
 

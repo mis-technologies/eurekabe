@@ -73,20 +73,20 @@ class AdvocateExamController extends Controller
         ->value('total_hours') ?? 0;
 
         $questions = Question::where('exam_id', $exam->id)->paginate(10);
-    
+
         return view('advocate::exams.show', compact('exam', 'questions'));
     }
 
     public function update(Request $request, $exam){
         $exam = Exam::find($exam);
 
+        
         if( $request->hasFile('image') ){
             $files = request()->files;
             foreach ($files as $key => $value) {
-                // dd($key);
                 // FileFacade::publicFileUpload($value, $exam, identifier:$key);
+                FileFacade::cloudinaryDelete(File::where('identifier', $key)->where('entity_id', $exam->id)->get() ); 
                 FileFacade::cloudinaryUpload($value, $exam, identifier:$key);
-                FileFacade::cloudinaryDelete($key);
             }
         }
 
