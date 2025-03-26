@@ -1,11 +1,14 @@
 <?php
 namespace Modules\Exam\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Modules\Common\Actions\OpenRouter;
-use App\Http\Controllers\Controller;
-
+use Modules\Exam\Models\Exam;
+use Modules\Exam\Models\Question;
+use Modules\Exam\Models\QuestionOption;
 
 class AIExamController extends Controller
 {
@@ -100,4 +103,77 @@ class AIExamController extends Controller
         // Add status field and reformat
         return array_map(fn($question) => array_merge($question, ['status' => 0]), $decoded);
     }
+
+    public function saveGeneratedExam(Request $request)
+    {
+        // Validate request
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'instruction' => 'required|string',
+            'duration' => 'required|integer|min:1',
+            'pass_percentage' => 'required|integer|min:0|max:100',
+            'status' => 'required|integer|in:1,2', // Assuming 1 = Active, 2 = Inactive
+            'school_id' => 'required|exists:schools,id',
+            'subject_id' => 'required|exists:subjects,id',
+            'questions' => 'required|array',
+            'questions.*.question' => 'required|string',
+            'questions.*.marks' => 'required|numeric|min:1',
+            'questions.*.options' => 'required|array|min:2', // Ensure at least 2 options
+            'questions.*.options.*.option' => 'required|string',
+            'questions.*.options.*.is_correct' => 'required|boolean',
+        ]);
+
+        // $validated = $request->all();
+
+        try {
+            DB::beginTransaction();
+
+            // Save Exam
+            $exam = new Exam();
+            $exam->title = $validated['title'];
+            $exam->instruction = $validated['instruction'];
+            $exam->duration = $validated['duration'];
+            $exam->pass_percentage = $validated['pass_percentage'];
+            $exam->status = $validated['status'];
+            $exam->subject_id = $validated['subject_id'];
+            $exam->totalmark = array_sum(array_column($validated['questions'], 'marks'));
+            $exam->value = 0;
+            $exam->school_id = $validated['school_id'];
+            $exam->question_type = 1; 
+            $exam->save();
+
+            // Save Questions & Options
+            foreach ($validated['questions'] as $questionData) {
+                $question = new Question();
+                $question->exam_id = $exam->id;
+                $question->question = $questionData['question'];
+                $question->marks = $questionData['marks'];
+                $question->save();
+
+                foreach ($questionData['options'] as $optionData) {
+                    $option = new QuestionOption();
+                    $option->question_id = $question->id;
+                    $option->option = $optionData['option'];
+                    $option->is_correct = $optionData['is_correct'];
+                    $option->save();
+                }
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Exam and questions saved successfully!',
+                'exam_id' => $exam->id,
+            ], 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to save exam. Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
 }

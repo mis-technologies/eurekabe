@@ -11,7 +11,12 @@ cmds = ["composer install --no-dev"]
 [phases.start]
 cmds = [
   "php artisan storage:link",
-  "chmod -R 775 storage bootstrap/cache",
-  "chmod -R 775 storage public/uploads",
+  "chmod -R 777 storage bootstrap/cache",
+  "chmod -R 777 storage public/uploads",
+  "chmod -R 777 /app/public/uploads/",
+
   "php artisan optimize:clear"
 ]
+
+[volumes]
+storage = "/app/storage"

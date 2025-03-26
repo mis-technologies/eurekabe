@@ -16,38 +16,32 @@
                         <div class="card-header">
                             <div class="flex justify-between items-center">
                                 <h5 class="card-title">{{ $exam->subject->name }}</h5>
-                                <div class="bg-success text-xs text-white rounded-md py-1 px-1.5 font-medium" role="alert">
-                                    <span>Complated</span>
-                                </div>
+                                {{-- <div class="bg-success text-xs text-white rounded-md py-1 px-1.5 font-medium" role="alert">
+                                    <span>{{ $exam->tag }}</span>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="flex flex-col">
                             <div class="py-3 px-6">
-                                <h5 class="my-2"><a href="{{ route('advocate.exams.show', $exam->id) }}"
-                                        class="text-slate-900 dark:text-slate-200">{{ $exam->title }}</a></h5>
-                                <p class="text-gray-500 text-sm mb-9">{{ $exam->instruction }}</p>
-
-                                <div class="flex -space-x-2">
-
-                                    @if($exam->recentExamResults()->count() )
-                                        @foreach ($exam->recentExamResults() as $student)
-                                            <a href="javascript: void(0);">
-                                                <img class="inline-block h-12 w-12 rounded-full border-2 border-white dark:border-gray-700"
-                                                    src="{{ $student->image }}" alt="Image Description">
-                                            </a>
-                                        @endforeach
-                                        <a href="javascript: void(0);">
-                                            <div class="relative inline-flex">
-                                                <button
-                                                    class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gray-200 border-2 border-white font-medium text-gray-700 shadow-sm align-middle dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 transition-all text-sm">
-                                                    <span class="font-medium leading-none">{{ $exam->recentExamResults()->count() }}+</span>
-                                                </button>
-                                            </div>
-                                        </a>
-                                    @endif
-                                    
-
-                                </div>
+                                <a href="{{ route('advocate.exams.show', $exam->id) }}" class="block">
+                                    <div class="py-3 px-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                        <h5 class="my-2">
+                                            <span class="text-slate-900 dark:text-slate-200">{{ $exam->title }}
+                                        </h5>
+                                        <p class="text-gray-500 text-sm mb-9">{{ $exam->instruction }}</p>
+                                
+                                        <div class="flex -space-x-2">
+                                            @if($exam->recentExamResults()->count())
+                                                <div class="relative inline-flex">
+                                                    <button class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gray-200 border-2 border-white font-medium text-gray-700 shadow-sm align-middle dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 transition-all text-sm">
+                                                        <span class="font-medium leading-none">{{ $exam->recentExamResults()->count() }}+
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </a>
+                                
                             </div>
 
                             <div class="border-t p-5 border-gray-300 dark:border-gray-700">
@@ -59,18 +53,23 @@
                                             <span class="align-text-bottom">{{ $exam->created_at->format('d M Y') }}</span>
                                         </a>
 
-                                        <a href="#" class="text-sm">
+                                        <a href="#" title="Total Questions" class="text-sm">
                                             <i class="mgc_align_justify_line text-lg me-2"></i>
                                             <span class="align-text-bottom">{{ $exam->questions_count }}</span>
                                         </a>
 
-                                        <a href="#" class="text-sm">
+                                        <a href="#" title="Total Feedbacks" class="text-sm">
                                             <i class="mgc_comment_line text-lg me-2"></i>
                                             <span class="align-text-bottom">{{ $exam->feedback_count }}</span>
                                         </a>
                                     </div>
 
+                                    <div class="flex justify-end">
+                                        <a href="{{ route('advocate.exams.results', $exam->id) }}" class="btn bg-secondary text-white">View Results</a>
+                                    </div>
+
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

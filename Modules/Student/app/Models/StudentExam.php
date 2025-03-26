@@ -4,6 +4,7 @@ namespace Modules\Student\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Modules\Exam\Models\Exam;
 use Modules\Exam\Models\Question;
 use Modules\Student\Models\StudentExamResult;
@@ -38,6 +39,8 @@ class StudentExam extends Model
         'started_at' => 'datetime',
         'ended_at' => 'datetime',
     ];
+
+    protected $appends = ['duration'];
 
     public function exam()
     {
@@ -83,7 +86,9 @@ class StudentExam extends Model
         $finalScore = max(0, $totalMarks - $negativeMarks); // Ensure score doesn't go below zero
 
         // Calculate percentage of correct answers
-        $correctPercentage = ($totalQuestions > 0) ? ($finalScore / $totalPossibleMarks) * 100 : 0;
+        // Safe version
+        $correctPercentage = ($totalPossibleMarks > 0) ? ($finalScore / $totalPossibleMarks) * 100 : 0;
+
 
         // Check if the student passed
         $isPassed = $correctPercentage >= $exam->pass_percentage;
@@ -169,8 +174,39 @@ class StudentExam extends Model
         return $reviewData;
 
     }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
+
+
+
+    public function getDurationAttribute()
+    {
+        if (!$this->started_at || !$this->ended_at) {
+            return null;
+        }
+
+        $startTime = Carbon::parse($this->started_at);
+        $endTime = Carbon::parse($this->ended_at);
+        
+        // Calculate duration in seconds
+        $durationInSeconds = $endTime->diffInSeconds($startTime);
+        
+        // Format duration into hours:minutes:seconds
+        $hours = floor($durationInSeconds / 3600);
+        $minutes = floor(($durationInSeconds % 3600) / 60);
+        $seconds = $durationInSeconds % 60;
+        
+        return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+    }
+
+
     protected static function newFactory()
     {
         // return StudentExamFactory::new();
     }
+
+
 }

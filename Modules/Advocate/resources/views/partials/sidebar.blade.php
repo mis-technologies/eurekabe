@@ -50,15 +50,16 @@
                                     </a>
                                 </li>
 
-                                <li class="menu-item">
-                                    <a href="#" class="menu-link">
+                               
+                                <li  class="menu-item">
+                                    <a href="{{ route('advocate.students.index') }}" class="{{ (Route::is('advocate.students*')) ? 'active' : '' }} menu-link">
                                         <span class="menu-icon"><i class="mgc_coupon_line"></i></span>
                                         <span class="menu-text"> Students </span>
                                     </a>
                                 </li>
 
                                 <li class="menu-item">
-                                    <a href="#" class="menu-link">
+                                    <a href="{{ route('advocate.results') }}" class="{{ (Route::is('advocate.results*')) ? 'active' : '' }} menu-link">
                                         <span class="menu-icon"><i class="mgc_folder_2_line"></i></span>
                                         <span class="menu-text">  Results </span>
                                     </a>
@@ -72,6 +73,13 @@
                                 </li>
 
                                 <li class="menu-item">
+                                    <a href="{{ route('advocate.ai_create_exam') }}" class="{{ (Route::is('advocate.ai_create_exam')) ? 'active' : '' }} menu-link">
+                                        <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
+                                        <span class="menu-text">Eureka AI</span>
+                                    </a>
+                                </li>
+{{-- 
+                                <li class="menu-item">
                                     <a href="javascript:void(0)" data-fc-type="collapse"
                                         class="menu-link fc-collapse">
                                         <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
@@ -79,7 +87,7 @@
                                         <span class="menu-arrow"></span>
                                     </a>
 
-                                    {{-- <ul class="sub-menu hidden">
+                                    <ul class="sub-menu hidden">
                                         <li class="menu-item">
                                             <a href="apps-project-list.html" class="menu-link">
                                                 <span class="menu-text">List</span>
@@ -95,8 +103,8 @@
                                                 <span class="menu-text">Create</span>
                                             </a>
                                         </li>
-                                    </ul> --}}
-                                </li>
+                                    </ul>
+                                </li> --}}
 
                                 
                             </ul>

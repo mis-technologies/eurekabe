@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Modules\File\Models\File as FileEntity;
+use Cloudinary\Configuration\Configuration;
+use Cloudinary\Api\Upload\UploadApi;
+use Cloudinary\Api\Admin\AdminApi;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 
 class FileFacade
 {
@@ -67,9 +72,7 @@ class FileFacade
 
 
 
-
-
-    public static function defaultUploadv2($file, $entity = null, $disk = null, $dir = null, $identifier = null)
+    public static function publicFileUpload($file, $entity = null, $disk = null, $dir = null, $identifier = null)
     {
         try {
             $storageDisk = $disk ?? config('filesystems.default');
@@ -98,7 +101,7 @@ class FileFacade
             $user = Auth::user();
             $media = FileEntity::create([
                 'user_id' => $user->id,
-                'disk' => 'public',
+                'disk' => 'cloudinary',
                 'entity' => $entityClass,
                 'entity_id' => $entity->id,
                 'filename' => $fileName,
@@ -116,7 +119,7 @@ class FileFacade
     }
 
     // public static function deleteFile($files, $disk=null) {
-    public static function deleteFilev2($files, $disk = null)
+    public static function publicFileDelete($files, $disk = null)
     {
         try {
             $storageDisk = $disk ?? config('filesystems.default');
@@ -148,6 +151,80 @@ class FileFacade
                 }
                 $files->delete();
             }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+
+    public static function cloudinaryUpload($file, $entity = null, $identifier = null)
+    {
+        try {
+            // Configure Cloudinary
+            Configuration::instance([
+                'cloud' => [
+                    'cloud_name' => config('cloudinary.cloud_name'),
+                    'api_key' => config('cloudinary.api_key'),
+                    'api_secret' => config('cloudinary.api_secret'),
+                ],
+                'url' => [
+                    'secure' => true
+                ]
+            ]);
+
+            // Upload the file to Cloudinary
+            $uploadResult = (new UploadApi())->upload($file->getRealPath(), [
+                'folder' => 'uploads',
+                'public_id' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
+                'overwrite' => true,
+                'resource_type' => 'image'
+            ]);
+
+            // $uploadResult = Cloudinary::uploadApi()->upload($file->getRealPath());
+
+            $user = Auth::user();
+            $media = FileEntity::create([
+                'user_id' => $user->id,
+                'disk' => 'cloudinary',
+                'entity' => get_class($entity),
+                'entity_id' => $entity->id,
+                'filename' => $uploadResult['public_id'],
+                'identifier' => $identifier,
+                'path' => $uploadResult['secure_url'],
+                'extension' => $file->guessClientExtension() ?? '',
+                'mime' => $file->getClientMimeType(),
+                'size' => $file->getSize(),
+            ]);
+
+            return $media;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public static function cloudinaryDelete($files)
+    {
+        try {
+            // Configure Cloudinary
+            Configuration::instance([
+                'cloud' => [
+                    'cloud_name' => config('cloudinary.cloud_name'),
+                    'api_key' => config('cloudinary.api_key'),
+                    'api_secret' => config('cloudinary.api_secret'),
+                ],
+                'url' => [
+                    'secure' => true
+                ]
+            ]);
+
+            foreach ($files as $file ) {
+                $publicId = $file->filename;
+                $adminApi = new AdminApi();
+                $adminApi->deleteAssets([$publicId]);
+                $file->delete();
+            }
+
+
         } catch (Exception $e) {
             throw $e;
         }

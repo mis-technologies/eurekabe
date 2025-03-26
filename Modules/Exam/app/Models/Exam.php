@@ -28,13 +28,14 @@ class Exam extends Model
         'status', 
         'created_by', 
         'updated_by',
+        'question_type',
         'value',
     ];
 
     
     protected $guarded = [];
 
-    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag'];
+    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag', 'totalmark', 'exam_type'];
 
     public function school()
     {
@@ -118,6 +119,24 @@ class Exam extends Model
         return 'New';
     }
 
+    // get exam totalmark from questions
+    public function getTotalmarkAttribute()
+    {
+        $questions = Question::where('exam_id', $this->id)->get();
+        $totalmark = 0;
+        foreach ($questions as $question) {
+            $totalmark += $question->marks;
+        }
+        return round($totalmark);
+    }
+
+    public function getExamTypeAttribute()
+    {
+        if ($this->question_type == 2) {
+            return 'Written';
+        }
+        return 'Multiple Choice Questions';
+    }
     public function examResults (){
         return $this->hasMany(StudentExamResult::class, 'exam_id');
     }

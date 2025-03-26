@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Modules\Advocate\Http\Controllers\AdvocateAuthController;
 use Modules\Advocate\Http\Controllers\AdvocateController;
 use Modules\Advocate\Http\Controllers\AdvocateExamController;
+use Modules\Advocate\Http\Controllers\AdvocateStudentController;
+use Modules\Advocate\Http\Controllers\AdvocateAIExamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,9 @@ Route::post('advocate/change-password', [AdvocateAuthController::class, 'changeP
 Route::group(['middleware'=> 'advocate'], function () {
     Route::get('advocate/dashboard', [AdvocateController::class, 'dashboard'])->name('advocate.dashboard');
     Route::get('advocate/exams', [AdvocateExamController::class, 'index'])->name('advocate.exams.index');
+    
+    Route::get('advocate/exams/ai', [AdvocateExamController::class, 'aiCreate'])->name('advocate.ai_create_exam');
+
     Route::get('advocate/exams/create', [AdvocateExamController::class, 'create'])->name('advocate.exams.create');
     Route::post('advocate/exams/store', [AdvocateExamController::class, 'storeExam'])->name('advocate.exams.store');
     Route::get('advocate/exams/{exam}', [AdvocateExamController::class, 'show'])->name('advocate.exams.show');
@@ -41,7 +46,14 @@ Route::group(['middleware'=> 'advocate'], function () {
 
     Route::get('advocate/exams/{exam}/questions/create', [AdvocateExamController::class, 'getCreateQuestion'])->name('advocate.exams.question.create');
     Route::post('advocate/exams/{exam}/questions/store', [AdvocateExamController::class, 'storeQuestion'])->name('advocate.exams.question.store');
+    Route::get('advocate/exams/{exam}/results', [AdvocateExamController::class, 'getExamResults'])->name('advocate.exams.results');
 
+    // Students
+    Route::get('advocate/students', [AdvocateStudentController::class, 'getStudents'])->name('advocate.students.index');
+    Route::get('advocate/students/{student}', [AdvocateStudentController::class, 'showStudent'])->name('advocate.students.show');
+
+    
+    Route::get('advocate/results', [AdvocateExamController::class, 'allExamResults'])->name('advocate.results');
 
     Route::get('advocate/exams/{exam}/questions/{question}', [AdvocateExamController::class, 'getQuestion'])->name('advocate.exams.question.show');
     Route::post('advocate/exams/{exam}/questions/{question}', [AdvocateExamController::class, 'updateQuestion'])->name('advocate.exams.question.update');
