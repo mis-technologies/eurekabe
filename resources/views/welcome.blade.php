@@ -499,7 +499,7 @@
           <h2 class="script-font" style="color:#4F92FE">Engagement</h2>
           <h1 class="text-2xl font-bold">Our Events</h1>
           <p class="text-lg opacity-50">
-            Explore upcoming events and experiences.Eureka's OurEvents is more
+            Explore upcoming events and experiences. Eureka's OurEvents is more
             than just a calendar – it's a portal to a world of exploration,
             discovery, and endless fun. So, join the adventure, unleash your
             curiosity, and get ready to learn like never before!
