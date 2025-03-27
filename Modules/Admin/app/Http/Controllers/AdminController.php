@@ -51,28 +51,70 @@ class AdminController extends Controller
    public function showHomePage()
    {
        $homePage = HomePage::first(); // Assuming there's only one record
-       return view('admin::pages.home.index', compact('homePage'));
+       $homePageData = json_decode($homePage, true); // Decode the JSON data into an array
+       return view('admin::pages.home.index', compact('homePage', 'homePageData'));
    }
 
-   public function updateHomePage(Request $request)
-   {
-       $homePage = HomePage::first();
-   
-       // Update each section dynamically
-       $sections = ['herosection', 'pathnersection', 'whoarewe', 'socialsection', 'whatweoffer', 'teamsection', 'downloadsection', 'engagementsection'];
-   
-       foreach ($sections as $section) {
-           if ($request->has($section)) {
-               $sectionData = json_decode($homePage->$section, true);
-               $updatedData = $request->input($section, []);
-               $homePage->$section = json_encode(array_merge($sectionData, $updatedData));
-           }
-       }
-   
-       $homePage->save();
-   
-       return redirect()->route('admin.pages.home')->with('success', 'HomePage updated successfully.');
-   }
+
+public function updateHomePage(Request $request)
+{
+    $homePage = HomePage::first();
+
+    // Update each section dynamically
+    $sections = ['herosection', 'pathnersection', 'whoarewe', 'socialsection', 'whatweoffer', 'teamsection', 'downloadsection', 'engagementsection'];
+
+    foreach ($sections as $section) {
+        if ($request->has($section)) {
+            // Decode the existing JSON data for the section
+            $sectionData = json_decode($homePage->$section, true) ?? [];
+
+            // Update text fields
+            $updatedData = $request->input($section, []);
+            foreach ($updatedData as $key => $value) {
+                if (!empty($value)) {
+                    $sectionData[$key] = $value; // Only update if the new value is not empty
+                }
+            }
+
+            // Special handling for pathnersection schools
+            if ($section === 'pathnersection' && isset($updatedData['schools'])) {
+                foreach ($updatedData['schools'] as $index => $school) {
+                    // Update school name
+                    if (!empty($school['school_name'])) {
+                        $sectionData['schools'][$index]['school_name'] = $school['school_name'];
+                    }
+
+                    // Handle file uploads for school images
+                    if ($request->hasFile("$section.schools.$index.img_url")) {
+                        $file = $request->file("$section.schools.$index.img_url");
+                        if ($file) {
+                            $filePath = $file->store("uploads/$section/schools", 'public');
+                            $sectionData['schools'][$index]['img_url'] = 'storage/' . $filePath;
+                        }
+                    }
+                }
+            }
+
+            // Handle file uploads for images (general img_url field)
+            if ($request->hasFile("$section.img_url")) {
+                foreach ($request->file("$section.img_url") as $key => $file) {
+                    if ($file) {
+                        $filePath = $file->store("uploads/$section", 'public');
+                        $sectionData['img_url'][$key] = 'storage/' . $filePath;
+                    }
+                }
+            }
+
+            // Save the updated JSON data back to the section
+            $homePage->$section = json_encode($sectionData);
+        }
+    }
+
+    // Save the updated record
+    $homePage->save();
+
+    return redirect()->route('admin.pages.home')->with('success', 'HomePage updated successfully.');
+}
 
 
 

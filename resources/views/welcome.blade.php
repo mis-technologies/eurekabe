@@ -139,10 +139,16 @@
         <div class="slider-track flex transition-transform duration-300">
           @foreach ($homePageData['pathnersection']['schools'] as $school)
           <div class="slide flex items-center justify-between">
-            <img src="{{ $school['img_url'] }}" alt="{{ $school['school_name'] }}" />
-            <h5 class="font-bold ml-1 italic font-lato">{{ $school['school_name'] }}</h5>
-        </div>
-          @endforeach
+              @if (!empty($school['img_url']))
+                  <img src="{{ $school['img_url'] }}" alt="{{ $school['school_name'] }}" />
+              @else
+                  <div class="w-32 h-32 flex items-center justify-center bg-gray-200">
+                      <span class="text-gray-500">No Image Available</span>
+                  </div>
+              @endif
+              <h5 class="font-bold ml-1 italic font-lato">{{ $school['school_name'] }}</h5>
+          </div>
+      @endforeach
 
         </div>
         <button class="prev left-0 transform -translate-y-1/2 rounded-md p-3 z-10">❮</button>
