@@ -36,9 +36,8 @@ Route::group(['middleware'=> 'isadmin'], function () {
     Route::post('admin/user/approve-disapprove/{id?}', [AdminController::class, 'update'])->name('admin.update.user.status');
 
     // Home Page
-    Route::get('admin/home-page', [AdminController::class, 'Homepage'])->name('admin.pages.home');
-    Route::get('/admin/pages/edit/{column}', [AdminController::class, 'editHeroSection'])->name('admin.pages.home.edit-hero-section');
-    Route::post('/admin/pages/update/{column}', [AdminController::class, 'updateHeroSection'])->name('admin.pages.update');
+    Route::get('/admin/pages/home', [AdminController::class, 'showHomePage'])->name('admin.pages.home');
+    Route::post('/admin/pages/home', [AdminController::class, 'updateHomePage'])->name('admin.pages.home.update');
 
 
 });
