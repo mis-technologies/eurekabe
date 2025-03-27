@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <script src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
-    \ <script defer src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
+    <script defer src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/asset/images/favicon.png" />
 

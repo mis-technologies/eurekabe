@@ -10,14 +10,11 @@
     <link rel="stylesheet" href="/asset/styles/main.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <script src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
-    <script defer src="/asset/scripts/main.js"></script>
+    <script defer src="asset/scripts/main.js"></script>
     <script defer src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/asset/images/favicon.png" />
@@ -183,9 +180,10 @@
     <footer id="myDiv" class="bg-secondary  relative dark:bg-dark dark:text-white">
         <div class="morphism z-10 bg-secondary py-20 relative dark:bg-dark dark:text-white ">
             <div class="container w-full flex flex-col items-center mx-auto md:max-w-2xl gap-7 text-center z-[3]">
-                <button class="absolute top-0 right-0 text-black dark:text-white font-bold text-3xl p-5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90"
-                onclick=closeDiv() >&times;
-            </button>
+                <button
+                    class="absolute top-0 right-0 text-black dark:text-white font-bold text-3xl p-5 rounded-full flex items-center justify-center cursor-pointer hover:opacity-90"
+                    onclick=closeDiv()>&times;
+                </button>
                 <h1 class="text-xl font-bold font-lato md:text-3xl">
                     Join our community. Support, Promote, Advocate. Get Started Today.
                 </h1>
@@ -239,7 +237,8 @@
         <div class="flex items-center gap-6">
             <a href="https://whatapp.com" target="_blank"><i class="fab fa-whatsapp font-bold text-3xl"></i></a>
             <a href="https://x.com" target="_blank"><i class="fab fa-x-twitter font-bold text-3xl"></i></i></a>
-            <a href="https://telegram.com" target="_blank"><i class="fab fa-telegram-plane font-bold text-3xl"></i></a>
+            <a href="https://telegram.com" target="_blank"><i
+                    class="fab fa-telegram-plane font-bold text-3xl"></i></a>
             <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in font-bold text-3xl"></i></a>
         </div>
         <div class="mt-4 md:mt-0">
@@ -251,41 +250,40 @@
 </body>
 
 <script>
-
-
     function closeDiv() {
         document.getElementById("myDiv").style.display = "none";
     }
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-const themeToggle = document.querySelector('#theme-toggle'); // Example toggle button
-const logo = document.querySelector('#logo'); // The logo element
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.querySelector('#theme-toggle'); // Example toggle button
+        const logo = document.querySelector('#logo'); // The logo element
 
-// Check and set initial theme
-const currentTheme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', currentTheme);
+        // Check and set initial theme
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
 
-if (currentTheme === 'dark') {
-logo.src = '/asset/images/white_logo.png'; // Dark logo
-} else {
-logo.src = '/asset/images/logo.png'; // Light logo
-}
+        if (currentTheme === 'dark') {
+            logo.src = '/asset/images/white_logo.png'; // Dark logo
+        } else {
+            logo.src = '/asset/images/logo.png'; // Light logo
+        }
 
-// Toggle theme on button click
-themeToggle.addEventListener('click', () => {
-const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-document.documentElement.setAttribute('data-theme', theme);
-localStorage.setItem('theme', theme);
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' :
+                'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
 
-// Change logo based on theme
-if (theme === 'dark') {
-    logo.src = '/asset/images/white_logo.png'; // Dark logo
-} else {
-    logo.src = '/asset/images/logo.png'; // Light logo
-}
-});
-});
+            // Change logo based on theme
+            if (theme === 'dark') {
+                logo.src = '/asset/images/white_logo.png'; // Dark logo
+            } else {
+                logo.src = '/asset/images/logo.png'; // Light logo
+            }
+        });
+    });
 </script>
 
 <style>
@@ -309,14 +307,16 @@ if (theme === 'dark') {
 </style>
 
 <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/67db16d5d3bed8190a7ea933/1imnt2cqv';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
+    var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+    (function() {
+        var s1 = document.createElement("script"),
+            s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/67db16d5d3bed8190a7ea933/1imnt2cqv';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
     })();
 </script>
 

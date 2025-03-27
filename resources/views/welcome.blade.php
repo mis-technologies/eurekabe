@@ -288,11 +288,13 @@
             Lead curriculum, events, support, and community engagement. Shape
             education's future with us!
           </p>
-          <button
-            class="bg-primary w-fit mt-10 px-8 py-3 font-semibold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
-          >
-            Become an Advocate
-          </button>
+          <a href="{{ route('advocate.apply') }}">
+            <button
+                class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
+            >
+                Become an Advocate
+            </button>
+        </a>
         </div>
 
         <div
