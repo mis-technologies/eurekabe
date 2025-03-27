@@ -85,7 +85,7 @@ class StudentExam extends Model
 
         // I need to calculate totalmark from the list of questions that was sampled for the exam, student_exam has array of question ids
         $studentExamQuestions = $this->questions;
-        $totalPossibleMarks = Question::whereIn('id', $studentExamQuestions)->sum('mark');
+        $totalPossibleMarks = Question::whereIn('id', $studentExamQuestions)->sum('marks');
         // $totalPossibleMarks = $exam->totalmark;
         $finalScore = max(0, $totalMarks - $negativeMarks); // Ensure score doesn't go below zero
 
