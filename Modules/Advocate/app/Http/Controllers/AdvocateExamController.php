@@ -175,7 +175,10 @@ class AdvocateExamController extends Controller
         unset($request['option']);
 
         if ($request->acceptsJson()) {
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'redirect' => route('advocate.exams.show', $exam->id),
+            ]);
         } else {
             $notify[] = ['success', 'Created successfully'];
             return redirect()->back()->withNotify($notify);

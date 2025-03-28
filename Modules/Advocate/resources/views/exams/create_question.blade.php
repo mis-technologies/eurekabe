@@ -35,10 +35,10 @@
 
             <div class="lg:col-span-4 mt-5">
                 <div class="flex justify-start gap-3">
-                   
-                    <button id="save-question" type="button"
-                        class="bg-green-500 text-white px-4 py-2 rounded">Save Question</button>
-                        <button type="button" class="bg-red-500 text-white px-4 py-2 rounded">Cancel</button>
+
+                    <button id="save-question" type="button" class="bg-green-500 text-white px-4 py-2 rounded">Save
+                        Question</button>
+                    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded">Cancel</button>
                 </div>
             </div>
 
@@ -74,6 +74,8 @@
                     .then(response => response.json())
                     .then(data => {
                         notify("success", "Question saved successfully!");
+                        // response.redirect
+                        window.location = "{{ route('advocate.exams.show', [$exam->id]) }}";
                     })
                     .catch(error => console.error("Error:", error));
             });
