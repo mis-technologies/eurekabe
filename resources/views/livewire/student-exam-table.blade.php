@@ -14,10 +14,10 @@
             <option value="result_released">Result Released</option>
         </select>
 
-        <select wire:model="perPage" class="border mx-2 p-2 px-10 rounded">
+        <select wire:model.lazy="perPage" class="border mx-2 p-2 px-10 rounded">
             <option value="50">50 per page</option>
             <option value="100">100 per page</option>
-            <option value="200">100 per page</option>
+            <option value="200">200 per page</option>
             <option value="300">300 per page</option>
         </select>
 

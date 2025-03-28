@@ -20,7 +20,7 @@ class StudentExamTable extends Component
     // Add public properties for query parameters
     public $student_id;
     public $exam_id;
-    public $perPage = 100; // Default items per page
+    public $perPage = 50; // Default items per page
 
     public function mount($student_id = null, $exam_id = null)
     {
