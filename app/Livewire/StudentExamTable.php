@@ -20,6 +20,7 @@ class StudentExamTable extends Component
     // Add public properties for query parameters
     public $student_id;
     public $exam_id;
+    public $perPage = 100; // Default items per page
 
     public function mount($student_id = null, $exam_id = null)
     {
@@ -81,7 +82,7 @@ class StudentExamTable extends Component
         $query->orderBy($this->sortField, $this->sortDirection);
 
       
-        $data = $query->paginate(10);
+        $data = $query->paginate($this->perPage);
 
         // Append result data to each StudentExam instance
         $data->getCollection()->transform(function ($studentExam) {

@@ -4,7 +4,7 @@
     <div class="flex justify-between mb-4">
         <input type="text" wire:model.lazy="search" placeholder="Search by Name, Email, Exam Title, or Subject..."
             class="border p-2 rounded" />
-
+       
       <div class="flex">
         <select wire:model.lazy="filters.status" class="border p-2 rounded">
             <option value="">All Statuses</option>
@@ -12,6 +12,13 @@
             <option value="submitted">Submitted</option>
             <option value="awaiting_result">Awaiting Result</option>
             <option value="result_released">Result Released</option>
+        </select>
+
+        <select wire:model="perPage" class="border mx-2 p-2 px-10 rounded">
+            <option value="50">50 per page</option>
+            <option value="100">100 per page</option>
+            <option value="200">100 per page</option>
+            <option value="300">300 per page</option>
         </select>
 
         <button id="download-excel" style="background: black" class=" text-white mx-2  px-4 py-2 rounded">Download Excel</button>
