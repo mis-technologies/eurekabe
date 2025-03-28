@@ -32,6 +32,13 @@ class StudentExam extends Model
         'status',
         'started_at',
         'ended_at',
+
+        'total_marks_earned', // very important to enable sorting and filtering
+        'total_correct',
+        'pass_percentage',
+        'total_questions',
+        'total_possible_marks',
+        'passed',
     ];
 
     protected $casts = [
@@ -93,13 +100,33 @@ class StudentExam extends Model
         // Safe version
         $correctPercentage = ($totalPossibleMarks > 0) ? ($finalScore / $totalPossibleMarks) * 100 : 0;
 
-
         // Check if the student passed
         $isPassed = $correctPercentage >= $exam->pass_percentage;
 
         // Return a detailed summary of the result
         // $time_taken = $this->started_at ? (double)($this->started_at->diffInMinutes($this->ended_at) ) : 2.00;
-        $time_taken = $this->started_at ? round((double)($this->started_at->diffInMinutes($this->ended_at)), 2) : 2.00;
+        $time_taken = $this->started_at ? round((double) ($this->started_at->diffInMinutes($this->ended_at)), 2) : 2.00;
+
+        // Store in the database
+        if ($this->total_marks_earned !== $finalScore) {
+            $this->update(['total_marks_earned' => $finalScore]);
+        }
+        if ($this->total_correct !== $totalCorrect) {
+            $this->update(['total_correct' => $totalCorrect]);
+        }
+        if ($this->total_questions !== $totalQuestions) {
+            $this->update(['total_questions' => $totalQuestions]);
+        }
+        if ($this->total_possible_marks !== $totalPossibleMarks) {
+            $this->update(['total_possible_marks' => $totalPossibleMarks]);
+        }
+        if ($this->pass_percentage !== $exam->pass_percentage) {
+            $this->update(['pass_percentage' => $exam->pass_percentage]);
+        }
+        if ($this->passed !== $exam->passed) {
+            $this->update(['passed' => $isPassed ]);
+        }
+
 
         return [
             'exam_type' => $examType == 1 ? 'mcq' : 'essay',
@@ -113,7 +140,7 @@ class StudentExam extends Model
             'negative_marks' => $negativeMarks,
             'student_exam' => $this,
             'exam_details' => $exam,
-            'time_taken' => $time_taken
+            'time_taken' => $time_taken,
         ];
     }
 
@@ -121,7 +148,7 @@ class StudentExam extends Model
     {
         // Fetch all submissions for this exam
         $submissions = StudentExamResult::where('student_exam_id', $this->id)
-            // ->with(['question.options']) // Eager load questions and their options
+        // ->with(['question.options']) // Eager load questions and their options
             ->get()
             ->keyBy('question_id'); // Index by question_id for easier lookup
 
@@ -152,18 +179,16 @@ class StudentExam extends Model
             if ($question->options->isNotEmpty()) {
                 $studentAnswer = $submission ? $submission->answer : null;
 
-                $questionReview['options'] = $question->options->map(function ($option) use ($studentAnswer)  {
+                $questionReview['options'] = $question->options->map(function ($option) use ($studentAnswer) {
                     return [
                         'id' => $option->id,
                         'text' => $option->option,
                         'is_correct' => $option->is_correct,
-                        'student_selected' => (int)$studentAnswer == $option->id
+                        'student_selected' => (int) $studentAnswer == $option->id,
 
                     ];
                 });
 
-
-               
             }
             // Handle essay questions
             else {
@@ -184,8 +209,6 @@ class StudentExam extends Model
         return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 
-
-
     public function getDurationAttribute()
     {
         if (!$this->started_at || !$this->ended_at) {
@@ -194,23 +217,21 @@ class StudentExam extends Model
 
         $startTime = Carbon::parse($this->started_at);
         $endTime = Carbon::parse($this->ended_at);
-        
+
         // Calculate duration in seconds
         $durationInSeconds = $endTime->diffInSeconds($startTime);
-        
+
         // Format duration into hours:minutes:seconds
         $hours = floor($durationInSeconds / 3600);
         $minutes = floor(($durationInSeconds % 3600) / 60);
         $seconds = $durationInSeconds % 60;
-        
+
         return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
     }
-
 
     protected static function newFactory()
     {
         // return StudentExamFactory::new();
     }
-
 
 }
