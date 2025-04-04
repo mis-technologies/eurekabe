@@ -62,7 +62,7 @@
                         <input type="checkbox" name="remember" id="remember" class="w-6 h-6  via-gray-400 cursor-pointer">
                         <span>Remember me</span>
                     </div>
-                    <a href="advocate/apply" class="text-primary">Signup</a>
+                    <a href="{{ route('advocate.apply') }}" class="text-primary">Signup</a>
                     <a href="{{route('advocate.forgot.password')}}" class="text-primary">Forgot Password</a>
 
                 </div>
