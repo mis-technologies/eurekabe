@@ -77,21 +77,17 @@
                     <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
                         <a href="/contact">Contact Us</a>
                     </li>
-                    {{-- <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
-                        <a href="/advocate/login"> Login</a>
-                    </li> --}}
-                    
-
+                   
                 </ul>
 
                 <!-- Toggle Switch formerly here-->
 
                 <button" 
                     class="hidden md:block bg-primary p-3 lg:px-4 xl:px-6 max-w-28 xl:max-w-none rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105">
-                    <a href="/advocate/login">SignIn </a>
+                    <a href="{{ route('advocate.apply') }}"> Become an Advocate </a>
                 </button>
               
-                    {{-- <a href=""> Login</a> --}}
+                    {{-- <a href="/advocate/login"> Login</a> --}}
                
                
             </div>
@@ -170,7 +166,7 @@
                 </ul>
                 <button
                     class="bg-primary mt-3 p-3 px-6 rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105">
-                    <a href="{{ route('advocate.apply') }}"> Become an Advocate </a>
+                    <a href="{{ route('advocate.login') }}"> SignIn </a>
                 </button>
             </div>
 

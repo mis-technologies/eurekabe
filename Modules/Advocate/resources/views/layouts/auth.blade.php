@@ -164,7 +164,7 @@
                 </ul>
                 <button
                     class="bg-primary mt-3 p-3 px-6 rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105">
-                    <a href="{{ route('advocate.apply') }}"> Become an Advocate </a>
+                    <a href="{{ route('advocate.login') }}">SignIn </a>
                 </button>
             </div>
 
