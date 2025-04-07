@@ -42,10 +42,14 @@ Route::group(['middleware'=> 'isadmin'], function () {
 
     // Blog Crud
     Route::get('/admin/pages/blog', [AdminController::class, 'blogDisplay'])->name('admin.pages.blog.display');
-
     Route::post('/admin/pages/blog-update/{blog_id?}', [AdminController::class, 'blogUpdate'])->name('admin.pages.update.blog');
     Route::get('/admin/pages/blog-update-view/{blog_id?}', [AdminController::class, 'blogUpdateView'])->name('admin.pages.update.blog.view');
+    Route::get('/admin/pages/blog-delete/{blog_id}', [AdminController::class, 'deleteBlog'])->name('admin.pages.delete.blog');
 
-    Route::post('/admin/pages/blog-delete/{blog_id}', [AdminController::class, 'blogDelete'])->name('admin.pages.delete.blog');
+
+    Route::get('/admin/pages/events', [AdminController::class, 'eventsDisplay'])->name('admin.pages.events.display');
+    Route::post('/admin/pages/event-update/{event_id?}', [AdminController::class, 'eventUpdate'])->name('admin.pages.update.event');
+    Route::get('/admin/pages/event-update-view/{event_id?}', [AdminController::class, 'eventUpdateView'])->name('admin.pages.update.event.view');
+    Route::get('/admin/pages/event-delete/{event_id}', [AdminController::class, 'deleteEvent'])->name('admin.pages.delete.event');
 
 });

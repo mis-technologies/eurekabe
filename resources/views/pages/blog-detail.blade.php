@@ -37,12 +37,12 @@
  <!-- Title -->
  <h1 class="font-bold text-3xl uppercase text-center w-full">
      <!-- ${article.title} -->
-     The revolution Ai Chatbot Training library for NodeJS
+     {{$blog?->title}}
  </h1>
 
  <!-- Image -->
  <img
-   src="/asset/images/programs/ent.jpg"
+   src="{{$blog?->image}}"
    alt="${article.title}"
    class="w-full h-auto md:w-auto md:h-80 object-cover rounded-lg"
  />
@@ -50,14 +50,14 @@
  <!-- Content -->
  <div class="content text-base text-justify">
      <!-- ${article.fullContent} -->
-     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas necessitatibus quibusdam dolor, optio perspiciatis sint blanditiis, provident cum expedita corrupti nemo maiores laudantium sequi, incidunt amet. Quam officia aliquid, aut error pariatur, veritatis voluptatibus ducimus sequi alias dicta velit maxime accusamus sit quis quod nobis nostrum labore amet qui nemo?
+     {{$blog?->content}}
  </div>
 
  <!-- Meta Information -->
  <div class="w-full flex flex-wrap gap-4 justify-center text-sm font-semibold dark:text-gray-300">
 
    <!-- <span class="font-bold italic">Date: ${article.date}</span> -->
-   <span class="font-bold italic">Date: 22 Feb, 2025</span>
+   <span class="font-bold italic">Date: {{$blog?->created_at?->diffForHumans()}}</span>
  </div>
 </div>
 

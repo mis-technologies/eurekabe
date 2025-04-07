@@ -63,8 +63,13 @@
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <a href="{{route('admin.pages.blog.display')}}"  class="menu-link">
-                                        <span class="menu-icon"><i class="mgc_pen_3_line"></i></span>
+                                        <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
                                         <span class="menu-text"> Blog </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <a href="{{route('admin.pages.events.display')}}"  class="menu-link">
+                                        <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
+                                        <span class="menu-text"> Event </span>
                                         <span class="menu-arrow"></span>
                                     </a>
 

@@ -23,6 +23,10 @@
             </div>
         </div>
 
+        @php
+        $assets = env('APP_URL').'/';
+        @endphp
+
         <section id="eventsList">
             <!-- In person events -->
             <div id="physical" class="content space-y-20 gap-6 md:container">
@@ -41,7 +45,10 @@
                                     <i class="fa fa-close hidden"></i>
                                 </div>
 
-                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="/{{$event->getRawOriginal('image')}}" alt="image here">
+
+
+                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="{{$assets.$event->getRawOriginal('image')}}" alt="image here">
+                                {{-- <img class="w-full h-full object-cover rounded-2xl -z-20" src="/{{$event->getRawOriginal('image')}}" alt="image here"> --}}
                                 <div class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0"></div>
 
                                 <!-- Event Sponsors -->
@@ -105,7 +112,7 @@
                                     <i class="fa fa-eye"></i>
                                     <i class="fa fa-close hidden"></i>
                                 </div>
-                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="/{{ $event->getRawOriginal('image') }}" alt="image here">
+                                <img class="w-full h-full object-cover rounded-2xl -z-20" src="{{$assets. $event->getRawOriginal('image') }}" alt="image here">
                                 <div class="w-full h-full bg-gradient-to-t from-white dark:from-dark to-[rgba(0,0,0,0.1)] absolute top-0"></div>
                                 <!-- event logo -->
                                 @foreach ($event['sponsors'] as $sponsor)
@@ -196,8 +203,8 @@
         document.getElementById('eventDateLocation').innerHTML = `<p class="text-gray-500">${new Date(event.start_datetime).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ${new Date(event.end_datetime).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })} | ${event.duration} hours</p><p class="text-gray-500">${event.location}</p>`;
         document.getElementById('eventDescription').innerHTML = `<p>${event.description}</p>`;
         document.getElementById('eventBonus').innerHTML = event.special_bonus;
-        
-       
+
+
         let speakersHtml = '<h3 class="text-xl font-bold mb-2">Featured Speakers:</h3><ul class="list-disc pl-6">';
         event.speakers.forEach(speaker => {
             speakersHtml += `<li>${speaker.name}</li>`;

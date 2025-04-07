@@ -5,6 +5,7 @@ namespace Modules\Admin\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Admin\Emails\NotifyUser;
 use App\Models\HomePage;
 use Modules\Admin\Http\Requests\BlogUpdateRequest;
+use Modules\Admin\Http\Requests\EventUpdateRequest;
 
 class AdminController extends Controller
 {
@@ -130,6 +132,13 @@ public function blogDisplay()
 public function blogUpdate(BlogUpdateRequest $request, $blog_id=null)
 {
 
+    if ($request->has('image')) {
+
+        $blogImage = self::imageUploader($request->image, 'SuperAdmin', 'blog-images');
+        $path = $blogImage;
+
+    }
+
     $blog = Blog::updateOrCreate(
         ['id' => $blog_id],
         [
@@ -138,15 +147,11 @@ public function blogUpdate(BlogUpdateRequest $request, $blog_id=null)
             'content'=>$request->content,
             'status'=>$request->status,
             'category_id'=> $request->category_id,
+            'image'=>$path ?? null,
         ]
         );
 
-    if ($request->has('image')) {
 
-        $blogImage = self::imageUploader($request->image, 'SuperAdmin', 'blog-images');
-        $blog->image = $blogImage;
-        $blog->save();
-    }
 
     $notify[]=['success', 'Updated succesfully'];
         return redirect()->back()->withNotify($notify);
@@ -160,6 +165,118 @@ public function blogUpdateView($blog_id=null)
     $data['blog'] = Blog::with('category')->where('id', $blog_id)->first();
 
     return view('admin::blog-crud.update-blog', $data);
+
+}
+
+
+public function eventsDisplay()
+{
+
+    $data['events'] = Event::latest()->get();
+
+    return view('admin::event-crud.index', $data);
+}
+
+public function eventUpdate(EventUpdateRequest $request, $event_id = null)
+{
+    $validated = $request->validated();
+
+    // dd($validated);
+
+   // Handle speaker image uploads
+$speakers = $validated['speakers'] ?? [];
+$sponsors = $validated['sponsors'] ?? [];
+
+
+foreach ($sponsors as $index => $sponsor) {
+    if ($request->hasFile("sponsors.$index.logo_url")) {
+        $logo = $request->file("sponsors.$index.logo_url");
+        $path = self::imageUploader($logo, 'SuperAdmin', 'event-sponsors');
+        $sponsors[$index]['logo_url'] = $path;
+    } else {
+        $sponsors[$index]['logo_url'] = $sponsor['logo_urll'] ?? null;
+    }
+}
+
+foreach ($speakers as $index => $speaker) {
+    if ($request->hasFile("speakers.$index.img_url")) {
+        $image = $request->file("speakers.$index.img_url");
+        $path = self::imageUploader($image, 'SuperAdmin', 'event-speakers');
+        $speakers[$index]['img_url'] = $path;
+    } else {
+        $speakers[$index]['img_url'] = $speaker['img_urll'] ?? null;
+    }
+}
+
+// Encode the speakers and sponsors data without adding extra slashes
+$encodedSpeakers = json_encode($speakers);
+$encodedSponsors = json_encode($sponsors);
+
+
+// Handle event image upload
+if ($request->hasFile('image')) {
+    $eventImage = self::imageUploader($request->image, 'SuperAdmin', 'event-images');
+    $path = $eventImage;
+
+}
+
+// dd($path);
+// Create or update event
+$event = Event::updateOrCreate(
+    ['id' => $event_id],
+    [
+        'title' => $validated['title'],
+        'type' => $validated['type'],
+        'start_datetime' => $validated['start_datetime'],
+        'end_datetime' => $validated['end_datetime'],
+        'location' => $validated['location'],
+        'price' => $validated['price'],
+        'description' => $validated['description'],
+        'speakers' => $encodedSpeakers, // Save the JSON encoded speakers
+        'sponsors' => $encodedSponsors, // Save the JSON encoded sponsors
+        'special_bonus' => $validated['special_bonus'],
+        'status' => $validated['status'],
+        'reg_link' => $validated['reg_link'],
+        'image'=> $path ?? null,
+    ]
+);
+
+
+    $notify[]=['success', 'Updated succesfully'];
+    return redirect()->back()->withNotify($notify);
+}
+
+
+
+public function eventUpdateView($event_id=null)
+{
+
+    $data['event'] = Event::where('id', $event_id)->first();
+
+    // dd(Blog::all());
+    return view('admin::event-crud.update-event', $data);
+
+}
+
+
+public function deleteBlog($blog_id)
+{
+
+    $blog = Blog::find($blog_id);
+    $blog->delete();
+
+    $notify[]=['success', 'Deleted succesfully'];
+    return redirect()->back()->withNotify($notify);
+
+}
+public function deleteEvent($event_id)
+{
+
+    $event = Event::find($event_id);
+    $event->delete();
+
+    $notify[]=['success', 'Deleted succesfully'];
+    return redirect()->back()->withNotify($notify);
 
 }
 
@@ -191,7 +308,7 @@ public static function imageUploader($fileRequest, $user, $folderName)
         if ($finalPath) {
             if (env('APP_ENV') == 'local') {
 
-                return '/storage/' . $finalPath;
+                return 'storage/' . $finalPath;
 
             }else{
 

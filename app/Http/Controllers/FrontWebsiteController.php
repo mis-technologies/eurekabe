@@ -124,7 +124,7 @@ class FrontWebsiteController extends Controller
     public function events()
     {
         $appUrl = config('app.url');
-    
+
         // Fetch all events from the database
         $events = Event::all()->map(function ($event) use ($appUrl) {
             $event->image = $appUrl . '/' . $event->image;
@@ -136,17 +136,17 @@ class FrontWebsiteController extends Controller
                 $sponsor->logo_url = $appUrl . '/' . $sponsor->logo_url;
                 return $sponsor;
             });
-    
+
             // Calculate duration
             $start = \Carbon\Carbon::parse($event->start_datetime);
             $end = \Carbon\Carbon::parse($event->end_datetime);
             $event->duration = $start->diffInHours($end);
-    
+
             return $event;
         });
 
         // dd($events->toArray());
-    
+
         // Pass the events data to the Blade view
         return view('pages.event', compact('events'));
     }
@@ -183,7 +183,7 @@ class FrontWebsiteController extends Controller
         return view('pages.blog-detail', compact('blog', 'categories'));
     }
 
-   
+
 
 
 
@@ -196,11 +196,11 @@ class FrontWebsiteController extends Controller
          } catch (ModelNotFoundException $e) {
              $faqs = collect(); // Return an empty collection if no FAQs are found
          }
- 
+
          return view('pages.faq', compact('faqs'));
      }
 
-   
+
 
     public function requestForm()
     {
@@ -218,12 +218,12 @@ class FrontWebsiteController extends Controller
         return view('pages.login');
     }
 
-   
+
 
     public function policyPrivacy()
     {
         return view('pages.privacy-policy');
     }
 
-   
+
 }
