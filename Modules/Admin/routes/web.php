@@ -40,4 +40,12 @@ Route::group(['middleware'=> 'isadmin'], function () {
     Route::post('/admin/pages/home', [AdminController::class, 'updateHomePage'])->name('admin.pages.home.update');
 
 
+    // Blog Crud
+    Route::get('/admin/pages/blog', [AdminController::class, 'blogDisplay'])->name('admin.pages.blog.display');
+
+    Route::post('/admin/pages/blog-update/{blog_id?}', [AdminController::class, 'blogUpdate'])->name('admin.pages.update.blog');
+    Route::get('/admin/pages/blog-update-view/{blog_id?}', [AdminController::class, 'blogUpdateView'])->name('admin.pages.update.blog.view');
+
+    Route::post('/admin/pages/blog-delete/{blog_id}', [AdminController::class, 'blogDelete'])->name('admin.pages.delete.blog');
+
 });

@@ -3,6 +3,8 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -10,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use Modules\Admin\Emails\NotifyUser;
 use App\Models\HomePage;
+use Modules\Admin\Http\Requests\BlogUpdateRequest;
 
 class AdminController extends Controller
 {
@@ -46,7 +49,7 @@ class AdminController extends Controller
    }
 
    // Home Page
-   
+
 
    public function showHomePage()
    {
@@ -116,8 +119,88 @@ public function updateHomePage(Request $request)
     return redirect()->route('admin.pages.home')->with('success', 'HomePage updated successfully.');
 }
 
+public function blogDisplay()
+{
+
+    $data['blogs'] = Blog::with('category')->latest()->get();
+
+    return view('admin::blog-crud.index', $data);
+}
+
+public function blogUpdate(BlogUpdateRequest $request, $blog_id=null)
+{
+
+    $blog = Blog::updateOrCreate(
+        ['id' => $blog_id],
+        [
+            'title' => $request->title,
+            'slug' => \Str::slug($request->title),
+            'content'=>$request->content,
+            'status'=>$request->status,
+            'category_id'=> $request->category_id,
+        ]
+        );
+
+    if ($request->has('image')) {
+
+        $blogImage = self::imageUploader($request->image, 'SuperAdmin', 'blog-images');
+        $blog->image = $blogImage;
+        $blog->save();
+    }
+
+    $notify[]=['success', 'Updated succesfully'];
+        return redirect()->back()->withNotify($notify);
+
+}
+
+public function blogUpdateView($blog_id=null)
+{
+
+    $data['cats'] = Category::all();
+    $data['blog'] = Blog::with('category')->where('id', $blog_id)->first();
+
+    return view('admin::blog-crud.update-blog', $data);
+
+}
 
 
 
+
+
+
+
+
+
+
+public static function imageUploader($fileRequest, $user, $folderName)
+    {
+        $ext = $fileRequest->getClientOriginalExtension();
+        $name = \Str::slug($user).time().".".$ext;
+
+        $tempPath = $fileRequest->getRealPath();
+        $destinationPath = storage_path( 'app/public/' . $folderName);
+
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0775, true);
+            chmod($destinationPath, 0775);
+        }
+
+        $finalPath = $fileRequest->storeAs($folderName, $name, 'public');
+
+
+        if ($finalPath) {
+            if (env('APP_ENV') == 'local') {
+
+                return '/storage/' . $finalPath;
+
+            }else{
+
+                return env('ASSET_URL') .'/storage'. $finalPath;
+
+            }
+        } else {
+            throw new \Exception('File upload failed.');
+        }
+    }
 
 }

@@ -92,7 +92,7 @@
                                         @endif
                                     </div>
                                     <input type="file" name="pathnersection[schools][{{ $index }}][img_url]" class="form-input mt-2 block w-full">
-                        
+
                                     <!-- School Name -->
                                     <div class="mt-2 text-center">
                                         <input type="text" name="pathnersection[schools][{{ $index }}][school_name]" value="{{ $school->school_name ?? '' }}" placeholder="Enter School Name" class="form-input mt-1 block w-full text-center">

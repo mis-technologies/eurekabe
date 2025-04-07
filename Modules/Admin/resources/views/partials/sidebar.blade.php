@@ -62,6 +62,11 @@
                                         <span class="menu-text"> Home Page </span>
                                         <span class="menu-arrow"></span>
                                     </a>
+                                    <a href="{{route('admin.pages.blog.display')}}"  class="menu-link">
+                                        <span class="menu-icon"><i class="mgc_pen_3_line"></i></span>
+                                        <span class="menu-text"> Blog </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
 
                                     {{-- <a href="{{route('admin.pages')}}" data-fc-type="collapse" class="menu-link fc-collapse">
                                         <span class="menu-icon"><i class="mgc_box_3_line"></i></span>
