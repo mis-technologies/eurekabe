@@ -22,8 +22,8 @@ return new class extends Migration
             $table->unsignedInteger('reduce_mark')->nullable()->comment('mark will be reduce for wrong answer');
             $table->unsignedInteger('pass_percentage')->comment('pass mark percentage for exam');
             $table->unsignedInteger('duration')->comment('exam duration time');
-            $table->unsignedInteger('totalmark')->comment('exam total mark');
-            $table->unsignedInteger('value')->comment('1=> paid, 2 => unpaid');
+            $table->unsignedInteger('totalmark')->nullable()->comment('exam total mark');
+            $table->unsignedInteger('value')->nullable()->comment('1=> paid, 2 => unpaid');
             $table->unsignedInteger('exam_fee')->nullable()->comment('exam fee');
             $table->unsignedInteger('random_question')->default(0)->comment('questions will be random or not, 1=yes, 0= no');
             $table->unsignedInteger('option_suffle')->default(0)->comment('question options will be suffle or , not , 1 = yes, 0= no');

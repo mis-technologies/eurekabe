@@ -44,7 +44,7 @@
     </div>
 
     <!-- Notification Bell Button -->
-    <div class="relative md:flex hidden">
+    {{-- <div class="relative md:flex hidden">
         <button data-fc-type="dropdown" data-fc-placement="bottom-end" type="button" class="nav-link p-2 fc-dropdown">
             <span class="sr-only">View notifications</span>
             <span class="flex items-center justify-center h-6 w-6">
@@ -190,7 +190,7 @@
                 View All
             </a>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Light/Dark Toggle Button -->
     <div class="flex">

@@ -91,7 +91,8 @@
                 <div class="card">
                     <div class="card-header flex justify-between">
                         <h6 class="card-title">Exam Questions</h6>
-                        <a href="{{ route('advocate.exams.question.create', $exam->id) }}" class="btn bg-primary text-white">Add Question</a>
+                        <a href="{{ route('advocate.exams.question.create', $exam->id) }}"
+                            class="btn bg-primary text-white">Add Question</a>
                     </div>
                     <div class="overflow-x-auto">
                         <div class="min-w-full inline-block align-middle">
@@ -160,7 +161,7 @@
                                                         {{ $question->questionType->name }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                                                         <a class="text-primary hover:text-sky-700"
-                                                            href="{{ route('advocate.exams.question.show', [$exam->id, $question->id] ) }}">Update</a>
+                                                            href="{{ route('advocate.exams.question.show', [$exam->id, $question->id]) }}">Update</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -170,7 +171,7 @@
                                     </table>
                                 </div>
                                 <div class="py-4 px-4">
-                                   {!! $questions->render() !!}
+                                    {!! $questions->render() !!}
                                 </div>
                             </div>
                         </div>
@@ -188,25 +189,76 @@
                     </div>
 
                     <div class="p-6">
-                        <form action="{{ route('advocate.exams.update', $exam->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('advocate.exams.update', $exam->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @method('POST')
                             @csrf
-                            <label for="project-name" class="mb-2 block">Exam Title</label>
-                            <input type="text" name="title" value="{{ $exam->title }}" class="form-input">
 
-                            <label class="mb-2 block" for="">Instructions</label>
-                            <textarea name="instruction" cols="50" rows="5" class="form-input">
-                                 {!! $exam->instruction !!}
-                            </textarea>
+                            <div class="my-4">
+                                <label for="project-name" class="mb-2 block">Exam Title</label>
+                                <input type="text" required name="title" value="{{ $exam->title }}"
+                                    class="form-input">
+                            </div>
+
+                            <div class="my-4">
+                                <label class="mb-2 block" for="">Instructions</label>
+                                <textarea required name="instruction" cols="50" rows="5" class="form-input">
+                                     {!! $exam->instruction !!}
+                                </textarea>
+                            </div>
 
 
-                            <label for="project-name" class="mb-2 block">Duration</label>
-                            <input type="text" name="duration" value="{{ $exam->duration }}" class="form-input">
+                            <div class="my-4 ">
+                                <label for="project-name" class="mb-2 block">Duration</label>
+                                <input type="number" required name="duration" value="{{ $exam->duration }}"
+                                    class="form-input">
+                            </div>
 
-                            <label for="project-name" class="mb-2 block">Pass Percentage</label>
-                            <input type="text" name="pass_percentage" value="{{ $exam->pass_percentage }}" class="form-input">
+                            {{-- subject --}}
+                            <div class="my-4">
+                                <label for="select-label" class="mb-2 block">Subject</label>
+                                <select required id="select-label" name="subject_id" class="form-select">
+                                    @foreach ($subjects as $subject)
+                                        <option value="{{ $subject->id }}"
+                                            {{ $subject->id == $exam->subject_id ? 'selected' : '' }}>
+                                            {{ $subject->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                            <div class="mt-6">
+
+
+                            <div class="my-4 ">
+                                <label for="project-name" class="block">Pass Percentage</label>
+                                <input type="number" required name="pass_percentage"
+                                    value="{{ $exam->pass_percentage }}" class="form-input">
+                            </div>
+
+
+                            <div class="my-4">
+                                <label for="product-status" class="mb-2 block">Status <span
+                                        class="text-red-500">*</span></label>
+                                <div class="flex gap-x-6">
+                                    <div class="flex">
+                                        <input type="radio" name="status" class="form-radio" id="active"
+                                            value="1" {{ $exam->status == 1 ? 'checked' : '' }}>
+                                        <label for="active"
+                                            class="text-sm text-gray-500 ms-2 dark:text-gray-400">Active</label>
+                                    </div>
+
+                                    <div class="flex">
+                                        <input type="radio" name="status" class="form-radio" id="inactive"
+                                            value="2" {{ $exam->status == 2 ? 'checked' : '' }}>
+                                        <label for="inactive"
+                                            class="text-sm text-gray-500 ms-2 dark:text-gray-400">Inactive</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="my-4">
                                 <h6 class="text-gray-800 font-medium mb-3">Cover Image</h6>
                                 <div class="grid md:grid-cols-1 gap-1">
                                     <div class="p-2 border border-gray-200 dark:border-gray-700 rounded mb-2">
@@ -228,8 +280,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit"
-                                class="btn bg-primary text-white">Update
+                            <button type="submit" class="btn bg-primary text-white">Update
                                 Exam</button>
 
                         </form>

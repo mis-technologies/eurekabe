@@ -35,4 +35,9 @@ Route::group(['middleware'=> 'isadmin'], function () {
     Route::get('admin/advocates', [AdminController::class, 'allAdvocates'])->name('admin.advocates');
     Route::post('admin/user/approve-disapprove/{id?}', [AdminController::class, 'update'])->name('admin.update.user.status');
 
+    // Home Page
+    Route::get('/admin/pages/home', [AdminController::class, 'showHomePage'])->name('admin.pages.home');
+    Route::post('/admin/pages/home', [AdminController::class, 'updateHomePage'])->name('admin.pages.home.update');
+
+
 });

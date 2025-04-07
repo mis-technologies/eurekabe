@@ -11,7 +11,7 @@ return [
     | by the framework. The "local" disk, as well as a variety of cloud
     | based disks are available to your application for file storage.
     |
-    */
+     */
 
     'default' => env('FILESYSTEM_DISK', 'public'),
 
@@ -26,7 +26,7 @@ return [
     |
     | Supported drivers: "local", "ftp", "sftp", "s3"
     |
-    */
+     */
 
     'disks' => [
 
@@ -39,7 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -56,6 +56,23 @@ return [
             'throw' => false,
         ],
 
+        // 'cloudinary' => [
+        //     'driver' => 'cloudinary',
+        //     'api_key' => env('CLOUDINARY_API_KEY'),
+        //     'api_secret' => env('CLOUDINARY_API_SECRET'),
+        //     'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+        // ],
+
+        'cloudinary' => [
+            'driver' => 'cloudinary',
+            'key' => env('CLOUDINARY_KEY'),
+            'secret' => env('CLOUDINARY_SECRET'),
+            'cloud' => env('CLOUDINARY_CLOUD_NAME'),
+            'url' => env('CLOUDINARY_URL'),
+            'secure' => (bool) env('CLOUDINARY_SECURE', true),
+            'prefix' => env('CLOUDINARY_PREFIX'),
+        ],
+
     ],
 
     /*
@@ -67,7 +84,7 @@ return [
     | `storage:link` Artisan command is executed. The array keys should be
     | the locations of the links and the values should be their targets.
     |
-    */
+     */
 
     'links' => [
         public_path('storage') => storage_path('app/public'),

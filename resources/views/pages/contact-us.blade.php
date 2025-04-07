@@ -102,7 +102,7 @@
     >
       <h1 class="font-bold text-3xl">Contact Information</h1>
       <p class="text-sm font-semibold md:w-10/12">
-        You will fill out the information information and our teams will get
+        You will fill out the  information and our team will get
         back to you within 24hrs
       </p>
 

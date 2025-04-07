@@ -4,6 +4,7 @@
 
     <!-- Hero Section -->
     <section id="hero" class="relative overflow-hidden">
+
       <div class="morphism z-10 bg-secondary dark:bg-dark dark:text-white py-10 pb-16">
       <div
         class="container flex flex-col md:flex-row justify-between h-full md:max-h-[37rem] gap-8"
@@ -138,10 +139,16 @@
         <div class="slider-track flex transition-transform duration-300">
           @foreach ($homePageData['pathnersection']['schools'] as $school)
           <div class="slide flex items-center justify-between">
-            <img src="{{ $school['img_url'] }}" alt="{{ $school['school_name'] }}" />
-            <h5 class="font-bold ml-1 italic font-lato">{{ $school['school_name'] }}</h5>
-        </div>
-          @endforeach
+              @if (!empty($school['img_url']))
+                  <img src="{{ $school['img_url'] }}" alt="{{ $school['school_name'] }}" />
+              @else
+                  <div class="w-32 h-32 flex items-center justify-center bg-gray-200">
+                      <span class="text-gray-500">No Image Available</span>
+                  </div>
+              @endif
+              <h5 class="font-bold ml-1 italic font-lato">{{ $school['school_name'] }}</h5>
+          </div>
+      @endforeach
 
         </div>
         <button class="prev left-0 transform -translate-y-1/2 rounded-md p-3 z-10">❮</button>
@@ -281,11 +288,13 @@
             Lead curriculum, events, support, and community engagement. Shape
             education's future with us!
           </p>
-          <button
-            class="bg-primary w-fit mt-10 px-8 py-3 font-semibold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
-          >
-            Become an Advocate
-          </button>
+          <a href="{{ route('advocate.apply') }}">
+            <button
+                class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
+            >
+                Become an Advocate
+            </button>
+        </a>
         </div>
 
         <div
@@ -446,7 +455,7 @@
         </p>
 
         <div class="flex items-center justify-center gap-8 gap-y-4 flex-col md:flex-row text-white mt-14 max-w-lg ">
-          <a href="https://play.google.com/store" target="_blank">
+          <a href="https://play.google.com/store/apps/details?id=academy.eurekaedu.app" target="_blank">
           <button class="bg-primary rounded-2xl w-52 p-3 px-5 inline-flex gap-3 items-center transition-all duration-150 ease-in-out hover:bg-opacity-80 hover:scale-105">
             <img src="{{ asset('asset/images/playStore.png')}}" alt=" ">
             <div class="flex flex-col gap-1 items-start">
@@ -498,7 +507,7 @@
           <h2 class="script-font" style="color:#4F92FE">Engagement</h2>
           <h1 class="text-2xl font-bold">Our Events</h1>
           <p class="text-lg opacity-50">
-            Explore upcoming events and experiences.Eureka's OurEvents is more
+            Explore upcoming events and experiences. Eureka's OurEvents is more
             than just a calendar – it's a portal to a world of exploration,
             discovery, and endless fun. So, join the adventure, unleash your
             curiosity, and get ready to learn like never before!

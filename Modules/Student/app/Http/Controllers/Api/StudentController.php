@@ -101,8 +101,8 @@ class StudentController extends Controller
             if( request()->files->count() ){
                 $files = request()->files;
                 foreach ($files as $key => $value) {
-                    FileFacade::deleteFile(File::where('identifier', $key)->where('user_id', $user->id)->get() ); //delete previous
-                    FileFacade::defaultUpload($value, $user, identifier:$key);
+                    FileFacade::cloudinaryDelete(File::where('identifier', $key)->where('entity_id', $user->id)->get() ); 
+                    FileFacade::cloudinaryUpload($value, $user, identifier:$key);
                 }
             }
             return response()->json([

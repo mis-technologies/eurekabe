@@ -8,7 +8,6 @@ use Illuminate\Support\Carbon;
 use Modules\Messaging\Models\Conversation;
 use App\Models\User;
 use Modules\File\Models\File;
-use Modules\Messaging\Events\MessageSentEvent;
 use Webpatser\Uuid\Uuid;
 
 
@@ -59,7 +58,7 @@ class Message extends Model
             if( request()['files'] ){
                 $files = request()['files'];
                 foreach ($files as $key => $value) {
-                    \Modules\File\Facades\FileFacade::defaultUpload($value, $message, identifier: $key);  
+                    \Modules\File\Facades\FileFacade::cloudinaryUpload($value, $message, identifier: $key);  
                 }
             }
             

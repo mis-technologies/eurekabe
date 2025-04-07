@@ -4,7 +4,7 @@
         <div>
             <script>
                 document.write(new Date().getFullYear())
-            </script>© Eureka - <a href="#"
+            </script> © Eureka - <a href="#"
                 target="_blank">MISTECH</a>
         </div>
     </div>

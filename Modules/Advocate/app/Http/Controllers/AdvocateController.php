@@ -19,6 +19,7 @@ class AdvocateController extends Controller
      */
     public function dashboard()
     {
+        $advocate = Auth::user();
         $quick_infos = [
             'recent_school' => School::latest()->first()?->only(['name', 'cover_image', 'created_at']) ?? [
                 "name" => "No Recent School",
@@ -37,19 +38,21 @@ class AdvocateController extends Controller
             ],
         ];
         
-        $top_exams = Exam::withCount('examResults')->orderBy('exam_results_count', 'desc')->take(5)->get();
-        $top_students = User::where('role', 'student')->withCount('examResults')->orderBy('exam_results_count', 'desc')->take(5)->get();
+        $top_exams = Exam::where('school_id', $advocate->school_id)->withCount('examResults')->orderBy('exam_results_count', 'desc')->take(5)->get();
+        $top_students = User::where('school_id', $advocate->school_id)->where('role', 'student')->withCount('examResults')->orderBy('exam_results_count', 'desc')->take(5)->get();
 
         $stats = [
-            'total_students' => User::where('role', 'student')->count(),
-            'total_exams' => Exam::count(),
-            'total_challenges' => StudentChallenge::count(),
-            'total_questions' => Exam::withCount('questions')->get()->sum('questions_count'),
+            'total_students' => User::where('school_id', $advocate->school_id)->where('role', 'student')->count(),
+            'total_exams' => Exam::where('school_id', $advocate->school_id)->count(),
+            'total_challenges' => StudentChallenge::whereIn('exam_id', [$advocate->school_id])->count(),
+            'total_questions' => Exam::where('school_id', $advocate->school_id)->withCount('questions')->get()->sum('questions_count'),
         ];
 
         return view('advocate::dashboard', compact('quick_infos', 'top_exams', 'top_students', 'stats'));
     }
 
+
+    
     
     
 }
