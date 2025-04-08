@@ -214,32 +214,56 @@ $encodedSponsors = json_encode($sponsors);
 
 
 // Handle event image upload
-if ($request->hasFile('image')) {
-    $eventImage = self::imageUploader($request->image, 'SuperAdmin', 'event-images');
-    $path = $eventImage;
+// if ($request->hasFile('image')) {
+//     $eventImage = self::imageUploader($request->image, 'SuperAdmin', 'event-images');
+//     $path = $eventImage;
 
+// }
+
+$data = [
+    'title' => $validated['title'],
+    'type' => $validated['type'],
+    'start_datetime' => $validated['start_datetime'],
+    'end_datetime' => $validated['end_datetime'],
+    'location' => $validated['location'],
+    'price' => $validated['price'],
+    'description' => $validated['description'],
+    'speakers' => $encodedSpeakers, // JSON encoded
+    'sponsors' => $encodedSponsors, // JSON encoded
+    'special_bonus' => $validated['special_bonus'],
+    'status' => $validated['status'],
+    'reg_link' => $validated['reg_link'],
+];
+
+// Only add image if it exists
+if ($request->hasFile('image')) {
+    $path = self::imageUploader($request->file('image'), 'SuperAdmin', 'event-images');
+    $data['image'] = $path;
 }
 
+$event = Event::updateOrCreate(['id' => $event_id], $data);
 // dd($path);
 // Create or update event
-$event = Event::updateOrCreate(
-    ['id' => $event_id],
-    [
-        'title' => $validated['title'],
-        'type' => $validated['type'],
-        'start_datetime' => $validated['start_datetime'],
-        'end_datetime' => $validated['end_datetime'],
-        'location' => $validated['location'],
-        'price' => $validated['price'],
-        'description' => $validated['description'],
-        'speakers' => $encodedSpeakers, // Save the JSON encoded speakers
-        'sponsors' => $encodedSponsors, // Save the JSON encoded sponsors
-        'special_bonus' => $validated['special_bonus'],
-        'status' => $validated['status'],
-        'reg_link' => $validated['reg_link'],
-        'image'=> $path ?? null,
-    ]
-);
+// $event = Event::updateOrCreate(
+//     ['id' => $event_id],
+//     [
+//         'title' => $validated['title'],
+//         'type' => $validated['type'],
+//         'start_datetime' => $validated['start_datetime'],
+//         'end_datetime' => $validated['end_datetime'],
+//         'location' => $validated['location'],
+//         'price' => $validated['price'],
+//         'description' => $validated['description'],
+//         'speakers' => $encodedSpeakers, // Save the JSON encoded speakers
+//         'sponsors' => $encodedSponsors, // Save the JSON encoded sponsors
+//         'special_bonus' => $validated['special_bonus'],
+//         'status' => $validated['status'],
+//         'reg_link' => $validated['reg_link'],
+//             'image'=> $path ?? null,
+
+//
+//     ]
+// );
 
 
     $notify[]=['success', 'Updated succesfully'];
