@@ -34,8 +34,13 @@
 
                         <div class="mt-4">
                             <label class="block text-sm font-medium text-gray-700">Type</label>
-                            <input class="form-input mt-1 block w-full" name="type" type="text"
-                                value="{{ old('type', $event?->type) }}" placeholder="Event type">
+                            <select class="form-input mt-1 block w-full" name="type" id="">
+                                <option value="{{old('type', $event?->type)}}">{{old('type', $event?->type)}}</option>
+
+                                <option value="in_person">In Person</option>
+                                <option value="virtual">Virtual</option>
+                            </select>
+                            
                         </div>
 
                         <div class="mt-4">
