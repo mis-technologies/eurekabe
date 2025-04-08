@@ -40,7 +40,7 @@
                                 <option value="in_person">In Person</option>
                                 <option value="virtual">Virtual</option>
                             </select>
-                            
+
                         </div>
 
                         <div class="mt-4">
@@ -115,6 +115,9 @@
                         $sponsors = old('sponsors', json_decode($event?->sponsors, true) ?? []);
                         @endphp
 
+                        @php
+                        $assets = env('APP_URL').'/';
+                        @endphp
                         {{-- SPEAKERS --}}
                         <div class="mt-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Speakers</label>
@@ -130,7 +133,7 @@
 
                                     <input type="hidden" name="speakers[{{ $index }}][img_urll]"
                                         value="{{ $speaker['img_url'] ?? '' }}">
-                                    <img src="{{ $speaker['img_url'] ?? '' }}" style="height: 100px; width: 100px;"
+                                    <img src="{{$assets.$speaker['img_url'] ?? '' }}" style="height: 100px; width: 100px;"
                                         alt="no image">
 
                                     <button type="button" onclick="removeSpeaker(this)"
@@ -154,7 +157,7 @@
                                         accept="images/*" placeholder="Logo URL" />
                                     <input name="sponsors[{{ $index }}][logo_urll]"
                                         value="{{ $sponsor['logo_url'] ?? '' }}" type="hidden" />
-                                    <img src="{{ $sponsor['logo_url'] ?? '' }}" style="height: 100px; width: 100px;"
+                                    <img src="{{ $assets.$sponsor['logo_url'] ?? '' }}" style="height: 100px; width: 100px;"
                                         alt="no image">
                                     <button type="button" onclick="removeSponsor(this)"
                                         class="text-red-500 col-span-2 text-left">Remove</button>
@@ -173,7 +176,7 @@
                         <div class="mt-4">
                             <label class="block text-sm font-medium text-gray-700">Event Image</label>
                             @if ($assets.$event?->image)
-                            <img src="{{ $event?->image }}" alt="Event Image"
+                            <img src="{{ $assets.$event?->image }}" alt="Event Image"
                                 class="w-64 h-64 object-cover rounded-xl mb-2">
                             @endif
                             <input type="file" name="image" class="form-input mt-1 block w-full">

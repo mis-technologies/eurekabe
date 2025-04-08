@@ -123,10 +123,12 @@ class FrontWebsiteController extends Controller
 
     public function events()
     {
+
+        dd('here');
         $appUrl = config('app.url');
 
         // Fetch all events from the database
-        $events = Event::all()->map(function ($event) use ($appUrl) {
+        $data['events'] = Event::all()->map(function ($event) use ($appUrl) {
             $event->image = $appUrl . '/' . $event->image;
             $event->speakers = collect(json_decode($event->speakers))->map(function ($speaker) use ($appUrl) {
                 $speaker->img_url = $appUrl . '/' . $speaker->img_url;
@@ -145,10 +147,10 @@ class FrontWebsiteController extends Controller
             return $event;
         });
 
-        // dd($events->toArray());
+        dd($data['events']->toArray());
 
         // Pass the events data to the Blade view
-        return view('pages.event', compact('events'));
+        return view('pages.event', $data);
     }
 
     public function blog(Request $request)
