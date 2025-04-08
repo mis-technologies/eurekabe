@@ -18,17 +18,17 @@
                 <div>
                     <div>
                         @if ($errors->any())
-                            <div class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <div class="text-red-700 px-4 py-3 rounded relative"
-                                        role="alert">
-                                        <span class="block sm:inline">{{ $error }}
-                                    </div>
-                                @endforeach
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                            <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <span class="block sm:inline">{{ $error }}
                             </div>
+                            @endforeach
+                        </div>
                         @endif
                     </div>
-                    <form action="{{route('admin.pages.update.blog', $blog?->id)}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('admin.pages.update.blog', $blog?->id)}}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
 
                         <div class="w-100 h-100 overflow-hidden rounded-t-xl">
@@ -79,16 +79,19 @@
                         </div>
                         <div class="w-100 mt-4 overflow-hidden rounded-t-xl">
 
+                            @php
+                            $assets = env('APP_URL').'/';
+                            @endphp
 
                             @if ($blog != null)
 
                             <img style="height: 100%" class="w-64 h-64 object-cover rounded-t-xl"
-                                src="{{ $blog?->image}}" alt="Enter image">
+                                src="{{ $assets.$blog?->image}}" alt="Enter image">
                             @endif
 
                             <div class="w-50% flex items-center justify-center bg-gray-200">
-                                <input type="file" accept="images/*" id="image"
-                                    name="image" class="form-input mt-1 block w-50%">
+                                <input type="file" accept="images/*" id="image" name="image"
+                                    class="form-input mt-1 block w-50%">
                             </div>
                         </div>
 

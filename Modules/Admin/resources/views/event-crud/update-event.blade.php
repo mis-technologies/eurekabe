@@ -83,9 +83,12 @@
                         <div class="mt-4">
                             <label class="block text-sm font-medium text-gray-700">Status</label>
                             <select class="form-input mt-1 block w-full" name="status">
-                                <option value="PAST EVENT" {{ $event?->status == 'PAST EVENT' ? 'selected' : '' }}>PAST EVENT
+
+                                <option value="{{$event?->status}}">{{$event?->status}}
                                 </option>
-                                <option value="PAST EVENT" {{ $event?->status == 'PAST EVENT' ? 'selected' : '' }}>PAST EVENT
+                                <option value="UPCOMING">UPCOMING
+                                </option>
+                                <option value="PAST EVENT">PAST EVENT
                                 </option>
                             </select>
                         </div>
@@ -117,11 +120,13 @@
                                         value="{{ $speaker['name'] ?? '' }}" placeholder="Name" />
                                     <input class="form-input" name="speakers[{{ $index }}][title]"
                                         value="{{ $speaker['title'] ?? '' }}" placeholder="Title" />
-                                    <input class="form-input" name="speakers[{{ $index }}][img_url]"
-                                        type="file" value="{{ $speaker['img_url'] ?? '' }}" accept="images/*" />
+                                    <input class="form-input" name="speakers[{{ $index }}][img_url]" type="file"
+                                        value="{{ $speaker['img_url'] ?? '' }}" accept="images/*" />
 
-                                    <input type="hidden" name="speakers[{{ $index }}][img_urll]" value="{{ $speaker['img_url'] ?? '' }}">
-                                    <img src="{{ $speaker['img_url'] ?? '' }}" style="height: 100px; width: 100px;" alt="no image">
+                                    <input type="hidden" name="speakers[{{ $index }}][img_urll]"
+                                        value="{{ $speaker['img_url'] ?? '' }}">
+                                    <img src="{{ $speaker['img_url'] ?? '' }}" style="height: 100px; width: 100px;"
+                                        alt="no image">
 
                                     <button type="button" onclick="removeSpeaker(this)"
                                         class="text-red-500">Remove</button>
@@ -140,11 +145,12 @@
                                 <div class="grid grid-cols-2 gap-2 mb-2 sponsor-item" data-index="{{ $index }}">
                                     <input class="form-input" name="sponsors[{{ $index }}][name]"
                                         value="{{ $sponsor['name'] ?? '' }}" placeholder="Name" />
-                                    <input class="form-input" name="sponsors[{{ $index }}][logo_url]"
-                                         type="file" accept="images/*" placeholder="Logo URL" />
-                                    <input  name="sponsors[{{ $index }}][logo_urll]" value="{{ $sponsor['logo_url'] ?? '' }}"
-                                         type="hidden"  />
-                                         <img src="{{ $sponsor['logo_url'] ?? '' }}" style="height: 100px; width: 100px;" alt="no image">
+                                    <input class="form-input" name="sponsors[{{ $index }}][logo_url]" type="file"
+                                        accept="images/*" placeholder="Logo URL" />
+                                    <input name="sponsors[{{ $index }}][logo_urll]"
+                                        value="{{ $sponsor['logo_url'] ?? '' }}" type="hidden" />
+                                    <img src="{{ $sponsor['logo_url'] ?? '' }}" style="height: 100px; width: 100px;"
+                                        alt="no image">
                                     <button type="button" onclick="removeSponsor(this)"
                                         class="text-red-500 col-span-2 text-left">Remove</button>
                                 </div>
@@ -155,11 +161,13 @@
                         </div>
 
 
-
+                        @php
+                        $assets = env('APP_URL').'/';
+                        @endphp
 
                         <div class="mt-4">
                             <label class="block text-sm font-medium text-gray-700">Event Image</label>
-                            @if ($event?->image)
+                            @if ($assets.$event?->image)
                             <img src="{{ $event?->image }}" alt="Event Image"
                                 class="w-64 h-64 object-cover rounded-xl mb-2">
                             @endif
