@@ -124,7 +124,7 @@ class FrontWebsiteController extends Controller
     public function events()
     {
 
-        dd('here');
+        // dd('here');
         $appUrl = config('app.url');
 
         // Fetch all events from the database
@@ -147,7 +147,7 @@ class FrontWebsiteController extends Controller
             return $event;
         });
 
-        dd($data['events']->toArray());
+        // dd($data['events']->toArray());
 
         // Pass the events data to the Blade view
         return view('pages.event', $data);

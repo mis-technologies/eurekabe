@@ -25,6 +25,7 @@
 
         @php
         $assets = env('APP_URL').'/';
+        // dd($events);
         @endphp
 
         <section id="eventsList">
