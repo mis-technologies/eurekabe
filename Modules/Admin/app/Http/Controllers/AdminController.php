@@ -312,7 +312,7 @@ public static function imageUploader($fileRequest, $user, $folderName)
 
             }else{
 
-                return env('ASSET_URL') .'/storage'. $finalPath;
+                return 'storage/'. $finalPath;
 
             }
         } else {
