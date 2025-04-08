@@ -40,9 +40,13 @@
      {{$blog?->title}}
  </h1>
 
+        @php
+        $assets = env('APP_URL').'/';
+        @endphp
+
  <!-- Image -->
  <img
-   src="{{$blog?->image}}"
+   src="{{$assets.$blog?->image}}"
    alt="${article.title}"
    class="w-full h-auto md:w-auto md:h-80 object-cover rounded-lg"
  />
