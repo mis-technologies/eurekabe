@@ -5,8 +5,7 @@ COMPOSER_ALLOW_SUPERUSER="1"
 cmds = [
   "composer install --no-dev", 
   "npm install",
-  "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo -e 'post_max_size = 10M' >> $PHP_INI_PATH",
-  "echo -e 'client_max_filesize = 10M' >> /usr/local/etc/php/conf.d/uploads.ini"
+  "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo -e 'post_max_size = 10M\nupload_max_filesize = 10M' >> $PHP_INI_PATH",
 ]
 
 [phases.setup]
