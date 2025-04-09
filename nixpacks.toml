@@ -5,7 +5,8 @@ COMPOSER_ALLOW_SUPERUSER="1"
 cmds = [
   "composer install --no-dev", 
   "npm install",
-  "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo -e 'post_max_size = 100M\nupload_max_filesize = 100M' | tee -a $PHP_INI_PATH",
+  "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo -e 'post_max_size = 100M | tee -a $PHP_INI_PATH",
+  "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo -e  upload_max_filesize = 100M' | tee -a $PHP_INI_PATH",
 ]
 
 
