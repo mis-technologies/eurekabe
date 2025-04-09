@@ -4,7 +4,6 @@ FROM php:8.3-fpm
 # Set working directory
 WORKDIR /var/www/html
 
-# --- Git ownership fix ---
 RUN git config --global --add safe.directory /var/www/html
 
 
