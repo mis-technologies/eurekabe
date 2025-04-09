@@ -46,8 +46,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Nginx configuration
 COPY nginx/default.conf /etc/nginx/sites-available/default
 
+# Supervisord configuration to manage nginx and php-fpm
+COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+
 # Expose ports for Nginx and PHP-FPM
 EXPOSE 80 9000
 
-# Start services (PHP-FPM and Nginx)
-CMD service nginx start && php-fpm
+# Start supervisord to manage both Nginx and PHP-FPM
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
