@@ -37,8 +37,12 @@ COPY . .
 # Set permissions
 # RUN chmod -R 775 storage bootstrap/cache
 
-RUN chown -R www-data:www-data storage bootstrap/cache \
+
+# Make sure storage dirs exist and are writable
+RUN mkdir -p storage/framework/views storage/framework/sessions storage/framework/cache bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
+
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-progress --no-interaction
