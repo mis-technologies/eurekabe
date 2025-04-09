@@ -45,10 +45,6 @@ RUN mkdir -p storage/framework/views storage/framework/sessions storage/framewor
 
 
 
-# Create the storage link
-RUN php artisan storage:link
-
-
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-progress --no-interaction
 
@@ -62,6 +58,10 @@ COPY nginx/default.conf /etc/nginx/sites-available/default
 
 # Supervisord configuration to manage nginx and php-fpm
 COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+
+
+# Create the storage link
+RUN php artisan storage:link
 
 # Expose ports for Nginx and PHP-FPM
 EXPOSE 80 9000
