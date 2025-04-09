@@ -24,7 +24,7 @@ services:
       - app
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.laravel.rule=Host(`yourdomain.com`)"
+      - "traefik.http.routers.laravel.rule=Host(`eurekaedu.academy`)"
       - "traefik.http.routers.laravel.entrypoints=web"
       - "traefik.http.services.laravel.loadbalancer.server.port=80"
     networks:
