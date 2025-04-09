@@ -7,6 +7,7 @@ cmds = [
   "npm install",
   "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo 'post_max_size = 100M' | tee -a $PHP_INI_PATH",
   "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo 'upload_max_filesize = 100M' | tee -a $PHP_INI_PATH",
+  "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo 'memory_limit = 100M' | tee -a $PHP_INI_PATH",
 ]
 
 
