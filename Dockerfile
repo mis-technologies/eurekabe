@@ -4,9 +4,6 @@ FROM php:8.3-fpm
 # Set working directory
 WORKDIR /var/www/html
 
-RUN git config --global --add safe.directory /var/www/html
-
-
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -31,8 +28,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . .
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-progress --no-interaction
