@@ -44,6 +44,11 @@ RUN mkdir -p storage/framework/views storage/framework/sessions storage/framewor
     && chmod -R 775 storage bootstrap/cache
 
 
+
+# Create the storage link
+RUN php artisan storage:link
+
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-progress --no-interaction
 
