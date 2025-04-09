@@ -33,3 +33,21 @@ services:
 networks:
   laravel:
     driver: bridge
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-app
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:8000"  # Exposing port 8000 to access via localhost
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge

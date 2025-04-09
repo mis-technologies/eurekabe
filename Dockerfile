@@ -1,5 +1,4 @@
-# Dockerfile
-FROM php:8.3-fpm
+FROM php:8.3-cli
 
 # Set working directory
 WORKDIR /var/www/html
@@ -38,9 +37,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install && npm run build
 
-# Schedule Laravel cron
-RUN echo "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" | crontab -
+# Expose port 8000 for PHP artisan serve
+EXPOSE 8000
 
-EXPOSE 9000
-
-CMD ["php-fpm"]
+# Command to run Laravel development server
+CMD php artisan serve --host=0.0.0.0 --port=8000
