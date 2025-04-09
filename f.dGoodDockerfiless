@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.3-cli
 
 # Set working directory
 WORKDIR /var/www/html
@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     cron \
     supervisor \
-    nginx \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql intl zip opcache
 
@@ -43,11 +42,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install && npm run build
 
-# Nginx configuration
-COPY nginx/default.conf /etc/nginx/sites-available/default
+# Expose port 8000 for PHP artisan serve
+EXPOSE 8000
 
-# Expose ports for Nginx and PHP-FPM
-EXPOSE 80 9000
-
-# Start services (PHP-FPM and Nginx)
-CMD service nginx start && php-fpm
+# Command to run Laravel development server
+CMD php artisan serve --host=0.0.0.0 --port=8000
