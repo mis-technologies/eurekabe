@@ -42,9 +42,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install && npm run build
 
-    # Create the storage link
-RUN php artisan storage:link
-
 # Expose port 8000 for PHP artisan serve
 EXPOSE 8000
 
