@@ -10,22 +10,8 @@ cmds = [
   "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo 'post_max_size = 100M' | tee -a $PHP_INI_PATH",
   "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo 'upload_max_filesize = 100M' | tee -a $PHP_INI_PATH",
   "PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}') && echo 'memory_limit = 100M' | tee -a $PHP_INI_PATH",
-]
-
-
-
-[phases.setup]
-cmds = [
-  "composer install --no-dev",
   'UPLOAD_INI_PATH=$(find /nix/store/*-php-*/lib -name php.ini -print0 | tail -z -n 1 | rev | cut -c 9- | rev)/upload.ini; echo "upload_max_filesize=${UPLOAD_MAX_FILESIZE};" >> $UPLOAD_INI_PATH; echo "post_max_size=${POST_MAX_SIZE};" >> $UPLOAD_INI_PATH'
 ]
-
-[nginx]
-  # Nginx configuration settings
-  enable = true
-  template_file = "/app/nginx.template.conf"   # Nginx template config file location
-  output_file = "/nginx.conf"                   # Generated Nginx config output path
-
 
 [phases.start]
 cmds = [
