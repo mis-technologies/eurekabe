@@ -64,7 +64,8 @@ class User extends Authenticatable implements FilamentUser
         'position',
         'leading_attribute',
         'refereed_by',
-        'deleted_at'
+        'deleted_at',
+        'one_signal_id',
     ];
 
 

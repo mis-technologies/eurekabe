@@ -5,6 +5,7 @@ namespace Modules\Student\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\Student\Events\ChallengeCreated;
 use Modules\Student\Models\StudentChallenge;
 use Modules\Student\Models\StudentExam;
 use Modules\Student\Models\StudentLeaderBoard;
@@ -53,8 +54,6 @@ class StudentChallengeController extends Controller
         ]);
 
 
-        // $challenge->participants()->sync($participantIds);
-        // $challenge->participants()->attach($user->id, ['status' => 'accepted']);
 
         // Create an array with all participants including the user with status
         $participantsWithStatus = collect($participantIds)
@@ -67,6 +66,7 @@ class StudentChallengeController extends Controller
         $challenge->participants()->sync($participantsWithStatus);
 
 
+        event(new ChallengeCreated($challenge));
 
         return response()->json([
             'success' => true,

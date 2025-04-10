@@ -27,7 +27,7 @@ class StudentChallenge extends Model
     public function participants()
     {
         return $this->belongsToMany(User::class, 'student_challenge_participants', 'challenge_id', 'user_id')
-                    ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email')
+                    ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id')
                     ->withPivot('status', 'score')
                     ->withTimestamps();
     }
