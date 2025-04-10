@@ -136,6 +136,14 @@ class StudentChallengeController extends Controller
             ], 400);
         }
 
+        // prevent starting the challenge if any participant has not accepted
+        if ($challenge->participants()->where('status', '!=', 'accepted')->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'All participants must accept the challenge before starting',
+            ], 400);
+        }
+
         $exam = $challenge->exam;
         $questions = $exam->questions()->inRandomOrder()->limit(20)->get();
 
