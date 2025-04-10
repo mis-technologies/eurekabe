@@ -45,6 +45,9 @@ RUN mkdir -p storage/framework/views storage/framework/sessions storage/framewor
     && chmod -R 775 storage bootstrap/cache
 
 
+RUN echo '#!/bin/bash\nchown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache\nexec "$@"' > /entrypoint.sh \
+    && chmod +x /entrypoint.sh
+
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-progress --no-interaction
@@ -66,6 +69,8 @@ RUN php artisan storage:link
 
 # Expose ports for Nginx and PHP-FPM
 EXPOSE 80 9000
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Start supervisord to manage both Nginx and PHP-FPM
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

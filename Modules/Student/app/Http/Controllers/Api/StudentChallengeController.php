@@ -185,6 +185,7 @@ class StudentChallengeController extends Controller
         if ($result['passed'] === 'Yes') {
             $pointsEarned += 10;
         }
+        
         StudentLeaderBoard::updateOrCreate([
             'user_id' => $studentExam->user_id,
             'exam_id' => $studentExam->exam_id,
