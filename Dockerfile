@@ -67,13 +67,15 @@ COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 # Create the storage link
 RUN php artisan storage:link
 
-# Expose ports for Nginx and PHP-FPM
-EXPOSE 80 9000
-
 # Add cron job for Laravel scheduler
 RUN echo "* * * * * www-data php /var/www/html/artisan schedule:run >> /var/log/cron.log 2>&1" > /etc/cron.d/laravel-scheduler \
     && chmod 0644 /etc/cron.d/laravel-scheduler \
     && crontab /etc/cron.d/laravel-scheduler
+    
+# Expose ports for Nginx and PHP-FPM
+EXPOSE 80 9000
+
+
 
 ENTRYPOINT ["/entrypoint.sh"]
 
