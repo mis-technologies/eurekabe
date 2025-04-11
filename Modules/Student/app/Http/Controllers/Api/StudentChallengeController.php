@@ -33,7 +33,7 @@ class StudentChallengeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Challenges retrieved',
-            'data' => $challenge,
+            'data' => $challenge->load('participants', 'exam'),
         ]);
     }
 
@@ -133,7 +133,7 @@ class StudentChallengeController extends Controller
         if (!$participant || $participant->status !== 'accepted') {
             return response()->json([
                 'success' => false,
-                'message' => 'Challenge not accepted yet',
+                'message' => 'You have not accepted yet',
             ], 400);
         }
 
@@ -239,10 +239,7 @@ class StudentChallengeController extends Controller
     // get challenge ranking based of student leaderboard with challenge_id
     public function getChallengeRanking(Request $request, StudentChallenge $challenge)
     {
-        // $leaderboard = StudentLeaderBoard::with('user')->where('challenge_id', $challenge->id)
-        //     ->orderByDesc('points')
-        //     ->get();
-
+       
         $results = StudentChallengeParticipant::where('challenge_id', $challenge->id)
             ->with(['user' => function ($query) {
                 $query->select('id', 'firstname', 'lastname', 'image');
