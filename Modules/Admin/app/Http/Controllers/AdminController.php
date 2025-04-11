@@ -132,24 +132,20 @@ public function blogDisplay()
 public function blogUpdate(BlogUpdateRequest $request, $blog_id=null)
 {
 
+    $data = [
+        'title' => $request->title,
+        'slug' => \Str::slug($request->title),
+        'content'=>$request->content,
+        'status'=>$request->status,
+        'category_id'=> $request->category_id,
+    ];
+
     if ($request->has('image')) {
-
         $blogImage = self::imageUploader($request->image, 'SuperAdmin', 'blog-images');
-        $path = $blogImage;
-
+        $data['image'] = $blogImage;
     }
 
-    $blog = Blog::updateOrCreate(
-        ['id' => $blog_id],
-        [
-            'title' => $request->title,
-            'slug' => \Str::slug($request->title),
-            'content'=>$request->content,
-            'status'=>$request->status,
-            'category_id'=> $request->category_id,
-            'image'=>$path ?? null,
-        ]
-        );
+    $blog = Blog::updateOrCreate(['id' => $blog_id],$data);
 
 
 
