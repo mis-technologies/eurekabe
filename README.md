@@ -74,3 +74,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 composer dump-autoload
 php artisan optimize:clear
 php artisan optimize
+
+
+Nixpack is using nginx.template.conf
+
+Dockerfile depends on nginx and supervisor directory

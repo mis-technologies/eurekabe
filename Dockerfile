@@ -1,10 +1,10 @@
-# Base PHP image with FPM
 FROM php:8.3-fpm
 
-# Install required dependencies, including PHP intl and zip extensions
+# Set working directory
+WORKDIR /var/www/html
+
+# Install dependencies
 RUN apt-get update && apt-get install -y \
-    cron \
-    supervisor \
     git \
     unzip \
     curl \
@@ -14,45 +14,64 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libicu-dev \
     libzip-dev \
+    libonig-dev \
+    cron \
+    supervisor \
+    nginx \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql intl zip
+    && docker-php-ext-install gd pdo pdo_mysql intl zip opcache
 
-# Set working directory
-WORKDIR /var/www/html
-
-# Mark the Laravel directory as a "safe" Git directory
-RUN git config --global --add safe.directory /var/www/html
-
-# Install Composer globally
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Copy Laravel application files
-COPY . /var/www/html
 
-# Set correct permissions for Laravel storage & cache
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Override PHP settings for larger file uploads
+RUN echo "upload_max_filesize = 100M" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "post_max_size = 100M" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "memory_limit = 256M" >> /usr/local/etc/php/conf.d/uploads.ini
+    
+
+# Copy existing application directory contents
+COPY . .
+
+# Set permissions
+# RUN chmod -R 775 storage bootstrap/cache
+
+
+# Make sure storage dirs exist and are writable
+RUN mkdir -p storage/framework/views storage/framework/sessions storage/framework/cache bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+
+RUN echo '#!/bin/bash\nchown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache\nexec "$@"' > /entrypoint.sh \
+    && chmod +x /entrypoint.sh
+
 
 # Install PHP dependencies
-RUN composer install --no-dev --prefer-dist --no-progress --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-progress --no-interaction
 
-# Install Node.js (using stable v18) and build frontend assets
+# Install Node.js & build assets
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
-    && npm install \
-    && npm run build
+    && npm install && npm run build
 
-# Ensure cron job is added for Laravel Scheduler
-RUN echo "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" | crontab -
+# Nginx configuration
+COPY nginx/default.conf /etc/nginx/sites-available/default
 
-# Copy Supervisor configuration
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Supervisord configuration to manage nginx and php-fpm
+COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
-# Use named volumes for persistent storage
-VOLUME ["/var/www/html/storage", "/var/www/html/bootstrap/cache"]
 
-# Expose port for PHP-FPM
-EXPOSE 9000
+# Create the storage link
+RUN php artisan storage:link
+    
+# Expose ports for Nginx and PHP-FPM
+EXPOSE 80 9000
 
-# Start Supervisor to manage processes
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Start supervisord to manage both Nginx and PHP-FPM
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

@@ -45,8 +45,13 @@ class LoginController extends Controller
        
         $user->generateUsername();
         $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
+        $user->one_signal_id = $request->one_signal_id;
+        $user->save();
+
+
         $user = User::where('email', $request->email )->first();
         $response = [ 'user' => $user, 'token' => $token ];
+
         return response([
             'status' => 'success',
             'message' => 'Login successful',
