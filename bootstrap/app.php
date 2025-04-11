@@ -5,6 +5,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Symfony\Component\HttpFoundation\Request;
+// use Illuminate\Support\Facades\Schedule;
+use Illuminate\Console\Scheduling\Schedule; // Corrected import
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,6 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+    })
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->command('queue:work')->everySecond();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // $exceptions->render(function (AuthenticationException $e, Request $request) {
