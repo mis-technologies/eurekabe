@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withSchedule(function (Schedule $schedule) {
-        $schedule->command('queue:work')->everySecond();
+        //$schedule->command('queue:work')->everySecond();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // $exceptions->render(function (AuthenticationException $e, Request $request) {
