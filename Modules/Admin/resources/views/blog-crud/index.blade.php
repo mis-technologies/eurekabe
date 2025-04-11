@@ -27,7 +27,7 @@
                     </div>
 
 
-                    <h4 class="text-sm font-medium text-gray-700 mt-2">{{$blog?->created_at}}</h4>
+                    <h4 class="text-sm font-medium text-gray-700 mt-2">{{$blog?->created_at->diffForHumans()}}</h4>
                     <p>
                         {{ Str::limit($blog?->content, 10, '...') }}
                     </p>
