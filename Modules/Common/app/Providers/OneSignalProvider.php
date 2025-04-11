@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class OneSignalProvider
 {
-    private static string $apiUrl = "https://onesignal.com/api/v1/notifications";
+    private static string $apiUrl = "https://onesignal.com/api/v1/notifications?c=push";
     
     
 
@@ -81,6 +81,12 @@ class OneSignalProvider
             ])->post(self::$apiUrl, array_merge([
                 'app_id' => $appId,
             ], $data));
+
+            // Log::info('OneSignal API Response', [
+            //     'status' => $response->status(),
+            //     'response' => $response->json(),
+            //     'request' => $data
+            // ]);
 
             if (!$response->successful()) {
                 Log::error('OneSignal API Error', [

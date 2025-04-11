@@ -3,6 +3,8 @@
 namespace Modules\Student\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Modules\Student\Events\ChallengeCreated;
+use Modules\Student\Listeners\ChallengeCreatedListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,9 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [];
+    protected $listen = [
+        ChallengeCreated::class => [ChallengeCreatedListener::class ],
+    ];
 
     /**
      * Indicates if events should be discovered.

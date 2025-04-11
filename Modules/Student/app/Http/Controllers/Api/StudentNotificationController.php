@@ -9,7 +9,6 @@ use Modules\Common\Events\SocketEvent;
 
 class StudentNotificationController extends Controller
 {
-    
 
     /**
      * Display a listing of the resource.
@@ -18,33 +17,56 @@ class StudentNotificationController extends Controller
      */
     public function getNotifications(Request $request)
     {
-
-        $limit = (int) $request->query('limit');
-        $unread = (boolean) $request->query('unread');
+        $perPage = $request->query('per_page', 10); // Default per_page to 10 if not provided
+        $unread = filter_var($request->query('unread', false), FILTER_VALIDATE_BOOLEAN); // Default unread to false
         $user = Auth::user();
 
-        if($limit){
-            if($unread){
-                $userNotifications = Auth::user()->unreadNotifications->take($limit);
-            }else{
-                $userNotifications = $user->notifications()->take($limit)->latest()->get();
-            }
+        // Validate per_page
+        if (!is_numeric($perPage) || $perPage <= 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid per_page parameter',
+            ], 400);
         }
-        //GET ALL ONE NOTIFICATION PER ENTITY
-        $uniqueNotifications = collect($userNotifications)->unique(function ($item) {
+
+        // Fetch notifications based on the unread parameter
+        if ($unread) {
+            $notificationsQuery = $user->unreadNotifications();
+        } else {
+            $notificationsQuery = $user->notifications();
+        }
+
+        // Apply pagination and fetch notifications
+        $paginatedNotifications = $notificationsQuery->latest()->paginate($perPage);
+
+        // Filter unique notifications by entity and entity_id
+        $uniqueNotifications = $paginatedNotifications->getCollection()->unique(function ($item) {
             return $item->data['entity'] . $item->data['entity_id'];
-        })->values()->all();
+        })->values()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'title' => $item->data['title'] ?? null,
+                'text' => $item->data['text'] ?? null,
+                'meta' => $item->data['meta'] ?? null,
+                'entity' => $item->data['entity'] ?? null,
+                'entity_id' => $item->data['entity_id'] ?? null,
+
+                'read_at' => $item->read_at,
+                'created_at' => $item->created_at,
+                'updated_at' => $item->updated_at,
+            ];
+        });
+
+        // Replace the collection in the paginator with the unique notifications
+        $paginatedNotifications->setCollection($uniqueNotifications);
 
         return response()->json([
-           'success' => true,
+            'success' => true,
             'message' => 'Notifications retrieved successfully',
-            'data' => $uniqueNotifications
+            'data' => $paginatedNotifications,
         ]);
     }
 
-
-    
-    
     /**
      * Mark user's notification as read.
      *
@@ -54,21 +76,18 @@ class StudentNotificationController extends Controller
      */
     public function markAsRead(Request $request, $id)
     {
-        if(!$notification = Auth::user()->notifications()->where('id', $id)->first()){
+        if (!$notification = Auth::user()->notifications()->where('id', $id)->first()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Notification not found'
+                'message' => 'Notification not found',
             ], 404);
         }
         $notification->markAsRead();
         return response()->json([
-           'success' => true,
-            'message' => 'successfully marked as read'
+            'success' => true,
+            'message' => 'successfully marked as read',
         ], 200);
     }
-
-
-
 
     /**
      * Mark user's notification as read.
@@ -79,20 +98,30 @@ class StudentNotificationController extends Controller
      */
     public function getSingle(Request $request, $id)
     {
-        if(!$notification = Auth::user()->notifications()->where('id', $id)->first()){
+        if (!$notification = Auth::user()->notifications()->where('id', $id)->first()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Notification not found'
+                'message' => 'Notification not found',
             ], 404);
         }
         return response()->json([
-           'success' => true,
+            'success' => true,
             'message' => 'Retrieved successfully',
-            'data' => $notification
+            'data' => [
+                'id' => $notification->id,
+                'title' => $notification->data['title'] ?? null,
+                'text' => $notification->data['text'] ?? null,
+                'meta' => $notification->data['meta'] ?? null,
+                'entity' => $notification->data['entity'] ?? null,
+                'entity_id' => $notification->data['entity_id'] ?? null,
+
+                'read_at' => $notification->read_at,
+                'created_at' => $notification->created_at,
+                'updated_at' => $notification->updated_at,
+            ],
         ], 200);
     }
-    
-    
+
     /**
      * Mark all user's notifications as read.
      *
@@ -102,14 +131,14 @@ class StudentNotificationController extends Controller
     public function markAllRead(Request $request)
     {
         $request->user()
-                ->unreadNotifications()
-                ->get()->each(function ($n) {
-                    $n->markAsRead();
-                });
-        event(new SocketEvent( [], Auth::user()->email, 'Notification'));
+            ->unreadNotifications()
+            ->get()->each(function ($n) {
+            $n->markAsRead();
+        });
+        event(new SocketEvent([], Auth::user()->email, 'Notification'));
         return response()->json([
-           'success' => true,
-            'message' => 'All notifications successfully marked as read'
+            'success' => true,
+            'message' => 'All notifications successfully marked as read',
         ], 200);
     }
 
