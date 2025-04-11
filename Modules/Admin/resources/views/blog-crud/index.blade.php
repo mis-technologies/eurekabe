@@ -29,7 +29,7 @@
 
                     <h4 class="text-sm font-medium text-gray-700 mt-2">{{$blog?->created_at}}</h4>
                     <p>
-                        {{$blog?->content}}
+                        {{ Str::limit($blog?->content, 10, '...') }}
                     </p>
 
 
