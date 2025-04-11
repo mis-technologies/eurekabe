@@ -2,7 +2,7 @@
 
 namespace Modules\Student\Events;
 
-use App\Providers\OneSignalProvider;
+use  Modules\Common\Providers\OneSignalProvider;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;

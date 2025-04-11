@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Modules\Common\Providers;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
