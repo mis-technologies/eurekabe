@@ -12,8 +12,13 @@ class CompetitionExam extends Model
 
     /**
      * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+     */ 
+    protected $fillable = [
+        'competition_id',
+        'exam_id',
+        'duration', // in minutes
+        'total_questions' // total number of questions
+    ];
 
     // protected static function newFactory(): CompetitionExamFactory
     // {

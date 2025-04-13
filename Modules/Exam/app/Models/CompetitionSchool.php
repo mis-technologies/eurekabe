@@ -13,7 +13,11 @@ class CompetitionSchool extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+
+    protected $fillable = [
+        'competition_id',
+        'school_id'
+    ];
 
     // protected static function newFactory(): CompetitionSchoolFactory
     // {

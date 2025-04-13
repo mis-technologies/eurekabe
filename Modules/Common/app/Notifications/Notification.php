@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification as BaseNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Modules\Common\Providers\OneSignalProvider;
 
 class Notification extends BaseNotification //implements ShouldQueue
 {
@@ -32,7 +33,28 @@ class Notification extends BaseNotification //implements ShouldQueue
      */
     public function via($notifiable): array
     {
+        if (is_array($this->channel) && in_array('push', $this->channel)) {
+            $this->toPush($notifiable); // Pass $notifiable to toPush
+        }
         return (is_array($this->channel) ? $this->channel : [$this->channel]) ?? ['mail'];
+    }
+
+    // push notification
+    public function toPush($notifiable)
+    {
+       try {
+            OneSignalProvider::sendToUsers(
+                [$notifiable->one_signal_id],
+                $this->dbContent['title'],
+                $this->dbContent['text'],
+                [
+                    'url' => $this->dbContent['url'] ?? null,
+                    'data' => $this->dbContent,
+                ]
+            );
+        } catch (\Exception $e) {
+            // Handle the exception
+        }
     }
 
     /**

@@ -13,7 +13,14 @@ class CompetitionParticipant extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+
+    protected $fillable = [
+        'user_id',
+        'competition_id',
+        'status', // pending, approved, rejected
+        'isPaid',
+        'payment_id'
+    ];
 
     // protected static function newFactory(): CompetitionParticipantFactory
     // {

@@ -5,6 +5,7 @@ namespace Modules\Messaging\Providers;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Modules\Messaging\Events\MessageSentEvent;
 use Modules\Messaging\Listeners\MessageSentEventListener;
+use Modules\Messaging\Listeners\NewMessageNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,8 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         MessageSentEvent::class => [
-            MessageSentEventListener::class
+            MessageSentEventListener::class,
+            NewMessageNotification::class
         ],
     ];
 
