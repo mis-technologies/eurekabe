@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification as BaseNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Log;
 use Modules\Common\Providers\OneSignalProvider;
 
 class Notification extends BaseNotification //implements ShouldQueue
@@ -54,6 +55,10 @@ class Notification extends BaseNotification //implements ShouldQueue
             );
         } catch (\Exception $e) {
             // Handle the exception
+            Log::error('Failed to send OneSignal notification', [
+                'error' => $e->getMessage(),
+                'notifiable_id' => $notifiable->id,
+            ]);
         }
     }
 

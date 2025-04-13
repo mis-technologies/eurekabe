@@ -70,7 +70,6 @@ class NewMessageNotification implements ShouldQueue
 
             // Send notification
             $to->notify(new Notification(emailContent: null, dbContent: $dbContent, channel: ['database', 'push']));
-            event(new SocketEvent($to->unreadNotifications()->latest()->limit(1)->get(), "{$to->email}", 'Notification'));
         }
     }
 }
