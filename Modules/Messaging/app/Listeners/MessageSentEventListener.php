@@ -2,8 +2,8 @@
 
 namespace Modules\Messaging\Listeners;
 
+use Illuminate\Support\Facades\Log;
 use Modules\Common\Events\SocketEvent;
-use Modules\Common\Notifications\Notification;
 use Modules\Messaging\Events\MessageSentEvent;
 
 class MessageSentEventListener//implements ShouldQueue
@@ -30,6 +30,7 @@ class MessageSentEventListener//implements ShouldQueue
         $conversation = $event->message->conversation;
         $from = $event->message->from;
         $to = $event->message->to;
+        
         if ($to) {
             $conversation['recent_message']['is_own'] = false;
             event(new SocketEvent($conversation, "chat.{$conversation->id}", 'Conversation'));

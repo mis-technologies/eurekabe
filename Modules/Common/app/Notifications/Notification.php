@@ -27,6 +27,12 @@ class Notification extends BaseNotification //implements ShouldQueue
         $this->emailContent = $emailContent;
         $this->dbContent = $dbContent;
         $this->channel = $channel;
+
+        Log::info('Sending OneSignal notification', [
+            'channel' => $this->channel,
+            'emailContent' => $this->emailContent,
+            'dbContent' => $this->dbContent,
+        ]);
     }
 
     /**
@@ -37,28 +43,31 @@ class Notification extends BaseNotification //implements ShouldQueue
         if (is_array($this->channel) && in_array('push', $this->channel)) {
             $this->toPush($notifiable); // Pass $notifiable to toPush
         }
-        return (is_array($this->channel) ? $this->channel : [$this->channel]) ?? ['mail'];
+        $channel = $this->channel;
+
+        // remove push from the channel array
+        if (is_array($channel) && in_array('push', $channel)) {
+            $channel = array_diff($channel, ['push']);
+        }
+        return (is_array($channel) ? $channel : [$channel]) ?? ['mail'];
     }
 
     // push notification
     public function toPush($notifiable)
     {
-       try {
-            OneSignalProvider::sendToUsers(
-                [$notifiable->one_signal_id],
-                $this->dbContent['title'],
-                $this->dbContent['text'],
-                [
-                    'url' => $this->dbContent['url'] ?? null,
-                    'data' => $this->dbContent,
-                ]
-            );
+       try {           
+            if(!empty($notifiable->one_signal_id)) {
+                OneSignalProvider::sendToUsers(
+                    [$notifiable->one_signal_id],
+                    $this->dbContent['title'],
+                    $this->dbContent['text'],
+                    [
+                        'data' => $this->dbContent,
+                        'url' => $this->dbContent['url'] ?? null,
+                    ]
+                );
+            } 
         } catch (\Exception $e) {
-            // Handle the exception
-            Log::error('Failed to send OneSignal notification', [
-                'error' => $e->getMessage(),
-                'notifiable_id' => $notifiable->id,
-            ]);
         }
     }
 
