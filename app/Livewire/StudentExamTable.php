@@ -20,8 +20,8 @@ class StudentExamTable extends Component
     // Add public properties for query parameters
     public $student_id;
     public $exam_id;
+    public $perPage = 50; // Default items per page
 
-        
     public function mount($student_id = null, $exam_id = null)
     {
         $this->student_id = $student_id;
@@ -43,93 +43,55 @@ class StudentExamTable extends Component
         }
     }
 
-
-    // public function render()
-    // {
-    //     $query = StudentExam::query()
-    //         ->with(['exam.subject', 'user']); // Eager load related models (exam, subject, and user)
-
-    //     // Apply search filter
-    //     if ($this->search) {
-    //                     $query->whereHas('user', function ($q) {
-    //             $q->where('firstname', 'like', '%' . $this->search . '%')
-    //                 ->orWhere('email', 'like', '%' . $this->search . '%');
-    //         })->orWhereHas('exam', function ($q) {
-    //             $q->where('title', 'like', '%' . $this->search . '%')
-    //                 ->orWhereHas('subject', function ($subQuery) {
-    //                     $subQuery->where('name', 'like', '%' . $this->search . '%');
-    //                 });
-    //         });
-    //     }
-
-    //     // Apply status filter
-    //     if ($this->filters['status']) {
-    //         $query->where('status', $this->filters['status']);
-    //     }
-
-    //     // Apply sorting
-    //     $query->orderBy($this->sortField, $this->sortDirection);
-
-    //     $data = $query->paginate(10);
-
-    //     // Append result data to each StudentExam instance
-    //     $data->getCollection()->transform(function ($studentExam) {
-    //         $studentExam->result = $studentExam->result(); // Add result data
-    //         return $studentExam;
-    //     });
-
-    //     return view('livewire.student-exam-table', [
-    //         'studentExams' => $data,
-    //     ]);
-    // }
-
     public function render()
-{
-    $query = StudentExam::query()
-        ->with(['exam.subject', 'user']); // Eager load related models (exam, subject, and user)
+    {
+        $query = StudentExam::query()
+            ->with(['exam.subject', 'user']); // Eager load related models (exam, subject, and user)
 
-    // Apply search filter
-    if ($this->search) {
-        $query->whereHas('user', function ($q) {
-            $q->where('firstname', 'like', '%' . $this->search . '%') // Use 'firstname'
-              ->orWhere('lastname', 'like', '%' . $this->search . '%') // Use 'lastname'
-              ->orWhere('email', 'like', '%' . $this->search . '%');
-        })->orWhereHas('exam', function ($q) {
-            $q->where('title', 'like', '%' . $this->search . '%')
-              ->orWhereHas('subject', function ($subQuery) {
-                  $subQuery->where('name', 'like', '%' . $this->search . '%');
-              });
+        // Apply search filter
+        if ($this->search) {
+            $query->whereHas('user', function ($q) {
+                $q->where('firstname', 'like', '%' . $this->search . '%') // Use 'firstname'
+                    ->orWhere('lastname', 'like', '%' . $this->search . '%') // Use 'lastname'
+                    ->orWhere('email', 'like', '%' . $this->search . '%');
+            })->orWhereHas('exam', function ($q) {
+                $q->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhereHas('subject', function ($subQuery) {
+                        $subQuery->where('name', 'like', '%' . $this->search . '%');
+                    });
+            });
+        }
+
+        // Apply filters for student_id and exam_id
+        if ($this->student_id) {
+            $query->where('user_id', $this->student_id);
+        }
+
+        if ($this->exam_id) {
+            $query->where('exam_id', $this->exam_id);
+        }
+
+        // Apply status filter
+        if ($this->filters['status']) {
+            $query->where('status', $this->filters['status']);
+        }
+
+       
+
+        // Apply sorting
+        $query->orderBy($this->sortField, $this->sortDirection);
+
+      
+        $data = $query->paginate($this->perPage);
+
+        // Append result data to each StudentExam instance
+        $data->getCollection()->transform(function ($studentExam) {
+            $studentExam->result = $studentExam->result(); // Add result data
+            return $studentExam;
         });
+
+        return view('livewire.student-exam-table', [
+            'studentExams' => $data,
+        ]);
     }
-
-     // Apply filters for student_id and exam_id
-     if ($this->student_id) {
-        $query->where('user_id', $this->student_id);
-    }
-
-    if ($this->exam_id) {
-        $query->where('exam_id', $this->exam_id);
-    }
-
-    
-    // Apply status filter
-    if ($this->filters['status']) {
-        $query->where('status', $this->filters['status']);
-    }
-
-    // Apply sorting
-    $query->orderBy($this->sortField, $this->sortDirection);
-
-    $data = $query->paginate(10);
-
-    // Append result data to each StudentExam instance
-    $data->getCollection()->transform(function ($studentExam) {
-        $studentExam->result = $studentExam->result(); // Add result data
-        return $studentExam;
-    });
-
-    return view('livewire.student-exam-table', [
-        'studentExams' => $data,
-    ]);
-}
 }

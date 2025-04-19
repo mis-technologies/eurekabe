@@ -32,6 +32,13 @@ class StudentExam extends Model
         'status',
         'started_at',
         'ended_at',
+
+        'total_marks_earned', // very important to enable sorting and filtering
+        'total_correct',
+        'pass_percentage',
+        'total_questions',
+        'total_possible_marks',
+        'passed',
     ];
 
     protected $casts = [
@@ -99,7 +106,27 @@ class StudentExam extends Model
         // Return a detailed summary of the result
         // $time_taken = $this->started_at ? (double)($this->started_at->diffInMinutes($this->ended_at) ) : 2.00;
         $time_taken = $this->started_at ? round((double) ($this->started_at->diffInMinutes($this->ended_at)), 2) : 2.00;
-        
+
+        // Store in the database
+        if ($this->total_marks_earned !== $finalScore) {
+            $this->update(['total_marks_earned' => $finalScore]);
+        }
+        if ($this->total_correct !== $totalCorrect) {
+            $this->update(['total_correct' => $totalCorrect]);
+        }
+        if ($this->total_questions !== $totalQuestions) {
+            $this->update(['total_questions' => $totalQuestions]);
+        }
+        if ($this->total_possible_marks !== $totalPossibleMarks) {
+            $this->update(['total_possible_marks' => $totalPossibleMarks]);
+        }
+        if ($this->pass_percentage !== $exam->pass_percentage) {
+            $this->update(['pass_percentage' => $exam->pass_percentage]);
+        }
+        if ($this->passed !== $exam->passed) {
+            $this->update(['passed' => $isPassed ]);
+        }
+
         return [
             'exam_type' => $examType == 1 ? 'mcq' : 'essay',
             'total_questions' => $totalQuestions,
@@ -200,6 +227,7 @@ class StudentExam extends Model
 
         return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
     }
+
 
     public function submitExam($submissions)
     {
