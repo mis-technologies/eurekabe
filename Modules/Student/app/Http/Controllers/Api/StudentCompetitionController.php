@@ -27,7 +27,7 @@ class StudentCompetitionController extends Controller
             $query->where('type', $request->type);
         }
 
-        $competitions = $query->paginate(10);
+        $competitions = $query->paginate(20);
 
         return response()->json($competitions);
     }
@@ -174,8 +174,10 @@ class StudentCompetitionController extends Controller
      */
     public function submitCompetitionExam(Request $request, Competition $competition)
     {
-        $request->validate();
-        $studentExamId = $request->input('exam_id');
+        $payload =   $request->validated();
+
+        $submissions = $payload['submissions'];
+        $studentExamId = $payload['student_exam_id'];
         $user = Auth::user();
 
         // Retrieve the student's exam for this competition
@@ -183,11 +185,9 @@ class StudentCompetitionController extends Controller
         if (!$studentExam || $studentExam->status !== StudentExam::STARTED) {
             return response()->json([
                 'success' => false,
-                'message' => 'No active exam found for this competition',
+                'message' => 'No student active exam found for this competition',
             ], 404);
         }
-
-        $submissions = $request->input('submissions');
         $studentExam->submitExam($submissions);
 
         // Mark the exam as submitted
@@ -265,5 +265,23 @@ class StudentCompetitionController extends Controller
             ->first();
 
         return response()->json($participant);
+    }
+
+
+    // get challenge ranking based of student leaderboard with challenge_id
+    public function getCompetitionRanking(Request $request, Competition $competition)
+    {
+        $results = CompetitionParticipant::where('competition_id', $competition->id)
+            ->with(['user' => function ($query) {
+                $query->select('id', 'firstname', 'lastname', 'image');
+            }])
+            ->orderByDesc('score')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Competition ranking retrieved',
+            'data' => $results,
+        ]);
     }
 }
