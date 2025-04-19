@@ -86,7 +86,6 @@
                 </div>
             </div>
 
-
             <div class="col-span-2">
                 <div class="card">
                     <div class="card-header flex justify-between">
