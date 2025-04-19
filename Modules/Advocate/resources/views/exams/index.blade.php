@@ -16,9 +16,7 @@
                         <div class="card-header">
                             <div class="flex justify-between items-center">
                                 <h5 class="card-title">{{ $exam->subject->name }}</h5>
-                                {{-- <div class="bg-success text-xs text-white rounded-md py-1 px-1.5 font-medium" role="alert">
-                                    <span>{{ $exam->tag }}</span>
-                                </div> --}}
+                                <div class="{{ $exam->status == 1 ? 'bg-success' : 'bg-danger'  }} text-xs text-white rounded-md py-1 px-1.5 font-medium" role="alert">{{  $exam->status == 1 ? 'Active' : 'Inactive' }}</div>
                             </div>
                         </div>
                         <div class="flex flex-col">

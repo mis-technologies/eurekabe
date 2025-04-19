@@ -51,7 +51,7 @@
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                     @endif
                 </th>
-                <th class="cursor-pointer">
+                <th wire:click="sortBy('total_marks_earned')" class="cursor-pointer">
                     Total Marks Earned
                     @if ($sortField === 'total_marks_earned')
                         <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
@@ -82,7 +82,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
                         {{ ucfirst($studentExam->status) }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
-                        {{ $studentExam->result['total_marks_earned'] ?? 'N/A' }}
+                        {{ $studentExam->total_marks_earned ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-800">
                         {{ $studentExam->result['passed'] ?? 'N/A' }}
