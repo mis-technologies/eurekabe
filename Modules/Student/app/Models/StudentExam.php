@@ -93,27 +93,26 @@ class StudentExam extends Model
         // Safe version
         $correctPercentage = ($totalPossibleMarks > 0) ? ($finalScore / $totalPossibleMarks) * 100 : 0;
 
-
         // Check if the student passed
         $isPassed = $correctPercentage >= $exam->pass_percentage;
 
         // Return a detailed summary of the result
         // $time_taken = $this->started_at ? (double)($this->started_at->diffInMinutes($this->ended_at) ) : 2.00;
-        $time_taken = $this->started_at ? round((double)($this->started_at->diffInMinutes($this->ended_at)), 2) : 2.00;
+        $time_taken = $this->started_at ? round((double) ($this->started_at->diffInMinutes($this->ended_at)), 2) : 2.00;
 
         return [
             'exam_type' => $examType == 1 ? 'mcq' : 'essay',
             'total_questions' => $totalQuestions,
-            'total_correct' => $totalCorrect,
-            'total_marks_earned' => $finalScore,
-            'total_possible_marks' => $totalPossibleMarks,
-            'correct_percentage' => $correctPercentage,
+            'total_correct' => round($totalCorrect),
+            'total_marks_earned' => round($finalScore, 2),
+            'total_possible_marks' => round($totalPossibleMarks, 2),
+            'correct_percentage' => round($correctPercentage, 2),
             'passed' => $isPassed ? 'Yes' : 'No',
             'pass_percentage' => $exam->pass_percentage,
             'negative_marks' => $negativeMarks,
             'student_exam' => $this,
             'exam_details' => $exam,
-            'time_taken' => $time_taken
+            'time_taken' => $time_taken,
         ];
     }
 
@@ -121,7 +120,7 @@ class StudentExam extends Model
     {
         // Fetch all submissions for this exam
         $submissions = StudentExamResult::where('student_exam_id', $this->id)
-            // ->with(['question.options']) // Eager load questions and their options
+        // ->with(['question.options']) // Eager load questions and their options
             ->get()
             ->keyBy('question_id'); // Index by question_id for easier lookup
 
@@ -152,18 +151,16 @@ class StudentExam extends Model
             if ($question->options->isNotEmpty()) {
                 $studentAnswer = $submission ? $submission->answer : null;
 
-                $questionReview['options'] = $question->options->map(function ($option) use ($studentAnswer)  {
+                $questionReview['options'] = $question->options->map(function ($option) use ($studentAnswer) {
                     return [
                         'id' => $option->id,
                         'text' => $option->option,
                         'is_correct' => $option->is_correct,
-                        'student_selected' => (int)$studentAnswer == $option->id
+                        'student_selected' => (int) $studentAnswer == $option->id,
 
                     ];
                 });
 
-
-               
             }
             // Handle essay questions
             else {
@@ -184,8 +181,6 @@ class StudentExam extends Model
         return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 
-
-
     public function getDurationAttribute()
     {
         if (!$this->started_at || !$this->ended_at) {
@@ -194,23 +189,85 @@ class StudentExam extends Model
 
         $startTime = Carbon::parse($this->started_at);
         $endTime = Carbon::parse($this->ended_at);
-        
+
         // Calculate duration in seconds
         $durationInSeconds = $endTime->diffInSeconds($startTime);
-        
+
         // Format duration into hours:minutes:seconds
         $hours = floor($durationInSeconds / 3600);
         $minutes = floor(($durationInSeconds % 3600) / 60);
         $seconds = $durationInSeconds % 60;
-        
+
         return sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
     }
 
-
-    protected static function newFactory()
+    public function submitExam($submissions)
     {
-        // return StudentExamFactory::new();
-    }
+        $studentExam = $this;
+        $questionIds = $studentExam->questions;
 
+        // Loop through the submissions and process each question
+        foreach ($submissions as $submission) {
+            $questionId = $submission['question'];
+            $userAnswer = $submission['answer'];
+            // Check if the question is part of the served questions
+            if (in_array($questionId, $questionIds)) {
+                // Find the question and load its options if it's a multiple-choice question
+                if ($question = Question::find($questionId)->load('options')) {
+                    $options = $question['options'];
+
+                    // Determine the answer type (assume multiple choice if options exist, otherwise essay)
+                    $answerType = $options->isNotEmpty() ? 1 : 2;
+                    $examType = $studentExam->exam->question_type;
+
+                    // Initialize variables for correctness and marks
+                    $isCorrect = false;
+                    $mark = 0;
+
+                    if ($examType === 1) {
+                        // For multiple-choice, check if the submitted answer matches a correct option
+                        $isCorrect = $options->where('is_correct', true)->pluck('id')->contains($userAnswer);
+                        $mark = $isCorrect ? ($question->marks ?? 1) : 0;
+
+                        // Create the StudentExamResult for this question
+                        $correct_option = $options->where('is_correct', true)->first();
+                        $correct_answer = $correct_option ? $correct_option['option'] : null;
+                        StudentExamResult::updateOrCreate([
+                            'student_exam_id' => $studentExam->id,
+                            'question_id' => $question->id,
+                        ], [
+                            'student_exam_id' => $studentExam->id,
+                            'exam_id' => $studentExam->exam_id,
+                            'user_id' => $studentExam->user_id,
+                            'question_id' => $question->id,
+                            'answer' => $userAnswer,
+                            'correct_answer' => $correct_answer, // Store correct answer for multiple-choice questions
+                            'mark' => $mark, // Store calculated mark
+                            'is_correct' => $isCorrect, // Store correctness for multiple-choice questions
+                        ]);
+
+                    } else {
+                        // For  or written-type questions, mark and correctness may be handled manually later
+                        $mark = 0; // By default 0 for written answers, may be graded later
+                        StudentExamResult::updateOrCreate([
+                            'student_exam_id' => $studentExam->id,
+                            'question_id' => $question->id,
+                        ], [
+                            'student_exam_id' => $studentExam->id,
+                            'exam_id' => $studentExam->exam_id,
+                            'user_id' => $studentExam->user_id,
+                            'question_id' => $question->id,
+                            'answer' => $userAnswer,
+                            'correct_answer' => "N/A", // No correct answer for written questions
+                            'mark' => $mark, // Store calculated mark
+                            'is_correct' => $isCorrect, // Store correctness for multiple-choice questions
+                        ]);
+
+                    }
+
+                }
+            }
+        }
+    }
 
 }
