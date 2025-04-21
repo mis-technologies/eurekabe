@@ -35,7 +35,6 @@ class LoginController extends Controller
         }
 
         if (!$user->hasVerifiedEmail()) {
-
             VerificationCode::send($user->email);
             return response([
                 'status' => 'error',
@@ -58,7 +57,6 @@ class LoginController extends Controller
             'data' => $response
         ], 200);
     }
-
-    
+  
 
 }

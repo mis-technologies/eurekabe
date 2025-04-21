@@ -31,12 +31,12 @@ class Message extends Model
 
     public function from(){
         return $this->belongsTo(User::class, 'user_id')
-        ->select('id', 'firstname', 'username', 'lastname', 'image', 'email');
+        ->select('id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id');
     }
 
     public function to(){
         return $this->belongsTo(User::class, 'to_user_id')
-        ->select('id', 'firstname', 'username', 'lastname', 'image', 'email');
+        ->select('id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id');
     }
 
     public function getIsOwnAttribute(){
