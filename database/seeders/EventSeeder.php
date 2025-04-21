@@ -97,7 +97,7 @@ class EventSeeder extends Seeder
             'special_bonus' => 'Free swag for all attendees!',
             'status' => 'PAST EVENT',
             'reg_link' => 'https://example.com/register',
-          
+
 
 
 

@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
     //    $this->call(EventSeeder::class);
        $this->call([
             CategorySeeder::class,
-            BlogSeeder::class,
+            // BlogSeeder::class,
         ]);
         $this->call(FaqSeeder::class);
     }
