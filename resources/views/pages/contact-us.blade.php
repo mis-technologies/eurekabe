@@ -108,14 +108,19 @@
 
       <ul class="flex flex-col gap-4 mt-12">
         <li class="inline-flex gap-4 items-center">
-          <i class="fas fa-phone text-lg"></i>+2348123445678
+          <i class="fas fa-phone text-lg"></i>+44 7438 320955
+
         </li>
         <li class="inline-flex gap-4 items-center">
-          <i class="fa-regular fa-envelope text-lg"></i>hello@eureka.com
+          <i class="fas fa-phone text-lg"></i>
+          +2349038097992
         </li>
         <li class="inline-flex gap-4 items-center">
-          <i class="fas fa-map-marker-alt text-lg"></i>55 London street,
-          Minna
+          <i class="fa-regular fa-envelope text-lg"></i>info@eurekaedu.academy
+        </li>
+        <li class="inline-flex gap-4 items-center">
+          <i class="fas fa-map-marker-alt text-lg"></i>HOUSE 10, APO RESETTLEMENT ZONE E,
+          ABUJA, FCT, NIGERIA
         </li>
       </ul>
 
@@ -168,8 +173,8 @@
   </div>
   <!-- Popup  -->
   <div class="submit_success container bg-white rounded-xl w-full h-fit max-w-[580px] items-center justify-center translate-y-5 py-12 dark:bg-dark relative" id="submit_success">
-    <button 
-      class="absolute top-0 right-0 text-black dark:text-white font-bold text-3xl p-5 rounded-full  flex items-center justify-center cursor-pointer hover:opacity-90" 
+    <button
+      class="absolute top-0 right-0 text-black dark:text-white font-bold text-3xl p-5 rounded-full  flex items-center justify-center cursor-pointer hover:opacity-90"
       id="close_popup"
     >&times;
   </button>
