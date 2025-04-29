@@ -36,7 +36,7 @@ Route::post('advocate/change-password', [AdvocateAuthController::class, 'changeP
 
 Route::group(['middleware'=> 'advocate'], function () {
     Route::get('advocate/dashboard', [AdvocateController::class, 'dashboard'])->name('advocate.dashboard');
-    
+
       // Exams and Results
     Route::get('advocate/exams', [AdvocateExamController::class, 'index'])->name('advocate.exams.index');
     Route::get('advocate/exams/ai', [AdvocateExamController::class, 'aiCreate'])->name('advocate.ai_create_exam');
@@ -50,7 +50,7 @@ Route::group(['middleware'=> 'advocate'], function () {
     Route::get('advocate/results', [AdvocateExamController::class, 'allExamResults'])->name('advocate.results');
     Route::get('advocate/exams/{exam}/questions/{question}', [AdvocateExamController::class, 'getQuestion'])->name('advocate.exams.question.show');
     Route::post('advocate/exams/{exam}/questions/{question}', [AdvocateExamController::class, 'updateQuestion'])->name('advocate.exams.question.update');
-    
+
 
     // Students
     Route::get('advocate/students', [AdvocateStudentController::class, 'getStudents'])->name('advocate.students.index');
@@ -64,7 +64,7 @@ Route::group(['middleware'=> 'advocate'], function () {
     Route::post('advocate/competitions/{competition}/update', [AdvocateCompetitionController::class, 'updateCompetition'])->name('advocate.competitions.update');
     Route::post('advocate/competitions/store', [AdvocateCompetitionController::class, 'storeCompetitions'])->name('advocate.competitions.store');
     Route::get('advocate/competitions/{competition}', [AdvocateCompetitionController::class, 'showCompetition'])->name('advocate.competitions.show');
-    
+
     Route::get('advocate/logout', [AdvocateAuthController::class, 'logout'])->name('advocate.logout');
 
 });

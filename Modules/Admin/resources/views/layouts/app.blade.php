@@ -1361,6 +1361,15 @@
     <!-- Dashboard Project Page js -->
     <script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
 
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 
     <svg id="SvgjsSvg1202" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"
         xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"

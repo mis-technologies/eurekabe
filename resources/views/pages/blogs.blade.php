@@ -33,7 +33,9 @@
                 </div>
                 <div class="cardContent space-y-3">
                     <h4 class="font-bold">{{ $blog->title }}</h4>
-                    <p class="opacity-50 text-[13px]">{{ Str::limit($blog->content, 100 , '...') }}</p>
+                    <p class="opacity-50 text-[13px]">
+                        {{ \Illuminate\Support\Str::limit(strip_tags($blog?->content), 100) }}
+                    </p>
                     <h6 class="font-bold text-[11px]">{{ $blog->created_at->format('d F, Y') }}</h6>
                     <a href="{{ route('blogs.show', $blog->id) }}"
                         class="bg-primary rounded-[5px] p-2 font-bold text-white text-[12px] inline-flex items-center justify-between gap-x-2 hover:bg-opacity-85 readArticle">

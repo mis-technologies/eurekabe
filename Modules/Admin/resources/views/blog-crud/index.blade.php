@@ -29,10 +29,15 @@
 
                     <h4 class="text-sm font-medium text-gray-700 mt-2">{{$blog?->created_at->diffForHumans()}}</h4>
                     <p>
-                        {{ Str::limit($blog?->content, 10, '...') }}
+                        {{ \Illuminate\Support\Str::limit(strip_tags($blog?->content), 100) }}
+                        {{-- {!! Str::limit($blog?->content, 10, '...') !!} --}}
                     </p>
 
 
+                    <a href="{{route('blogs.show', $blog?->id)}}" class="btn bg-success mt-4 text-white"
+                        target="_blank" rel="noopener noreferrer">
+                        View
+                    </a>
                     <a href="{{route('admin.pages.update.blog.view', $blog?->id)}}" class="btn bg-primary mt-4 text-white"
                         target="_blank" rel="noopener noreferrer">
                         Edit

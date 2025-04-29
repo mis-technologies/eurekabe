@@ -147,8 +147,6 @@ public function blogUpdate(BlogUpdateRequest $request, $blog_id=null)
 
     $blog = Blog::updateOrCreate(['id' => $blog_id],$data);
 
-
-
     $notify[]=['success', 'Updated succesfully'];
         return redirect()->back()->withNotify($notify);
 

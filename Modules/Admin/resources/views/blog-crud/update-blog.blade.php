@@ -36,11 +36,7 @@
                             <input class="form-input mt-1 block w-full" placeholder="Enter Your Title"
                                 value="{{$blog?->title}}" name="title" type="text">
                         </div>
-                        <div class="w-100 mt-4 overflow-hidden rounded-t-xl">
-                            <label class="block text-sm font-medium text-gray-700">Content</label>
-                            <textarea id="content" name="content"
-                                class="form-input mt-1 block w-full">{{ $blog?->content ?? 'Enter content here'}}</textarea>
-                        </div>
+
                         <div class="w-100 mt-4 overflow-hidden rounded-t-xl">
                             <label class="block text-sm font-medium text-gray-700">Category</label>
 
@@ -93,6 +89,12 @@
                                 <input type="file" accept="images/*" id="image" name="image"
                                     class="form-input mt-1 block w-50%">
                             </div>
+                        </div>
+
+                        <div class="w-100 mt-4 overflow-hidden rounded-t-xl">
+                            <label class="block text-sm font-medium text-gray-700">Content</label>
+                            <textarea id="editor" name="content" cols="30" rows="10"
+                                class="form-input mt-1 block w-full">{!! $blog?->content ?? 'Enter content here'!!}</textarea>
                         </div>
 
                         <button class="btn bg-primary text-white mt-4" type="submit">

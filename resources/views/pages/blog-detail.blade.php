@@ -54,7 +54,7 @@
  <!-- Content -->
  <div class="content text-base text-justify">
      <!-- ${article.fullContent} -->
-     {{$blog?->content}}
+     {!!$blog?->content!!}
  </div>
 
  <!-- Meta Information -->
