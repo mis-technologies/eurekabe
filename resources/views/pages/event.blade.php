@@ -202,7 +202,7 @@
         document.getElementById('eventTitle').innerText = event.title;
         document.getElementById('eventPrice').innerText = event.price + ' in total prizes';
         document.getElementById('eventDateLocation').innerHTML = `<p class="text-gray-500">${new Date(event.start_datetime).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ${new Date(event.end_datetime).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })} | ${event.duration} hours</p><p class="text-gray-500">${event.location}</p>`;
-        document.getElementById('eventDescription').innerHTML = `<p>${event.description}</p>`;
+        document.getElementById('eventDescription').innerHTML = event.description;
         document.getElementById('eventBonus').innerHTML = event.special_bonus;
 
 

@@ -69,8 +69,8 @@
 
                         <div class="mt-4">
                             <label class="block text-sm font-medium text-gray-700">Description</label>
-                            <textarea class="form-input mt-1 block w-full" name="description" rows="4"
-                                placeholder="Event description">{{ old('description', $event?->description) }}</textarea>
+                            <textarea id="editor" class="form-input mt-1 block w-full" name="description" rows="4"
+                                placeholder="Event description">{!! old('description', $event?->description) !!}</textarea>
                         </div>
 
                         <div class="mt-4">

@@ -15,7 +15,7 @@
         @php
         $assets = env('APP_URL').'/';
         @endphp
-        
+
         <div class="p-6">
             <div class="grid lg:grid-cols-3 gap-6">
                 @foreach ($events as $event)
@@ -26,7 +26,9 @@
                     </div>
 
                     <h4 class="text-sm font-medium text-gray-700 mt-2">{{ $event?->event_date }}</h4>
-                    <p class="text-sm mt-2">{{ $event?->description }}</p>
+                    <p class="text-sm mt-2">{{ \Illuminate\Support\Str::limit(strip_tags($event?->description), 100) }}</p>
+
+
 
                     <a href="{{ route('admin.pages.update.event.view', $event->id) }}" class="btn bg-primary mt-4 text-white" target="_blank" rel="noopener noreferrer">
                         Edit
