@@ -129,7 +129,7 @@
                             </div>
                             <div class="flex-grow">
                                 <h5 class="mb-1">Total Students</h5>
-                                {{-- <p>{{ $stats['total_students'] ?? 9 }}</p> --}}
+                                <p>{{ $students }}</p>
                             </div>
 
                         </div>
@@ -148,7 +148,7 @@
                             </div>
                             <div class="flex-grow">
                                 <h5 class="mb-1">Total Exams</h5>
-                                {{-- <p>{{ $stats['total_exams'] ?? 9 }}</p> --}}
+                                <p>{{ $exams }}</p>
                             </div>
 
                         </div>
@@ -167,7 +167,7 @@
                             </div>
                             <div class="flex-grow">
                                 <h5 class="mb-1">Total Exam Results</h5>
-                                {{-- <p>{{ $stats['total_challenges'] ?? 9 }}</p> --}}
+                                <p>{{ $results }}</p>
                             </div>
 
                         </div>
@@ -186,7 +186,7 @@
                             </div>
                             <div class="flex-grow">
                                 <h5 class="mb-1">Total Questions</h5>
-                                {{-- <p>{{ $stats['total_questions'] ?? 9 }}</p> --}}
+                                <p>{{ $questions }}</p>
                             </div>
 
                         </div>

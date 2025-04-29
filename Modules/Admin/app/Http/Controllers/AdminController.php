@@ -15,13 +15,24 @@ use Modules\Admin\Emails\NotifyUser;
 use App\Models\HomePage;
 use Modules\Admin\Http\Requests\BlogUpdateRequest;
 use Modules\Admin\Http\Requests\EventUpdateRequest;
+use Modules\Common\Models\Student;
+use Modules\Exam\Models\Exam;
+use Modules\Exam\Models\Question;
+use Modules\Exam\Models\Result;
+use Modules\Student\Http\Requests\StudentRequest;
+use Modules\Student\Models\StudentExamResult;
 
 class AdminController extends Controller
 {
    public function dashboard()
    {
 
-        return view('admin::dashboard');
+        $data['students'] = User::where('role', 'student')->count();
+        $data['exams'] = Exam::count();
+        $data['results'] = Result::count();
+        $data['questions'] = Question::count();
+
+        return view('admin::dashboard', $data);
    }
 
    public function allStudents()
