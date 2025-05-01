@@ -25,6 +25,10 @@ class StudentChallengeParticipant extends Model
         'score',
     ];
 
+    public $casts = [
+        'score' => 'decimal:2',
+    ];
+
     public function challenge()
     {
         return $this->belongsTo(StudentChallenge::class, 'challenge_id');
