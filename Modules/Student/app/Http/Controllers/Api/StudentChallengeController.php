@@ -166,7 +166,7 @@ class StudentChallengeController extends Controller
         }
 
 
-        if ($participant->pivot->status !== 'accepted') {
+        if (!$participant || $participant->status !== 'accepted') {
             return response()->json([
                 'success' => false,
                 'message' => 'You have not accepted yet',
@@ -219,7 +219,7 @@ class StudentChallengeController extends Controller
             ], 400);
         }
 
-        if ($participant->pivot->status !== 'accepted') {
+        if ($participant->status !== 'accepted') {
             return response()->json([
                 'success' => false,
                 'message' => 'You have not accepted the challenge yet',
