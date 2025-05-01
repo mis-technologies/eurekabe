@@ -45,7 +45,7 @@
         @endphp
 
  <!-- Image -->
- <img
+ <img style="height: 100%; width: 100%"
    src="{{$assets.$blog?->image}}"
    alt="${article.title}"
    class="w-full h-auto md:w-auto md:h-80 object-cover rounded-lg"

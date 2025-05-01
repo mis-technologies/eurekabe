@@ -108,12 +108,8 @@
 
       <ul class="flex flex-col gap-4 mt-12">
         <li class="inline-flex gap-4 items-center">
-          <i class="fas fa-phone text-lg"></i>+44 7438 320955
+          <i class="fas fa-phone text-lg"></i>+44 7438 320955,  +2349038097992
 
-        </li>
-        <li class="inline-flex gap-4 items-center">
-          <i class="fas fa-phone text-lg"></i>
-          +2349038097992
         </li>
         <li class="inline-flex gap-4 items-center">
           <i class="fa-regular fa-envelope text-lg"></i>info@eurekaedu.academy
@@ -124,7 +120,7 @@
         </li>
       </ul>
 
-      <div class="flex gap-4 mt-24">
+      <div class="flex gap-4 mt-12">
         <a
           href="https://facebook.com"
           target="_blank"
