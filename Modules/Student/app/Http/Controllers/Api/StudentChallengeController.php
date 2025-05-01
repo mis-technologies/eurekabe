@@ -89,12 +89,12 @@ class StudentChallengeController extends Controller
             ], 403);
         }
 
-        if ($participant->status != 'pending') {
-            return response()->json([
-                'success' => false,
-                'message' => 'You can no longer accept this challenge',
-            ], 400);
-        }
+        // if ($participant->status != 'pending') {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'You can no longer accept this challenge',
+        //     ], 400);
+        // }
 
         $challenge->participants()->updateExistingPivot($participant->id, [
             'status' => 'accepted'
