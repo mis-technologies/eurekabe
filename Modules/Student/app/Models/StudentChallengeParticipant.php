@@ -5,9 +5,11 @@ namespace Modules\Student\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+
 // use Modules\Student\Database\Factories\StudentChallengeParticipantFactory;
 
-class StudentChallengeParticipant extends Model
+class StudentChallengeParticipant  extends Model 
 {
     use HasFactory;
 
@@ -28,6 +30,16 @@ class StudentChallengeParticipant extends Model
     public $casts = [
         'score' => 'float',
     ];
+
+    public function getScoreAttribute($value)
+    {
+        return (float) $value;
+    }
+
+    public function setScoreAttribute($value)
+    {
+        $this->attributes['score'] = (float) $value;
+    }
 
     public function challenge()
     {

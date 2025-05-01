@@ -4,6 +4,8 @@ namespace Modules\Student\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Facades\DB;
 use Modules\Exam\Models\Exam;
 
 class StudentChallenge extends Model
@@ -26,10 +28,21 @@ class StudentChallenge extends Model
 
     public function participants()
     {
+        // return $this->belongsToMany(User::class, 'student_challenge_participants', 'challenge_id', 'user_id')
+        //             ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id')
+        //             ->withPivot('student_challenge_participants.status as status', 'student_challenge_participants.score as score')
+        //             ->withTimestamps();
+                   
+
         return $this->belongsToMany(User::class, 'student_challenge_participants', 'challenge_id', 'user_id')
-                    ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id')
-                    ->withPivot('student_challenge_participants.status as status', 'student_challenge_participants.score as score')
-                    ->withTimestamps();
+        ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id')
+        ->withPivot('status')
+        ->withTimestamps()
+        ->addSelect([
+            DB::raw('CAST(student_challenge_participants.score AS FLOAT) as score')
+        ]);
+
+
     }
 
     public function winner()
@@ -37,3 +50,5 @@ class StudentChallenge extends Model
         return $this->belongsTo(User::class, 'winner_id');
     }
 }
+
+
