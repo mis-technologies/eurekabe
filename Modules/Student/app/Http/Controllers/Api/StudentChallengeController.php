@@ -19,9 +19,12 @@ class StudentChallengeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $challenges = StudentChallenge::latest()->whereHas('participants', function ($query) use ($user) {
+        $challenges = StudentChallenge::whereHas('participants', function ($query) use ($user) {
             $query->where('user_id', $user->id);
-        })->with(['exam', 'participants', 'winner'])->get();
+        })
+        ->latest()
+        ->with(['exam', 'participants', 'winner'])
+        ->get();
 
         return response()->json([
             'success' => true,
@@ -163,7 +166,7 @@ class StudentChallengeController extends Controller
         }
 
 
-        if (!$participant || $participant->status !== 'accepted') {
+        if ($participant->pivot->status !== 'accepted') {
             return response()->json([
                 'success' => false,
                 'message' => 'You have not accepted yet',
