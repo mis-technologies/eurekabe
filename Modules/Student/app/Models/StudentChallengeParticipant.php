@@ -26,7 +26,7 @@ class StudentChallengeParticipant extends Model
     ];
 
     public $casts = [
-        'score' => 'decimal:2',
+        'score' => 'float',
     ];
 
     public function challenge()
