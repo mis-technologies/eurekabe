@@ -19,7 +19,7 @@ class StudentChallengeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $challenges = StudentChallenge::whereHas('participants', function ($query) use ($user) {
+        $challenges = StudentChallenge::latest()->whereHas('participants', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })->with(['exam', 'participants', 'winner'])->get();
 
