@@ -20,6 +20,7 @@ class StudentChallenge extends Model
     public const STATUS_PENDING = 'pending';
     public const STATUS_ACCEPTED = 'accepted';
     public const STATUS_COMPLETED = 'completed';
+    public const STATUS_ONGOING = 'ongoing';
 
     public function exam()
     {
@@ -28,12 +29,7 @@ class StudentChallenge extends Model
 
     public function participants()
     {
-        // return $this->belongsToMany(User::class, 'student_challenge_participants', 'challenge_id', 'user_id')
-        //             ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id')
-        //             ->withPivot('student_challenge_participants.status as status', 'student_challenge_participants.score as score')
-        //             ->withTimestamps();
-                   
-
+        
         return $this->belongsToMany(User::class, 'student_challenge_participants', 'challenge_id', 'user_id')
         ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id')
         ->withPivot('student_challenge_participants.status as status')
@@ -48,6 +44,13 @@ class StudentChallenge extends Model
     public function winner()
     {
         return $this->belongsTo(User::class, 'winner_id');
+    }
+    
+
+    //user 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id')->select('id', 'firstname', 'username', 'lastname', 'image');
     }
 }
 

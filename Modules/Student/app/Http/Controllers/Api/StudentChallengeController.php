@@ -39,7 +39,7 @@ class StudentChallengeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Challenges retrieved',
-            'data' => $challenge->load('participants', 'exam'),
+            'data' => $challenge->load('participants', 'exam', 'user'),
         ]);
     }
 
@@ -254,7 +254,6 @@ class StudentChallengeController extends Controller
                 ->where('user_id', $studentExam->user_id)
                 ->first();
 
-            
             if ($participant) {
                 $participant->score = $result['total_marks_earned'];
                 $participant->status = 'submitted';
@@ -275,17 +274,15 @@ class StudentChallengeController extends Controller
                         $challenge->status = StudentChallenge::STATUS_COMPLETED;
                         $challenge->save();
                     }
+                }else{
+                    $challenge->status = StudentChallenge::STATUS_ONGOING;
+                    $challenge->save();
                 }
 
                 event(new ChallengeSubmitted($challenge, $participant->firstname, ));
 
             }
         }
-
-        // change participant status to submitted
-        // $participant = $challenge->participants()->where('user_id', $studentExam->user_id)->first();
-        // dd($participant);
-
        
 
         return response()->json([
