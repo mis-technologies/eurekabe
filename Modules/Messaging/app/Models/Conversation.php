@@ -71,6 +71,15 @@ class Conversation extends Model
         $user = User::find($this->user_id);
         $entityUser = User::find($this->entity_id);
 
+        if(!$entityUser || !$entityUser ){
+            return [
+                'name' => 'Deleted User',
+                'profile_pic' => '',
+                'username' => '',
+                'recent_message' => 'New conversation',
+                'recent_message_created_at' => $this->created_at,
+            ];
+        }
         $recentMessage = Message::where('conversation_id', $this->id)->latest()->first();
         $authUserId = Auth::user()->id;
         if ($user->id == $authUserId) {
