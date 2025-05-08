@@ -71,7 +71,7 @@ class Conversation extends Model
         $user = User::find($this->user_id);
         $entityUser = User::find($this->entity_id);
 
-        if(!$entityUser || !$entityUser ){
+        if(!$entityUser || !$user ){
             return [
                 'name' => 'Deleted User',
                 'profile_pic' => '',
