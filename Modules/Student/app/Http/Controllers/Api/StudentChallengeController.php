@@ -23,7 +23,7 @@ class StudentChallengeController extends Controller
             $query->where('user_id', $user->id);
         })
         ->latest()
-        ->with(['exam', 'participants', 'winner'])
+        ->with(['exam', 'participants', 'winner', 'user'])
         ->get();
 
         return response()->json([
