@@ -3,15 +3,11 @@
 namespace Modules\Auth\Http\Controllers\Api;
 
 use App\Models\User;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+
 use Wotz\VerificationCode\VerificationCode;
 
 class ResetPasswordController extends Controller
@@ -40,7 +36,7 @@ class ResetPasswordController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid email',
-            ]);
+            ], 400);
        }
 
         $isvalid = VerificationCode::verify($input['code'], $user->email);
@@ -48,8 +44,12 @@ class ResetPasswordController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid or expired code',
-            ]);
+            ], 400);
         }
+
+        $user->forceFill([
+            'password' => Hash::make($input['password'])
+        ])->save();
 
         $response = [
             'status' => 'success',
