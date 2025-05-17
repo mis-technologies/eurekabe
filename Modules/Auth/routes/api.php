@@ -37,7 +37,7 @@ Route::namespace('Api')->prefix('v1')->group(function () {
     // AUTHENTICATED
     Route::middleware('auth:sanctum')->prefix('user')->group(function () {
         Route::post('logout', [LoginController::class, 'logout']);
-        Route::post('change-password', [PasswordController::class, 'changePassword']);
+        Route::post('password/change', [PasswordController::class, 'changePassword']);
     });
 
 });
