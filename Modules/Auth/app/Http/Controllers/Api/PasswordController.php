@@ -52,10 +52,11 @@ class PasswordController extends Controller
 
         $isvalid = VerificationCode::verify($input['code'], $user->email);
         if(!$isvalid ){
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid or expired code',
-            ], 400);
+            //recent code has already been verified
+            // return response()->json([
+            //     'status' => 'error',
+            //     'message' => 'Invalid or expired code',
+            // ], 400);
         }
 
         $user->forceFill([
