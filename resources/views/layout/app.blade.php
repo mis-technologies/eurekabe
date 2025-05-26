@@ -335,7 +335,7 @@
     } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
     createChat({
-        webhookUrl: 'https://marktems.app.n8n.cloud/webhook/cd10ddfc-129f-49a3-9d2b-e73f20e28f84/chat',
+        webhookUrl: 'https://abesade.app.n8n.cloud/webhook/cd10ddfc-129f-49a3-9d2b-e73f20e28f84/chat',
         webhookConfig: {
             method: 'POST',
             headers: {}
