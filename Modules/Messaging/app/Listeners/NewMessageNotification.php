@@ -127,7 +127,10 @@ class NewMessageNotification implements ShouldQueue
                 'text' => $summary,
                 'entity' => get_class($from),
                 'entity_id' => $from->id,
-                'meta' => '',
+                'meta' => [
+                    'conversation_id' => $conversation->id,
+                    'message_count' => $totalUnread,
+                ],
             ];
 
             // Send notification
