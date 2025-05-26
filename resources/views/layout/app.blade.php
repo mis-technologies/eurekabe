@@ -18,6 +18,7 @@
     <script defer src="https://kit.fontawesome.com/b4b8be07f5.js" crossorigin="anonymous"></script>
     <!-- App favicon -->
     <link rel="shortcut icon" href="/asset/images/favicon.png" />
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 
     <!-- Scripts -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
@@ -251,6 +252,9 @@
         </div>
     </div>
 
+     {{-- '#n8n-chat --}}
+     <div id="n8n-chat" class="fixed bottom-0 right-0 z-50 w-full max-w-md h-96"></div>
+
 </body>
 
 <script>
@@ -309,7 +313,7 @@
         transition: all 0.3s ease;
     }
 </style>
-
+{{-- 
 <script type="text/javascript">
     var Tawk_API = Tawk_API || {},
         Tawk_LoadStart = new Date();
@@ -322,6 +326,40 @@
         s1.setAttribute('crossorigin', '*');
         s0.parentNode.insertBefore(s1, s0);
     })();
+</script> --}}
+
+
+<script type="module">
+    import {
+        createChat
+    } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    createChat({
+        webhookUrl: 'https://marktems.app.n8n.cloud/webhook/cd10ddfc-129f-49a3-9d2b-e73f20e28f84/chat',
+        webhookConfig: {
+            method: 'POST',
+            headers: {}
+        },
+        target: '#n8n-chat',
+        mode: 'window',
+        chatInputKey: 'chatInput',
+        chatSessionKey: 'sessionId',
+        metadata: {},
+        showWelcomeScreen: false,
+        defaultLanguage: 'en',
+        initialMessages: [
+            'Hi there! 👋',
+        ],
+        i18n: {
+            en: {
+                title: 'Customer Support',
+                subtitle: "",
+                footer: '',
+                getStarted: 'New Conversation',
+                inputPlaceholder: 'Type your question..',
+            },
+        },
+    });
 </script>
 
 </html>
