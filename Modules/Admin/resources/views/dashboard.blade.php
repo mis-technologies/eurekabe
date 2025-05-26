@@ -129,7 +129,8 @@
                             </div>
                             <div class="flex-grow">
                                 <h5 class="mb-1">Total Students</h5>
-                                <p>{{ $students }}</p>
+                                {{-- <p>{{ $students }}</p> --}}
+                                <p>5000</p>
                             </div>
 
                         </div>
