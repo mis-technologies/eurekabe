@@ -77,19 +77,19 @@
                     <li class="font-sans font-bold hover:text-primary {{ Request::is('contact') ? 'active' : '' }}">
                         <a href="/contact">Contact Us</a>
                     </li>
-                   
+
                 </ul>
 
                 <!-- Toggle Switch formerly here-->
 
-                <button" 
+                <button"
                     class="hidden md:block bg-primary p-3 lg:px-4 xl:px-6 max-w-28 xl:max-w-none rounded-[2rem] font-lato font-bold text-white cursor-pointer hover:opacity-90 scale-105">
                     <a href="{{ route('advocate.apply') }}"> Become an Advocate </a>
                 </button>
-              
+
                     {{-- <a href="/advocate/login"> Login</a> --}}
-               
-               
+
+
             </div>
 
             <!-- Toggle Switch -->
@@ -236,7 +236,7 @@
     <!-- Footer Socials -->
     <div class="container flex flex-col items-center justify-between py-7 md:flex-row gap-y-10 dark:text-white">
         <img id="logo" src="/asset/images/logo.png" alt="Eureka EdTech" class="" />
-        <p class="opacity-50 text-sm text-center">&copy; 2024 Eureka. All rights reveserved. For inquries. contact:
+        <p class="opacity-50 text-sm text-center">&copy; 2025 Eureka. All rights reveserved. For inquries. contact:
             info@eurekaedu.academy</p>
         <div class="flex items-center gap-6">
             <a href="https://whatapp.com" target="_blank"><i class="fab fa-whatsapp font-bold text-3xl"></i></a>
