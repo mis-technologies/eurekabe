@@ -145,6 +145,12 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(StudentExamResult::class, 'exam_id');
     }
 
+    // get lastname  attribute
+    public function getLastnameAttribute($value)
+    {
+        return $value ?: '';
+    }
+
     public function isAdvocate()
     {
         return $this->role === 'advocate';

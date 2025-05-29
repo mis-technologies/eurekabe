@@ -47,7 +47,7 @@ class StudentNotificationController extends Controller
                 'id' => $item->id,
                 'title' => $item->data['title'] ?? null,
                 'text' => $item->data['text'] ?? null,
-                'meta' => $item->data['meta'] ?? null,
+                'meta' => (is_object($item->data['meta'] ?? "")) ? $item->data['meta'] : null,
                 'entity' => $item->data['entity'] ?? null,
                 'entity_id' => $item->data['entity_id'] ?? null,
 
@@ -111,7 +111,7 @@ class StudentNotificationController extends Controller
                 'id' => $notification->id,
                 'title' => $notification->data['title'] ?? null,
                 'text' => $notification->data['text'] ?? null,
-                'meta' => $notification->data['meta'] ?? null,
+                'meta' => (is_object($notification->data['meta'] ?? "")) ? $notification->data['meta'] : null,
                 'entity' => $notification->data['entity'] ?? null,
                 'entity_id' => $notification->data['entity_id'] ?? null,
 

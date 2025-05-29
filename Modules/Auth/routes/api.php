@@ -25,14 +25,19 @@ Route::namespace('Api')->prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', [LoginController::class, 'login']);
         Route::post('register', [RegisterController::class, 'register']);
-        Route::post('password/forgot', [PasswordController::class, 'forgetPassword']);
+        Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
         Route::post('password/reset', [PasswordController::class, 'resetPassword']);
         Route::get('email/verify/{id}', [EmailController::class, 'verifyLink'])->name('email.verifylink');
         Route::post('email/verify', [EmailController::class, 'verifyCode'])->name('email.verifycode');
         Route::post('email/resend-code', [EmailController::class, 'resendCode'])->name('email.resendcode');
         Route::post('social/login-google', [SocialAuthController::class, 'loginSocialUserWithGoogleToken']);
         // Route::post('phone/verify', 'PhoneVerificationController@verify')->name('verify.phone');
+    });
 
+    // AUTHENTICATED
+    Route::middleware('auth:sanctum')->prefix('user')->group(function () {
+        Route::post('logout', [LoginController::class, 'logout']);
+        Route::post('password/change', [PasswordController::class, 'changePassword']);
     });
 
 });
