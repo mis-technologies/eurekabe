@@ -31,6 +31,11 @@
                             <input class="form-input mt-1 block w-full" name="title" type="text"
                                 value="{{ old('title', $event?->title) }}" placeholder="Event title">
                         </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-gray-700">CTA Text</label>
+                            <input class="form-input mt-1 block w-full" name="cta_text" type="text"
+                                value="{{ old('cta_text', $event?->cta_text) }}" placeholder="Register now!!">
+                        </div>
 
                         <div class="mt-4">
                             <label class="block text-sm font-medium text-gray-700">Type</label>

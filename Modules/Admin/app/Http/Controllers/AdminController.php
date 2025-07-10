@@ -227,6 +227,7 @@ $encodedSponsors = json_encode($sponsors);
 
 $data = [
     'title' => $validated['title'],
+    'cta_text' => $validated['cta_text'],
     'type' => $validated['type'],
     'start_datetime' => $validated['start_datetime'],
     'end_datetime' => $validated['end_datetime'],

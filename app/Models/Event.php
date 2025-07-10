@@ -21,7 +21,8 @@ class Event extends Model
         'special_bonus',
         'status',
         'reg_link',
-        'image'
+        'image',
+        'cta_text', 
     ];
     protected $casts = [
         'speakers' => 'array',

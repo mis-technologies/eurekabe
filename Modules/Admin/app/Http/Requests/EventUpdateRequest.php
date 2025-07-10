@@ -14,6 +14,7 @@ class EventUpdateRequest extends FormRequest
         return [
 
                 'title' => 'required|string|max:255',
+                'cta_text' => 'nullable|string|max:255',
                 'type' => 'required|string|max:255',
                 'start_datetime' => 'required|date',
                 'end_datetime' => 'required|date|after_or_equal:start_datetime',
