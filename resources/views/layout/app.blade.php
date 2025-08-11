@@ -240,11 +240,12 @@
         <p class="opacity-50 text-sm text-center">&copy; 2025 Eureka. All rights reveserved. For inquries. contact:
             info@eurekaedu.academy</p>
         <div class="flex items-center gap-6">
-            <a href="https://whatapp.com" target="_blank"><i class="fab fa-whatsapp font-bold text-3xl"></i></a>
-            <a href="https://x.com" target="_blank"><i class="fab fa-x-twitter font-bold text-3xl"></i></i></a>
-            <a href="https://telegram.com" target="_blank"><i
-                    class="fab fa-telegram-plane font-bold text-3xl"></i></a>
-            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in font-bold text-3xl"></i></a>
+            <a href="https://chat.whatsapp.com/K9wtsP5rWam1FecyTLRhpA" target="_blank"><i class="fab fa-whatsapp font-bold text-3xl"></i></a>
+            <a href="https://www.instagram.com/eurekaexam" target="_blank"><i class="fab fa-instagram font-bold text-3xl"></i></i></a>
+            <a href="https://www.youtube.com/@eurekaacad" target="_blank"><i class="fab fa-youtube font-bold text-3xl"></i></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61556742701390" target="_blank"><i
+                    class="fab fa-facebook font-bold text-3xl"></i></a>
+            <a href="https://www.linkedin.com/company/eurekaexam/" target="_blank"><i class="fab fa-linkedin-in font-bold text-3xl"></i></a>
         </div>
         <div class="mt-4 md:mt-0">
             <a href="/policy-privacy" class="text-sm text-primary hover:underline">Privacy Policy</a>

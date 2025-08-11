@@ -1,595 +1,575 @@
-
 @extends('layout.app')
 @section('content')
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative overflow-hidden">
+<!-- Hero Section -->
+<section id="hero" class="relative overflow-hidden">
 
-      <div class="morphism z-10 bg-secondary dark:bg-dark dark:text-white py-10 pb-16">
-      <div
-        class="container flex flex-col md:flex-row justify-between h-full md:max-h-[37rem] gap-8"
-      >
-        <!-- Hero Content -->
-        <div
-          class="flex flex-col w-full justify-center items-center gap-5 md:gap-8 md:w-1/2 md:items-start"
-        >
-          <h1
-            class="font-bold font-sans text-3xl text-center leading-normal md:text-start md:text-5xl md:leading-[1.3]"
-          >
-          {{ $homePageData['herosection']['title'] }}
-          </h1>
-          <h4
-            class="text-[20px] font-normal text-center opacity-60 md:text-start"
-          >
-          {{ $homePageData['herosection']['desc'] }}
-          </h4>
-          <div class="hidden md:flex items-center gap-14 mt-5">
-           <a href="{{ $homePageData['herosection']['community_url']}}">
-             <button
-              class="bg-primary px-10 py-4 font-bold text-xl text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
-            >
-              Join the community
-            </button>
-          </a>
-            <div class="flex flex-col items-center font-bold mx-auto justify-between gap-2">
-              <p>It’s absolutely free.</p>
-              <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt="" class="w-24" />
+    <div class="morphism z-10 bg-secondary dark:bg-dark dark:text-white py-10 pb-16">
+        <div class="container flex flex-col md:flex-row justify-between h-full md:max-h-[37rem] gap-8">
+            <!-- Hero Content -->
+            <div class="flex flex-col w-full justify-center items-center gap-5 md:gap-8 md:w-1/2 md:items-start">
+                <h1
+                    class="font-bold font-sans text-3xl text-center leading-normal md:text-start md:text-5xl md:leading-[1.3]">
+                    {{ $homePageData['herosection']['title'] }}
+                </h1>
+                <h4 class="text-[20px] font-normal text-center opacity-60 md:text-start">
+                    {{ $homePageData['herosection']['desc'] }}
+                </h4>
+                <div class="hidden md:flex items-center gap-14 mt-5">
+                    <a href="{{ $homePageData['herosection']['community_url']}}">
+                        <button
+                            class="bg-primary px-10 py-4 font-bold text-xl text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105">
+                            Join the community
+                        </button>
+                    </a>
+                    <div class="flex flex-col items-center font-bold mx-auto justify-between gap-2">
+                        <p>It’s absolutely free.</p>
+                        <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt="" class="w-24" />
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
 
-          <!-- Hero Images -->
-          <div class="w-full md:w-1/2 relative flex justify-between z-10 lg:justify-end gap-3">
-            <!--first col  -->
-              <div class="w-[170px] flex flex-col items-center gap-2">  
-                <div class="bg-[#3B88FFCC] bg-opacity-80 w-full h-[226px] overflow-hidden rounded-[120px] flex items-center justify-center">
-                  <div class="w-full h-full translate-y-5">
-                  <img src="{{ $homePageData['herosection']['img_url']['img1'] }}" alt="" class="object-cover w-full h-full md:scale-90">
-                  </div>
-                </div>
-                <div class="bg-[#00E25ACC] bg-opacity-80 w-full h-[192.67px] overflow-hidden rounded-[50px] flex items-center justify-center">
-                  <div class="w-full h-full">
-                    <img src="{{ $homePageData['herosection']['img_url']['img2'] }}" alt="" class="object-cover w-full h-full">
-                  </div>
-                 </div>
-                 <div class="bg-[#BB86FC] w-full h-[170px] overflow-hidden rounded-full flex items-center justify-center">
-                  <div class="w-full h-full translate-y-5">
-                    <img src="{{ $homePageData['herosection']['img_url']['img3'] }}" alt="" class="object-cover w-full h-full md:scale-95 ">
-                  </div>
-                </div>
+            <!-- Hero Images -->
+            <div class="w-full md:w-1/2 relative flex justify-between z-10 lg:justify-end gap-3">
+                <!--first col  -->
+                <div class="w-[170px] flex flex-col items-center gap-2">
+                    <div
+                        class="bg-[#3B88FFCC] bg-opacity-80 w-full h-[226px] overflow-hidden rounded-[120px] flex items-center justify-center">
+                        <div class="w-full h-full translate-y-5">
+                            <img src="{{ $homePageData['herosection']['img_url']['img1'] }}" alt=""
+                                class="object-cover w-full h-full md:scale-90">
+                        </div>
+                    </div>
+                    <div
+                        class="bg-[#00E25ACC] bg-opacity-80 w-full h-[192.67px] overflow-hidden rounded-[50px] flex items-center justify-center">
+                        <div class="w-full h-full">
+                            <img src="{{ $homePageData['herosection']['img_url']['img2'] }}" alt=""
+                                class="object-cover w-full h-full">
+                        </div>
+                    </div>
+                    <div
+                        class="bg-[#BB86FC] w-full h-[170px] overflow-hidden rounded-full flex items-center justify-center">
+                        <div class="w-full h-full translate-y-5">
+                            <img src="{{ $homePageData['herosection']['img_url']['img3'] }}" alt=""
+                                class="object-cover w-full h-full md:scale-95 ">
+                        </div>
+                    </div>
                 </div>
                 <!--second col  -->
-                <div class="w-[170px] flex flex-col items-center gap-6">      
-                  <div class="bg-[#F77947] w-full h-[226.67px] overflow-hidden rounded-[2rem] rounded-br-[40%] flex items-center justify-center">
-                    <img src="{{ $homePageData['herosection']['img_url']['img4'] }}" alt="" class="object-cover w-full h-full">
-                  </div>
-                  <div class="bg-[#FCAF00] w-full h-[170px] overflow-hidden rounded-full flex items-center justify-center">
-                    <img src="{{ $homePageData['herosection']['img_url']['img5'] }}" alt="" class="object-cover w-full h-full">
-                  </div>
-                  <div class="bg-[#3B88FF] w-full h-[170px] overflow-hidden rounded-full rounded-br-none flex items-center justify-center">
-                    <div class="md:scale-[85%] translate-y-5">
-                      <img src="{{ $homePageData['herosection']['img_url']['img6'] }}" alt="" class="object-cover w-full h-full transform scale-x-[-1] md:translate-y-5 md:translate-x-4">
+                <div class="w-[170px] flex flex-col items-center gap-6">
+                    <div
+                        class="bg-[#F77947] w-full h-[226.67px] overflow-hidden rounded-[2rem] rounded-br-[40%] flex items-center justify-center">
+                        <img src="{{ $homePageData['herosection']['img_url']['img4'] }}" alt=""
+                            class="object-cover w-full h-full">
                     </div>
-                  </div>             
+                    <div
+                        class="bg-[#FCAF00] w-full h-[170px] overflow-hidden rounded-full flex items-center justify-center">
+                        <img src="{{ $homePageData['herosection']['img_url']['img5'] }}" alt=""
+                            class="object-cover w-full h-full">
+                    </div>
+                    <div
+                        class="bg-[#3B88FF] w-full h-[170px] overflow-hidden rounded-full rounded-br-none flex items-center justify-center">
+                        <div class="md:scale-[85%] translate-y-5">
+                            <img src="{{ $homePageData['herosection']['img_url']['img6'] }}" alt=""
+                                class="object-cover w-full h-full transform scale-x-[-1] md:translate-y-5 md:translate-x-4">
+                        </div>
+                    </div>
                 </div>
                 <!-- third col -->
                 <div class="w-[170px] flex flex-col items-center gap-2">
-                  <div class="w-full h-1/3 relative rounded-l-full flex items-center justify-end overlapped">
-                    <div class="h-full w-full overflow-hidden rounded-l-full flex">
-                      <img src="{{ $homePageData['herosection']['img_url']['img7'] }}" alt="" class="object-cover w-full h-full scale-[85%] translate-y-5">
+                    <div class="w-full h-1/3 relative rounded-l-full flex items-center justify-end overlapped">
+                        <div class="h-full w-full overflow-hidden rounded-l-full flex">
+                            <img src="{{ $homePageData['herosection']['img_url']['img7'] }}" alt=""
+                                class="object-cover w-full h-full scale-[85%] translate-y-5">
+                        </div>
                     </div>
-                  </div>
-                  <div class="bg-[#F8BAD1] w-full h-2/3 overflow-hidden rounded-full flex items-center justify-end">
-                    <div class="md:translate-y-1 place-self-end">
-                    <img src="{{ $homePageData['herosection']['img_url']['img8'] }}" alt="" class="object-cover w-full h-full">
-                  </div>
-                  </div>
-                </div>         
-            </div>      
+                    <div class="bg-[#F8BAD1] w-full h-2/3 overflow-hidden rounded-full flex items-center justify-end">
+                        <div class="md:translate-y-1 place-self-end">
+                            <img src="{{ $homePageData['herosection']['img_url']['img8'] }}" alt=""
+                                class="object-cover w-full h-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-       <!-- Join botton for mobile -->
-       <div
-       class="flex flex-col items-center justify-center gap-4 md:hidden z-10"
-     >
-     <a href="{{ $homePageData['herosection']['community_url']}}">
-       <button
-         class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
-       >
-         Join the community
-       </button>
-      </a>
-       <div class="flex flex-col items-center justify-center">
-         <p class="font-bold font-sans text-lg">It’s absolutely free.</p>
-         <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt="" />
-       </div>
-     </div>
-      
-    </div>
-    </div>
-
-      <!-- Hero Icons -->
-      <div class="hidden md:block absolute top-28 -left-1">
-        <img src="{{ asset('asset/images/designs/hero_blue_arrow.png')}}" alt="" />
-      </div>    
-       
-      <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10 md:w-2/3">
-        <div class="particle-container h-full w-full ">
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle1.png')}}" alt="" class="opacity-30 dark:opacity-60">
-          </div>
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle2.png')}}" alt="" class="opacity-30 dark:opacity-60">
-          </div>
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle3.png')}}" alt="" class="opacity-30 dark:opacity-60">
-          </div>         
-      </div> 
-      </div> 
-    </section>
-
-    <!--Partners  -->
-    <section class="container flex flex-col py-16 gap-12 dark:text-white">    
-    <div
-      class="flex flex-col items-center justify-between md:flex-row gap-y-10"
-    >
-      <h2 class="text-3xl font-bold text-center md:max-w-[20rem] md:text-left font-lato">
-        {!! str_replace('Eureka', '<span class="text-primary">Eureka</span>', $homePageData['pathnersection']['title']) !!}
-      </h2>
-      <div class="slider-container relative w-full max-w-xl">
-        <div class="slider-track flex transition-transform duration-300">
-          @foreach ($homePageData['pathnersection']['schools'] as $school)
-          <div class="slide flex items-center justify-between">
-              @if (!empty($school['img_url']))
-                  <img src="{{ $school['img_url'] }}" alt="{{ $school['school_name'] }}" />
-              @else
-                  <div class="w-32 h-32 flex items-center justify-center bg-gray-200">
-                      <span class="text-gray-500">No Image Available</span>
-                  </div>
-              @endif
-              <h5 class="font-bold ml-1 italic font-lato">{{ $school['school_name'] }}</h5>
-          </div>
-      @endforeach
+            <!-- Join botton for mobile -->
+            <div class="flex flex-col items-center justify-center gap-4 md:hidden z-10">
+                <a href="{{ $homePageData['herosection']['community_url']}}">
+                    <button
+                        class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105">
+                        Join the community
+                    </button>
+                </a>
+                <div class="flex flex-col items-center justify-center">
+                    <p class="font-bold font-sans text-lg">It’s absolutely free.</p>
+                    <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt="" />
+                </div>
+            </div>
 
         </div>
-        <button class="prev left-0 transform -translate-y-1/2 rounded-md p-3 z-10">❮</button>
-        <button class="next right-0 transform -translate-y-1/2 rounded-md p-3 z-10">❯</button>
     </div>
-    
-      
+
+    <!-- Hero Icons -->
+    <div class="hidden md:block absolute top-28 -left-1">
+        <img src="{{ asset('asset/images/designs/hero_blue_arrow.png')}}" alt="" />
+    </div>
+
+    <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10 md:w-2/3">
+        <div class="particle-container h-full w-full ">
+            <div class="particle">
+                <img src="{{ asset('asset/images/particle1.png')}}" alt="" class="opacity-30 dark:opacity-60">
+            </div>
+            <div class="particle">
+                <img src="{{ asset('asset/images/particle2.png')}}" alt="" class="opacity-30 dark:opacity-60">
+            </div>
+            <div class="particle">
+                <img src="{{ asset('asset/images/particle3.png')}}" alt="" class="opacity-30 dark:opacity-60">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Partners  -->
+<section class="container flex flex-col py-16 gap-12 dark:text-white">
+    <div class="flex flex-col items-center justify-between md:flex-row gap-y-10">
+        <h2 class="text-3xl font-bold text-center md:max-w-[20rem] md:text-left font-lato">
+            {!! str_replace('Eureka', '<span class="text-primary">Eureka</span>',
+            $homePageData['pathnersection']['title']) !!}
+        </h2>
+        <div class="slider-container relative w-full max-w-xl">
+            <div class="slider-track flex transition-transform duration-300">
+                @foreach ($homePageData['pathnersection']['schools'] as $school)
+                <div class="slide flex items-center justify-between">
+                    @if (!empty($school['img_url']))
+                    <img src="{{ $school['img_url'] }}" alt="{{ $school['school_name'] }}" />
+                    @else
+                    <div class="w-32 h-32 flex items-center justify-center bg-gray-200">
+                        <span class="text-gray-500">No Image Available</span>
+                    </div>
+                    @endif
+                    <h5 class="font-bold ml-1 italic font-lato">{{ $school['school_name'] }}</h5>
+                </div>
+                @endforeach
+
+            </div>
+            <button class="prev left-0 transform -translate-y-1/2 rounded-md p-3 z-10">❮</button>
+            <button class="next right-0 transform -translate-y-1/2 rounded-md p-3 z-10">❯</button>
+        </div>
+
+
     </div>
     <div class="h-[1.3px] w-full bg-primary"></div>
-  </section>
+</section>
 
-    <!-- About Section -->
-    <section id="about" class="relative overflow-hidden">
-      <div
-        class="container flex flex-col justify-between items-center gap-10 md:flex-row pt-20 dark:text-white"
-      >
+<!-- About Section -->
+<section id="about" class="relative overflow-hidden">
+    <div class="container flex flex-col justify-between items-center gap-10 md:flex-row pt-20 dark:text-white">
         <div class="relative w-full md:w-1/2 z-10">
-          <img
-            src="{{ $homePageData['whoarewe']['img_url'] }}"
-            alt=""
-            class="w-full h-auto"
-          />
-          <img
-            src="{{ asset('asset/images/designs/Frame 628898.png')}}"
-            alt=""
-            class="absolute top-0 left-0 -translate-y-1/2 -translate-x-2 rounded-full shadow-lg drop-shadow-lg"
-          />
+            <img src="{{ $homePageData['whoarewe']['img_url'] }}" alt="" class="w-full h-auto" />
+            <img src="{{ asset('asset/images/designs/Frame 628898.png')}}" alt=""
+                class="absolute top-0 left-0 -translate-y-1/2 -translate-x-2 rounded-full shadow-lg drop-shadow-lg" />
         </div>
         <div class="w-full md:w-1/2 flex flex-col gap-3">
-          <h2 class="script-font" style="color:#4F92FE"> {{ $homePageData['whoarewe']['title'] }}</h2>
-          <h1 class="text-2xl font-bold md:text-3xl">
-            {{ $homePageData['whoarewe']['desc'] }}
-          </h1>
-          <p class="opacity-60 text-xl">
-            {{ $homePageData['whoarewe']['content'] }}
-          </p>
-          <ul class="grid grid-cols-2 w-full gap-5 md:gap-x-12 mt-2">
-            @foreach ($homePageData['whoarewe']['points'] as $point)
-            <li class="flex items-center gap-3">
-              <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" /> 
-              <p class="font-medium text-lg opacity-60">{{ $point }}</p>
-            </li>
-            @endforeach
-          </ul>
-          <div class="flex flex-col items-center justify-center gap-4 mt-10">
-            <a href="{{ $homePageData['whoarewe']['community_url'] }}">
-            <button
-              class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
-            >
-              Join the community
-            </button>
-            <a/>
-            <div class="flex flex-col items-center justify-center">
-              <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt=""/>
-            </dv>
-          </div>
-        </div
-      </div>
-      <!-- <div class="absolute top-24 left-0 hidden md:block">
+            <h2 class="script-font" style="color:#4F92FE"> {{ $homePageData['whoarewe']['title'] }}</h2>
+            <h1 class="text-2xl font-bold md:text-3xl">
+                {{ $homePageData['whoarewe']['desc'] }}
+            </h1>
+            <p class="opacity-60 text-xl">
+                {{ $homePageData['whoarewe']['content'] }}
+            </p>
+            <ul class="grid grid-cols-2 w-full gap-5 md:gap-x-12 mt-2">
+                @foreach ($homePageData['whoarewe']['points'] as $point)
+                <li class="flex items-center gap-3">
+                    <img src="{{ asset('asset/images/icons/Check circle.png')}}" alt="" />
+                    <p class="font-medium text-lg opacity-60">{{ $point }}</p>
+                </li>
+                @endforeach
+            </ul>
+            <div class="flex flex-col items-center justify-center gap-4 mt-10">
+                <a href="{{ $homePageData['whoarewe']['community_url'] }}">
+                    <button
+                        class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105">
+                        Join the community
+                    </button>
+                    <a />
+                    <div class="flex flex-col items-center justify-center">
+                        <img src="{{ asset('asset/images/designs/Vector6.png')}}" alt="" />
+                        </dv>
+                    </div>
+            </div </div>
+            <!-- <div class="absolute top-24 left-0 hidden md:block">
         <img src="{{ asset('asset/images/designs/who_we_are_i_l.png')}}" alt="" />
       </div> -->
-      <div class="absolute top-0 left-1/2 rotate-45 -translate-y-8 translate-x-2">
-        <img src="{{ asset('asset/images/designs/purple_top_i.png')}}" alt="" />
-      </div>
-      <div class="absolute bottom-24 right-0 scale-75 hidden md:block">
-        <img src="{{ asset('asset/images/designs/who_we_are_i_r.png')}}" alt="" />
-      </div>
-      <div class="absolute bottom-0 left-0 w-44 h-44">
-        <img
-          src="{{ asset('asset/images/designs/who_we_are_ellipse.png')}}"
-          alt=""
-          class="w-full h-full"
-        />
-      </div>
-    </section>
+            <div class="absolute top-0 left-1/2 rotate-45 -translate-y-8 translate-x-2">
+                <img src="{{ asset('asset/images/designs/purple_top_i.png')}}" alt="" />
+            </div>
+            <div class="absolute bottom-24 right-0 scale-75 hidden md:block">
+                <img src="{{ asset('asset/images/designs/who_we_are_i_r.png')}}" alt="" />
+            </div>
+            <div class="absolute bottom-0 left-0 w-44 h-44">
+                <img src="{{ asset('asset/images/designs/who_we_are_ellipse.png')}}" alt="" class="w-full h-full" />
+            </div>
+</section>
 
-    <!-- Socials -->
-    <div class="container grid grid-cols-2 md:flex items-center justify-center py-20 gap-12 flex-wrap dark:text-white">
-      <div
-        class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2"
-        id="fbI"
-      >
+<!-- Socials -->
+<div class="container grid grid-cols-2 md:flex items-center justify-center py-20 gap-12 flex-wrap dark:text-white">
+    <div class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2" id="fbI">
         <img src="{{ asset('asset/images/socials/mingcute_facebook-line_d.png')}}" alt="" />
         <div class="count">
-          <h1 class="font-semibold text-2xl md:text-[36px]">5K+</h1>
-          <p class="font-semibold opacity-50 text-[15px]">followers</p>
+            <h1 class="font-semibold text-2xl md:text-[36px]">5K+</h1>
+            <p class="font-semibold opacity-50 text-[15px]">followers</p>
         </div>
-      </div>
-      <div
-        class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
-        id="tgI"
-      >
+    </div>
+    <div class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        id="tgI">
         <img src="{{ asset('asset/images/socials/telegram_d.png')}}" alt="" />
         <div class="count">
-          <h1 class="font-semibold text-2xl md:text-[36px]">2K+</h1>
-          <p class="font-semibold opacity-50 text-[15px]">followers</p>
+            <h1 class="font-semibold text-2xl md:text-[36px]">2K+</h1>
+            <p class="font-semibold opacity-50 text-[15px]">followers</p>
         </div>
-      </div>
-      <div
-        class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
-        id="waI"
-      >
+    </div>
+    <div class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        id="waI">
         <img src="{{ asset('asset/images/socials/ic_baseline-whatsapp_d.png')}}" alt="" />
         <div class="count">
-          <h1 class="font-semibold text-2xl md:text-[36px]">1M+</h1>
-          <p class="font-semibold opacity-50 text-[15px]">subscribers</p>
+            <h1 class="font-semibold text-2xl md:text-[36px]">1M+</h1>
+            <p class="font-semibold opacity-50 text-[15px]">subscribers</p>
         </div>
-      </div>
-      <div
-        class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
-        id="inI"
-      >
+    </div>
+    <div class="scale-85 md:scale-100 flex items-center gap-4 pr-4 border-[rgba(0,0,0,0.4)] md:border-r-2 dark:border-[rgba(255,255,255,0.4)]"
+        id="inI">
         <img src="{{ asset('asset/images/socials/mdi_instagram_d.png')}}" alt="" />
         <div class="count">
-          <h1 class="font-semibold text-2xl md:text-[36px]">1K+</h1>
-          <p class="font-semibold opacity-50 text-[15px]">followers</p>
+            <h1 class="font-semibold text-2xl md:text-[36px]">1K+</h1>
+            <p class="font-semibold opacity-50 text-[15px]">followers</p>
         </div>
-      </div>
-      <div class="scale-85 md:scale-100 flex items-center gap-4 pr-4" id="twI">
+    </div>
+    <div class="scale-85 md:scale-100 flex items-center gap-4 pr-4" id="twI">
         <img src="{{ asset('asset/images/socials/mingcute_twitter-line_d.png')}}" alt="" />
         <div class="count">
-          <h1 class="font-semibold text-2xl md:text-[36px]">3K+</h1>
-          <p class="font-semibold opacity-50 text-[15px]">subscribers</p>
+            <h1 class="font-semibold text-2xl md:text-[36px]">3K+</h1>
+            <p class="font-semibold opacity-50 text-[15px]">subscribers</p>
         </div>
-      </div>
+    </div>
+</div>
+
+<!-- Programs -->
+<section id="program" class="bg-secondary py-16 relative dark:bg-dark dark:text-white">
+    <div class="container flex flex-col justify-between gap-10 lg:flex-row z-10">
+        <div class="w-full md:w-1/2 md:max-w-80 flex flex-col gap-4">
+            <h2 class="script-font" style="color:#4F92FE">What we offer</h2>
+            <h1 class="text-2xl font-bold">Our Programs</h1>
+            <p class="text-lg opacity-50">
+                Lead curriculum, events, support, and community engagement. Shape
+                education's future with us!
+            </p>
+            <a href="{{ route('advocate.apply') }}">
+                <button
+                    class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105">
+                    Become an Advocate
+                </button>
+            </a>
+        </div>
+
+        <div class="w-full lg:w-7/12 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div
+                class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark">
+                <img src="{{ asset('asset/images/icons/clarity_note-line.png')}}" alt="" />
+                <h5 class="font-bold text-[16px]">Curriculum Development</h5>
+                <p class="opacity-50 text-[16px]">
+                    Shape engaging learning experiences by designing curriculum and
+                    promoting innovative teaching methods..
+                </p>
+            </div>
+            <div
+                class="relative flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark">
+                <img src="{{ asset('asset/images/icons/carbon_license-third-party (1).png')}}" alt="" />
+                <h5 class="font-bold text-[16px]">Event Organization & Management</h5>
+                <p class="opacity-50 text-[16px]">
+                    Lead in planning and executing school events, fostering a vibrant
+                    and inclusive community.
+                </p>
+                <div class="absolute -bottom-1 right-0 scale-90 translate-y-1/4">
+                    <img src="{{ asset('asset/images/designs/x.png')}}" alt="" />
+                </div>
+            </div>
+            <div
+                class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark">
+                <img src="{{ asset('asset/images/icons/la_chalkboard-teacher.png')}}" alt="" />
+                <h5 class="font-bold text-[16px]">Student Support & Mentoring</h5>
+                <p class="opacity-50 text-[16px]">
+                    Provide guidance and encouragement to students, helping them
+                    navigate challenges and reach their potential.
+                </p>
+            </div>
+            <div
+                class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark">
+                <img src="{{ asset('asset/images/icons/Vector (3).png')}}" alt="" />
+                <h5 class="font-bold text-[16px]">Community Engagement & Advocacy</h5>
+                <p class="opacity-50 text-[16px]">
+                    Advocate for student needs and collaborate with stakeholders to
+                    create a supportive educational environment.
+                </p>
+            </div>
+        </div>
     </div>
 
-    <!-- Programs -->
-    <section id="program" class="bg-secondary py-16 relative dark:bg-dark dark:text-white">
-      <div
-        class="container flex flex-col justify-between gap-10 lg:flex-row z-10"
-      >
-        <div class="w-full md:w-1/2 md:max-w-80 flex flex-col gap-4">
-          <h2 class="script-font" style="color:#4F92FE">What we offer</h2>
-          <h1 class="text-2xl font-bold">Our Programs</h1>
-          <p class="text-lg opacity-50">
-            Lead curriculum, events, support, and community engagement. Shape
-            education's future with us!
-          </p>
-          <a href="{{ route('advocate.apply') }}">
-            <button
-                class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
-            >
-                Become an Advocate
-            </button>
-        </a>
-        </div>
-
-        <div
-          class="w-full lg:w-7/12 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm"
-        >
-          <div
-            class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
-          >
-            <img src="{{ asset('asset/images/icons/clarity_note-line.png')}}" alt="" />
-            <h5 class="font-bold text-[16px]">Curriculum Development</h5>
-            <p class="opacity-50 text-[16px]">
-              Shape engaging learning experiences by designing curriculum and
-              promoting innovative teaching methods..
-            </p>
-          </div>
-          <div
-            class="relative flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
-          >
-            <img
-              src="{{ asset('asset/images/icons/carbon_license-third-party (1).png')}}"
-              alt=""
-            />
-            <h5 class="font-bold text-[16px]">Event Organization & Management</h5>
-            <p class="opacity-50 text-[16px]">
-              Lead in planning and executing school events, fostering a vibrant
-              and inclusive community.
-            </p>
-             <div class="absolute -bottom-1 right-0 scale-90 translate-y-1/4">
-              <img src="{{ asset('asset/images/designs/x.png')}}" alt="" />
-            </div>
-          </div>
-          <div
-            class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
-          >
-            <img src="{{ asset('asset/images/icons/la_chalkboard-teacher.png')}}" alt="" />
-            <h5 class="font-bold text-[16px]">Student Support & Mentoring</h5>
-            <p class="opacity-50 text-[16px]">
-              Provide guidance and encouragement to students, helping them
-              navigate challenges and reach their potential.
-            </p>
-          </div>
-          <div
-            class="flex flex-col items-start p-4 bg-white rounded-2xl gap-4 shadow-primary drop-shadow-lg shadow dark:bg-dark"
-          >
-            <img src="{{ asset('asset/images/icons/Vector (3).png')}}" alt="" />
-            <h5 class="font-bold text-[16px]">Community Engagement & Advocacy</h5>
-            <p class="opacity-50 text-[16px]">
-              Advocate for student needs and collaborate with stakeholders to
-              create a supportive educational environment.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="absolute bottom-0 left-0">
+    <!-- <div class="absolute bottom-0 left-0">
         <img src="{{ asset('asset/images/designs/Vector7.png')}}" alt="" />
       </div> -->
-      <div class="absolute bottom-5 right-0 translate-x-3 hidden md:block">
+    <div class="absolute bottom-5 right-0 translate-x-3 hidden md:block">
         <img src="{{ asset('asset/images/designs/Vector.png')}}" alt="" class="scale-75" />
-      </div>
-      <!-- <div class="absolute top-1/3 left-1/3 scale-75">
+    </div>
+    <!-- <div class="absolute top-1/3 left-1/3 scale-75">
         <img src="{{ asset('asset/images/designs/Vector (1).png')}}" alt="" />
       </div> -->
-      <div class="absolute top-28 -left-1 hidden md:block">
+    <div class="absolute top-28 -left-1 hidden md:block">
         <img src="{{ asset('asset/images/designs/who_we_are_i_l.png')}}" alt="" />
-      </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Founders -->
-     <section id="founders" class="bg-white py-24 relative container md:py-16 dark:bg-dark dark:text-white">
-      <h1 class="font-bold text-3xl text-center mb-10 md:mb-16">
+<!-- Founders -->
+<section id="founders" class="bg-white py-24 relative container md:py-16 dark:bg-dark dark:text-white">
+    <h1 class="font-bold text-3xl text-center mb-10 md:mb-16">
         The Brains Behind Eureka.
-      </h1>
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
+    </h1>
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
         <!-- Marv -->
-        <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
-          <div class="img-container relative">
-            <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
-            <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-              <img src="{{ asset('asset/images/Marv.png')}}" alt="" class="w-full h-full">
+        <div
+            class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+            <div class="img-container relative">
+                <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
+                <div
+                    class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+                    <img src="{{ asset('asset/images/Marv.png')}}" alt="" class="w-full h-full">
+                </div>
             </div>
-          </div>
-          <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
-            <h1 class="font-semibold text-xl">Ejeh Marvelous</h1>
-            <p class="opacity-80 font-light text-lg">CEO & Co-Founder</p>
-            <div class="h-[1.2px] w-full bg-primary"></div>
-            {{-- <p class="text-sm font-normal ">
-              I am a software engineer and digital entrepreneur with 7 years of experience. As co-founder of Trafull and founder of Eureka Online CBT Software, I build impactful, user-focused products. I thrive in creative environments and bring strong leadership, communication, and problem-solving skills to every project.
-            </p> --}}
-          </div>
+            <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
+                <h1 class="font-semibold text-xl">Ejeh Marvelous</h1>
+                <p class="opacity-80 font-light text-lg">CEO & Co-Founder</p>
+                <div class="h-[1.2px] w-full bg-primary"></div>
+                {{-- <p class="text-sm font-normal ">
+                    I am a software engineer and digital entrepreneur with 7 years of experience. As co-founder of
+                    Trafull and founder of Eureka Online CBT Software, I build impactful, user-focused products. I
+                    thrive in creative environments and bring strong leadership, communication, and problem-solving
+                    skills to every project.
+                </p> --}}
+            </div>
         </div>
         <!-- Oche -->
-        <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
-          <div class="img-container relative">
-            <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
-            <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-              <img src="{{ asset('asset/images/Oche.png')}}" alt="" class="w-full h-full">
+        <div
+            class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+            <div class="img-container relative">
+                <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
+                <div
+                    class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+                    <img src="{{ asset('asset/images/Oche.png')}}" alt="" class="w-full h-full">
+                </div>
             </div>
-          </div>
-          <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
-            <h1 class="font-semibold text-xl">Oche Solomon</h1>
-            <p class="opacity-80 font-light text-lg">Co-Founder</p>
-            <div class="h-[1.2px] w-full bg-primary"></div>
-            {{-- <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates ipsam repudiandae magnam voluptate nihil?
+            <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
+                <h1 class="font-semibold text-xl">Oche Solomon</h1>
+                <p class="opacity-80 font-light text-lg">Co-Founder</p>
+                <div class="h-[1.2px] w-full bg-primary"></div>
+                {{-- <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos
+                    possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates
+                    ipsam repudiandae magnam voluptate nihil?
 
-            </p> --}}
-          </div>
+                </p> --}}
+            </div>
         </div>
         <!-- Airon -->
-          <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+        <div
+            class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
             <div class="img-container relative">
-              <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
-              <div class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-              <img src="{{ asset('asset/images/Aaron.png')}}" alt="" class="w-full h-full">
+                <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
+                <div
+                    class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+                    <img src="{{ asset('asset/images/Aaron.png')}}" alt="" class="w-full h-full">
+                </div>
             </div>
-          </div>
-          <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
-            <h1 class="font-semibold text-xl">Aaron Aniebiet</h1>
-            <p class="opacity-80 font-light text-lg">Co-Founder</p>
-            <div class="h-[1.2px] w-full bg-primary"></div>
-            {{-- <p class="text-sm font-normal ">
-              Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of Eureka EduTech, he develops user-centric platforms that transform education. With a background in Physics and Computer Science, he focuses on creating innovative, accessible solutions that empower students and educators.
-            </p> --}}
-          </div>
+            <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
+                <h1 class="font-semibold text-xl">Aaron Aniebiet</h1>
+                <p class="opacity-80 font-light text-lg">Co-Founder</p>
+                <div class="h-[1.2px] w-full bg-primary"></div>
+                {{-- <p class="text-sm font-normal ">
+                    Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of
+                    Eureka EduTech, he develops user-centric platforms that transform education. With a background in
+                    Physics and Computer Science, he focuses on creating innovative, accessible solutions that empower
+                    students and educators.
+                </p> --}}
+            </div>
         </div>
         <!-- Richard -->
-        <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
-          <div class="img-container relative">
-            <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
-            <div class="bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-                <img src="{{ asset('asset/images/Richard-removebg-preview.png')}}" style="height: 100%" alt="">
+        <div
+            class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
+            <div class="img-container relative">
+                <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
+                <div class="bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
+                    <img src="{{ asset('asset/images/Richard-removebg-preview.png')}}" style="height: 100%" alt="">
+                </div>
+            </div>
+            <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
+                <h1 class="font-semibold text-xl">Richard John</h1>
+                <p class="opacity-80 font-light text-lg">Co-founder</p>
+                <div class="h-[1.2px] w-full bg-primary"></div>
+                {{-- <p class="text-sm font-normal ">
+                    I am a designer with 5 years of experience in branding and art, and 3 years in UX research.
+                    Passionate about solving real-world problems, I combine creativity and dedication to deliver
+                    impactful solutions that enhance client value and make a difference.
+                </p> --}}
             </div>
         </div>
-          <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
-            <h1 class="font-semibold text-xl">Richard John</h1>
-            <p class="opacity-80 font-light text-lg">Co-founder</p>
-            <div class="h-[1.2px] w-full bg-primary"></div>
-            {{-- <p class="text-sm font-normal ">
-              I am a designer with 5 years of experience in branding and art, and 3 years in UX research. Passionate about solving real-world problems, I combine creativity and dedication to deliver impactful solutions that enhance client value and make a difference.
-            </p> --}}
-          </div>
-        </div>
-      </div>
-      
-      <div class="absolute top-0 left-10 md:left-[20rem]">
+    </div>
+
+    <div class="absolute top-0 left-10 md:left-[20rem]">
         <img src="{{ asset('asset/images/designs/purple_top_i.png')}}" alt="">
-      </div>
-     </section>
+    </div>
+</section>
 
-    
-    <!-- Download Section -->
-    <section id="download" class="relative">
-      <div class="morphism bg-secondary py-20 relative dark:bg-dark dark:text-white">
-      <div class="container w-full text-center relative flex flex-col items-center">
-        <h1 class="font-bold text-3xl">Download Eureka App Now!</h1>
-        <p class="opacity-50 mt-5">
-          Prepare and take your exams with confidence using our comprehensive platform
-        </p>
 
-        <div class="flex items-center justify-center gap-8 gap-y-4 flex-col md:flex-row text-white mt-14 max-w-lg ">
-          <a href="https://play.google.com/store/apps/details?id=academy.eurekaedu.app" target="_blank">
-          <button class="bg-primary rounded-2xl w-52 p-3 px-5 inline-flex gap-3 items-center transition-all duration-150 ease-in-out hover:bg-opacity-80 hover:scale-105">
-            <img src="{{ asset('asset/images/playStore.png')}}" alt=" ">
-            <div class="flex flex-col gap-1 items-start">
-              <p class="text-xs font-light">Get it on</p>
-              <h1 class="text-sm font-normal">Google Play</h1>
+<!-- Download Section -->
+<section id="download" class="relative">
+    <div class="morphism bg-secondary py-20 relative dark:bg-dark dark:text-white">
+        <div class="container w-full text-center relative flex flex-col items-center">
+            <h1 class="font-bold text-3xl">Download Eureka App Now!</h1>
+            <p class="opacity-50 mt-5">
+                Prepare and take your exams with confidence using our comprehensive platform
+            </p>
+
+            <div class="flex items-center justify-center gap-8 gap-y-4 flex-col md:flex-row text-white mt-14 max-w-lg ">
+                <a href="https://play.google.com/store/apps/details?id=academy.eurekaedu.app" target="_blank">
+                    <button
+                        class="bg-primary rounded-2xl w-52 p-3 px-5 inline-flex gap-3 items-center transition-all duration-150 ease-in-out hover:bg-opacity-80 hover:scale-105">
+                        <img src="{{ asset('asset/images/playStore.png')}}" alt=" ">
+                        <div class="flex flex-col gap-1 items-start">
+                            <p class="text-xs font-light">Get it on</p>
+                            <h1 class="text-sm font-normal">Google Play</h1>
+                        </div>
+                    </button>
+                </a>
+                <a href="https://play.google.com/store" target="_blank">
+                    <button
+                        class="bg-primary rounded-2xl w-52 p-3 px-5 inline-flex gap-3 items-center transition-all duration-150 ease-in-out hover:bg-opacity-80 hover:scale-105">
+                        <img src="{{ asset('asset/images/appStore.png')}}" alt=" ">
+                        <div class="flex flex-col gap-1 items-start">
+                            <p class="text-xs font-light">Get it on</p>
+                            <h1 class="text-sm font-normal">Google Play</h1>
+                        </div>
+                    </button>
+                </a>
             </div>
-          </button>
-        </a>
-        <a href="https://play.google.com/store" target="_blank">
-          <button class="bg-primary rounded-2xl w-52 p-3 px-5 inline-flex gap-3 items-center transition-all duration-150 ease-in-out hover:bg-opacity-80 hover:scale-105">
-            <img src="{{ asset('asset/images/appStore.png')}}" alt=" ">
-            <div class="flex flex-col gap-1 items-start">
-              <p class="text-xs font-light">Get it on</p>
-              <h1 class="text-sm font-normal">Google Play</h1>
+            <div class="absolute top-8 left-0 scale-75 md:top-0 md:left-6 md:scale-90">
+                <img src="{{ asset('asset/images/designs/downloadCurve.png')}}" alt="">
             </div>
-          </button>
-        </a>
         </div>
-        <div class="absolute top-8 left-0 scale-75 md:top-0 md:left-6 md:scale-90">        
-          <img src="{{ asset('asset/images/designs/downloadCurve.png')}}" alt="">
-        </div>
-      </div>
-      
-      <div class="absolute bottom-0 right-0 hidden md:block">        
-        <img src="{{ asset('asset/images/designs/elipse.png')}}" alt="">
-      </div>
-      </div>
 
-      <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10">
+        <div class="absolute bottom-0 right-0 hidden md:block">
+            <img src="{{ asset('asset/images/designs/elipse.png')}}" alt="">
+        </div>
+    </div>
+
+    <div class="absolute top-0 left-0 h-full bg-slate-0 w-full -z-10">
         <div class="particle-container h-full w-full ">
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle1.png')}}" alt="" class="opacity-30 dark:opacity-60">
-          </div>
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle2.png')}}" alt="" class="opacity-30 dark:opacity-60">
-          </div>
-          <div class="particle">
-            <img src="{{ asset('asset/images/particle3.png')}}" alt="" class="opacity-30 dark:opacity-60">
-          </div>                  
-      </div> 
-      </div> 
-     </section>
+            <div class="particle">
+                <img src="{{ asset('asset/images/particle1.png')}}" alt="" class="opacity-30 dark:opacity-60">
+            </div>
+            <div class="particle">
+                <img src="{{ asset('asset/images/particle2.png')}}" alt="" class="opacity-30 dark:opacity-60">
+            </div>
+            <div class="particle">
+                <img src="{{ asset('asset/images/particle3.png')}}" alt="" class="opacity-30 dark:opacity-60">
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Events -->
-    <section id="events" class="py-10 container">
-      <div
-        class="container-box flex flex-col justify-between items-start gap-10 lg:flex-row dark:text-white">      
+<!-- Events -->
+<section id="events" class="py-10 container">
+    <div class="container-box flex flex-col justify-between items-start gap-10 lg:flex-row dark:text-white">
         <div class="w-full md:w-1/2 md:max-w-80 flex flex-col gap-4 mt-0 md:mt-20">
-          <h2 class="script-font" style="color:#4F92FE">Engagement</h2>
-          <h1 class="text-2xl font-bold">Our Events</h1>
-          <p class="text-lg opacity-50">
-            Explore upcoming events and experiences. Eureka's OurEvents is more
-            than just a calendar – it's a portal to a world of exploration,
-            discovery, and endless fun. So, join the adventure, unleash your
-            curiosity, and get ready to learn like never before!
-          </p>
-          <button
-            class="bg-primary w-fit mt-10 px-8 py-3 font-semibold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105"
-          >
-            Become an Advocate
-          </button>
+            <h2 class="script-font" style="color:#4F92FE">Engagement</h2>
+            <h1 class="text-2xl font-bold">Our Events</h1>
+            <p class="text-lg opacity-50">
+                Explore upcoming events and experiences. Eureka's OurEvents is more
+                than just a calendar – it's a portal to a world of exploration,
+                discovery, and endless fun. So, join the adventure, unleash your
+                curiosity, and get ready to learn like never before!
+            </p>
+            <button
+                class="bg-primary w-fit mt-10 px-8 py-3 font-semibold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105">
+                Explore Events
+            </button>
         </div>
 
-       <div class="w-full lg:w-2/3">
-        <div class="w-full flex flex-col items-center gap-5 md:flex-row justify-end">
-          <div id="cardContainer" class="w-full max-w-96">
-          <div class="event-card default" id="card1">
-            <h3 class="font-bold text-2xl">Virtual Escape Rooms</h3>
-            <p class="font-light text-sm text-justify">
-              Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
-            </p>
-            <div class="hidden-content mt-2">
-              <p class="font-light text-sm text-justify">
-                Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
-              </p>
+
+
+        <div class="w-full lg:w-2/3">
+            <div class="w-full flex flex-col items-center gap-5 md:flex-row justify-end">
+                <div id="cardContainer" class="w-full max-w-96">
+                    
+
+                    @foreach ($events->take(3) as $key => $event)
+
+                    @php
+                        $path = $event?->type === 'in_person' ? '/events#physical' : '/events#virtual';
+                    @endphp
+
+                    <div class="event-card{{ $key == 1 ? ' default' : '' }}" id="card{{ $key + 1 }}">
+
+                        <h3 class="font-bold text-2xl">{{$event?->title}}</h3>
+                        <p class="font-light text-sm text-justify">
+                            <a href="{{$path}}" target="_blank" rel="noopener noreferrer">
+                                {{ \Illuminate\Support\Str::words(strip_tags($event?->description), 10, '...See more') }}
+                            </a>
+                            
+                        </p>
+                        <div class="hidden-content mt-2">
+                            
+                        </div>
+                        <div class="relative inline-flex justify-end translate-x-8">
+                            <img src="{{ $event?->image}}" alt="not-found"
+                                class="w-10/12 object-cover" />
+                        </div>
+                    </div>
+
+                    @endforeach
+
+                    
+                </div>
+
+                <div id="cardContainer" class="w-full max-w-96">
+
+                    @foreach ($events->shuffle()->take(1) as $key => $event)
+
+                        @php
+                            $path = $event?->type === 'in_person' ? '/events#physical' : '/events#virtual';
+                        @endphp
+                        
+                        <a href="{{$path}}" target="_blank" rel="noopener noreferrer">
+                            <div class="event-card" id="card4">
+                                <h3 class="font-bold text-2xl">{{$event?->title}}</h3>
+                                
+                                <p class="font-light text-sm text-justify">
+                                    {{ \Illuminate\Support\Str::words(strip_tags($event?->description), 10) }}
+                                </p>
+                                <div class="hidden-content mt-2">
+                                    <p class="font-light text-sm text-justify">
+
+                                    </p>
+                                </div>
+                                <div class="relative inline-flex justify-end translate-x-8">
+                                    <img src="{{ $event?->image}}" alt="not-found"
+                                        class="w-10/12 object-cover" />
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+
+               
+                </div>
             </div>
-            <div class="relative inline-flex justify-end translate-x-8">
-              <img src="{{ asset('asset/images/people-playing-wooden-tower-game 1.png')}}" alt="" class="w-10/12 object-cover" />
-            </div>
-          </div>
-      
-          <div class="event-card default " id="card2">
-            <h3 class="font-bold text-2xl">Virtual Escape Rooms</h3>
-            <p class="font-light text-sm text-justify">
-              Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
-            </p>
-            <div class="hidden-content mt-2">
-              <p class="font-light text-sm text-justify">
-                Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
-              </p>
-            </div>
-            <div class="relative inline-flex justify-end translate-x-8">
-              <img src="{{ asset('asset/images/people-playing-wooden-tower-game 1.png')}}" alt="" class="w-10/12 object-cover" />
-            </div>
-          </div>
-          </div>
-      
-          <div id="cardContainer" class="w-full max-w-96">
-          <div class="event-card" id="card3">
-            <h3 class="font-bold text-2xl">Virtual Escape Rooms</h3>
-            <p class="font-light text-sm text-justify">
-              Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
-            </p>
-            <div class="hidden-content mt-2">
-              <p class="font-light text-sm text-justify">
-                Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
-              </p>
-            </div>
-            <div class="relative inline-flex justify-end translate-x-8">
-              <img src="{{ asset('asset/images/people-playing-wooden-tower-game 1.png')}}" alt="" class="w-10/12 object-cover" />
-            </div>
-          </div>
-      
-          <div class="event-card" id="card4">
-            <h3 class="font-bold text-2xl">Virtual Escape Rooms</h3>
-            <p class="font-light text-sm text-justify">
-              Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
-            </p>
-            <div class="hidden-content mt-2">
-              <p class="font-light text-sm text-justify">
-                Create subject-specific escape rooms where students work together online to solve puzzles and challenges to "escape." This could be done in history, science, or even literature.
-              </p>
-            </div>
-            <div class="relative inline-flex justify-end translate-x-8">
-              <img src="{{ asset('asset/images/people-playing-wooden-tower-game 1.png')}}" alt="" class="w-10/12 object-cover" />
-            </div>
-          </div>
-          </div>
         </div>
-       </div>
-        
-    
+</section>
 
-    </section>
-
-    @endsection
-   
+@endsection

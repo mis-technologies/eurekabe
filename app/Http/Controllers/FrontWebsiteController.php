@@ -21,6 +21,8 @@ class FrontWebsiteController extends Controller
         // Fetch the first record from the HomePage model
         $homePage = HomePage::first();
 
+        $events = Event::latest()->take(10)->get();
+
         if ($homePage) {
             // Decode the JSON data
             $homePageData = [
@@ -118,7 +120,7 @@ class FrontWebsiteController extends Controller
         // dd($homePageData);
 
         // Pass the data to the view
-        return view('welcome', compact('homePageData'));
+        return view('welcome', compact('homePageData', 'events'));
     }
 
     public function events()
