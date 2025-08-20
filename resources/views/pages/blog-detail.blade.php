@@ -52,7 +52,7 @@
  />
 
  <!-- Content -->
- <div class="content text-base text-justify">
+ <div class="content text-base text-justify container-fluid">
      <!-- ${article.fullContent} -->
      {!!$blog?->content!!}
  </div>

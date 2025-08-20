@@ -314,7 +314,7 @@
         transition: all 0.3s ease;
     }
 </style>
-{{-- 
+
 <script type="text/javascript">
     var Tawk_API = Tawk_API || {},
         Tawk_LoadStart = new Date();
@@ -327,9 +327,9 @@
         s1.setAttribute('crossorigin', '*');
         s0.parentNode.insertBefore(s1, s0);
     })();
-</script> --}}
+</script>
 
-
+{{--
 <script type="module">
     import {
         createChat
@@ -361,6 +361,6 @@
             },
         },
     });
-</script>
+</script> --}}
 
 </html>

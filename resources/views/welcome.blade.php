@@ -496,10 +496,12 @@
                 discovery, and endless fun. So, join the adventure, unleash your
                 curiosity, and get ready to learn like never before!
             </p>
-            <button
+            <a href="{{route('pages.events')}}" target="_blank" rel="noopener noreferrer"
+            class="bg-primary w-fit mt-10 px-8 py-3 font-semibold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105">Explore Event</a>
+            {{-- <button
                 class="bg-primary w-fit mt-10 px-8 py-3 font-semibold text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105">
                 Explore Events
-            </button>
+            </button> --}}
         </div>
 
 
@@ -507,7 +509,7 @@
         <div class="w-full lg:w-2/3">
             <div class="w-full flex flex-col items-center gap-5 md:flex-row justify-end">
                 <div id="cardContainer" class="w-full max-w-96">
-                    
+
 
                     @foreach ($events->take(3) as $key => $event)
 
@@ -518,14 +520,14 @@
                     <div class="event-card{{ $key == 1 ? ' default' : '' }}" id="card{{ $key + 1 }}">
 
                         <h3 class="font-bold text-2xl">{{$event?->title}}</h3>
-                        <p class="font-light text-sm text-justify">
+                        <p class="font-light text-sm">
                             <a href="{{$path}}" target="_blank" rel="noopener noreferrer">
                                 {{ \Illuminate\Support\Str::words(strip_tags($event?->description), 10, '...See more') }}
                             </a>
-                            
+
                         </p>
                         <div class="hidden-content mt-2">
-                            
+
                         </div>
                         <div class="relative inline-flex justify-end translate-x-8">
                             <img src="{{ $event?->image}}" alt="not-found"
@@ -535,7 +537,7 @@
 
                     @endforeach
 
-                    
+
                 </div>
 
                 <div id="cardContainer" class="w-full max-w-96">
@@ -545,12 +547,12 @@
                         @php
                             $path = $event?->type === 'in_person' ? '/events#physical' : '/events#virtual';
                         @endphp
-                        
+
                         <a href="{{$path}}" target="_blank" rel="noopener noreferrer">
                             <div class="event-card" id="card4">
                                 <h3 class="font-bold text-2xl">{{$event?->title}}</h3>
-                                
-                                <p class="font-light text-sm text-justify">
+
+                                <p class="font-light text-sm">
                                     {{ \Illuminate\Support\Str::words(strip_tags($event?->description), 10) }}
                                 </p>
                                 <div class="hidden-content mt-2">
@@ -566,7 +568,7 @@
                         </a>
                     @endforeach
 
-               
+
                 </div>
             </div>
         </div>
