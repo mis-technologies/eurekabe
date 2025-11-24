@@ -16,6 +16,7 @@ class HomePage extends Model
         'teamsection', 
         'downloadsection', 
         'engagementsection',
+        'show_volunteer_call',
        
     ];
 }

@@ -63,3 +63,9 @@ Route::post('/upload', function (Request $request) {
 
     return redirect()->back()->with('success', 'File uploaded successfully')->with('file_url', $fileUrl);
 })->name('file.upload');
+
+// Volunteer call & application
+use App\Http\Controllers\VolunteerApplicationController;
+
+Route::get('/volunteer/apply', [VolunteerApplicationController::class, 'showForm'])->name('volunteer.apply');
+Route::post('/volunteer/apply', [VolunteerApplicationController::class, 'submit'])->name('volunteer.apply.submit');

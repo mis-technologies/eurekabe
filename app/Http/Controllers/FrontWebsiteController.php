@@ -38,30 +38,52 @@ class FrontWebsiteController extends Controller
 
             // Prepend APP_URL to image paths
             $appUrl = config('app.url');
-            foreach ($homePageData['herosection']['img_url'] as $key => $value) {
-                $homePageData['herosection']['img_url'][$key] = $appUrl . '/' . $value;
-            }
-            foreach ($homePageData['pathnersection']['schools'] as &$school) {
-                $school['img_url'] = $appUrl . '/' . $school['img_url'];
-            }
-            foreach ($homePageData['whoarewe'] as $key => $value) {
-                if ($key === 'img_url' || $key === 'community_url') {
-                    $homePageData['whoarewe'][$key] = $appUrl . '/' . $value;
+            if (isset($homePageData['herosection']['img_url']) && is_array($homePageData['herosection']['img_url'])) {
+                foreach ($homePageData['herosection']['img_url'] as $key => $value) {
+                    $homePageData['herosection']['img_url'][$key] = $appUrl . '/' . $value;
                 }
             }
-            foreach ($homePageData['socialsection'] as &$social) {
-                if (isset($social['img_url'])) {
-                    $social['img_url'] = $appUrl . '/' . $social['img_url'];
+            if (isset($homePageData['pathnersection']['schools']) && is_array($homePageData['pathnersection']['schools'])) {
+                foreach ($homePageData['pathnersection']['schools'] as &$school) {
+                    if (isset($school['img_url'])) {
+                        $school['img_url'] = $appUrl . '/' . $school['img_url'];
+                    }
                 }
             }
-            foreach ($homePageData['whatweoffer']['services'] as &$service) {
-                $service['img_url'] = $appUrl . '/' . $service['img_url'];
+            if (isset($homePageData['whoarewe']) && is_array($homePageData['whoarewe'])) {
+                foreach ($homePageData['whoarewe'] as $key => $value) {
+                    if ($key === 'img_url' || $key === 'community_url') {
+                        $homePageData['whoarewe'][$key] = $appUrl . '/' . $value;
+                    }
+                }
             }
-            foreach ($homePageData['teamsection']['members'] as &$member) {
-                $member['img_url'] = $appUrl . '/' . $member['img_url'];
+            if (isset($homePageData['socialsection']) && is_array($homePageData['socialsection'])) {
+                foreach ($homePageData['socialsection'] as &$social) {
+                    if (isset($social['img_url'])) {
+                        $social['img_url'] = $appUrl . '/' . $social['img_url'];
+                    }
+                }
             }
-            foreach ($homePageData['downloadsection'] as &$store) {
-                $store['img_url'] = $appUrl . '/' . $store['img_url'];
+            if (isset($homePageData['whatweoffer']['services']) && is_array($homePageData['whatweoffer']['services'])) {
+                foreach ($homePageData['whatweoffer']['services'] as &$service) {
+                    if (isset($service['img_url'])) {
+                        $service['img_url'] = $appUrl . '/' . $service['img_url'];
+                    }
+                }
+            }
+            if (isset($homePageData['teamsection']['members']) && is_array($homePageData['teamsection']['members'])) {
+                foreach ($homePageData['teamsection']['members'] as &$member) {
+                    if (isset($member['img_url'])) {
+                        $member['img_url'] = $appUrl . '/' . $member['img_url'];
+                    }
+                }
+            }
+            if (isset($homePageData['downloadsection']) && is_array($homePageData['downloadsection'])) {
+                foreach ($homePageData['downloadsection'] as &$store) {
+                    if (isset($store['img_url'])) {
+                        $store['img_url'] = $appUrl . '/' . $store['img_url'];
+                    }
+                }
             }
         } else {
             // Set default values if no data is available
@@ -120,7 +142,7 @@ class FrontWebsiteController extends Controller
         // dd($homePageData);
 
         // Pass the data to the view
-        return view('welcome', compact('homePageData', 'events'));
+        return view('welcome', compact('homePageData', 'events', 'homePage'));
     }
 
     public function events()
