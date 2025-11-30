@@ -52,4 +52,9 @@ Route::group(['middleware'=> 'isadmin'], function () {
     Route::get('/admin/pages/event-update-view/{event_id?}', [AdminController::class, 'eventUpdateView'])->name('admin.pages.update.event.view');
     Route::get('/admin/pages/event-delete/{event_id}', [AdminController::class, 'deleteEvent'])->name('admin.pages.delete.event');
 
+    // Volunteer Applications
+    Route::get('/admin/volunteers', [AdminController::class, 'volunteers'])->name('admin.volunteers');
+    Route::get('/admin/volunteers/{id}', [AdminController::class, 'showVolunteer'])->name('admin.volunteers.show');
+    Route::post('/admin/volunteers/{id}/status', [AdminController::class, 'updateVolunteerStatus'])->name('admin.volunteers.update-status');
+
 });

@@ -51,6 +51,13 @@
                                 </li>
 
                                 <li class="menu-item">
+                                    <a href="{{ route('admin.volunteers')}}" class="menu-link">
+                                        <span class="menu-icon"><i class="mgc_user_heart_line"></i></span>
+                                        <span class="menu-text"> Volunteers </span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-item">
                                     <a href="{{route('admin.advocates')}}" class="menu-link">
                                         <span class="menu-icon"><i class="mgc_building_2_line"></i></span>
                                         <span class="menu-text"> Advocates </span>

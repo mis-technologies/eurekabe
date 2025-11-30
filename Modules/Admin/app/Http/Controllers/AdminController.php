@@ -13,6 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use Modules\Admin\Emails\NotifyUser;
 use App\Models\HomePage;
+use App\Models\VolunteerApplication;
 use Modules\Admin\Http\Requests\BlogUpdateRequest;
 use Modules\Admin\Http\Requests\EventUpdateRequest;
 use Modules\Common\Models\Student;
@@ -348,6 +349,34 @@ public static function imageUploader($fileRequest, $user, $folderName)
         } else {
             throw new \Exception('File upload failed.');
         }
+    }
+
+    // Volunteer Application Methods
+    public function volunteers()
+    {
+        $data['volunteers'] = VolunteerApplication::latest()->get();
+        return view('admin::volunteers.index', $data);
+    }
+
+    public function showVolunteer($id)
+    {
+        $data['volunteer'] = VolunteerApplication::findOrFail($id);
+        return view('admin::volunteers.show', $data);
+    }
+
+    public function updateVolunteerStatus(Request $request, $id)
+    {
+        $volunteer = VolunteerApplication::findOrFail($id);
+        
+        $volunteer->update([
+            'status' => $request->status,
+            'reviewed_at' => now(),
+            'reviewed_by' => auth()->id(),
+        ]);
+
+        $statusText = ucfirst($request->status);
+        $notify[] = ['success', "Application has been {$statusText}"];
+        return redirect()->back()->withNotify($notify);
     }
 
 }
