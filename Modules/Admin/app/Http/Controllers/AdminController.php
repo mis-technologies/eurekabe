@@ -367,12 +367,23 @@ public static function imageUploader($fileRequest, $user, $folderName)
     public function updateVolunteerStatus(Request $request, $id)
     {
         $volunteer = VolunteerApplication::findOrFail($id);
+        $oldStatus = $volunteer->status;
         
         $volunteer->update([
             'status' => $request->status,
             'reviewed_at' => now(),
             'reviewed_by' => auth()->id(),
         ]);
+
+        // Send email notification if status changed to approved or rejected
+        if (in_array($request->status, ['approved', 'rejected']) && $oldStatus !== $request->status) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($volunteer->email)
+                    ->send(new \App\Mail\VolunteerApplicationStatus($volunteer, $request->status));
+            } catch (\Exception $e) {
+                \Log::error('Failed to send volunteer status email: ' . $e->getMessage());
+            }
+        }
 
         $statusText = ucfirst($request->status);
         $notify[] = ['success', "Application has been {$statusText}"];
