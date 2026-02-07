@@ -135,7 +135,7 @@
                         <!-- Motivation -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Why do you want to volunteer? * <span class="text-xs text-gray-500">(minimum 100 characters)</span></label>
-                            <textarea name="motivation" rows="3" minlength="100"
+                            <textarea name="motivation" rows="3" minlength="20"
                                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" 
                                       placeholder="Tell us about your motivation..." 
                                       required>{{ old('motivation') }}</textarea>
@@ -145,7 +145,7 @@
                         <!-- Experience -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Previous Experience <span class="text-xs text-gray-500">(minimum 100 characters)</span></label>
-                            <textarea name="experience" rows="3" minlength="100"
+                            <textarea name="experience" rows="3" minlength="20"
                                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" 
                                       placeholder="Any relevant experience...">{{ old('experience') }}</textarea>
                             @error('experience')<span class="text-sm text-red-600">{{ $message }}</span>@enderror
