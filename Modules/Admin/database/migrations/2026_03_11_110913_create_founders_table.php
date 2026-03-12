@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('position');
             $table->string('image_path');
             $table->text('bio')->nullable();
-            $table->integer('order_column')->default(0);
+            $table->unsignedInteger('order_column')->default(0)->unique();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -11,11 +11,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 use Modules\Admin\Emails\NotifyUser;
 use App\Models\HomePage;
 use App\Models\VolunteerApplication;
 use Modules\Admin\Http\Requests\BlogUpdateRequest;
 use Modules\Admin\Http\Requests\EventUpdateRequest;
+use Modules\Admin\Models\Founder;
 use Modules\Common\Models\Student;
 use Modules\Exam\Models\Exam;
 use Modules\Exam\Models\Question;
@@ -69,7 +71,8 @@ class AdminController extends Controller
    {
        $homePage = HomePage::first(); // Assuming there's only one record
        $homePageData = json_decode($homePage, true); // Decode the JSON data into an array
-       return view('admin::pages.home.index', compact('homePage', 'homePageData'));
+       $founders = Founder::orderBy('order_column', 'asc')->get();
+       return view('admin::pages.home.index', compact('homePage', 'homePageData', 'founders'));
    }
 
 
@@ -311,15 +314,6 @@ public function deleteEvent($event_id)
 
 }
 
-
-
-
-
-
-
-
-
-
 public static function imageUploader($fileRequest, $user, $folderName)
     {
         $ext = $fileRequest->getClientOriginalExtension();
@@ -389,5 +383,95 @@ public static function imageUploader($fileRequest, $user, $folderName)
         $notify[] = ['success', "Application has been {$statusText}"];
         return redirect()->back()->withNotify($notify);
     }
+
+    public function bulkUpdate(Request $request)
+    {
+        $request->validate([
+            'founders' => ['required', 'array'],
+            'founders.*.name' => ['required', 'string', 'max:255'],
+            'founders.*.position' => ['required', 'string', 'max:255'],
+            'founders.*.is_active' => ['required', 'boolean'],
+            'founders.*.order_column' => ['required', 'integer', 'min:0'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['nullable', 'image', 'mimes:png', 'max:2048'],
+        ]);
+
+        $founders = $request->input('founders', []);
+        $images = $request->file('images', []);
+
+        // Prevent duplicate order_column in request
+        $orders = collect($founders)->pluck('order_column');
+
+        if ($orders->duplicates()->isNotEmpty()) {
+            return back()
+                ->withErrors(['order_column' => 'Display order must be unique.'])
+                ->withInput();
+        }
+
+        foreach ($founders as $id => $data) {
+
+            $founder = Founder::find($id);
+
+            if (!$founder) {
+                continue;
+            }
+
+            // Handle image upload
+            if (isset($images[$id]) && $images[$id]->isValid()) {
+
+                if ($founder->image_path && File::exists(public_path($founder->image_path))) {
+                    File::delete(public_path($founder->image_path));
+                }
+
+                $image = $images[$id];
+
+                $filename = time().'_'.$image->getClientOriginalName();
+
+                $image->move(public_path('asset/images'), $filename);
+
+                $data['image_path'] = 'asset/images/'.$filename;
+            }
+
+            $founder->update([
+                'name' => $data['name'],
+                'position' => $data['position'],
+                'order_column' => $data['order_column'],
+                'is_active' => $data['is_active'],
+                'image_path' => $data['image_path'] ?? $founder->image_path
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Founders updated successfully.');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'position' => ['required', 'string', 'max:255'],
+            'is_active' => ['required', 'boolean'],
+            'image' => ['required', 'image', 'mimes:png,jpeg,jpg']
+        ]);
+
+        $image = $request->file('image');
+
+        $filename = uniqid().'_'.$image->getClientOriginalName();
+
+        $image->move(public_path('asset/images'), $filename);
+
+        $imagePath = 'asset/images/'.$filename;
+
+        $nextOrder = (Founder::max('order_column') ?? 0) + 1;
+
+        Founder::create([
+            'name' => $validated['name'],
+            'position' => $validated['position'],
+            'order_column' => $nextOrder,
+            'is_active' => $validated['is_active'],
+            'image_path' => $imagePath
+        ]);
+
+        return redirect()->back()->with('success', 'Founder created successfully.');
+}
 
 }
