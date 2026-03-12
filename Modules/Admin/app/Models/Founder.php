@@ -4,7 +4,8 @@ namespace Modules\Admin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Admin\Database\Factories\FounderFactory;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Founder extends Model
 {
@@ -27,21 +28,17 @@ class Founder extends Model
         'order_column' => 'integer'
     ];
 
-    // Scope for ordering
-    public function scopeOrdered($query)
+    /**
+     * Fetch founders where is_active is true and order them in ascending order.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActiveOrdered(Builder $query)
     {
-        return $query->orderBy('order_column');
+        return $query->where('is_active', true)
+                    ->orderBy('order_column', 'asc');
     }
 
-    // Scope for active founders
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
-    }
-
-    // Helper method to get image URL
-    public function getImageUrlAttribute()
-    {
-        return asset('storage/' . $this->image_path);
-    }
+    
 }

@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Faq;
-
+use Modules\Admin\Models\Founder;
 
 class FrontWebsiteController extends Controller
 {
@@ -20,7 +20,9 @@ class FrontWebsiteController extends Controller
     {
         // Fetch the first record from the HomePage model
         $homePage = HomePage::first();
-
+        
+        $founders = Founder::activeOrdered()->get();
+        
         $events = Event::latest()->take(10)->get();
 
         if ($homePage) {
@@ -142,7 +144,7 @@ class FrontWebsiteController extends Controller
         // dd($homePageData);
 
         // Pass the data to the view
-        return view('welcome', compact('homePageData', 'events', 'homePage'));
+        return view('welcome', compact('homePageData', 'events', 'homePage', 'founders'));
     }
 
     public function events()

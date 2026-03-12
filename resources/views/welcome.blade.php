@@ -197,12 +197,12 @@
                             class="bg-primary px-10 py-4 font-semibold text-lg text-white rounded-[2rem] cursor-pointer hover:opacity-80 hover:scale-105">
                             Join the community
                         </button>
-                        <a />
+                    </a>
                         <div class="flex flex-col items-center justify-center">
                             <img src="{{ asset('asset/images/designs/Vector6.png') }}" alt="" />
                             </dv>
                         </div>
-                </div </div>
+                </div> </div>
                 <!-- <div class="absolute top-24 left-0 hidden md:block">
             <img src="{{ asset('asset/images/designs/who_we_are_i_l.png') }}" alt="" />
           </div> -->
@@ -342,94 +342,23 @@
             The Brains Behind Eureka.
         </h1>
         <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
-            <!-- Marv -->
-            <div
+            @foreach ($founders as $founder)
+                <div
                 class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
                 <div class="img-container relative">
                     <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
                     <div
                         class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-                        <img src="{{ asset('asset/images/Marv.png') }}" alt="" class="w-full h-full">
+                        <img src="{{ asset($founder->image_path) }}" alt="" class="w-full h-full">
                     </div>
                 </div>
                 <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
-                    <h1 class="font-semibold text-xl">Ejeh Marvelous</h1>
-                    <p class="opacity-80 font-light text-lg">CEO & Co-Founder</p>
+                    <h1 class="font-semibold text-xl">{{ $founder->name }}</h1>
+                    <p class="opacity-80 font-light text-lg">{{ $founder->position }}</p>
                     <div class="h-[1.2px] w-full bg-primary"></div>
-                    {{-- <p class="text-sm font-normal ">
-                    I am a software engineer and digital entrepreneur with 7 years of experience. As co-founder of
-                    Trafull and founder of Eureka Online CBT Software, I build impactful, user-focused products. I
-                    thrive in creative environments and bring strong leadership, communication, and problem-solving
-                    skills to every project.
-                </p> --}}
                 </div>
             </div>
-            <!-- Oche -->
-            <div
-                class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
-                <div class="img-container relative">
-                    <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
-                    <div
-                        class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-                        <img src="{{ asset('asset/images/Oche.png') }}" alt="" class="w-full h-full">
-                    </div>
-                </div>
-                <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
-                    <h1 class="font-semibold text-xl">Oche Solomon</h1>
-                    <p class="opacity-80 font-light text-lg">Co-Founder</p>
-                    <div class="h-[1.2px] w-full bg-primary"></div>
-                    {{-- <p class="text-sm font-normal ">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatibus rem consequatur quia. Ullam, distinctio deleniti. Quaerat voluptatem voluptatibus quos
-                    possimus itaque accusantium esse sunt! Voluptatum minima numquam placeat maxime incidunt voluptates
-                    ipsam repudiandae magnam voluptate nihil?
-
-                </p> --}}
-                </div>
-            </div>
-            <!-- Airon -->
-            <div
-                class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
-                <div class="img-container relative">
-                    <div class="h-52 w-52 border-accent border-[8px] translate-y-6"></div>
-                    <div
-                        class=" bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-                        <img src="{{ asset('asset/images/Aaron.png') }}" alt="" class="w-full h-full">
-                    </div>
-                </div>
-                <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
-                    <h1 class="font-semibold text-xl">Aaron Aniebiet</h1>
-                    <p class="opacity-80 font-light text-lg">Co-Founder</p>
-                    <div class="h-[1.2px] w-full bg-primary"></div>
-                    {{-- <p class="text-sm font-normal ">
-                    Aaron Aniebiet is a Software Engineer and Techpreneur with expertise in AI and ML. As co-founder of
-                    Eureka EduTech, he develops user-centric platforms that transform education. With a background in
-                    Physics and Computer Science, he focuses on creating innovative, accessible solutions that empower
-                    students and educators.
-                </p> --}}
-                </div>
-            </div>
-            <!-- Richard -->
-            <div
-                class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start">
-                <div class="img-container relative">
-                    <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
-                    <div
-                        class="bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8">
-                        <img src="{{ asset('asset/images/Richard-removebg-preview.png') }}" style="height: 100%"
-                            alt="">
-                    </div>
-                </div>
-                <div class="w-full md:max-w-64 space-y-2 text-center md:text-left">
-                    <h1 class="font-semibold text-xl">Richard John</h1>
-                    <p class="opacity-80 font-light text-lg">Co-founder</p>
-                    <div class="h-[1.2px] w-full bg-primary"></div>
-                    {{-- <p class="text-sm font-normal ">
-                    I am a designer with 5 years of experience in branding and art, and 3 years in UX research.
-                    Passionate about solving real-world problems, I combine creativity and dedication to deliver
-                    impactful solutions that enhance client value and make a difference.
-                </p> --}}
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <div class="absolute top-0 left-10 md:left-[20rem]">
