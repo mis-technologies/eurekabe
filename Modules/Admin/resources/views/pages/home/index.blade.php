@@ -100,11 +100,6 @@
                                 </div>
                             @endforeach
                         </div>
-
-
-
-
-
             </div>
 
             <!-- Update Button -->
@@ -114,7 +109,182 @@
             </form>
 
         </div>
-        </div> <!-- end card -->
+
+        <section id="create-founder" class="container mx-auto py-16 bg-white dark:bg-dark dark:text-white">
+            <div class="max-w-3xl mx-auto mt-12 bg-white dark:bg-gray-900 shadow rounded-lg p-8">
+                <h2 class="text-xl font-semibold mb-6">Create Founder</h2>
+
+                <form action="{{ route('founders.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    @csrf
+
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value="{{ old('name') }}"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                            required
+                        >
+                    </div>
+
+                    <!-- Position -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Position</label>
+                        <input
+                            type="text"
+                            name="position"
+                            value="{{ old('position') }}"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                            required
+                        >
+                    </div>
+
+
+                    <!-- Status -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Status</label>
+                        <select
+                            name="is_active"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                        >
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+
+                    <!-- Image -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Founder Image (PNG only)</label>
+                        <input
+                            type="file"
+                            name="image"
+                            accept="image/*"
+                            class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                            required
+                        >
+                    </div>
+
+                    <div class="pt-4">
+                        <button
+                            type="submit"
+                            class="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90"
+                        >
+                            Create Founder / Team Member
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        @if ($founders->count() > 0)
+          <section id="edit-founders" class="bg-white py-24 relative container md:py-16 dark:bg-dark dark:text-white">
+            <h1 class="font-bold text-3xl text-center mb-10 md:mb-16">
+                Edit Founders
+            </h1>
+            
+            <form method="POST" action="{{ route('founders.update.bulk') }}" enctype="multipart/form-data" class="max-w-4xl mx-auto">
+                @csrf
+                @method('PUT')
+                
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 m-3">
+                    @foreach ($founders as $founder)
+                        <div class="w-full flex flex-col gap-6 gap-y-10 items-center justify-between md:max-w-lg lg:flex-row md:items-start border p-6 rounded-lg">
+                            <div class="img-container relative">
+                                <div class="h-52 w-52 border-primary border-[8px] translate-y-6"></div>
+                                <div class="bg-[#DFDBD7] border-white border-[8px] h-52 w-52 translate-x-6 absolute top-0 right-0 pt-8 overflow-hidden">
+                                    <img src="{{ asset($founder->image_path) }}" alt="{{ $founder->name }}" class="w-full h-full object-cover">
+                                </div>
+                                <div class="space-y-2">
+                                <label for="image_{{ $founder->id }}" class="font-semibold text-sm">Update Image (optional)</label>
+                                <input 
+                                    type="file" 
+                                    name="images[{{ $founder->id }}]" 
+                                    id="image_{{ $founder->id }}"
+                                    accept="image/*"
+                                    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                                >
+                            </div>
+                            </div>
+                            
+                            <div class="w-full md:max-w-64 space-y-4 text-center md:text-left">
+                                <!-- Name Input -->
+                                <div class="space-y-2">
+                                    <label for="name_{{ $founder->id }}" class="font-semibold text-sm">Name</label>
+                                    <input 
+                                        type="text" 
+                                        name="founders[{{ $founder->id }}][name]" 
+                                        id="name_{{ $founder->id }}"
+                                        value="{{ $founder->name }}"
+                                        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                                        required
+                                    >
+                                </div>
+                                
+                                <!-- Position Input -->
+                                <div class="space-y-2">
+                                    <label for="position_{{ $founder->id }}" class="font-semibold text-sm">Position</label>
+                                    <input 
+                                        type="text" 
+                                        name="founders[{{ $founder->id }}][position]" 
+                                        id="position_{{ $founder->id }}"
+                                        value="{{ $founder->position }}"
+                                        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                                        required
+                                    >
+                                </div>
+                                
+                                <!-- Is Active Select -->
+                                <div class="space-y-2">
+                                    <label for="is_active_{{ $founder->id }}" class="font-semibold text-sm">Status</label>
+                                    <select 
+                                        name="founders[{{ $founder->id }}][is_active]" 
+                                        id="is_active_{{ $founder->id }}"
+                                        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                                        required
+                                    >
+                                        <option value="1" {{ $founder->is_active ? 'selected' : '' }}>Active (True)</option>
+                                        <option value="0" {{ !$founder->is_active ? 'selected' : '' }}>Inactive (False)</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Order Column Input -->
+                                <div class="space-y-2">
+                                    <label for="order_column_{{ $founder->id }}" class="font-semibold text-sm">Display Order</label>
+                                    <input 
+                                        type="number" 
+                                        name="founders[{{ $founder->id }}][order_column]" 
+                                        id="order_column_{{ $founder->id }}"
+                                        value="{{ $founder->order_column ?? 0 }}"
+                                        min="0"
+                                        step="1"
+                                        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:border-gray-700"
+                                        required
+                                    >
+                                </div>
+                                
+                                <div class="h-[1.2px] w-full bg-primary mt-4"></div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="text-center mt-10">
+                    <button 
+                        type="submit"
+                        class="px-8 py-3 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors duration-200 font-semibold mb-3"
+                    >
+                        Update All Founders
+                    </button>
+                </div>
+            </form>            
+        </section>  
+        @endif
+        
+        </div> 
 
     </main>
 @endsection

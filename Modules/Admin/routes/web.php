@@ -38,6 +38,8 @@ Route::group(['middleware'=> 'isadmin'], function () {
     // Home Page
     Route::get('/admin/pages/home', [AdminController::class, 'showHomePage'])->name('admin.pages.home');
     Route::post('/admin/pages/home', [AdminController::class, 'updateHomePage'])->name('admin.pages.home.update');
+    Route::put('/admin/founders/update', [AdminController::class, 'bulkUpdate'])->name('founders.update.bulk');
+    Route::post('/admin/founders', [AdminController::class, 'store'])->name('founders.store');
 
 
     // Blog Crud
