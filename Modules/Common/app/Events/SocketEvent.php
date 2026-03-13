@@ -28,7 +28,6 @@ class SocketEvent implements ShouldBroadcastNow
         $this->payload = $payload;
         $this->channel = $channel;
         $this->event = $event;
-        Log::info('SocketEvent Dispatched:', ['channel' => $this->channel, 'event' => $this->event, 'payload' => $this->payload, ]);
     }
 
 
@@ -48,8 +47,8 @@ class SocketEvent implements ShouldBroadcastNow
     public function broadcastOn()
     {
         
-        // return new Channel($this->channel);
-        return new PrivateChannel($this->channel); 
+        return new Channel($this->channel);
+        // return new PrivateChannel($this->channel); 
 
     }
 

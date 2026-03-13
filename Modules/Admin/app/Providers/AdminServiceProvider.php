@@ -3,7 +3,9 @@
 namespace Modules\Admin\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Admin\Http\Middleware\Admin;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,7 @@ class AdminServiceProvider extends ServiceProvider
 
     protected string $moduleNameLower = 'admin';
 
-    
+
     /**
      * Boot the application events.
      */
@@ -23,6 +25,8 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'database/migrations'));
+
+        $this->registerMiddleware();
     }
 
     /**
@@ -117,5 +121,14 @@ class AdminServiceProvider extends ServiceProvider
         }
 
         return $paths;
+    }
+
+
+     /**
+     * Register middleware.
+     */
+    protected function registerMiddleware(): void
+    {
+        Route::aliasMiddleware('isadmin', Admin::class);
     }
 }

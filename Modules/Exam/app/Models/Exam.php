@@ -2,9 +2,12 @@
 
 namespace Modules\Exam\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Modules\Common\Models\School;
 use Modules\File\Models\File;
+use Modules\Common\Models\School;
+use Modules\Common\Models\Student;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Student\Models\StudentExam;
+use Modules\Student\Models\StudentExamResult;
 
 class Exam extends Model
 {
@@ -25,11 +28,14 @@ class Exam extends Model
         'status', 
         'created_by', 
         'updated_by',
+        'question_type',
         'value',
     ];
 
     
     protected $guarded = [];
+
+    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag', 'totalmark', 'exam_type'];
 
     public function school()
     {
@@ -47,8 +53,6 @@ class Exam extends Model
     }
 
    
-
-   
     public function passark()
     {
         return ($this->totalmark * $this->pass_percentage) / 100;
@@ -58,10 +62,85 @@ class Exam extends Model
     public function getImageAttribute()
     {
        $entity =  get_class($this);
-        $examCoverImage = File::where('entity', $entity )->where('entity_id', $this->id)->where('identifier', 'cover_image')->first();
+        $examCoverImage = File::where('entity', $entity )->where('entity_id', $this->id)->where('identifier', 'image')->first();
         if (!$examCoverImage ) {
             return asset('assets/images/noimage.jpg');
         }
         return $examCoverImage->url;
+    }
+
+    public function getRatingAttribute()
+    {
+        $ratings = ExamFeedback::where('exam_id', $this->id)->average('rating');
+        return $ratings;
+    }
+
+    public function getFeedbackCountAttribute()
+    {
+        $ratings = ExamFeedback::where('exam_id', $this->id)->count();
+        return $ratings;
+    }
+
+    public function getQuestionsCountAttribute()
+    {
+        $questions = Question::where('exam_id', $this->id)->count();
+        return $questions;
+    }
+
+    public function getCreatedByAttribute()
+    {
+        $user = School::where('id', $this->school_id)->first();
+        return $user->name ?? 'Anonymous'; 
+    }
+
+    public function getLastUpdatedAtAttribute()
+    {
+        return $this->created_at->format('d M Y');
+    }
+
+    public function getTagAttribute()
+    {
+        $attempts = StudentExam::where('exam_id', $this->id)->count();
+
+        if ($attempts > 100) {
+            return 'Most Engaged';
+        }
+        if ($attempts > 50) {
+            return 'Popular';
+        }
+        if ($attempts > 10) {
+            return 'Trending';
+        }
+        
+        if ($attempts > 5) {
+            return 'Upcoming';
+        }
+
+        return 'New';
+    }
+
+    // get exam totalmark from questions
+    public function getTotalmarkAttribute()
+    {
+        $questions = Question::where('exam_id', $this->id)->get();
+        $totalmark = 0;
+        foreach ($questions as $question) {
+            $totalmark += $question->marks;
+        }
+        return round($totalmark);
+    }
+
+    public function getExamTypeAttribute()
+    {
+        if ($this->question_type == 2) {
+            return 'Written';
+        }
+        return 'Multiple Choice Questions';
+    }
+    public function examResults (){
+        return $this->hasMany(StudentExamResult::class, 'exam_id');
+    }
+    public function recentExamResults (){
+        return $this->hasMany(StudentExamResult::class, 'exam_id')->orderBy('created_at', 'desc')->limit(10);
     }
 }

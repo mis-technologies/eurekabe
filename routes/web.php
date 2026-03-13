@@ -6,22 +6,21 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontWebsiteController::class, 'home']);
 
-Route::get('/blog', [FrontWebsiteController::class, 'blog'])->name('pages.blogs');
-Route::get('/article', [FrontWebsiteController::class, 'article'])->name('pages.article');
+Route::get('/blogs', [FrontWebsiteController::class, 'blog'])->name('blogs');
+Route::get('/blogs/{id}', [FrontWebsiteController::class, 'show'])->name('blogs.show');
 Route::get('/events', [FrontWebsiteController::class, 'events'])->name('pages.events');
 Route::get('/faq', [FrontWebsiteController::class, 'faq'])->name('pages.faq');
 Route::get('/contact', [FrontWebsiteController::class, 'contact'])->name('pages.contact');
 Route::get('/requestForm', [FrontWebsiteController::class, 'requestForm'])->name('pages.requestForm');
+Route::get('/policy-privacy', [FrontWebsiteController::class, 'policyPrivacy'])->name('pages.policy-privacy');
 
 // Onboarding
 
-Route::prefix('advocate')->group(function () {
-    Route::post('/register', [RegisterController::class, 'register'])->name('pages.register');
-});
+// Route::prefix('advocate')->group(function () {
+//     Route::post('/register', [RegisterController::class, 'register'])->name('pages.register');
+// });
 Route::get('/verify-email',[RegisterController::class, 'verifyEmail'] )->name('pages.verify.email');
 Route::post('/verify',[RegisterController::class, 'verify'] )->name('verify');
 Route::post('resend-email', [RegisterController::class, 'resendEmail'])->name('resend.email');
@@ -29,6 +28,11 @@ Route::post('resend-email', [RegisterController::class, 'resendEmail'])->name('r
 Route::get('/upload', function () {
     return view('upload');
 });
+
+Route::post('delete-account', [RegisterController::class, 'deleteAccount'])->name('page.delete-account');
+Route::post('Verify-delete-useraccount', [RegisterController::class, 'VerifyDeleteUserAccount'])->name('verify.delete-useraccount');
+Route::get('/verify-user-request', [RegisterController::class, 'verifyUserRequest'])->name('verifyUserRequest');
+
 
 // Route::post('/upload', function (Request $request){
 //     $request->validate([
@@ -59,3 +63,9 @@ Route::post('/upload', function (Request $request) {
 
     return redirect()->back()->with('success', 'File uploaded successfully')->with('file_url', $fileUrl);
 })->name('file.upload');
+
+// Volunteer call & application
+use App\Http\Controllers\VolunteerApplicationController;
+
+Route::get('/volunteer/apply', [VolunteerApplicationController::class, 'showForm'])->name('volunteer.apply');
+Route::post('/volunteer/apply', [VolunteerApplicationController::class, 'submit'])->name('volunteer.apply.submit');

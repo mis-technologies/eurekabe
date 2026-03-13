@@ -1,4 +1,4 @@
-@extends('advocate::layouts.master')
+@extends('advocate::layouts.app')
 
 @section('content')
     <h1>Hello World</h1>

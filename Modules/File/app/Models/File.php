@@ -34,12 +34,25 @@ class File extends Model
     ];
 
     public function getUrlAttribute(){
-        $path = rawurlencode($this->path);
         // $path = $this->path;
-        $fileLink =  Storage::disk($this->disk)->url($path);
+        // $fileLink =  Storage::disk($this->disk)->url($path);
+        // v2 when file is moved to public folder
+        // $path = $this->path;
         // $fileLink =  asset($path);
-        // dd($fileLink);
+        // return $fileLink;
+
+       
+        $path = rawurlencode($this->path);
+        if($this->disk === 'cloudinary'){
+            $fileLink =  $this->path;
+        }else if($this->disk === 'storage'){
+            $fileLink =  Storage::disk($this->disk)->url($path);
+        }else{
+            $fileLink =  asset($path);
+        }
+        
         return $fileLink;
+
     }
     
 }

@@ -8,6 +8,7 @@ use Ichtrojan\Otp\Otp;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Notifications\ResetPasswordVerificationNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Auth\Http\Requests\ForgetPasswordRequest;
 use Wotz\VerificationCode\VerificationCode;
@@ -46,16 +47,21 @@ class PasswordController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid email',
-            ]);
+            ], 400);
        }
 
         $isvalid = VerificationCode::verify($input['code'], $user->email);
         if(!$isvalid ){
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid or expired code',
-            ]);
+            //recent code has already been verified
+            // return response()->json([
+            //     'status' => 'error',
+            //     'message' => 'Invalid or expired code',
+            // ], 400);
         }
+
+        $user->forceFill([
+            'password' => Hash::make($input['password'])
+        ])->save();
 
         $response = [
             'status' => 'success',
@@ -65,7 +71,9 @@ class PasswordController extends Controller
         return response()->json($response);
     }
 
-    public function forgetPassword(ForgetPasswordRequest $request)
+
+
+    public function forgotPassword(ForgetPasswordRequest $request)
     {
         $input = $request->only('email');
         $user = User::where('email', $input)->first();
@@ -82,8 +90,14 @@ class PasswordController extends Controller
 
     protected function changePassword(Request $request){
         $input = $request->only('old_password', 'new_password', 'new_password_confirmation');
-
-        $authUser = User::find(auth()->user()->id);
+        $userId = Auth::id();
+        $authUser = User::find($userId);
+        if(!$authUser){
+            return response([
+                "status" => "error",
+                "message" => "user not found"
+            ], 404);
+        }
         
         $validator = Validator::make($input, [
             'old_password' => 'required',
@@ -98,7 +112,7 @@ class PasswordController extends Controller
             ],422);
         }
 
-        if(!Hash::check( $input['old_password'], auth()->user()->password)){
+        if(!Hash::check( $input['old_password'], $authUser->password)){
             return response([
                 "status" => "error",
                 "message" => "old password is incorrect"

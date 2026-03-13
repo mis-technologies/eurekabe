@@ -1,35 +1,77 @@
-FROM php:8.1-fpm
-
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    cron \
-    supervisor \
-    && docker-php-ext-install pdo pdo_mysql
-
-# Copy application files
-COPY . /var/www/html
+FROM php:8.3-fpm
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Install Composer dependencies
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    curl \
+    zip \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libicu-dev \
+    libzip-dev \
+    libonig-dev \
+    cron \
+    supervisor \
+    nginx \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql intl zip opcache
+
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev
 
-# Install Node.js dependencies and build assets
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install
-RUN npm run build
 
-# Configure cron job
-RUN echo "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/laravel-scheduler
-RUN chmod 0644 /etc/cron.d/laravel-scheduler
-RUN crontab /etc/cron.d/laravel-scheduler
 
-# Configure supervisor to manage cron
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Override PHP settings for larger file uploads
+RUN echo "upload_max_filesize = 100M" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "post_max_size = 100M" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "memory_limit = 256M" >> /usr/local/etc/php/conf.d/uploads.ini
+    
 
-# Expose port 9000 and start supervisor
-EXPOSE 9000
-CMD ["/usr/bin/supervisord"]
+# Copy existing application directory contents
+COPY . .
+
+# Set permissions
+# RUN chmod -R 775 storage bootstrap/cache
+
+
+# Make sure storage dirs exist and are writable
+RUN mkdir -p storage/framework/views storage/framework/sessions storage/framework/cache bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+
+RUN echo '#!/bin/bash\nchown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache\nexec "$@"' > /entrypoint.sh \
+    && chmod +x /entrypoint.sh
+
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-progress --no-interaction
+
+# Install Node.js & build assets
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install && npm run build
+
+# Nginx configuration
+COPY nginx/default.conf /etc/nginx/sites-available/default
+
+# Supervisord configuration to manage nginx and php-fpm
+COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+
+
+# Create the storage link
+RUN php artisan storage:link
+    
+# Expose ports for Nginx and PHP-FPM
+EXPOSE 80 9000
+
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Start supervisord to manage both Nginx and PHP-FPM
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

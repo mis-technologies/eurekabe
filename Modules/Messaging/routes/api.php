@@ -18,7 +18,7 @@ Route::namespace('Api')->prefix('v1')->group(function() {
     Route::middleware('auth:sanctum')->prefix('messaging')->group(function () {
         Route::post('conversations', [ConversationController::class, 'startConversation']);    
         Route::get('conversations', [ConversationController::class, 'getConversations']);    
-        Route::get('conversations/{id}', [ConversationController::class, 'show']);    
+        Route::get('conversations/{id}', [ConversationController::class, 'getSingleConversation']);    
         Route::get('conversations/{id}/messages', [ConversationController::class, 'getConversationMessages']);    
         Route::post('conversations/{id}/messages', [ConversationController::class, 'sendMessage']);   
     });

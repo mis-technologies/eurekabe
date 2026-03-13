@@ -6,6 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification as BaseNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Log;
+use Modules\Common\Providers\OneSignalProvider;
 
 class Notification extends BaseNotification //implements ShouldQueue
 {
@@ -25,6 +27,12 @@ class Notification extends BaseNotification //implements ShouldQueue
         $this->emailContent = $emailContent;
         $this->dbContent = $dbContent;
         $this->channel = $channel;
+
+        Log::info('Sending OneSignal notification', [
+            'channel' => $this->channel,
+            'emailContent' => $this->emailContent,
+            'dbContent' => $this->dbContent,
+        ]);
     }
 
     /**
@@ -32,7 +40,35 @@ class Notification extends BaseNotification //implements ShouldQueue
      */
     public function via($notifiable): array
     {
-        return (is_array($this->channel) ? $this->channel : [$this->channel]) ?? ['mail'];
+        if (is_array($this->channel) && in_array('push', $this->channel)) {
+            $this->toPush($notifiable); // Pass $notifiable to toPush
+        }
+        $channel = $this->channel;
+
+        // remove push from the channel array
+        if (is_array($channel) && in_array('push', $channel)) {
+            $channel = array_diff($channel, ['push']);
+        }
+        return (is_array($channel) ? $channel : [$channel]) ?? ['mail'];
+    }
+
+    // push notification
+    public function toPush($notifiable)
+    {
+       try {           
+            if(!empty($notifiable->one_signal_id)) {
+                OneSignalProvider::sendToUsers(
+                    [$notifiable->one_signal_id],
+                    $this->dbContent['title'],
+                    $this->dbContent['text'],
+                    [
+                        'data' => $this->dbContent,
+                        'url' => $this->dbContent['url'] ?? null,
+                    ]
+                );
+            } 
+        } catch (\Exception $e) {
+        }
     }
 
     /**

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->double('marks')->unsigned();
             $table->text('written_ans')->nullable()->comment('when exam type is written this field is fillable');
             $table->foreignId('question_type_id')->default(1);
-            $table->integer('status')->comment('1 = Active, 2 = Pending');
+            $table->integer('status')->default(1)->comment('1 = Active, 2 = Pending');
             $table->timestamps();
         });
 

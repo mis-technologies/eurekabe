@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Modules\Exam\Models\Exam;
 use Illuminate\Http\Request;
 use Modules\Common\Models\School;
+use Modules\Exam\Models\ExamFeedback;
 use Modules\Exam\Models\Subject;
 use Modules\Student\Models\StudentFavoriteExam;
 
@@ -18,6 +19,11 @@ class ExploreExamController extends Controller
     {
         // Initialize query builder for Exam
         $query = Exam::query();
+
+        $query->where('status', 1); // Only show exams that are active
+
+        // filter out do not have  questions
+        $query->whereHas('questions');
 
         // Filtering (e.g., by subject or level)
         if ($request->has('subject')) {
@@ -114,8 +120,10 @@ class ExploreExamController extends Controller
      */
     public function popular()
     {
-        // Retrieve exams based on a popularity metric, e.g., number of views or enrollments
-        $exams = Exam::orderBy('popularity', 'desc')->limit(10)->get();
+        $query = Exam::query();
+        $query->where('status', 1); // Only show exams that are active
+        $query->whereHas('questions');
+        $exams = $query->orderBy('popularity', 'desc')->limit(10)->get();
 
         // Return API response
         return response()->json([
@@ -129,8 +137,10 @@ class ExploreExamController extends Controller
      */
     public function recommend()
     {
-        // Retrieve recommended exams based on user preferences, past performance, or similar criteria
-        $recommendedExams = Exam::where('recommended', true)->get();
+        $query = Exam::query();
+        $query->where('status', 1);
+        $query->whereHas('questions');
+        $recommendedExams =  $query->where('recommended', true)->get();
 
         // Return API response
         return response()->json([
@@ -164,6 +174,25 @@ class ExploreExamController extends Controller
             'data' => $favorite,
         ]);
 
+    }
+
+
+    // method to retrieve exam feedbacks
+    public function getExamFeedbacks($exam_id)
+    {
+        $exam = Exam::find($exam_id);
+        if (!$exam) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exam not found',
+            ], 404);
+        }
+
+        $feedbacks = ExamFeedback::where('exam_id', $exam->id)->paginate(50);
+        return response()->json([
+            'success' => true,
+            'data' => $feedbacks,
+        ]);
     }
 
 

@@ -10,10 +10,17 @@ use Modules\Common\Models\School;
 use Modules\File\Models\File;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+use Modules\Student\Models\StudentExamResult;
 
 class User extends Authenticatable implements FilamentUser
 {
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     use HasFactory, Notifiable, HasApiTokens;
 
     /**
@@ -57,6 +64,8 @@ class User extends Authenticatable implements FilamentUser
         'position',
         'leading_attribute',
         'refereed_by',
+        'deleted_at',
+        'one_signal_id',
     ];
 
 
@@ -113,5 +122,37 @@ class User extends Authenticatable implements FilamentUser
     public function getNameAttribute()
     {
         return "{$this->firstname} {$this->lastname}";
+    }
+
+    private function generateSlug($name)
+    {
+        if (static::whereUsername($slug = Str::slug($name, '-'))->exists()) {
+            $user = static::latest('id')->first();
+            return "{$slug}" . $user->id + rand();
+        }
+        return $slug;
+    }
+
+    public function generateUsername()
+    {
+        if (!$this->username) {
+            $this->username = $this->generateSlug($this->firstname . $this->lastname);
+            $this->save();
+        }
+    }
+
+    public function examResults (){
+        return $this->hasMany(StudentExamResult::class, 'exam_id');
+    }
+
+    // get lastname  attribute
+    public function getLastnameAttribute($value)
+    {
+        return $value ?: '';
+    }
+
+    public function isAdvocate()
+    {
+        return $this->role === 'advocate';
     }
 }

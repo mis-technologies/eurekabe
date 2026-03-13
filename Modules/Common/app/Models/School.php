@@ -27,6 +27,8 @@ class School extends Model
     ];
 
     protected $dates = ['deleted_at'];
+    // appends advocate
+    public $appends = ['advocate', 'student_count'];
 
     public function exams()
     {
@@ -37,16 +39,22 @@ class School extends Model
     {
         return $this->belongsToMany(User::class)->withPivot('role');
     }
+
+    public function getAdvocateAttribute(){
+        if(! $advocate = User::where('school_id', $this->id)->where('role', 'advocate')->first()){
+            $advocate = User::where('email', 'advocate@eureka.live')->first();
+
+        }
+        return [
+            'id' => $advocate->id,
+            'firstname' => $advocate->firstname,
+            'lastname' =>$advocate->lastname,
+            'email' => $advocate->email
+        ];
+
+    }
+
+    public function getStudentCountAttribute(){
+        return User::where('school_id', $this->id)->where('role', 'student')->count();
+    }
 }
-
-
-// Attaching a User with a Specific Role:
-// $school->users()->attach($user->id, ['role' => 'advocate']);
-
-
-// Updating a User's Role:
-// $school->users()->updateExistingPivot($user->id, ['role' => 'follower']);
-
-
-// You can filter users based on their role in a specific school:
-//     $advocates = $school->users()->wherePivot('role', 'advocate')->get();

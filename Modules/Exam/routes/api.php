@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Exam\Http\Controllers\AIExamController;
 use Modules\Exam\Http\Controllers\ExamController;
 
 /*
@@ -18,4 +19,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('exam', ExamController::class)->names('exam');
 });
 
+
+Route::post('generate-questions-batch', [AIExamController::class, 'generateQuestions']);
+Route::post('save-generated-ai-exam', [AIExamController::class, 'saveGeneratedExam']);
 

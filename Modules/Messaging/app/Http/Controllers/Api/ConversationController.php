@@ -6,10 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Modules\File\Facades\FileFacade;
-use Modules\Messaging\Models\Conversation;
 use Modules\Messaging\Events\MessageSentEvent;
 use Modules\Messaging\Http\Requests\StartConversationRequest;
+use Modules\Messaging\Models\Conversation;
 use Modules\Messaging\Models\Message;
 
 class ConversationController extends Controller
@@ -24,21 +23,19 @@ class ConversationController extends Controller
         $user = Auth::user();
         $conversations = Conversation::where(function ($query) use ($user) {
             $query->where('user_id', $user->id)
-                  ->orWhere(function ($query) use ($user) {
-                      $query->where('entity', 'App\Models\User')
-                            ->where('entity_id', $user->id);
-                  });
+                ->orWhere(function ($query) use ($user) {
+                    $query->where('entity', 'App\Models\User')
+                        ->where('entity_id', $user->id);
+                });
         })->paginate(30);
         return response()->json([
             'status' => 'success',
             'message' => 'User conversations retreived successfully',
-            'data' => $conversations
+            'data' => $conversations,
         ]);
     }
 
-
-
-     /**
+    /**
      * Store a newly created resource in storage.
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -46,61 +43,59 @@ class ConversationController extends Controller
     public function startConversation(StartConversationRequest $request)
     {
         $validated = $request->validated();
-        $authUser =  Auth::user();
-        if( $validated['recipient_type'] == 'user' ){
+        $authUser = Auth::user();
+        if ($validated['recipient_type'] == 'user') {
             $validated['entity'] = 'App\Models\User';
             $validated['entity_id'] = $validated['recipient_id'];
         }
 
-        if( $validated['recipient_type'] == 'school' ){
+        if ($validated['recipient_type'] == 'school') {
             $validated['entity'] = 'Modules\School\Models\School';
             $validated['entity_id'] = $validated['recipient_id'];
         }
 
         //start conversation here if it doesn't exists before
-        $conversation = Conversation::updateOrCreate(
-            [ 'user_id' => $authUser->id,  'entity_id' =>  $validated['entity_id'], 'entity' => $validated['entity']   ],
-            [ 
-                'entity_id' =>  $validated['entity_id'], 
-                'entity' => $validated['entity'], 
-                'user_id' => $authUser->id
-            ],
-        );
+        $existingConversation = Conversation::where(function ($query) use ($authUser, $validated) {
+            // First set of conditions as a group
+            $query->where(function ($q) use ($authUser, $validated) {
+                $q->where('user_id', $authUser->id)
+                  ->where('entity_id', $validated['entity_id'])
+                  ->where('entity', $validated['entity']);
+            })
+            // OR second set of conditions as a group
+            ->orWhere(function ($q) use ($authUser, $validated) {
+                $q->where('user_id', $validated['entity_id'])
+                  ->where('entity_id', $authUser->id)
+                  ->where('entity', $validated['entity']);
+            });
+        })->first();
 
-       
-        // $message = Message::create([
-        //     'conversation_id' => $conversation->id, 
-        //     'user_id' => $authUser->id, 
-        //     'to_user_id' => $validated['recipient_id'], 
-        //     'text' => $validated['text'] 
-        // ]);
-
-
-        // if( $request->files->count() ){
-        //     $files = $request->files;
-        //     foreach ($files as $key => $value) {
-        //         FileFacade::defaultUpload($value, $message, identifier: $key);  
-        //     }
-        // }
+        // If no conversation exists, then create a new one
+        if (!$existingConversation) {
+            $conversation = Conversation::create([
+                'user_id' => $authUser->id,
+                'entity_id' => $validated['entity_id'],
+                'entity' => $validated['entity'],
+            ]);
+        } else {
+            $conversation = $existingConversation;
+        }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Conversation started successfully',
-            'data' => $conversation
-        ],200);
+            'data' => $conversation,
+        ], 200);
     }
 
-
-
-   
     /**
      * Show the specified resource.
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getSingleConversation(Request $request,  $id)
+    public function getSingleConversation(Request $request, $id)
     {
-        if(!$conversation = Conversation::whereId($id)->orWhere('uuid', $id)->first()){
+        if (!$conversation = Conversation::whereId($id)->orWhere('uuid', $id)->first()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Conversation not found',
@@ -110,7 +105,7 @@ class ConversationController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'User conversation retrieved successfully',
-            'data' => $conversation
+            'data' => $conversation,
         ]);
     }
 
@@ -121,21 +116,29 @@ class ConversationController extends Controller
      */
     public function getConversationMessages(Request $request, $id)
     {
-       
-        if(!$conversation = Conversation::whereId($id)->orWhere('uuid', $id)->first()){
+
+        if (!$conversation = Conversation::whereId($id)->orWhere('uuid', $id)->first()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Conversation not found',
             ], 400); //
         }
+
+        
+        
+        // I should mark all conversations within the chat sent to the current logged in user, fetching the messages as read
+        if ($conversation->entity == get_class(new User())) {
+            $conversation->messages()->where('to_user_id', Auth::user()->id)->update(['read_at' => now()]);
+        }
+
         $messages = $conversation->messages()->latest()->paginate(50);
+
         return response()->json([
             'status' => 'success',
             'message' => 'User conversation messages retrieved successfully',
-            'data' => $messages
+            'data' => $messages,
         ]);
     }
-
 
     /**
      * Show the specified resource.
@@ -144,32 +147,32 @@ class ConversationController extends Controller
      */
     public function sendMessage(Request $request, $id)
     {
-        $authUser =  Auth::user();
-        if(!$conversation = Conversation::find($id) ){
+        $authUser = Auth::user();
+        if (!$conversation = Conversation::find($id)) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Conversation not found',
-            ], 404); 
+            ], 404);
         }
 
         $payload = $request->validate([
-            'text' => 'sometimes'
+            'text' => 'sometimes',
         ]);
-       
+
         $payload['user_id'] = $authUser->id;
-        if($conversation->entity == get_class(new User() )){
-            
-            if($payload['user_id'] == $conversation->entity_id  ){
+        if ($conversation->entity == get_class(new User())) {
+
+            if ($payload['user_id'] == $conversation->entity_id) {
                 $payload['to_user_id'] = $conversation->user_id;
             }
-            
+
             //if the person that started the conversation is sending message
-            if($payload['user_id'] == $conversation->user_id  ){
+            if ($payload['user_id'] == $conversation->user_id) {
                 $payload['to_user_id'] = $conversation->entity_id;
             }
         }
         $message = $conversation->messages()->create($payload);
-        event( new MessageSentEvent( $message) );
+        event(new MessageSentEvent($message));
         return response()->json([
             'success' => true,
             'message' => 'Conversations message created successfully',
@@ -177,9 +180,7 @@ class ConversationController extends Controller
         ]);
     }
 
-
-
-     /**
+    /**
      * Remove the specified resource from storage.
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
@@ -187,12 +188,12 @@ class ConversationController extends Controller
     public function deleteConversationMessage($id)
     {
         $user = Auth::user();
-        $mes = Message::whereUserId( $user->id)->whereId($id)->first();
+        $mes = Message::whereUserId($user->id)->whereId($id)->first();
         $mes->delete();
         return response()->json([
             'status' => 'success',
             'message' => 'Message deleted successfully',
-        ],200);
+        ], 200);
     }
 
 }

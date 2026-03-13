@@ -40,7 +40,6 @@ dd($email);
             <form action="{{route('verify')}}" method="POST" class="form mb-5">
 
                 @csrf
-
                 <h3 class="text-xl lg:text-3xl font-bold mb-10 tracking-wider lg:text-start text-flip-container">
                     Verify<br />Email Form
                     {{-- <span class="text-primary" id="text-container">an Advocate.</span> --}}
@@ -51,18 +50,14 @@ dd($email);
                     <input name="ver_code" type="number" required placeholder="123456"
                         class="p-2 px-5 border rounded-full w-full bg-transparent" />
                         <input type="hidden" name="email" id="emailInput">
-
                 </div>
 
                 <div class="form-group w-full">
-
-
                     <button type="submit"
                         class="bg-primary w-full text-white px-4 py-2 mt-5 rounded-full disabled:bg-[#D9D9D9] disabled:text-gray-500 disabled:cursor-not-allowed">
                         Verify
                     </button>
                 </div>
-
             </form>
 
             <form action="{{route('resend.email')}}" method="post">
@@ -138,10 +133,10 @@ dd($email);
         }
     });
 </script>
-{{-- 
+
 <script>
-    const dashboardUrl = "{{ route('advocate.dashboard') }}";
-</script> --}}
+    const dashboardUrl = "/";
+</script>
 
 <script src="/asset/src/scripts/main.js"></script>
 

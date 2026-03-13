@@ -15,7 +15,6 @@ class ExamDatabaseSeeder extends Seeder
             QuestionTypeSeeder::class,
             ExamsSeeder::class,
             QuestionsSeeder::class,
-            QuestionOptionSeeder::class,
             SubjectsSeeder::class
         ]);
     }

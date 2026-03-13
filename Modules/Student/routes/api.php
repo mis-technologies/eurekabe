@@ -5,6 +5,7 @@ use Modules\Student\Http\Controllers\Api\StudentController;
 use Modules\Student\Http\Controllers\Api\StudentExamController;
 use Modules\Student\Http\Controllers\Api\StudentLeaderBoardController;
 use Modules\Student\Http\Controllers\Api\StudentNotificationController;
+use Modules\Student\Http\Controllers\Api\StudentChallengeController;
 
 /*
  *--------------------------------------------------------------------------
@@ -57,6 +58,18 @@ Route::namespace('Api')->prefix('v1')->group(function () {
             Route::get('notifications/{notification}/mark-read', [StudentNotificationController::class, 'markAsRead']);
         });      
 
+
+        // Challenges
+        Route::middleware('auth:api')->group(function () {
+            Route::get('challenges', [StudentChallengeController::class, 'index']);
+            Route::get('challenges/{challenge}', [StudentChallengeController::class, 'show']);
+            Route::post('challenges', [StudentChallengeController::class, 'createChallenge']);
+            Route::post('challenges/{challenge}/accept', [StudentChallengeController::class, 'acceptChallenge']);
+            Route::post('challenges/{challenge}/reject', [StudentChallengeController::class, 'rejectChallenge']);
+            Route::post('challenges/{challenge}/start', [StudentChallengeController::class, 'startChallenge']);
+            Route::post('challenges/{challenge}/submit', [StudentChallengeController::class, 'submitChallenge']);
+            Route::get('challenges/{challenge}/result', [StudentChallengeController::class, 'getChallengeRanking']);
+        });
 
     });
 

@@ -35,26 +35,21 @@ class LoginController extends Controller
         }
 
         if (!$user->hasVerifiedEmail()) {
-
             VerificationCode::send($user->email);
             return response([
                 'status' => 'error',
                 'message' => 'Please check your inbox for email verification'
             ], 403);
         }
-
        
-
+        $user->generateUsername();
         $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
+        $user->one_signal_id = $request->one_signal_id;
+        $user->save();
 
 
         $user = User::where('email', $request->email )->first();
-
-        
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
+        $response = [ 'user' => $user, 'token' => $token ];
 
         return response([
             'status' => 'success',
@@ -62,7 +57,6 @@ class LoginController extends Controller
             'data' => $response
         ], 200);
     }
-
-    
+  
 
 }

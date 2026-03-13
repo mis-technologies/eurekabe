@@ -1,5 +1,5 @@
 {
-    "Admin": false,
+    "Admin": true,
     "Auth": true,
     "Student": true,
     "Common": true,
@@ -9,5 +9,6 @@
     "Explore": true,
     "Messaging": true,
     "Test": true,
-    "File": true
+    "File": true,
+    "FrontWebsite": true
 }

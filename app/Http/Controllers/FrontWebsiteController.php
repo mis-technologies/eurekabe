@@ -4,33 +4,231 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Modules\Common\Models\School;
+use App\Models\HomePage;
+use App\Models\Event;
+use App\Models\Blog;
+use Carbon\Carbon;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\Faq;
+use Modules\Admin\Models\Founder;
 
 class FrontWebsiteController extends Controller
 {
-    //
-
-    public function article()
+    // home page
+    public function home()
     {
-        // dd('here');
+        // Fetch the first record from the HomePage model
+        $homePage = HomePage::first();
+        
+        $founders = Founder::activeOrdered()->get();
+        
+        $events = Event::latest()->take(10)->get();
 
-        // $blogContent = Blog::findOrFail($id);
-        return view('pages.article');
+        if ($homePage) {
+            // Decode the JSON data
+            $homePageData = [
+                'herosection' => json_decode($homePage->herosection, true),
+                'pathnersection' => json_decode($homePage->pathnersection, true),
+                'whoarewe' => json_decode($homePage->whoarewe, true),
+                'socialsection' => json_decode($homePage->socialsection, true),
+                'whatweoffer' => json_decode($homePage->whatweoffer, true),
+                'teamsection' => json_decode($homePage->teamsection, true),
+                'downloadsection' => json_decode($homePage->downloadsection, true),
+                'engagementsection' => json_decode($homePage->engagementsection, true),
+            ];
+
+            // Prepend APP_URL to image paths
+            $appUrl = config('app.url');
+            if (isset($homePageData['herosection']['img_url']) && is_array($homePageData['herosection']['img_url'])) {
+                foreach ($homePageData['herosection']['img_url'] as $key => $value) {
+                    $homePageData['herosection']['img_url'][$key] = $appUrl . '/' . $value;
+                }
+            }
+            if (isset($homePageData['pathnersection']['schools']) && is_array($homePageData['pathnersection']['schools'])) {
+                foreach ($homePageData['pathnersection']['schools'] as &$school) {
+                    if (isset($school['img_url'])) {
+                        $school['img_url'] = $appUrl . '/' . $school['img_url'];
+                    }
+                }
+            }
+            if (isset($homePageData['whoarewe']) && is_array($homePageData['whoarewe'])) {
+                foreach ($homePageData['whoarewe'] as $key => $value) {
+                    if ($key === 'img_url' || $key === 'community_url') {
+                        $homePageData['whoarewe'][$key] = $appUrl . '/' . $value;
+                    }
+                }
+            }
+            if (isset($homePageData['socialsection']) && is_array($homePageData['socialsection'])) {
+                foreach ($homePageData['socialsection'] as &$social) {
+                    if (isset($social['img_url'])) {
+                        $social['img_url'] = $appUrl . '/' . $social['img_url'];
+                    }
+                }
+            }
+            if (isset($homePageData['whatweoffer']['services']) && is_array($homePageData['whatweoffer']['services'])) {
+                foreach ($homePageData['whatweoffer']['services'] as &$service) {
+                    if (isset($service['img_url'])) {
+                        $service['img_url'] = $appUrl . '/' . $service['img_url'];
+                    }
+                }
+            }
+            if (isset($homePageData['teamsection']['members']) && is_array($homePageData['teamsection']['members'])) {
+                foreach ($homePageData['teamsection']['members'] as &$member) {
+                    if (isset($member['img_url'])) {
+                        $member['img_url'] = $appUrl . '/' . $member['img_url'];
+                    }
+                }
+            }
+            if (isset($homePageData['downloadsection']) && is_array($homePageData['downloadsection'])) {
+                foreach ($homePageData['downloadsection'] as &$store) {
+                    if (isset($store['img_url'])) {
+                        $store['img_url'] = $appUrl . '/' . $store['img_url'];
+                    }
+                }
+            }
+        } else {
+            // Set default values if no data is available
+            $homePageData = [
+                'herosection' => [
+                    'title' => 'No data available',
+                    'desc' => 'No data available',
+                    'img_url' => [
+                        'img1' => '',
+                        'img2' => '',
+                        'img3' => '',
+                        'img4' => '',
+                        'img5' => '',
+                        'img6' => '',
+                        'img7' => '',
+                        'img8' => '',
+                    ],
+                ],
+                'pathnersection' => [
+                    'title' => 'No data available',
+                    'schools' => [
+                        [
+                            'school_name' => '',
+                            'img_url' => '',
+                        ],
+                    ],
+                ],
+                'whoarewe' => [
+                    'title' => 'No data available',
+                    'desc' => 'No data available',
+                    'img_url' => '',
+                    'content' => 'No data available',
+                    'points' => [],
+                    'community_url' => '',
+                ],
+                'socialsection' => [],
+                'whatweoffer' => [
+                    'title' => 'No data available',
+                    'sub_title' => 'No data available',
+                    'desc' => 'No data available',
+                    'advocacy_url' => '',
+                    'services' => [],
+                ],
+                'teamsection' => [
+                    'members' => [],
+                ],
+                'downloadsection' => [],
+                'engagementsection' => [
+                    'title' => 'No data available',
+                    'sub_title' => 'No data available',
+                    'desc' => 'No data available',
+                    'advocate_url' => '',
+                ],
+            ];
+        }
+        // dd($homePageData);
+
+        // Pass the data to the view
+        return view('welcome', compact('homePageData', 'events', 'homePage', 'founders'));
     }
+
     public function events()
     {
-        return view('pages.event');
+
+        // dd('here');
+        $appUrl = config('app.url');
+
+        // Fetch all events from the database
+        $data['events'] = Event::latest()->get()->map(function ($event) use ($appUrl) {
+            $event->image = $appUrl . '/' . $event->image;
+            $event->speakers = collect(json_decode($event->speakers))->map(function ($speaker) use ($appUrl) {
+                $speaker->img_url = $appUrl . '/' . $speaker->img_url;
+                return $speaker;
+            });
+            $event->sponsors = collect(json_decode($event->sponsors))->map(function ($sponsor) use ($appUrl) {
+                $sponsor->logo_url = $appUrl . '/' . $sponsor->logo_url;
+                return $sponsor;
+            });
+
+            // Calculate duration
+            $start = \Carbon\Carbon::parse($event->start_datetime);
+            $end = \Carbon\Carbon::parse($event->end_datetime);
+            $event->duration = $start->diffInHours($end);
+
+            return $event;
+        });
+
+        // dd($data['events']->toArray());
+
+        // Pass the events data to the Blade view
+        return view('pages.event', $data);
     }
 
-
-    public function faq()
+    public function blog(Request $request)
     {
-        return view('pages.faq');
+        try {
+            $categories = Category::all();
+            $categoryId = $request->query('category_id', 1); // Default to category_id 1
+            $blogs = Blog::where('category_id', $categoryId)
+                         ->where('status', 'PUBLISHED')
+                         ->get();
+        } catch (ModelNotFoundException $e) {
+            $categories = collect(); // Return an empty collection if no categories are found
+            $blogs = collect(); // Return an empty collection if no blogs are found
+            $categoryId = 1; // Default category ID
+        }
+
+        return view('pages.blogs', compact('categories', 'blogs', 'categoryId'));
     }
 
-    public function blog()
+    public function show($id)
     {
-        return view('pages.blogs');
+        try {
+            $blog = Blog::where('id', $id)
+                        ->where('status', 'PUBLISHED')
+                        ->firstOrFail();
+            $categories = Category::all();
+        } catch (ModelNotFoundException $e) {
+            $blog = null; // Return null if no blog is found
+            $categories = collect(); // Return an empty collection if no categories are found
+        }
+
+        return view('pages.blog-detail', compact('blog', 'categories'));
     }
+
+
+
+
+
+     // Other methods...
+
+     public function faq()
+     {
+         try {
+             $faqs = Faq::all();
+         } catch (ModelNotFoundException $e) {
+             $faqs = collect(); // Return an empty collection if no FAQs are found
+         }
+
+         return view('pages.faq', compact('faqs'));
+     }
+
+
 
     public function requestForm()
     {
@@ -48,8 +246,12 @@ class FrontWebsiteController extends Controller
         return view('pages.login');
     }
 
-    public function home()
+
+
+    public function policyPrivacy()
     {
-        return view('welcome');
+        return view('pages.privacy-policy');
     }
+
+
 }
