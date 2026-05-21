@@ -5,8 +5,8 @@ namespace Modules\Student\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Modules\Exam\Models\Competition;
-use Modules\Exam\Models\CompetitionParticipant;
+use Modules\Common\Models\Competition;
+use Modules\Common\Models\CompetitionParticipant;
 use Modules\Student\Models\StudentExam;
 use Modules\Student\Models\StudentLeaderBoard;
 

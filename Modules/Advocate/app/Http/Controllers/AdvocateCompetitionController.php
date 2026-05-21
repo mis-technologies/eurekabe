@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Common\Models\School;
-use Modules\Exam\Models\Competition;
-use Modules\Exam\Models\CompetitionExam;
-use Modules\Exam\Models\CompetitionSchool;
-use Modules\Exam\Models\Exam;
-use Modules\File\Facades\FileFacade;
-use Modules\File\Models\File;
+use Modules\Common\Models\Competition;
+use Modules\Common\Models\CompetitionExam;
+use Modules\Common\Models\CompetitionSchool;
+use Modules\Common\Models\Exam;
+use Modules\Common\Facades\FileFacade;
+use Modules\Common\Models\File;
 
 class AdvocateCompetitionController extends Controller
 {

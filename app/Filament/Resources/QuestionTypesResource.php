@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuestionTypesResource\Pages;
 use App\Filament\Resources\QuestionTypesResource\RelationManagers;
-use Modules\Exam\Models\QuestionType;
+use Modules\Common\Models\QuestionType;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

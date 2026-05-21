@@ -5,8 +5,8 @@ namespace Modules\Student\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
-use Modules\Exam\Models\Exam;
-use Modules\Exam\Models\Question;
+use Modules\Common\Models\Exam;
+use Modules\Common\Models\Question;
 use Modules\Student\Models\StudentExamResult;
 
 class StudentExam extends Model

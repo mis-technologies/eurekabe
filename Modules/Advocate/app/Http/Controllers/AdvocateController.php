@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Common\Models\School;
-use Modules\Exam\Models\Exam;
+use Modules\Common\Models\Exam;
 use Modules\Student\Models\StudentChallenge;
 
 class AdvocateController extends Controller

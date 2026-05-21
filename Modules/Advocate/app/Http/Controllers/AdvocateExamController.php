@@ -5,12 +5,12 @@ namespace Modules\Advocate\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Modules\Exam\Models\Exam;
-use Modules\Exam\Models\Question;
-use Modules\Exam\Models\QuestionOption;
-use Modules\Exam\Models\Subject;
-use Modules\File\Facades\FileFacade;
-use Modules\File\Models\File;
+use Modules\Common\Models\Exam;
+use Modules\Common\Models\Question;
+use Modules\Common\Models\QuestionOption;
+use Modules\Common\Models\Subject;
+use Modules\Common\Facades\FileFacade;
+use Modules\Common\Models\File;
 use Modules\Student\Models\StudentExam;
 use Modules\Student\Models\StudentExamResult;
 

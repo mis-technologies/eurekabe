@@ -1,14 +1,14 @@
 {
     "Admin": true,
-    "Auth": true,
+    "Advocate": true,
     "Student": true,
     "Common": true,
-    "Payment": true,
-    "Exam": true,
-    "Advocate": true,
-    "Explore": true,
-    "Messaging": true,
-    "Test": true,
-    "File": true,
-    "FrontWebsite": true
+    "Auth": false,
+    "Exam": false,
+    "Explore": false,
+    "File": false,
+    "FrontWebsite": false,
+    "Messaging": false,
+    "Payment": false,
+    "Test": false
 }

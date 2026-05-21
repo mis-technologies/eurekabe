@@ -58,7 +58,7 @@ class Notification extends DatabaseNotification
             $actions['view_notification'] = route('transactions.show', $this->getAttribute('data')['entity_id']);
         }
 
-        if($this->getAttribute('data')['entity'] == 'Modules\Messaging\\Entities\Conversation'){
+        if($this->getAttribute('data')['entity'] == 'Modules\Common\\Entities\Conversation'){
             $actions['view_conversation'] = route('transactions.show', $this->getAttribute('data')['entity_id']);
         }
 

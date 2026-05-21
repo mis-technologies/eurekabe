@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\DB;
-use Modules\Exam\Models\Exam;
+use Modules\Common\Models\Exam;
 
 class StudentChallenge extends Model
 {

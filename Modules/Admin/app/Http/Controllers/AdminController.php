@@ -17,9 +17,9 @@ use App\Models\VolunteerApplication;
 use Modules\Admin\Http\Requests\BlogUpdateRequest;
 use Modules\Admin\Http\Requests\EventUpdateRequest;
 use Modules\Common\Models\Student;
-use Modules\Exam\Models\Exam;
-use Modules\Exam\Models\Question;
-use Modules\Exam\Models\Result;
+use Modules\Common\Models\Exam;
+use Modules\Common\Models\Question;
+use Modules\Common\Models\Result;
 use Modules\Student\Http\Requests\StudentRequest;
 use Modules\Student\Models\StudentExamResult;
 

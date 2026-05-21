@@ -3,8 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ExamResource\Pages;
-use Modules\Exam\Models\Exam;
-use Modules\Exam\Models\Subject;
+use Modules\Common\Models\Exam;
+use Modules\Common\Models\Subject;
 use Modules\Common\Models\School;
 use Filament\Forms;
 use Filament\Forms\Form;

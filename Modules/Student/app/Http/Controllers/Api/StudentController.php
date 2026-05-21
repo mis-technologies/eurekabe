@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Modules\Common\Models\School;
-use Modules\File\Facades\FileFacade;
-use Modules\File\Models\File;
+use Modules\Common\Facades\FileFacade;
+use Modules\Common\Models\File;
 use Modules\Student\Models\Student;
 
 class StudentController extends Controller
