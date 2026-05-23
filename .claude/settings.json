@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan *)",
+      "Read(//tmp/**)",
+      "Bash(qlmanage -t -s 800 -o /tmp home1.svg)",
+      "Bash(qlmanage -t -s 800 -o /tmp home2.svg)",
+      "Bash(qlmanage -t -s 800 -o /tmp home3.svg)",
+      "Read(//private/tmp/**)",
+      "Bash(rsvg-convert -w 400 home1.svg -o /tmp/home1.png)",
+      "Bash(convert home1.svg /tmp/home1.png)",
+      "Bash(inkscape home1.svg --export-png=/tmp/home1.png)",
+      "Bash(python3 -c ' *)",
+      "Bash(ls /tmp/home*.png)",
+      "Bash(node -e ' *)",
+      "Bash(open -a Safari /tmp/home1.html)",
+      "Bash(screencapture -x -R \"0,0,420,900\" /tmp/home1_screen.png)",
+      "Bash(npx expo *)",
+      "Bash(grep -v \"^\\\\s*$\")"
+    ],
+    "additionalDirectories": [
+      "/private/tmp"
+    ]
+  }
+}

@@ -54,13 +54,14 @@ class StudentExamController extends Controller
         ];
 
         $studentExam = StudentExam::create($payload);
-        $studentExam['questions'] = $questions->load('options');
+
+        $data = $studentExam->load('exam')->toArray();
+        $data['questions'] = $questions->load('options');
+
         return response()->json([
             'success' => true,
             'message' => 'Student exam started',
-            'data' => [
-                $studentExam->load('exam'),
-            ],
+            'data' => $data,
         ]);
     }
 
@@ -70,18 +71,30 @@ class StudentExamController extends Controller
     public function show(Request $request, $id)
     {
         $user = Auth::user();
-        if (!$exam = StudentExam::whereUserId($user->id)->where('id', $id)->first()) {
+        if (!$studentExam = StudentExam::whereUserId($user->id)->where('id', $id)->first()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Student exam not found',
             ], 404);
         }
+
+        // Resolve stored question IDs → full Question objects with options,
+        // preserving the original random order they were assigned at exam start.
+        $questionIds = $studentExam->questions ?? [];
+        $query = Question::whereIn('id', $questionIds)->with('options');
+        if (!empty($questionIds)) {
+            $query->orderByRaw('FIELD(id, ' . implode(',', array_map('intval', $questionIds)) . ')');
+        }
+        $questions = $query->get();
+
+        $data = $studentExam->load('exam')->toArray();
+        $data['questions'] = $questions;
+
         return response()->json([
             'success' => true,
             'message' => 'Student exam retrieved',
-            'data' => $exam,
+            'data' => $data,
         ]);
-
     }
 
     /**
@@ -90,7 +103,7 @@ class StudentExamController extends Controller
     public function submit(SubmitStudentExamRequest $request, StudentExam $studentExam)
     {
         // Get the submissions from the request
-        $submissions =  $request->validated();    
+        $submissions = $request->validated()['submissions'];
         $studentExam->submitExam($submissions);
 
         $studentExam->ended_at = now();

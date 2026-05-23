@@ -30,6 +30,8 @@ class Exam extends Model
         'updated_by',
         'question_type',
         'value',
+        'show_review',
+        'visibility',
     ];
 
     

@@ -19,11 +19,13 @@ class Competition extends Model
     protected $fillable = [
         'user_id',
         'school_id',
+        'winner_id',
         'name',
         'visibility',
         'type',
         'description',
         'instruction',
+        'status',
         'start_date',
         'end_date',
     ];

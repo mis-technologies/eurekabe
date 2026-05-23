@@ -1,5 +1,5 @@
 <?php
-use Modules\Auth\Notifications\VerificationCodeCreated;
+use Modules\Common\Notifications\VerificationCodeCreated;
 
 return [
     /*

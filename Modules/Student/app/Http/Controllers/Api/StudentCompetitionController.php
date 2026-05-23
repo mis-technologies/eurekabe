@@ -13,275 +13,249 @@ use Modules\Student\Models\StudentLeaderBoard;
 class StudentCompetitionController extends Controller
 {
     /**
-     * List all competitions, allow search and filter
+     * List competitions (search + type filter)
      */
     public function index(Request $request)
     {
-        $query = Competition::query();
+        $query = Competition::with(['schools', 'exams'])
+            ->where(function ($q) {
+                $q->where('visibility', 'public')
+                  ->orWhereHas('schools', function ($sq) {
+                      $sq->whereHas('users', fn ($uq) => $uq->where('users.id', Auth::id()));
+                  });
+            });
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        if ($request->has('type')) {
+        if ($request->filled('type')) {
             $query->where('type', $request->type);
         }
 
-        $competitions = $query->paginate(20);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
 
-        return response()->json($competitions);
+        $competitions = $query->latest()->paginate(20);
+
+        return response()->json(['status' => 'success', 'data' => $competitions]);
     }
 
     /**
      * Show competition details
      */
-    public function show($id)
+    public function show(Competition $competition)
     {
-        $competition = Competition::findOrFail($id);
+        $competition->load(['schools', 'exams', 'participants.user']);
 
-        return response()->json($competition);
+        $myParticipant = CompetitionParticipant::where('competition_id', $competition->id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $competition,
+            'my_status' => $myParticipant?->status,
+        ]);
     }
 
     /**
-     * Show competition leaderboard
+     * Join a competition
      */
-    public function leaderboard($id)
+    public function join(Competition $competition)
     {
-        $competition = Competition::findOrFail($id);
-        $leaderboard = $competition->participants()
-            ->orderBy('score', 'desc')
-            ->get(['user_id', 'score']);
+        $existing = CompetitionParticipant::where('competition_id', $competition->id)
+            ->where('user_id', Auth::id())
+            ->first();
 
-        return response()->json($leaderboard);
-    }
+        if ($existing) {
+            return response()->json(['status' => 'error', 'message' => 'You have already joined this competition.'], 409);
+        }
 
-    /**
-     * Show competition participants
-     */
-    public function participants($id)
-    {
-        $competition = Competition::findOrFail($id);
-        $participants = $competition->participants()->get();
-
-        return response()->json($participants);
-    }
-
-    /**
-     * Join Competition
-     */
-    public function join(Request $request, $id)
-    {
-        $competition = Competition::findOrFail($id);
+        if ($competition->status === 'completed') {
+            return response()->json(['status' => 'error', 'message' => 'This competition has ended.'], 400);
+        }
 
         $participant = CompetitionParticipant::create([
-            'user_id' => Auth::id(),
+            'user_id'        => Auth::id(),
             'competition_id' => $competition->id,
-            'status' => 'pending',
+            'status'         => 'pending',
         ]);
 
-        return response()->json(['message' => 'Joined competition successfully', 'participant' => $participant]);
+        return response()->json(['status' => 'success', 'message' => 'Joined successfully.', 'data' => $participant]);
     }
 
     /**
-     * Leave Competition
+     * Leave a competition (only if not yet submitted)
      */
-    public function leave($id)
+    public function leave(Competition $competition)
     {
-        $competition = Competition::findOrFail($id);
-
         $participant = CompetitionParticipant::where('competition_id', $competition->id)
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        // Check if participant has submitted
-        if ($participant->status == 'submitted') {
-            return response()->json(['message' => 'Cannot leave competition after submission'], 400);
+        if ($participant->status === 'submitted') {
+            return response()->json(['status' => 'error', 'message' => 'Cannot leave after submitting.'], 400);
         }
 
         $participant->delete();
 
-        return response()->json(['message' => 'Left competition successfully']);
+        return response()->json(['status' => 'success', 'message' => 'Left competition.']);
     }
 
     /**
-     * Start an Exam in the Competition
+     * Start an exam within a competition
      */
-    public function startExam(Request $request, $competitionId, $examId)
+    public function startExam(Request $request, Competition $competition, $examId)
     {
-        $competition = Competition::findOrFail($competitionId);
-        $user = Auth::user();
-
-        // Check if the user is a participant in the competition
         $participant = CompetitionParticipant::where('competition_id', $competition->id)
-            ->where('user_id', $user->id)
+            ->where('user_id', Auth::id())
             ->first();
 
-        if (!$participant || $participant->status !== 'approved') {
-            return response()->json([
-                'success' => false,
-                'message' => 'You are not an approved participant of this competition',
-            ], 403);
+        if (!$participant || $participant->status === 'rejected') {
+            return response()->json(['status' => 'error', 'message' => 'You are not an approved participant.'], 403);
         }
 
-        // Retrieve the associated exam for the competition
         $competitionExam = $competition->exams()->find($examId);
         if (!$competitionExam) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No exam is associated with this competition',
-            ], 404);
+            return response()->json(['status' => 'error', 'message' => 'Exam not found in this competition.'], 404);
         }
 
-        // Check if student has already submitted the exam this competition
-        $existingStudentExam = StudentExam::where('exam_id', $competitionExam->id)
-            ->where('user_id', $user->id)
+        // Prevent re-start after submission
+        $existing = StudentExam::where('exam_id', $competitionExam->id)
+            ->where('user_id', Auth::id())
             ->where('competition_id', $competition->id)
             ->first();
 
-        if ($existingStudentExam && $existingStudentExam->status === StudentExam::SUBMITTED) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You have already submitted this exam',
-            ], 403);
+        if ($existing && $existing->status === StudentExam::SUBMITTED) {
+            return response()->json(['status' => 'error', 'message' => 'You have already submitted this exam.'], 409);
         }
 
-        // Fetch questions for the exam
-        $questions = $competitionExam->questions()->inRandomOrder()->limit($competitionExam->total_questions)->get();
+        $totalQ = $competitionExam->pivot->total_questions ?? 20;
+        $questions = $competitionExam->questions()->inRandomOrder()->limit($totalQ)->get();
 
-        // Create a new StudentExam record for the user
         $studentExam = StudentExam::create([
-            'exam_id' => $competitionExam->id,
-            'user_id' => $user->id,
+            'exam_id'        => $competitionExam->id,
+            'user_id'        => Auth::id(),
             'competition_id' => $competition->id,
-            'status' => StudentExam::STARTED,
-            'started_at' => now(),
-            'questions' => $questions->pluck('id'),
+            'status'         => StudentExam::STARTED,
+            'started_at'     => now(),
+            'questions'      => $questions->pluck('id'),
         ]);
 
-        // Load questions with options for the response
         $studentExam['questions'] = $questions->load('options');
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Exam started successfully',
-            'data' => $studentExam,
-        ]);
+        return response()->json(['status' => 'success', 'data' => $studentExam]);
     }
 
-
     /**
-     * Submit competition exam
+     * Submit competition exam answers
      */
     public function submitCompetitionExam(Request $request, Competition $competition)
     {
-        $payload =   $request->validated();
+        $request->validate([
+            'student_exam_id' => 'required|integer',
+            'submissions'     => 'required|array',
+        ]);
 
-        $submissions = $payload['submissions'];
-        $studentExamId = $payload['student_exam_id'];
         $user = Auth::user();
 
-        // Retrieve the student's exam for this competition
-        $studentExam = StudentExam::where('id', $studentExamId, 'competition_id', $competition->id)->first();
-        if (!$studentExam || $studentExam->status !== StudentExam::STARTED) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No student active exam found for this competition',
-            ], 404);
-        }
-        $studentExam->submitExam($submissions);
+        $studentExam = StudentExam::where('id', $request->student_exam_id)
+            ->where('competition_id', $competition->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        // Mark the exam as submitted
+        if (!$studentExam || $studentExam->status !== StudentExam::STARTED) {
+            return response()->json(['status' => 'error', 'message' => 'No active exam found for this competition.'], 404);
+        }
+
+        $studentExam->submitExam($request->submissions);
         $studentExam->ended_at = now();
-        $studentExam->status = StudentExam::SUBMITTED;
+        $studentExam->status   = StudentExam::SUBMITTED;
         $studentExam->save();
 
-        // Calculate the exam result
         $result = $studentExam->result();
 
-        // Calculate points based on the result
         $pointsEarned = $result['total_correct'];
-        if ($result['passed'] === 'Yes') {
+        if (($result['passed'] ?? false) === 'Yes') {
             $pointsEarned += 10;
         }
 
-        // Update or create leaderboard entry
-        $leaderResult = StudentLeaderBoard::updateOrCreate([
-            'user_id' => $studentExam->user_id,
-            'competition_id' => $studentExam->competition_id,
-        ], [
-            'points' => $pointsEarned,
-            'user_id' => $studentExam->user_id,
-            'exam_id' => $studentExam->exam_id,
-            'competition_id' => $competition->id,
-        ]);
+        StudentLeaderBoard::updateOrCreate(
+            ['user_id' => $user->id, 'competition_id' => $competition->id],
+            ['points' => $pointsEarned, 'exam_id' => $studentExam->exam_id]
+        );
 
-        // Update participant score
         $participant = CompetitionParticipant::where('competition_id', $competition->id)
             ->where('user_id', $user->id)
             ->first();
 
         if ($participant) {
-            $participant->score = $result['total_marks_earned'];
-            $participant->status = 'submitted';
+            $participant->score        = $result['total_marks_earned'];
+            $participant->status       = 'submitted';
+            $participant->submitted_at = now();
             $participant->save();
 
-            // Determine the winner if all participants have submitted
-            $allSubmitted = CompetitionParticipant::where('competition_id', $competition->id)
-                ->where('status', '!=', 'submitted')
-                ->count() === 0;
+            // Check if all approved participants have submitted → mark winner
+            $pendingCount = CompetitionParticipant::where('competition_id', $competition->id)
+                ->whereIn('status', ['pending', 'approved'])
+                ->count();
 
-            if ($allSubmitted) {
+            if ($pendingCount === 0) {
                 $winner = CompetitionParticipant::where('competition_id', $competition->id)
                     ->orderByDesc('score')
                     ->first();
 
                 $competition->winner_id = $winner->user_id;
-                $competition->status = 'completed';
+                $competition->status    = 'completed';
                 $competition->save();
             }
         }
 
         return response()->json([
-            'success' => true,
-            'message' => 'Competition exam submitted successfully',
-            'data' => [
-                'competition' => $leaderResult,
-                'result' => $result,
+            'status'        => 'success',
+            'message'       => 'Exam submitted successfully.',
+            'data'          => [
+                'result'        => $result,
                 'points_earned' => $pointsEarned,
-                'review' => $studentExam->getExamReview(),
+                'review'        => $studentExam->getExamReview(),
             ],
         ]);
     }
 
     /**
-     * Show competition submission
+     * My submission for this competition
      */
-    public function submission($id)
+    public function submission(Competition $competition)
     {
-        $competition = Competition::findOrFail($id);
-
         $participant = CompetitionParticipant::where('competition_id', $competition->id)
             ->where('user_id', Auth::id())
             ->first();
 
-        return response()->json($participant);
+        return response()->json(['status' => 'success', 'data' => $participant]);
     }
 
-
-    // get challenge ranking based of student leaderboard with challenge_id
-    public function getCompetitionRanking(Request $request, Competition $competition)
+    /**
+     * Competition leaderboard (ranked by score)
+     */
+    public function leaderboard(Competition $competition)
     {
         $results = CompetitionParticipant::where('competition_id', $competition->id)
-            ->with(['user' => function ($query) {
-                $query->select('id', 'firstname', 'lastname', 'image');
-            }])
+            ->with(['user:id,firstname,lastname,image,username'])
             ->orderByDesc('score')
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Competition ranking retrieved',
-            'data' => $results,
-        ]);
+        return response()->json(['status' => 'success', 'data' => $results]);
+    }
+
+    /**
+     * Participants list
+     */
+    public function participants(Competition $competition)
+    {
+        $participants = $competition->participants()->with('user:id,firstname,lastname,image,username')->get();
+
+        return response()->json(['status' => 'success', 'data' => $participants]);
     }
 }

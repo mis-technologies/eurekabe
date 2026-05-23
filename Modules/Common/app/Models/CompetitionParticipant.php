@@ -2,28 +2,36 @@
 
 namespace Modules\Common\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Common\Database\Factories\CompetitionParticipantFactory;
 
 class CompetitionParticipant extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-
     protected $fillable = [
         'user_id',
         'competition_id',
-        'status', // pending, approved, rejected
+        'status', // pending, approved, rejected, submitted
         'isPaid',
-        'payment_id'
+        'payment_id',
+        'score',
+        'submitted_at',
     ];
 
-    // protected static function newFactory(): CompetitionParticipantFactory
-    // {
-    //     // return CompetitionParticipantFactory::new();
-    // }
+    protected $casts = [
+        'submitted_at' => 'datetime',
+        'isPaid' => 'boolean',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function competition()
+    {
+        return $this->belongsTo(Competition::class);
+    }
 }

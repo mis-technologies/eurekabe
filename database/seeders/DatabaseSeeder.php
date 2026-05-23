@@ -18,13 +18,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       $this->call(UserSeeder::class);
-       $this->call(HomePageSeeder::class);
-    //    $this->call(EventSeeder::class);
-       $this->call([
+        $this->call(UserSeeder::class);
+        $this->call(HomePageSeeder::class);
+        // $this->call(EventSeeder::class);
+        $this->call([
             CategorySeeder::class,
             // BlogSeeder::class,
         ]);
         $this->call(FaqSeeder::class);
+
+        // Eureka app data
+        $this->call(InterestSeeder::class);
+        $this->call(SchoolSeeder::class);
+        $this->call(SubjectSeeder::class);
+        $this->call(ExamSeeder::class);
     }
 }

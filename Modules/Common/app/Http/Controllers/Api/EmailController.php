@@ -86,8 +86,8 @@ class EmailController extends Controller
 
 
     public function resendCode(Request $request) {
-        
-        $user = User::whereEmail($request->email)->first();  
+
+        $user = User::whereEmail($request->email)->first();
 
         if(!$user){
             return response()->json([
@@ -96,7 +96,7 @@ class EmailController extends Controller
             ]);
        }
 
-       
+
        if ( $user->hasVerifiedEmail() ) {
             return response()->json([
                 "status" => "error",
@@ -108,6 +108,34 @@ class EmailController extends Controller
         return response()->json([
             "status" => "success",
             "message" => "Email verification code sent on your email"
+        ]);
+    }
+
+    /**
+     * Send a verification code to an email before registration.
+     * Rejects emails already taken by a verified account.
+     */
+    public function sendCode(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = strtolower(trim($request->email));
+
+        $existingUser = User::whereEmail($email)->first();
+        if ($existingUser && $existingUser->hasVerifiedEmail()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'This email is already registered.',
+            ], 400);
+        }
+
+        VerificationCode::send($email);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Verification code sent to your email.',
         ]);
     }
 }

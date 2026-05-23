@@ -20,6 +20,7 @@ class StudentLeaderBoard extends Model
         'user_id',
         'exam_id',
         'challenge_id',
+        'competition_id',
         'points',
     ];
 

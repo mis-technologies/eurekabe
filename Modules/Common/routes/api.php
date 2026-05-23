@@ -46,6 +46,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', [LoginController::class, 'login']);
         Route::post('register', [RegisterController::class, 'register']);
+        Route::post('email/send-code', [EmailController::class, 'sendCode']);
+        Route::get('schools', [ExploreSchoolController::class, 'index']);
         Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
         Route::post('password/reset', [PasswordController::class, 'resetPassword']);
         Route::get('email/verify/{id}', [EmailController::class, 'verifyLink'])->name('email.verifylink');
@@ -79,6 +81,7 @@ Route::prefix('v1')->group(function () {
         Route::post('exams/{id}/favorites', [ExploreExamController::class, 'addExamToFavorite']);
         Route::get('exams/{id}/feedbacks', [ExploreExamController::class, 'getExamFeedbacks']);
         Route::apiResource('schools', ExploreSchoolController::class);
+        Route::post('schools/{id}/follow', [ExploreSchoolController::class, 'follow']);
         Route::apiResource('students', ExploreStudentController::class);
     });
 

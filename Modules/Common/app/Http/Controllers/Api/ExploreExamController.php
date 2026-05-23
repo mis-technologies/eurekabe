@@ -25,6 +25,35 @@ class ExploreExamController extends Controller
         // filter out do not have  questions
         $query->whereHas('questions');
 
+        // Apply visibility rules
+        $user = auth('sanctum')->user();
+        $query->where(function($q) use ($user) {
+            // 1. public exams
+            $q->where('visibility', 'public')
+              ->orWhereNull('visibility');
+            
+            if ($user) {
+                // 2. private exams: only students linked to that school
+                $q->orWhere(function($q2) use ($user) {
+                    $q2->where('visibility', 'private')
+                       ->where('school_id', $user->school_id);
+                });
+                
+                // 3. followers exams: students who follow the school or are linked
+                $schoolIds = $user->schools()->pluck('schools.id')->toArray();
+                if ($user->school_id) {
+                    $schoolIds[] = $user->school_id;
+                }
+                
+                if (!empty($schoolIds)) {
+                    $q->orWhere(function($q3) use ($schoolIds) {
+                        $q3->where('visibility', 'followers')
+                           ->whereIn('school_id', $schoolIds);
+                    });
+                }
+            }
+        });
+
         // Filtering (e.g., by subject or level)
         if ($request->has('subject')) {
             if($subject = Subject::where('name', $request->get('subject'))->orWhere('id', $request->get('subject'))->first() ){
@@ -92,6 +121,24 @@ class ExploreExamController extends Controller
             ], 404);
         }
 
+        // Apply visibility rules
+        $user = auth('sanctum')->user();
+        if ($exam->visibility === 'private') {
+            if (!$user || $user->school_id !== $exam->school_id) {
+                return response()->json(['success' => false, 'message' => 'This exam is private.'], 403);
+            }
+        } elseif ($exam->visibility === 'followers') {
+            if (!$user) {
+                return response()->json(['success' => false, 'message' => 'This exam is restricted to followers.'], 403);
+            }
+            $schoolIds = $user->schools()->pluck('schools.id')->toArray();
+            if ($user->school_id) $schoolIds[] = $user->school_id;
+            
+            if (!in_array($exam->school_id, $schoolIds)) {
+                return response()->json(['success' => false, 'message' => 'This exam is restricted to followers of the school.'], 403);
+            }
+        }
+
         // Return the exam data
         return response()->json([
             'success' => true,
@@ -106,7 +153,26 @@ class ExploreExamController extends Controller
     public function featured()
     {
         // Retrieve exams marked as featured
-        $exams = Exam::where('is_featured', true)->get();
+        $query = Exam::where('is_featured', true);
+        
+        $user = auth('sanctum')->user();
+        $query->where(function($q) use ($user) {
+            $q->where('visibility', 'public')->orWhereNull('visibility');
+            if ($user) {
+                $q->orWhere(function($q2) use ($user) {
+                    $q2->where('visibility', 'private')->where('school_id', $user->school_id);
+                });
+                $schoolIds = $user->schools()->pluck('schools.id')->toArray();
+                if ($user->school_id) $schoolIds[] = $user->school_id;
+                if (!empty($schoolIds)) {
+                    $q->orWhere(function($q3) use ($schoolIds) {
+                        $q3->where('visibility', 'followers')->whereIn('school_id', $schoolIds);
+                    });
+                }
+            }
+        });
+
+        $exams = $query->get();
 
         // Return API response
         return response()->json([
@@ -123,6 +189,25 @@ class ExploreExamController extends Controller
         $query = Exam::query();
         $query->where('status', 1); // Only show exams that are active
         $query->whereHas('questions');
+
+        // Apply visibility rules
+        $user = auth('sanctum')->user();
+        $query->where(function($q) use ($user) {
+            $q->where('visibility', 'public')->orWhereNull('visibility');
+            if ($user) {
+                $q->orWhere(function($q2) use ($user) {
+                    $q2->where('visibility', 'private')->where('school_id', $user->school_id);
+                });
+                $schoolIds = $user->schools()->pluck('schools.id')->toArray();
+                if ($user->school_id) $schoolIds[] = $user->school_id;
+                if (!empty($schoolIds)) {
+                    $q->orWhere(function($q3) use ($schoolIds) {
+                        $q3->where('visibility', 'followers')->whereIn('school_id', $schoolIds);
+                    });
+                }
+            }
+        });
+
         $exams = $query->orderBy('popularity', 'desc')->limit(10)->get();
 
         // Return API response
@@ -140,6 +225,25 @@ class ExploreExamController extends Controller
         $query = Exam::query();
         $query->where('status', 1);
         $query->whereHas('questions');
+
+        // Apply visibility rules
+        $user = auth('sanctum')->user();
+        $query->where(function($q) use ($user) {
+            $q->where('visibility', 'public')->orWhereNull('visibility');
+            if ($user) {
+                $q->orWhere(function($q2) use ($user) {
+                    $q2->where('visibility', 'private')->where('school_id', $user->school_id);
+                });
+                $schoolIds = $user->schools()->pluck('schools.id')->toArray();
+                if ($user->school_id) $schoolIds[] = $user->school_id;
+                if (!empty($schoolIds)) {
+                    $q->orWhere(function($q3) use ($schoolIds) {
+                        $q3->where('visibility', 'followers')->whereIn('school_id', $schoolIds);
+                    });
+                }
+            }
+        });
+
         $recommendedExams =  $query->where('recommended', true)->get();
 
         // Return API response

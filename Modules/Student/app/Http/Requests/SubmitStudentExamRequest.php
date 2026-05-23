@@ -12,9 +12,10 @@ class SubmitStudentExamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '*' => 'required|array',
-            '*.question' => 'required|integer',
-            '*.answer' => 'required|integer',
+            'submissions'              => 'required|array',
+            'submissions.*.question_id' => 'required|integer',
+            'submissions.*.answer'      => 'required',
+            'submissions.*.answer_type' => 'sometimes|string|in:mcq,essay',
         ];
     }
 

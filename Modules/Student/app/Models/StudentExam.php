@@ -131,11 +131,13 @@ class StudentExam extends Model
             'exam_type' => $examType == 1 ? 'mcq' : 'essay',
             'total_questions' => $totalQuestions,
             'total_correct' => round($totalCorrect),
+            'total_wrong' => max(0, count($submissions) - $totalCorrect),
             'total_marks_earned' => round($finalScore, 2),
             'total_possible_marks' => round($totalPossibleMarks, 2),
             'correct_percentage' => round($correctPercentage, 2),
             'passed' => $isPassed ? 'Yes' : 'No',
             'pass_percentage' => $exam->pass_percentage,
+            'show_review' => (bool) $exam->show_review,
             'negative_marks' => $negativeMarks,
             'student_exam' => $this,
             'exam_details' => $exam,
@@ -165,12 +167,12 @@ class StudentExam extends Model
             // dd($submission);
 
             $questionReview = [
-                'question_id' => $question->id,
-                'question_text' => $question->question,
+                'question_id'   => $question->id,
+                'question'      => $question->question,
                 'question_type' => $question->options->isNotEmpty() ? 'multiple_choice' : 'essay',
-                'marks' => $question->marks ?? 1,
-                'is_attempted' => !is_null($submission),
-                'is_correct' => $submission ? $submission->is_correct : null,
+                'marks'         => $question->marks ?? 1,
+                'is_attempted'  => !is_null($submission),
+                'is_correct'    => $submission ? (bool) $submission->is_correct : null,
                 'marks_obtained' => $submission ? $submission->mark : 0,
             ];
 
@@ -236,7 +238,7 @@ class StudentExam extends Model
 
         // Loop through the submissions and process each question
         foreach ($submissions as $submission) {
-            $questionId = $submission['question'];
+            $questionId = $submission['question_id'];
             $userAnswer = $submission['answer'];
             // Check if the question is part of the served questions
             if (in_array($questionId, $questionIds)) {

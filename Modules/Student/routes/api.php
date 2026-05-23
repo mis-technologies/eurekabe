@@ -6,6 +6,7 @@ use Modules\Student\Http\Controllers\Api\StudentExamController;
 use Modules\Student\Http\Controllers\Api\StudentLeaderBoardController;
 use Modules\Student\Http\Controllers\Api\StudentNotificationController;
 use Modules\Student\Http\Controllers\Api\StudentChallengeController;
+use Modules\Student\Http\Controllers\Api\StudentCompetitionController;
 
 /*
  *--------------------------------------------------------------------------
@@ -58,6 +59,19 @@ Route::namespace('Api')->prefix('v1')->group(function () {
             Route::get('notifications/{notification}/mark-read', [StudentNotificationController::class, 'markAsRead']);
         });      
 
+
+        // Competitions
+        Route::prefix('competitions')->group(function () {
+            Route::get('/',                                           [StudentCompetitionController::class, 'index']);
+            Route::get('/{competition}',                              [StudentCompetitionController::class, 'show']);
+            Route::post('/{competition}/join',                        [StudentCompetitionController::class, 'join']);
+            Route::delete('/{competition}/leave',                     [StudentCompetitionController::class, 'leave']);
+            Route::post('/{competition}/exams/{examId}/start',        [StudentCompetitionController::class, 'startExam']);
+            Route::post('/{competition}/submit',                      [StudentCompetitionController::class, 'submitCompetitionExam']);
+            Route::get('/{competition}/submission',                   [StudentCompetitionController::class, 'submission']);
+            Route::get('/{competition}/leaderboard',                  [StudentCompetitionController::class, 'leaderboard']);
+            Route::get('/{competition}/participants',                  [StudentCompetitionController::class, 'participants']);
+        });
 
         // Challenges
         Route::middleware('auth:api')->group(function () {
