@@ -3,8 +3,10 @@
 namespace Modules\Student\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Modules\Student\Events\ChallengeAcceptedDeclined;
 use Modules\Student\Events\ChallengeCreated;
 use Modules\Student\Events\ChallengeSubmitted;
@@ -33,12 +35,11 @@ class StudentChallengeController extends Controller
         ]);
     }
 
-    // show
     public function show(Request $request, StudentChallenge $challenge)
     {
         return response()->json([
             'success' => true,
-            'message' => 'Challenges retrieved',
+            'message' => 'Challenge retrieved',
             'data' => $challenge->load('participants', 'exam', 'user'),
         ]);
     }
@@ -46,27 +47,36 @@ class StudentChallengeController extends Controller
     public function createChallenge(Request $request)
     {
         $request->validate([
-            'exam_id' => 'required|exists:exams,id',
-            'participant_ids' => 'required|array',
+            'exam_id'          => 'required|exists:exams,id',
+            'participant_ids'  => 'required|array|min:1',
             'participant_ids.*' => 'required|exists:users,id',
+            'scheduled_at'     => 'nullable|date|after:now',
         ]);
 
         $user = Auth::user();
-        $examId = $request->input('exam_id');
-        $participantIds = $request->input('participant_ids');
+        $participantIds = collect($request->input('participant_ids'))
+            ->reject(fn($id) => $id == $user->id) // creator cannot invite themselves
+            ->unique()
+            ->values();
+
+        if ($participantIds->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You must invite at least one other student',
+            ], 422);
+        }
 
         $challenge = StudentChallenge::create([
-            'user_id' => $user->id,
-            'exam_id' => $examId,
-            'status' => StudentChallenge::STATUS_PENDING,
+            'user_id'      => $user->id,
+            'exam_id'      => $request->input('exam_id'),
+            'status'       => StudentChallenge::STATUS_PENDING,
+            'scheduled_at' => $request->input('scheduled_at'),
         ]);
 
-        // Create an array with all participants including the user with status
-        $participantsWithStatus = collect($participantIds)
-            ->mapWithKeys(function ($id) {
-                return [$id => ['status' => 'pending']];
-            })
-            ->put($user->id, ['status' => 'accepted'])
+        // Creator is auto-accepted; invitees start as pending
+        $participantsWithStatus = $participantIds
+            ->mapWithKeys(fn($id) => [$id => ['status' => StudentChallengeParticipant::STATUS_PENDING]])
+            ->put($user->id, ['status' => StudentChallengeParticipant::STATUS_ACCEPTED])
             ->all();
 
         $challenge->participants()->sync($participantsWithStatus);
@@ -76,119 +86,276 @@ class StudentChallengeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Challenge created',
-            'data' => $challenge,
+            'data' => $challenge->load('participants', 'exam'),
+        ]);
+    }
+
+    public function updateChallenge(Request $request, StudentChallenge $challenge)
+    {
+        $user = Auth::user();
+
+        if ($challenge->user_id !== $user->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the challenge creator can edit this challenge',
+            ], 403);
+        }
+
+        // Guard: no edits once someone has submitted
+        $hasSubmissions = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->where('status', StudentChallengeParticipant::STATUS_SUBMITTED)
+            ->exists();
+
+        if ($hasSubmissions) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Challenge cannot be edited after a participant has submitted',
+            ], 422);
+        }
+
+        $request->validate([
+            'exam_id'      => 'sometimes|exists:exams,id',
+            'scheduled_at' => 'nullable|date|after:now',
+        ]);
+
+        $challenge->fill($request->only('exam_id', 'scheduled_at'));
+        $challenge->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Challenge updated',
+            'data'    => $challenge->load('participants', 'exam', 'user', 'winner'),
+        ]);
+    }
+
+    public function addParticipants(Request $request, StudentChallenge $challenge)
+    {
+        $user = Auth::user();
+
+        if ($challenge->user_id !== $user->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the challenge creator can add participants',
+            ], 403);
+        }
+
+        $hasSubmissions = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->where('status', StudentChallengeParticipant::STATUS_SUBMITTED)
+            ->exists();
+
+        if ($hasSubmissions) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot add participants after someone has already submitted',
+            ], 422);
+        }
+
+        $request->validate([
+            'participant_ids'   => 'required|array|min:1',
+            'participant_ids.*' => 'required|exists:users,id',
+        ]);
+
+        $existingIds = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->pluck('user_id')
+            ->toArray();
+
+        $newIds = collect($request->input('participant_ids'))
+            ->reject(fn($id) => $id == $user->id || in_array($id, $existingIds))
+            ->unique()
+            ->values();
+
+        if ($newIds->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'All provided users are already participants',
+            ], 422);
+        }
+
+        $newParticipants = $newIds->mapWithKeys(fn($id) => [
+            $id => ['status' => StudentChallengeParticipant::STATUS_PENDING],
+        ])->all();
+
+        $challenge->participants()->syncWithoutDetaching($newParticipants);
+
+        // Notify the newly added participants
+        $challenge->load('participants');
+        event(new ChallengeCreated($challenge));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Participants added',
+            'data'    => $challenge->load('participants', 'exam', 'user', 'winner'),
         ]);
     }
 
     public function acceptChallenge(Request $request, StudentChallenge $challenge)
     {
-        $user = Auth::user();
-        $participant = $challenge->participants()->where('user_id', $user->id)->first();
+        $user   = Auth::user();
+        $record = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        if (!$participant) {
+        if (!$record) {
             return response()->json([
                 'success' => false,
                 'message' => 'You are not a participant of this challenge',
             ], 403);
         }
 
-        // if ($participant->status != 'pending') {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'You can no longer accept this challenge',
-        //     ], 400);
-        // }
+        if ($record->status !== StudentChallengeParticipant::STATUS_PENDING) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You can no longer accept this challenge',
+            ], 400);
+        }
 
-        $challenge->participants()->updateExistingPivot($participant->id, [
-            'status' => 'accepted'
-        ]);
+        $record->update(['status' => StudentChallengeParticipant::STATUS_ACCEPTED]);
 
-        $participant = $challenge->participants()->where('user_id', $user->id)->first();
-        event(new ChallengeAcceptedDeclined($challenge, 'accepted', $participant->firstname));
+        event(new ChallengeAcceptedDeclined($challenge, 'accepted', $user->firstname));
 
         return response()->json([
             'success' => true,
             'message' => 'Challenge accepted',
-            'data' => $participant,
         ]);
     }
 
     public function rejectChallenge(Request $request, StudentChallenge $challenge)
     {
-        $user = Auth::user();
-        $participant = $challenge->participants()->where('user_id', $user->id)->first();
+        $user   = Auth::user();
+        $record = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        if (!$participant) {
+        if (!$record) {
             return response()->json([
                 'success' => false,
                 'message' => 'You are not a participant of this challenge',
             ], 403);
         }
 
-        if ($participant->status !== 'pending' || $participant->status !== 'accepted') {
+        if ($record->status !== StudentChallengeParticipant::STATUS_PENDING
+            && $record->status !== StudentChallengeParticipant::STATUS_ACCEPTED) {
             return response()->json([
                 'success' => false,
                 'message' => 'You can no longer decline this challenge',
             ], 400);
         }
 
-        event(new ChallengeAcceptedDeclined($challenge, 'declined', $participant->firstname));
-        $challenge->participants()->detach($participant->id);
+        // Mark as declined so the allSubmitted count stays correct
+        $record->update(['status' => StudentChallengeParticipant::STATUS_DECLINED]);
 
-        // delete the challenge if the user is the only participant
-        if ($challenge->participants()->count() === 1) {
-            $challenge->delete();
-        }
+        event(new ChallengeAcceptedDeclined($challenge, 'declined', $user->firstname));
 
         return response()->json([
             'success' => true,
-            'message' => 'Challenge rejected',
+            'message' => 'Challenge declined',
+        ]);
+    }
+
+    /**
+     * Challenge creator removes a pending invitee before they accept.
+     */
+    public function removeParticipant(Request $request, StudentChallenge $challenge, User $user)
+    {
+        $authUser = Auth::user();
+
+        if ($challenge->user_id !== $authUser->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the challenge creator can remove participants',
+            ], 403);
+        }
+
+        if ($user->id === $authUser->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You cannot remove yourself from a challenge you created',
+            ], 422);
+        }
+
+        $participantRecord = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$participantRecord) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This user is not a participant of this challenge',
+            ], 404);
+        }
+
+        if ($participantRecord->status !== StudentChallengeParticipant::STATUS_PENDING) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You can only remove participants who have not yet responded',
+            ], 400);
+        }
+
+        $challenge->participants()->detach($user->id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Participant removed',
         ]);
     }
 
     public function startChallenge(Request $request, StudentChallenge $challenge)
     {
-        $user = Auth::user();
-        $participant = $challenge->participants()->where('user_id', $user->id)->first();
+        $user   = Auth::user();
+        $record = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        if (!$participant) {
+        if (!$record) {
             return response()->json([
                 'success' => false,
                 'message' => 'You are not a participant of this challenge',
+            ], 403);
+        }
+
+        if ($record->status === StudentChallengeParticipant::STATUS_SUBMITTED) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You have already submitted this challenge',
             ], 400);
         }
 
-        if ($participant->status == 'submitted') {
+        if ($record->status !== StudentChallengeParticipant::STATUS_ACCEPTED) {
             return response()->json([
                 'success' => false,
-                'message' => 'You have already submitted the challenge',
+                'message' => 'You must accept the challenge before starting',
             ], 400);
         }
 
+        // Prevent starting again if an exam session already exists
+        $existing = StudentExam::where('challenge_id', $challenge->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        if (!$participant || $participant->status !== 'accepted') {
+        if ($existing) {
+            $existing->load('questions.options'); // reload with options if needed
             return response()->json([
-                'success' => false,
-                'message' => 'You have not accepted yet',
-            ], 400);
+                'success' => true,
+                'message' => 'Challenge already started',
+                'data' => $existing,
+            ]);
         }
 
         $exam = $challenge->exam;
         $questions = $exam->questions()->inRandomOrder()->limit(20)->get();
 
-        $payload = [
-            'exam_id' => $exam->id,
-            'user_id' => $user->id,
+        $studentExam = StudentExam::create([
+            'exam_id'          => $exam->id,
+            'user_id'          => $user->id,
             'payment_required' => false,
-            'is_paid' => false,
-            'attempts' => 1,
-            'status' => StudentExam::STARTED,
-            'started_at' => now(),
-            'questions' => $questions->pluck('id'),
-            'challenge_id' => $challenge->id,
-        ];
+            'is_paid'          => false,
+            'attempts'         => 1,
+            'status'           => StudentExam::STARTED,
+            'started_at'       => now(),
+            'questions'        => $questions->pluck('id'),
+            'challenge_id'     => $challenge->id,
+        ]);
 
-        $studentExam = StudentExam::create($payload);
         $studentExam['questions'] = $questions->load('options');
 
         return response()->json([
@@ -200,107 +367,107 @@ class StudentChallengeController extends Controller
 
     public function submitChallenge(SubmitStudentExamRequest $request, StudentChallenge $challenge)
     {
+        $submissions = $request->validated()['submissions'];
 
-        $submissions = $request->validated();
+        $user   = Auth::user();
+        $record = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        $user = Auth::user();
-        $participant = $challenge->participants()->where('user_id', $user->id)->first();
-        if (!$participant) {
+        if (!$record) {
             return response()->json([
                 'success' => false,
                 'message' => 'You are not a participant of this challenge',
-            ], 400);
+            ], 403);
         }
 
-        if ($participant->status == 'submitted') {
+        if ($record->status === StudentChallengeParticipant::STATUS_SUBMITTED) {
             return response()->json([
                 'success' => false,
-                'message' => 'You have already submitted the challenge',
+                'message' => 'You have already submitted this challenge',
             ], 400);
         }
 
-        if ($participant->status !== 'accepted') {
+        if ($record->status !== StudentChallengeParticipant::STATUS_ACCEPTED) {
             return response()->json([
                 'success' => false,
-                'message' => 'You have not accepted the challenge yet',
+                'message' => 'You must accept the challenge before submitting',
             ], 400);
         }
 
+        $studentExam = StudentExam::where('challenge_id', $challenge->id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
 
-        $studentExam = StudentExam::where('challenge_id', $challenge->id)->where('user_id', $user->id )->first();
         $studentExam->submitExam($submissions);
-
         $studentExam->ended_at = now();
         $studentExam->status = StudentExam::SUBMITTED;
         $studentExam->save();
+
         $result = $studentExam->result();
-
-        // Calculate points based on the result
         $pointsEarned = $result['total_marks_earned'];
-        $leaderResult = StudentLeaderBoard::updateOrCreate([
-            'user_id' => $studentExam->user_id,
-            'challenge_id' => $studentExam->challenge_id,
-        ], [
-            'points' => $pointsEarned,
-            'user_id' => $studentExam->user_id,
-            'exam_id' => $studentExam->exam_id,
-            'challenge_id' => $challenge->id,
-        ]);
 
-       
+        $leaderResult = StudentLeaderBoard::updateOrCreate(
+            ['user_id' => $user->id, 'challenge_id' => $challenge->id],
+            ['points' => $pointsEarned, 'exam_id' => $studentExam->exam_id]
+        );
 
-        if ($challenge) {
-            $participant = StudentChallengeParticipant::where('challenge_id', $challenge->id)
-                ->where('user_id', $studentExam->user_id)
-                ->first();
+        // Record score and mark as submitted — use a transaction with lock to
+        // safely determine the winner when multiple participants finish at once
+        DB::transaction(function () use ($challenge, $user, $pointsEarned) {
+            StudentChallengeParticipant::where('challenge_id', $challenge->id)
+                ->where('user_id', $user->id)
+                ->lockForUpdate()
+                ->update([
+                    'score'  => $pointsEarned,
+                    'status' => StudentChallengeParticipant::STATUS_SUBMITTED,
+                ]);
 
-            if ($participant) {
-                $participant->score = $result['total_marks_earned'];
-                $participant->status = 'submitted';
-                $participant->save();
+            // All submitted when no active (pending/accepted) participants remain
+            $stillActive = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+                ->whereIn('status', [
+                    StudentChallengeParticipant::STATUS_PENDING,
+                    StudentChallengeParticipant::STATUS_ACCEPTED,
+                ])
+                ->lockForUpdate()
+                ->count();
 
-                // Determine the winner if all participants have completed the challenge
-                $allSubmitted = $challenge->participants()
-                    ->wherePivot('status', '=', 'submitted') // Changed from != to =
-                    ->count() === $challenge->participants()->count(); // Compare with total participants
+            if ($stillActive === 0) {
+                $winner = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+                    ->where('status', StudentChallengeParticipant::STATUS_SUBMITTED)
+                    ->orderByDesc('score')
+                    ->first();
 
-                if ($allSubmitted) {
-                    $winner = $challenge->participants()
-                        ->orderByDesc('score')
-                        ->first();
-
-                    if ($winner) {
-                        $challenge->winner_id = $winner->id;
-                        $challenge->status = StudentChallenge::STATUS_COMPLETED;
-                        $challenge->save();
-                    }
-                }else{
-                    $challenge->status = StudentChallenge::STATUS_ONGOING;
-                    $challenge->save();
-                }
-
-                event(new ChallengeSubmitted($challenge, $participant->firstname, ));
-
+                $challenge->winner_id = $winner?->user_id;
+                $challenge->status = StudentChallenge::STATUS_COMPLETED;
+            } else {
+                $challenge->status = StudentChallenge::STATUS_ONGOING;
             }
-        }
-       
+
+            $challenge->save();
+        });
+
+        // Refresh participant for the event
+        $participantRecord = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        event(new ChallengeSubmitted($challenge->fresh(), $participantRecord->user->firstname ?? $user->firstname));
 
         return response()->json([
             'success' => true,
             'message' => 'Challenge submitted successfully',
             'data' => [
                 'challenge' => $leaderResult,
-                'result' => $result,
+                'result'    => $result,
                 'points_earned' => $pointsEarned,
-                'review' => $studentExam->getExamReview(),
+                'review'    => $studentExam->getExamReview(),
             ],
         ]);
     }
 
-    // get challenge ranking based of student leaderboard with challenge_id
     public function getChallengeRanking(Request $request, StudentChallenge $challenge)
     {
-
         $results = StudentChallengeParticipant::where('challenge_id', $challenge->id)
             ->with(['user' => function ($query) {
                 $query->select('id', 'firstname', 'lastname', 'image');
@@ -311,7 +478,10 @@ class StudentChallengeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Challenge ranking retrieved',
-            'data' => $results,
+            'data' => [
+                'challenge'    => $challenge->load('winner'),
+                'participants' => $results,
+            ],
         ]);
     }
 }

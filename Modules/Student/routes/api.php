@@ -5,6 +5,7 @@ use Modules\Student\Http\Controllers\Api\StudentController;
 use Modules\Student\Http\Controllers\Api\StudentExamController;
 use Modules\Student\Http\Controllers\Api\StudentLeaderBoardController;
 use Modules\Student\Http\Controllers\Api\StudentNotificationController;
+use App\Models\User;
 use Modules\Student\Http\Controllers\Api\StudentChallengeController;
 use Modules\Student\Http\Controllers\Api\StudentCompetitionController;
 
@@ -74,15 +75,18 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         });
 
         // Challenges
-        Route::middleware('auth:api')->group(function () {
-            Route::get('challenges', [StudentChallengeController::class, 'index']);
-            Route::get('challenges/{challenge}', [StudentChallengeController::class, 'show']);
-            Route::post('challenges', [StudentChallengeController::class, 'createChallenge']);
-            Route::post('challenges/{challenge}/accept', [StudentChallengeController::class, 'acceptChallenge']);
-            Route::post('challenges/{challenge}/reject', [StudentChallengeController::class, 'rejectChallenge']);
-            Route::post('challenges/{challenge}/start', [StudentChallengeController::class, 'startChallenge']);
-            Route::post('challenges/{challenge}/submit', [StudentChallengeController::class, 'submitChallenge']);
-            Route::get('challenges/{challenge}/result', [StudentChallengeController::class, 'getChallengeRanking']);
+        Route::prefix('challenges')->group(function () {
+            Route::get('/',                                        [StudentChallengeController::class, 'index']);
+            Route::post('/',                                       [StudentChallengeController::class, 'createChallenge']);
+            Route::get('/{challenge}',                             [StudentChallengeController::class, 'show']);
+            Route::patch('/{challenge}',                           [StudentChallengeController::class, 'updateChallenge']);
+            Route::post('/{challenge}/accept',                     [StudentChallengeController::class, 'acceptChallenge']);
+            Route::post('/{challenge}/reject',                     [StudentChallengeController::class, 'rejectChallenge']);
+            Route::post('/{challenge}/participants',               [StudentChallengeController::class, 'addParticipants']);
+            Route::delete('/{challenge}/participants/{user}',      [StudentChallengeController::class, 'removeParticipant']);
+            Route::post('/{challenge}/start',                      [StudentChallengeController::class, 'startChallenge']);
+            Route::post('/{challenge}/submit',                     [StudentChallengeController::class, 'submitChallenge']);
+            Route::get('/{challenge}/result',                      [StudentChallengeController::class, 'getChallengeRanking']);
         });
 
     });

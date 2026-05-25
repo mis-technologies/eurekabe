@@ -15,12 +15,18 @@ class StudentChallenge extends Model
         'exam_id',
         'status',
         'winner_id',
+        'scheduled_at',
+    ];
+
+    protected $casts = [
+        'scheduled_at' => 'datetime',
     ];
 
     public const STATUS_PENDING = 'pending';
     public const STATUS_ACCEPTED = 'accepted';
-    public const STATUS_COMPLETED = 'completed';
     public const STATUS_ONGOING = 'ongoing';
+    public const STATUS_COMPLETED = 'completed';
+    public const STATUS_CANCELLED = 'cancelled';
 
     public function exam()
     {
@@ -29,16 +35,10 @@ class StudentChallenge extends Model
 
     public function participants()
     {
-        
         return $this->belongsToMany(User::class, 'student_challenge_participants', 'challenge_id', 'user_id')
-        ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id')
-        ->withPivot('student_challenge_participants.status as status')
-        ->withTimestamps()
-        ->addSelect([
-            DB::raw('CAST(student_challenge_participants.score AS FLOAT) as score')
-        ]);
-
-
+            ->select('user_id as id', 'firstname', 'username', 'lastname', 'image', 'email', 'one_signal_id')
+            ->withPivot('status', 'score')   // plain column names — withPivot does not support aliases or table prefixes
+            ->withTimestamps();
     }
 
     public function winner()

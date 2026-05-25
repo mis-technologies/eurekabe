@@ -33,15 +33,15 @@ class ChallengeAcceptedDeclinedListener implements ShouldQueue
         $challengeUser = User::find($challengeUserId);
         
         // Get array of one signal IDs
-        $onesignalIds = [$challengeUser->onesignal_ids];
+        $onesignalIds = array_filter([$challengeUser->one_signal_id]);
 
         // Only send if we have valid OneSignal IDs
         if (!empty($onesignalIds)) {
             try {
                 OneSignalProvider::sendToUsers(
-                    $onesignalIds,
+                    array_values($onesignalIds),
                     'Challenge ' . $action,
-                    $participantName . 'has ' . $action . ' your challenge',
+                    $participantName . ' has ' . $action . ' your challenge',
                     [
                         'challenge_id' => $challenge->id,
                         'exam_id' => $challenge->exam_id,
@@ -61,8 +61,8 @@ class ChallengeAcceptedDeclinedListener implements ShouldQueue
         // Send database notification
 
         $dbContent = [
-            'title' => "Challenge " . $action,
-            'text' => "$participantName has " . $action . " your challenge",
+            'title' => 'Challenge ' . $action,
+            'text'  => "$participantName has {$action} your challenge",
             'entity' => get_class($challenge),
             'entity_id' => $challenge->id,
             'meta' => [

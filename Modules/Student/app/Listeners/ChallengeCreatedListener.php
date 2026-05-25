@@ -56,7 +56,7 @@ class ChallengeCreatedListener implements ShouldQueue
         // Send database notification
 
         $dbContent = [
-            'title' => "You have a new campaign",
+            'title' => "You have a new challenge",
             'text' => "You have a new challenge on Eureka",
             'entity' => get_class($challenge),
             'entity_id' => $challenge->id,

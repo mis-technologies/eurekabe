@@ -9,10 +9,14 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 // use Modules\Student\Database\Factories\StudentChallengeParticipantFactory;
 
-class StudentChallengeParticipant  extends Model 
+class StudentChallengeParticipant  extends Model
 {
     use HasFactory;
 
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_ACCEPTED = 'accepted';
+    public const STATUS_SUBMITTED = 'submitted';
+    public const STATUS_DECLINED = 'declined';
 
     public $appends = [
         'is_winner',

@@ -8,12 +8,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Blog extends Model
 {
     protected $table    = 'blogs';
-    protected $fillable = ['title', 'content', 'image', 'slug', 'category_id', 'status'];
+    protected $fillable = ['title', 'content', 'image', 'slug', 'category_id', 'school_id', 'status'];
     protected $appends  = ['excerpt', 'read_time'];
 
     public function category(): HasOne
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+    public function school(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\Modules\Common\Models\School::class, 'school_id');
     }
 
     /** First 160 characters of content, stripped of HTML. */
