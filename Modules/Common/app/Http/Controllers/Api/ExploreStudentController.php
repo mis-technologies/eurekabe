@@ -5,7 +5,8 @@ namespace Modules\Common\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Modules\Common\Models\Student;
+use Modules\Student\Models\StudentExam;
+use Modules\Student\Models\StudentLeaderBoard;
 
 class ExploreStudentController extends Controller
 {
@@ -34,9 +35,30 @@ class ExploreStudentController extends Controller
             $query->orderBy($request->get('sort_by'), $sortOrder);
         }
 
-        // Filter by school
-        if ($request->has('school_id')) {
-            $query->where('school_id', $request->get('school_id'));
+        // Restrict students to only those from schools the user is affiliated with or following
+        $user = auth('sanctum')->user();
+        if ($user) {
+            $allowedSchoolIds = $user->schools()->pluck('schools.id')->toArray();
+            if ($user->school_id) {
+                $allowedSchoolIds[] = $user->school_id;
+            }
+            if (!empty($allowedSchoolIds)) {
+                $query->whereIn('school_id', $allowedSchoolIds);
+            } else {
+                $query->whereRaw('1 = 0'); // No affiliated schools, return empty
+            }
+        } else {
+            $query->whereRaw('1 = 0'); // Guests cannot see students
+        }
+
+        // Filter by specific requested schools
+        if ($request->has('school')) {
+            $schoolParam = $request->get('school');
+            $schoolList = is_array($schoolParam) ? $schoolParam : explode(',', $schoolParam);
+            $schoolIds = \Modules\Common\Models\School::whereIn('acronym', $schoolList)->orWhereIn('id', $schoolList)->pluck('id')->toArray();
+            if (!empty($schoolIds)) {
+                $query->whereIn('school_id', $schoolIds);
+            }
         }
 
         // Pagination
@@ -55,10 +77,8 @@ class ExploreStudentController extends Controller
      */
     public function show($id)
     {
-        // Retrieve the school by ID
-        $student = User::where('id', $id)->first();
+        $student = User::where('id', $id)->where('role', 'student')->with('school')->first();
 
-        // Check if school exists
         if (!$student) {
             return response()->json([
                 'success' => false,
@@ -66,10 +86,69 @@ class ExploreStudentController extends Controller
             ], 404);
         }
 
-        // Return the school data
+        // ── Exam stats ────────────────────────────────────────────────────────
+        $completedExams = StudentExam::where('user_id', $id)
+            ->whereIn('status', ['submitted', 'result_released'])
+            ->get();
+
+        $examsTaken  = $completedExams->count();
+        $passedCount = $completedExams->filter(fn($e) => (bool) $e->passed)->count();
+        $passRate    = $examsTaken > 0 ? round(($passedCount / $examsTaken) * 100) : 0;
+        $avgScore    = $examsTaken > 0
+            ? round($completedExams->avg(fn($e) => $e->total_possible_marks > 0
+                ? ($e->total_marks_earned / $e->total_possible_marks) * 100
+                : 0), 1)
+            : 0;
+
+        // ── Leaderboard points ────────────────────────────────────────────────
+        $totalPoints = (int) StudentLeaderBoard::where('user_id', $id)->sum('points');
+
+        // ── Recent exams (last 6) ─────────────────────────────────────────────
+        $recentExams = StudentExam::where('user_id', $id)
+            ->whereIn('status', ['submitted', 'result_released'])
+            ->with('exam.subject')
+            ->orderBy('ended_at', 'desc')
+            ->limit(6)
+            ->get()
+            ->map(fn($se) => [
+                'student_exam_id'    => $se->id,
+                'exam_title'         => $se->exam?->title,
+                'subject'            => $se->exam?->subject?->name,
+                'total_correct'      => (int) $se->total_correct,
+                'total_questions'    => (int) $se->total_questions,
+                'total_marks_earned' => (float) $se->total_marks_earned,
+                'total_possible_marks' => (float) $se->total_possible_marks,
+                'passed'             => (bool) $se->passed,
+                'ended_at'           => $se->ended_at?->toISOString(),
+            ]);
+
         return response()->json([
             'success' => true,
-            'data' => $student,
-        ], 200);
+            'data' => [
+                'id'        => $student->id,
+                'name'      => $student->name,
+                'firstname' => $student->firstname,
+                'lastname'  => $student->lastname,
+                'username'  => $student->username,
+                'image'     => $student->image,
+                'about'     => $student->about,
+                'interest'  => $student->interest ?? [],
+                'level'     => $student->level,
+                'gender'    => $student->gender,
+                'school'    => $student->school ? [
+                    'id'      => $student->school->id,
+                    'name'    => $student->school->name,
+                    'acronym' => $student->school->acronym,
+                ] : null,
+                'stats' => [
+                    'exams_taken'  => $examsTaken,
+                    'passed'       => $passedCount,
+                    'pass_rate'    => $passRate,
+                    'total_points' => $totalPoints,
+                    'avg_score'    => $avgScore,
+                ],
+                'recent_exams' => $recentExams,
+            ],
+        ]);
     }
 }

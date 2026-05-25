@@ -11,6 +11,8 @@ use Modules\Common\Models\School;
 use Modules\Common\Facades\FileFacade;
 use Modules\Common\Models\File;
 use Modules\Student\Models\Student;
+use Modules\Student\Models\StudentExam;
+use Modules\Student\Models\StudentLeaderBoard;
 
 class StudentController extends Controller
 {
@@ -39,11 +41,123 @@ class StudentController extends Controller
     public function getAccount(Request $request)
     {
         try {
-            $user = User::find(Auth::user()->id);
+            $user = User::find(Auth::user()->id)->load('school');
+
+            // ── Completed exams ───────────────────────────────────────────────
+            $completedExams = StudentExam::where('user_id', $user->id)
+                ->whereIn('status', ['submitted', 'result_released'])
+                ->get();
+
+            $examsTaken       = $completedExams->count();
+            $totalQAnswered   = (int) $completedExams->sum('total_questions');
+            $passedCount      = $completedExams->filter(fn($e) => (bool) $e->passed)->count();
+            $passRate         = $examsTaken > 0 ? round(($passedCount / $examsTaken) * 100) : 0;
+            $avgScore         = $examsTaken > 0
+                ? round($completedExams->avg(fn($e) => $e->total_possible_marks > 0
+                    ? ($e->total_marks_earned / $e->total_possible_marks) * 100
+                    : 0), 1)
+                : 0;
+
+            // ── Eco points ────────────────────────────────────────────────────
+            $ecoPoints = (int) StudentLeaderBoard::where('user_id', $user->id)->sum('points');
+
+            // ── School rank (by total points among same-school students) ──────
+            $schoolRank = null;
+            if ($user->school_id) {
+                $schoolStudentIds = User::where('school_id', $user->school_id)
+                    ->where('role', 'student')
+                    ->pluck('id');
+                $schoolRank = StudentLeaderBoard::whereIn('user_id', $schoolStudentIds)
+                    ->selectRaw('user_id, SUM(points) as total')
+                    ->groupBy('user_id')
+                    ->having('total', '>', $ecoPoints)
+                    ->count() + 1;
+            }
+
+            // ── Streak (consecutive exam days, most recent first) ─────────────
+            $examDays = StudentExam::where('user_id', $user->id)
+                ->whereIn('status', ['submitted', 'result_released'])
+                ->whereNotNull('ended_at')
+                ->orderBy('ended_at', 'desc')
+                ->pluck('ended_at')
+                ->map(fn($d) => $d->format('Y-m-d'))
+                ->unique()
+                ->values();
+
+            $streak = 0;
+            if ($examDays->isNotEmpty()) {
+                $today     = now()->format('Y-m-d');
+                $yesterday = now()->subDay()->format('Y-m-d');
+                $first     = $examDays->first();
+
+                if ($first === $today || $first === $yesterday) {
+                    $streak  = 1;
+                    $cursor  = $first === $today ? now() : now()->subDay();
+                    foreach ($examDays->slice(1) as $day) {
+                        $cursor = $cursor->subDay();
+                        if ($day === $cursor->format('Y-m-d')) {
+                            $streak++;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // ── Achievements ──────────────────────────────────────────────────
+            $achievements = [];
+
+            if ($examsTaken >= 1)
+                $achievements[] = ['key' => 'first_exam',  'title' => 'First step',    'desc' => 'Took your first exam',         'icon' => 'star'];
+            if ($totalQAnswered >= 100)
+                $achievements[] = ['key' => 'century',     'title' => '100 club',       'desc' => '100+ questions answered',      'icon' => 'flash'];
+            if ($totalQAnswered >= 1000)
+                $achievements[] = ['key' => 'thousand',    'title' => '1k club',        'desc' => '1000+ questions answered',     'icon' => 'trophy'];
+            if ($streak >= 3)
+                $achievements[] = ['key' => 'streak_3',    'title' => 'On a roll',      'desc' => '3-day streak',                 'icon' => 'flame'];
+            if ($streak >= 10)
+                $achievements[] = ['key' => 'streak_king', 'title' => 'Streak king',    'desc' => "{$streak}-day streak",         'icon' => 'flame'];
+            if ($schoolRank === 1)
+                $achievements[] = ['key' => 'top_class',   'title' => 'Top of class',   'desc' => 'School rank #1',               'icon' => 'ribbon'];
+            if ($avgScore >= 90 && $examsTaken >= 3)
+                $achievements[] = ['key' => 'ace',         'title' => 'Ace',            'desc' => '90%+ average score',           'icon' => 'medal'];
+            if ($passRate >= 80 && $examsTaken >= 5)
+                $achievements[] = ['key' => 'consistent',  'title' => 'Consistent',     'desc' => '80%+ pass rate',               'icon' => 'checkmark-circle'];
+            if ($examsTaken >= 25)
+                $achievements[] = ['key' => 'veteran',     'title' => 'Veteran',        'desc' => '25 exams completed',           'icon' => 'shield-checkmark'];
+
             return response()->json([
                 'success' => true,
                 'message' => 'LoggedIn User retrieved successfully',
-                'data' => $user->load('school')
+                'data' => [
+                    'id'        => $user->id,
+                    'name'      => $user->name,
+                    'firstname' => $user->firstname,
+                    'lastname'  => $user->lastname,
+                    'username'  => $user->username,
+                    'email'     => $user->email,
+                    'image'     => $user->image,
+                    'about'     => $user->about,
+                    'interest'  => $user->interest ?? [],
+                    'level'     => $user->level,
+                    'gender'    => $user->gender,
+                    'school'    => $user->school ? [
+                        'id'      => $user->school->id,
+                        'name'    => $user->school->name,
+                        'acronym' => $user->school->acronym,
+                    ] : null,
+                    'stats' => [
+                        'exams_taken'      => $examsTaken,
+                        'questions_answered' => $totalQAnswered,
+                        'passed'           => $passedCount,
+                        'pass_rate'        => $passRate,
+                        'avg_score'        => $avgScore,
+                        'eco_points'       => $ecoPoints,
+                        'school_rank'      => $schoolRank,
+                        'streak'           => $streak,
+                    ],
+                    'achievements' => $achievements,
+                ],
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

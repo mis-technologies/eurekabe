@@ -48,6 +48,24 @@ class ExploreSchoolController extends Controller
         $perPage = $request->get('per_page', 10);
         $schools = $query->paginate($perPage);
 
+        $user = auth('sanctum')->user();
+        if ($user) {
+            $userSchoolId = $user->school_id;
+            $followerSchoolIds = $user->schools()->pluck('schools.id')->toArray();
+            
+            $schools->getCollection()->transform(function($school) use ($userSchoolId, $followerSchoolIds) {
+                $school->is_affiliated = ($school->id === $userSchoolId);
+                $school->is_follower = in_array($school->id, $followerSchoolIds);
+                return $school;
+            });
+        } else {
+            $schools->getCollection()->transform(function($school) {
+                $school->is_affiliated = false;
+                $school->is_follower = false;
+                return $school;
+            });
+        }
+
         // Return API response
         return response()->json([
             'success' => true,

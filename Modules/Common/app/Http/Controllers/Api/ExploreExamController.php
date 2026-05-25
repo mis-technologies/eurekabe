@@ -18,7 +18,7 @@ class ExploreExamController extends Controller
     public function index(Request $request)
     {
         // Initialize query builder for Exam
-        $query = Exam::query();
+        $query = Exam::with(['school', 'subject']);
 
         $query->where('status', 1); // Only show exams that are active
 
@@ -54,21 +54,24 @@ class ExploreExamController extends Controller
             }
         });
 
-        // Filtering (e.g., by subject or level)
+        // Filtering by subject(s)
         if ($request->has('subject')) {
-            if($subject = Subject::where('name', $request->get('subject'))->orWhere('id', $request->get('subject'))->first() ){
-                $query->where('subject_id', $subject->id);
-            }   
-           
+            $subjectParam = $request->get('subject');
+            $subjectList = is_array($subjectParam) ? $subjectParam : explode(',', $subjectParam);
+            $subjectIds = Subject::whereIn('name', $subjectList)->orWhereIn('id', $subjectList)->pluck('id')->toArray();
+            if (!empty($subjectIds)) {
+                $query->whereIn('subject_id', $subjectIds);
+            }
         }
 
-
-        // Filtering (e.g., by subject or level)
+        // Filtering by school(s)
         if ($request->has('school')) {
-            if($school = School::where('acronym', $request->get('school'))->orWhere('id', $request->get('school' ))->first() ){
-                $query->where('school_id', $school->id);
-            }   
-           
+            $schoolParam = $request->get('school');
+            $schoolList = is_array($schoolParam) ? $schoolParam : explode(',', $schoolParam);
+            $schoolIds = School::whereIn('acronym', $schoolList)->orWhereIn('id', $schoolList)->pluck('id')->toArray();
+            if (!empty($schoolIds)) {
+                $query->whereIn('school_id', $schoolIds);
+            }
         }
 
         if ($request->has('level')) {
@@ -111,7 +114,14 @@ class ExploreExamController extends Controller
     public function show($id)
     {
         // Retrieve the exam by ID
-        $exam = Exam::find($id);
+        $exam = Exam::with(['school'])->find($id);
+
+        if ($exam) {
+            $exam->attempts_count = \Modules\Student\Models\StudentExam::where('exam_id', $exam->id)->count();
+            $exam->average_score = round(\Modules\Student\Models\StudentExam::where('exam_id', $exam->id)
+                ->where('total_possible_marks', '>', 0)
+                ->avg(\Illuminate\Support\Facades\DB::raw('(total_marks_earned / total_possible_marks) * 100')) ?? 0, 1);
+        }
 
         // Check if exam exists
         if (!$exam) {
@@ -153,7 +163,7 @@ class ExploreExamController extends Controller
     public function featured()
     {
         // Retrieve exams marked as featured
-        $query = Exam::where('is_featured', true);
+        $query = Exam::with(['school', 'subject'])->where('is_featured', true);
         
         $user = auth('sanctum')->user();
         $query->where(function($q) use ($user) {
@@ -186,7 +196,7 @@ class ExploreExamController extends Controller
      */
     public function popular()
     {
-        $query = Exam::query();
+        $query = Exam::with(['school', 'subject']);
         $query->where('status', 1); // Only show exams that are active
         $query->whereHas('questions');
 
@@ -222,7 +232,7 @@ class ExploreExamController extends Controller
      */
     public function recommend()
     {
-        $query = Exam::query();
+        $query = Exam::with(['school', 'subject']);
         $query->where('status', 1);
         $query->whereHas('questions');
 
