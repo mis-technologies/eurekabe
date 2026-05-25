@@ -156,8 +156,14 @@ class ConversationController extends Controller
         }
 
         $payload = $request->validate([
-            'text' => 'sometimes',
+            'text'    => 'sometimes|nullable|string',
+            'files'   => 'sometimes|array',
+            'files.*' => 'sometimes|file|max:20480', // 20 MB per file
         ]);
+
+        // Remove 'files' from payload — the Message boot() hook reads them
+        // directly from request() after the model is created.
+        unset($payload['files']);
 
         $payload['user_id'] = $authUser->id;
         if ($conversation->entity == get_class(new User())) {
@@ -177,6 +183,29 @@ class ConversationController extends Controller
             'success' => true,
             'message' => 'Conversations message created successfully',
             'data' => $conversation->messages()->latest()->with('files')->limit(2)->get(),
+        ]);
+    }
+
+    /**
+     * Return online presence for a user.
+     * "Online" = last_seen_at within the last 3 minutes.
+     * @param int $userId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPresence($userId)
+    {
+        if (!$user = User::find($userId)) {
+            return response()->json(['status' => 'error', 'message' => 'User not found'], 404);
+        }
+
+        $isOnline = $user->last_seen_at && $user->last_seen_at->gt(now()->subMinutes(3));
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => [
+                'is_online'    => $isOnline,
+                'last_seen_at' => $user->last_seen_at,
+            ],
         ]);
     }
 

@@ -21,6 +21,7 @@ use Modules\Common\Http\Controllers\Api\ExploreExamController;
 use Modules\Common\Http\Controllers\Api\ExploreSchoolController;
 use Modules\Common\Http\Controllers\Api\ExploreStudentController;
 use Modules\Common\Http\Controllers\Api\ConversationController;
+use Modules\Common\Http\Controllers\Api\AiTutorController;
 
 /*
  *--------------------------------------------------------------------------
@@ -93,6 +94,13 @@ Route::prefix('v1')->group(function () {
     });
 
     // ------------------------------------------------------------------
+    // AI Tutor
+    // ------------------------------------------------------------------
+    Route::middleware('auth:sanctum')->prefix('ai')->group(function () {
+        Route::post('ask', [AiTutorController::class, 'ask']);
+    });
+
+    // ------------------------------------------------------------------
     // Messaging
     // ------------------------------------------------------------------
     Route::middleware('auth:sanctum')->prefix('messaging')->group(function () {
@@ -101,6 +109,7 @@ Route::prefix('v1')->group(function () {
         Route::get('conversations/{id}', [ConversationController::class, 'getSingleConversation']);
         Route::get('conversations/{id}/messages', [ConversationController::class, 'getConversationMessages']);
         Route::post('conversations/{id}/messages', [ConversationController::class, 'sendMessage']);
+        Route::get('presence/{userId}', [ConversationController::class, 'getPresence']);
     });
 
     // ------------------------------------------------------------------

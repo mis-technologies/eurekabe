@@ -22,12 +22,15 @@ class MessageSentEvent implements ShouldBroadcastNow
 
     public function broadcastOn(): Channel
     {
-        return new Channel('chat.' . $this->message->conversation_id);
+        // Broadcast only to the recipient's personal inbox channel.
+        // The sender sees their own message via the API response — they never
+        // receive this event, so there is no echo/duplicate on their screen.
+        return new Channel('inbox.' . $this->message->to_user_id);
     }
 
     public function broadcastAs(): string
     {
-        return 'MessageSent';
+        return 'MessageReceived';
     }
 
     public function broadcastWith(): array

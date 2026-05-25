@@ -66,6 +66,7 @@ class User extends Authenticatable implements FilamentUser
         'refereed_by',
         'deleted_at',
         'one_signal_id',
+        'last_seen_at',
     ];
 
 
@@ -96,6 +97,7 @@ class User extends Authenticatable implements FilamentUser
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_seen_at'      => 'datetime',
             'password' => 'hashed',
             'interest' => 'array',
         ];
