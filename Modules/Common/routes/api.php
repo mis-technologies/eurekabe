@@ -22,6 +22,7 @@ use Modules\Common\Http\Controllers\Api\ExploreSchoolController;
 use Modules\Common\Http\Controllers\Api\ExploreStudentController;
 use Modules\Common\Http\Controllers\Api\ConversationController;
 use Modules\Common\Http\Controllers\Api\AiTutorController;
+use Modules\Common\Http\Controllers\Api\ArticleController;
 
 /*
  *--------------------------------------------------------------------------
@@ -117,6 +118,14 @@ Route::prefix('v1')->group(function () {
     // ------------------------------------------------------------------
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource('payment', PaymentController::class)->names('payment');
+    });
+
+    // ------------------------------------------------------------------
+    // Articles (public)
+    // ------------------------------------------------------------------
+    Route::prefix('articles')->group(function () {
+        Route::get('/',    [ArticleController::class, 'index']);
+        Route::get('{slug}', [ArticleController::class, 'show']);
     });
 
     // ------------------------------------------------------------------

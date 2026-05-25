@@ -15,12 +15,18 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Trending Now' => 'trending-now',
-            'Technology' => 'technology',
-            'Entertainment' => 'entertainment',
-            'Marketing' => 'marketing',
-            'Sports' => 'sports',
-            'Politics' => 'politics'
+            'Trending Now'     => 'trending-now',
+            'Technology'       => 'technology',
+            'Entertainment'    => 'entertainment',
+            'Marketing'        => 'marketing',
+            'Sports'           => 'sports',
+            'Politics'         => 'politics',
+            // Education categories
+            'Study Tips'       => 'study-tips',
+            'Exam Prep'        => 'exam-prep',
+            'Science'          => 'science',
+            'Mathematics'      => 'mathematics',
+            'Career & University' => 'career-university',
         ];
 
         foreach ($categories as $name => $slug) {
