@@ -8,21 +8,21 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('competition_participants', function (Blueprint $table) {
-            if (!Schema::hasColumn('competition_participants', 'score')) {
-                $table->unsignedInteger('score')->default(0)->after('payment_id');
-            }
-            if (!Schema::hasColumn('competition_participants', 'submitted_at')) {
-                $table->timestamp('submitted_at')->nullable()->after('score');
-            }
+        Schema::create('competition_participants', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('competition_id')->constrained('competitions')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('status')->default('pending')->comment('pending, approved, rejected, submitted');
+            $table->boolean('isPaid')->default(false);
+            $table->string('payment_id')->nullable();
+            $table->unsignedInteger('score')->default(0);
+            $table->timestamp('submitted_at')->nullable();
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::table('competition_participants', function (Blueprint $table) {
-            $cols = array_filter(['score', 'submitted_at'], fn($c) => Schema::hasColumn('competition_participants', $c));
-            if ($cols) $table->dropColumn(array_values($cols));
-        });
+        Schema::dropIfExists('competition_participants');
     }
 };

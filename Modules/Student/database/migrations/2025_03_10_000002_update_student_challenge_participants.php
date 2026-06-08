@@ -19,9 +19,16 @@ return new class extends Migration
 
     public function down(): void
     {
+        // MySQL uses the unique index as the backing index for the challenge_id FK.
+        // Drop the FK first, then the unique, then restore both.
+        Schema::table('student_challenge_participants', function (Blueprint $table) {
+            $table->dropForeign(['challenge_id']);
+        });
+
         Schema::table('student_challenge_participants', function (Blueprint $table) {
             $table->dropUnique(['challenge_id', 'user_id']);
             $table->integer('score')->default(0)->change();
+            $table->foreign('challenge_id')->references('id')->on('student_challenges');
         });
     }
 };
