@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('school_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('subject_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('school_id')->nullable();
+            $table->foreignId('subject_id')->nullable();
             $table->string('title');
             $table->string('exam_name')->nullable();
             $table->string('exam_fee')->nullable();
