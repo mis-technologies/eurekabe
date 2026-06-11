@@ -58,7 +58,7 @@ class Exam extends Model
     {
         $entity = get_class($this);
         $examCoverImage = File::where('entity', $entity)->where('entity_id', $this->id)->where('identifier', 'image')->first();
-        dd($examCoverImage);
+        // dd($examCoverImage);
         if (! $examCoverImage) {
             return asset('assets/images/noimage.jpg');
         }
