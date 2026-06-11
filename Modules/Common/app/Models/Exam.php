@@ -2,31 +2,27 @@
 
 namespace Modules\Common\Models;
 
-use Modules\Common\Models\File;
-use Modules\Common\Models\School;
-use Modules\Common\Models\Student;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Student\Models\StudentExam;
 use Modules\Student\Models\StudentExamResult;
 
 class Exam extends Model
 {
-
     protected $fillable = [
-        'school_id', 
+        'school_id',
         'title',
         'duration',
-        'subject_id', 
+        'subject_id',
         'exam_name',
-        'exam_fee', 
+        'exam_fee',
         'instruction',
         'totalmark',
         'pass_percentage',
         'start_date',
-        'end_date', 
+        'end_date',
         'image',
-        'status', 
-        'created_by', 
+        'status',
+        'created_by',
         'updated_by',
         'question_type',
         'value',
@@ -34,10 +30,9 @@ class Exam extends Model
         'visibility',
     ];
 
-    
     protected $guarded = [];
 
-    public $appends  = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag', 'totalmark', 'exam_type'];
+    public $appends = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag', 'totalmark', 'exam_type', 'image'];
 
     public function school()
     {
@@ -54,46 +49,49 @@ class Exam extends Model
         return $this->hasMany(Question::class, 'exam_id');
     }
 
-   
     public function passark()
     {
         return ($this->totalmark * $this->pass_percentage) / 100;
     }
 
-   
     public function getImageAttribute()
     {
-       $entity =  get_class($this);
-        $examCoverImage = File::where('entity', $entity )->where('entity_id', $this->id)->where('identifier', 'image')->first();
+        $entity = get_class($this);
+        $examCoverImage = File::where('entity', $entity)->where('entity_id', $this->id)->where('identifier', 'image')->first();
         dd($examCoverImage);
-        if (!$examCoverImage ) {
+        if (! $examCoverImage) {
             return asset('assets/images/noimage.jpg');
         }
+
         return $examCoverImage->url;
     }
 
     public function getRatingAttribute()
     {
         $ratings = ExamFeedback::where('exam_id', $this->id)->average('rating');
+
         return $ratings;
     }
 
     public function getFeedbackCountAttribute()
     {
         $ratings = ExamFeedback::where('exam_id', $this->id)->count();
+
         return $ratings;
     }
 
     public function getQuestionsCountAttribute()
     {
         $questions = Question::where('exam_id', $this->id)->count();
+
         return $questions;
     }
 
     public function getCreatedByAttribute()
     {
         $user = School::where('id', $this->school_id)->first();
-        return $user->name ?? 'Anonymous'; 
+
+        return $user->name ?? 'Anonymous';
     }
 
     public function getLastUpdatedAtAttribute()
@@ -114,7 +112,7 @@ class Exam extends Model
         if ($attempts > 10) {
             return 'Trending';
         }
-        
+
         if ($attempts > 5) {
             return 'Upcoming';
         }
@@ -130,6 +128,7 @@ class Exam extends Model
         foreach ($questions as $question) {
             $totalmark += $question->marks;
         }
+
         return round($totalmark);
     }
 
@@ -138,12 +137,17 @@ class Exam extends Model
         if ($this->question_type == 2) {
             return 'Written';
         }
+
         return 'Multiple Choice Questions';
     }
-    public function examResults (){
+
+    public function examResults()
+    {
         return $this->hasMany(StudentExamResult::class, 'exam_id');
     }
-    public function recentExamResults (){
+
+    public function recentExamResults()
+    {
         return $this->hasMany(StudentExamResult::class, 'exam_id')->orderBy('created_at', 'desc')->limit(10);
     }
 }
