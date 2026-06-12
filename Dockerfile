@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
     supervisor \
     nginx \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql intl zip opcache
+    && docker-php-ext-install gd pdo pdo_mysql intl zip opcache pcntl sockets
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
