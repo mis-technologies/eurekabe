@@ -92,7 +92,11 @@ class ExploreStudentController extends Controller
             ->get();
 
         $examsTaken  = $completedExams->count();
-        $passedCount = $completedExams->filter(fn($e) => (bool) $e->passed)->count();
+        $passedCount = $completedExams->filter(fn($e) =>
+            $e->total_possible_marks > 0 && $e->pass_percentage > 0
+                ? ($e->total_marks_earned / $e->total_possible_marks * 100) >= $e->pass_percentage
+                : (bool) $e->passed
+        )->count();
         $passRate    = $examsTaken > 0 ? round(($passedCount / $examsTaken) * 100) : 0;
         $avgScore    = $examsTaken > 0
             ? round($completedExams->avg(fn($e) => $e->total_possible_marks > 0
@@ -118,7 +122,9 @@ class ExploreStudentController extends Controller
                 'total_questions'    => (int) $se->total_questions,
                 'total_marks_earned' => (float) $se->total_marks_earned,
                 'total_possible_marks' => (float) $se->total_possible_marks,
-                'passed'             => (bool) $se->passed,
+                'passed'             => $se->total_possible_marks > 0 && $se->pass_percentage > 0
+                    ? ($se->total_marks_earned / $se->total_possible_marks * 100) >= $se->pass_percentage
+                    : (bool) $se->passed,
                 'ended_at'           => $se->ended_at?->toISOString(),
             ]);
 

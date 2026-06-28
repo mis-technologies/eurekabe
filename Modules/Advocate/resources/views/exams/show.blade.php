@@ -279,6 +279,19 @@
                                 </div>
                             </div>
 
+                            <div class="my-4">
+                                <label class="mb-2 block font-medium">AI Hints</label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="hidden" name="allow_ai_hints" value="0">
+                                    <input type="checkbox" name="allow_ai_hints" value="1"
+                                        class="form-checkbox"
+                                        {{ $exam->allow_ai_hints ? 'checked' : '' }}>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                                        Allow students to request AI hints during this exam
+                                    </span>
+                                </label>
+                            </div>
+
                             <button type="submit" class="btn bg-primary text-white">Update
                                 Exam</button>
 

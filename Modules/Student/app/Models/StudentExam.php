@@ -123,8 +123,8 @@ class StudentExam extends Model
         if ($this->pass_percentage !== $exam->pass_percentage) {
             $this->update(['pass_percentage' => $exam->pass_percentage]);
         }
-        if ($this->passed !== $exam->passed) {
-            $this->update(['passed' => $isPassed ]);
+        if ((bool) $this->passed !== $isPassed) {
+            $this->update(['passed' => $isPassed]);
         }
 
         return [

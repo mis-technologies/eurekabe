@@ -108,6 +108,7 @@ class AdvocateExamController extends Controller
         $exam->duration = $request->duration;
         $exam->pass_percentage = $request->pass_percentage;
         $exam->status = $request->status ?? 1;
+        $exam->allow_ai_hints = $request->has('allow_ai_hints') ? (bool) $request->allow_ai_hints : true;
         $exam->save();
 
         $notify[] = ['success', 'Updated succesfully'];

@@ -28,6 +28,7 @@ class Exam extends Model
         'value',
         'show_review',
         'visibility',
+        'allow_ai_hints',
     ];
 
     protected $guarded = [];

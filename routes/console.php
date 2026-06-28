@@ -11,3 +11,5 @@ Artisan::command('inspire', function () {
 
   
 // Schedule::command('queue:work')->everySecond()->withoutOverlapping();
+
+Schedule::command('credits:monthly-reset')->dailyAt('00:00');

@@ -23,6 +23,11 @@ use Modules\Common\Http\Controllers\Api\ExploreStudentController;
 use Modules\Common\Http\Controllers\Api\ConversationController;
 use Modules\Common\Http\Controllers\Api\AiTutorController;
 use Modules\Common\Http\Controllers\Api\ArticleController;
+use Modules\Common\Http\Controllers\Api\CreditController;
+use Modules\Common\Http\Controllers\Api\MaterialController;
+use Modules\Common\Http\Controllers\Api\MaterialSummaryController;
+use Modules\Common\Http\Controllers\Api\MaterialResourceController;
+use Modules\Common\Http\Controllers\Api\MaterialQuestionController;
 
 /*
  *--------------------------------------------------------------------------
@@ -99,6 +104,36 @@ Route::prefix('v1')->group(function () {
     // ------------------------------------------------------------------
     Route::middleware('auth:sanctum')->prefix('ai')->group(function () {
         Route::post('ask', [AiTutorController::class, 'ask']);
+    });
+
+    // ------------------------------------------------------------------
+    // Credits & Billing
+    // ------------------------------------------------------------------
+    Route::middleware('auth:sanctum')->prefix('credits')->group(function () {
+        Route::get('account', [CreditController::class, 'account']);
+        Route::get('plans',   [CreditController::class, 'plans']);
+        Route::get('costs',   [CreditController::class, 'costs']);
+        Route::get('history', [CreditController::class, 'history']);
+    });
+
+    // ------------------------------------------------------------------
+    // Study Materials (EureKab)
+    // ------------------------------------------------------------------
+    Route::middleware('auth:sanctum')->prefix('materials')->group(function () {
+        Route::post('/',    [MaterialController::class, 'store']);
+        Route::get('/',     [MaterialController::class, 'index']);
+        Route::get('{id}',  [MaterialController::class, 'show']);
+        Route::delete('{id}', [MaterialController::class, 'destroy']);
+
+        Route::get('{id}/summary',              [MaterialSummaryController::class, 'show']);
+        Route::post('{id}/summary/generate',    [MaterialSummaryController::class, 'generate']);
+
+        Route::get('{id}/resources',            [MaterialResourceController::class, 'index']);
+        Route::post('{id}/resources/generate',  [MaterialResourceController::class, 'generate']);
+
+        Route::get('{id}/questions',            [MaterialQuestionController::class, 'index']);
+        Route::post('{id}/questions/generate',  [MaterialQuestionController::class, 'generate']);
+        Route::delete('{id}/questions',         [MaterialQuestionController::class, 'destroyAll']);
     });
 
     // ------------------------------------------------------------------

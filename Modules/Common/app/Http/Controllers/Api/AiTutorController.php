@@ -5,6 +5,8 @@ namespace Modules\Common\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
+use Modules\Common\Models\Exam;
+use Modules\Common\Services\CreditService;
 
 class AiTutorController extends Controller
 {
@@ -24,6 +26,38 @@ class AiTutorController extends Controller
             'context' => ['required', 'array'],
         ]);
 
+        // Block hints if the exam has AI hints disabled
+        if ($validated['type'] === 'hint' && !empty($validated['context']['exam_id'])) {
+            $exam = Exam::find($validated['context']['exam_id']);
+            if ($exam && !$exam->allow_ai_hints) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'AI hints are disabled for this exam.',
+                ], 403);
+            }
+        }
+
+        // ── Credit check & deduction ───────────────────────────────────────────
+        $featureKey = match ($validated['type']) {
+            'hint'    => 'ai_hint',
+            'explain' => 'ai_explain',
+            default   => 'ai_chat_message',
+        };
+
+        $credits = app(CreditService::class);
+        $user    = $request->user();
+
+        if (!$credits->deduct($user, $featureKey)) {
+            $account = $credits->getAccount($user);
+            $cost    = $credits->getCost($featureKey);
+            return response()->json([
+                'status'  => 'error',
+                'code'    => 'INSUFFICIENT_CREDITS',
+                'message' => "Insufficient credits. You have {$account->balance} credits but this action costs {$cost}.",
+                'data'    => ['balance' => $account->balance, 'required' => $cost],
+            ], 402);
+        }
+
         [$system, $messages] = $this->buildMessages($validated['type'], $validated['context']);
 
         $response = Http::withToken(config('services.openai.key'))
@@ -39,9 +73,10 @@ class AiTutorController extends Controller
             ]);
 
         if (!$response->successful()) {
+            $credits->refund($user, $featureKey);
             return response()->json([
                 'status'  => 'error',
-                'message' => 'AI service unavailable. Please try again.',
+                'message' => 'AI service unavailable. Credits have been refunded.',
             ], 502);
         }
 

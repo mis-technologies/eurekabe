@@ -7,6 +7,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Modules\Common\Http\Requests\RegisterRequest;
+use Modules\Common\Models\CreditPlan;
+use Modules\Common\Services\CreditService;
 use Wotz\VerificationCode\VerificationCode;
 
 class RegisterController extends Controller
@@ -36,6 +38,12 @@ class RegisterController extends Controller
         $user = User::create($params);
         $user->generateUsername();
         $user->markEmailAsVerified();
+
+        // Provision a free credit account for the new user
+        $freePlan = CreditPlan::where('slug', 'free')->first();
+        if ($freePlan) {
+            app(CreditService::class)->assignPlan($user, $freePlan);
+        }
 
         $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'eureka'))->plainTextToken;
 
