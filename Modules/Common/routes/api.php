@@ -24,6 +24,7 @@ use Modules\Common\Http\Controllers\Api\ConversationController;
 use Modules\Common\Http\Controllers\Api\AiTutorController;
 use Modules\Common\Http\Controllers\Api\ArticleController;
 use Modules\Common\Http\Controllers\Api\CreditController;
+use Modules\Common\Http\Controllers\Api\PaymentController as ApiPaymentController;
 use Modules\Common\Http\Controllers\Api\MaterialController;
 use Modules\Common\Http\Controllers\Api\MaterialSummaryController;
 use Modules\Common\Http\Controllers\Api\MaterialResourceController;
@@ -114,7 +115,12 @@ Route::prefix('v1')->group(function () {
         Route::get('plans',   [CreditController::class, 'plans']);
         Route::get('costs',   [CreditController::class, 'costs']);
         Route::get('history', [CreditController::class, 'history']);
+        Route::post('payment/initiate',          [ApiPaymentController::class, 'initiate']);
+        Route::get('payment/verify/{reference}', [ApiPaymentController::class, 'verify']);
     });
+
+    // Paystack webhook — no auth middleware
+    Route::post('credits/payment/webhook', [ApiPaymentController::class, 'webhook']);
 
     // ------------------------------------------------------------------
     // Study Materials (EureKab)

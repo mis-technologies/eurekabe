@@ -1,5 +1,4 @@
 @extends('admin::layouts.app')
-@include('admin::partials.znotify')
 
 @section('content')
     <main class="flex-grow p-6">

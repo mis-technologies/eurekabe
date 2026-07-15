@@ -17,7 +17,9 @@
       "Bash(screencapture -x -R \"0,0,420,900\" /tmp/home1_screen.png)",
       "Bash(npx expo *)",
       "Bash(grep -v \"^\\\\s*$\")",
-      "Bash(xargs ls *)"
+      "Bash(xargs ls *)",
+      "Bash(php -r ' *)",
+      "Bash(xargs -I {} basename {})"
     ],
     "additionalDirectories": [
       "/private/tmp"

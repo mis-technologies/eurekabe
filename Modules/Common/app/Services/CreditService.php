@@ -112,9 +112,17 @@ class CreditService
 
     /**
      * Assign a plan to a user. Creates/updates the credit account and logs a subscription.
+     * For pay_as_you_go plans, credits are added directly without creating a subscription.
      */
     public function assignPlan(User $user, CreditPlan $plan): UserCreditAccount
     {
+        // PAYG plans: just top up credits, no subscription lifecycle
+        if ($plan->type === 'pay_as_you_go') {
+            $account = $this->getAccount($user);
+            $this->credit($user, $plan->monthly_credits, 'credit', "Credit pack purchase: {$plan->name} ({$plan->monthly_credits} credits)", ['plan_slug' => $plan->slug]);
+            return $account->fresh('plan');
+        }
+
         // Close any active subscriptions for other plans
         CreditPlanSubscription::where('user_id', $user->id)
             ->where('status', 'active')
@@ -157,23 +165,31 @@ class CreditService
 
     /**
      * Reset a user's monthly credits (called by scheduler or lazily on next action).
+     * Respects rollover: if the plan has rollover=true, the allowance is added to the existing
+     * balance instead of replacing it.
      */
     public function resetMonthlyCredits(UserCreditAccount $account): void
     {
+        $plan      = $account->plan;
         $allowance = $account->monthly_allowance;
 
+        // Rollover: add allowance to existing balance; otherwise reset to allowance
+        $newBalance = ($plan && $plan->rollover)
+            ? $account->balance + $allowance
+            : $allowance;
+
         $account->update([
-            'balance'      => $allowance,
+            'balance'       => $newBalance,
             'next_reset_at' => Carbon::now()->addMonth(),
         ]);
 
         CreditTransaction::create([
-            'user_id'     => $account->user_id,
-            'type'        => 'reset',
-            'amount'      => $allowance,
-            'balance_after' => $allowance,
-            'feature_key' => null,
-            'description' => "Monthly credits reset ({$allowance} credits)",
+            'user_id'       => $account->user_id,
+            'type'          => 'reset',
+            'amount'        => $allowance,
+            'balance_after' => $newBalance,
+            'feature_key'   => null,
+            'description'   => "Monthly credits reset ({$allowance} credits)" . ($plan?->rollover ? ' + rollover' : ''),
         ]);
     }
 

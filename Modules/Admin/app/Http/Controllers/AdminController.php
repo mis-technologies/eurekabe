@@ -19,7 +19,11 @@ use Modules\Admin\Http\Requests\EventUpdateRequest;
 use Modules\Common\Models\Student;
 use Modules\Common\Models\Exam;
 use Modules\Common\Models\Question;
-use Modules\Common\Models\Result;
+use Modules\Student\Models\StudentExam;
+use Modules\Common\Models\School;
+use Modules\Common\Models\Competition;
+use Modules\Common\Models\Material;
+use Modules\Common\Models\CreditPlan;
 use Modules\Student\Http\Requests\StudentRequest;
 use Modules\Student\Models\StudentExamResult;
 
@@ -27,11 +31,26 @@ class AdminController extends Controller
 {
    public function dashboard()
    {
+        $data['students']     = User::where('role', 'student')->count();
+        $data['exams']        = Exam::count();
+        $data['results']      = StudentExam::count();
+        $data['questions']    = Question::count();
+        $data['schools']      = School::count();
+        $data['competitions'] = Competition::count();
+        $data['materials']    = Material::where('status', 'ready')->count();
+        $data['active_plans'] = CreditPlan::where('is_active', true)->count();
 
-        $data['students'] = User::where('role', 'student')->count();
-        $data['exams'] = Exam::count();
-        $data['results'] = Result::count();
-        $data['questions'] = Question::count();
+        $data['top_exams'] = Exam::withCount('examResults')
+            ->orderByDesc('exam_results_count')
+            ->limit(5)
+            ->get();
+
+        $data['top_students'] = User::where('role', 'student')
+            ->latest()
+            ->limit(6)
+            ->get();
+
+        $data['recent_users'] = User::latest()->limit(5)->get();
 
         return view('admin::dashboard', $data);
    }

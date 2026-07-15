@@ -1,150 +1,117 @@
 @extends('admin::layouts.app')
-@include('admin::partials.znotify')
+
+@section('title', 'Volunteer Applications')
 
 @section('content')
-    <main class="flex-grow p-6">
+<main class="flex-grow p-6">
 
-        <!-- Page Title Start -->
-        <div class="flex justify-between items-center mb-6">
-            <h4 class="text-slate-900 dark:text-slate-200 text-lg font-medium">Volunteer Applications</h4>
+    <div class="flex items-center justify-between mb-6">
+        <h4 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Volunteer Applications</h4>
+        <span class="text-sm text-gray-500 dark:text-gray-400">{{ $volunteers->count() }} total</span>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h6 class="card-title">All Applications</h6>
         </div>
-        <!-- Page Title End -->
+        <div class="overflow-x-auto">
+            <div class="min-w-full inline-block align-middle">
+                <div class="overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Skills</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                            @forelse($volunteers as $volunteer)
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        {{ $volunteer->firstname }} {{ $volunteer->lastname }}
+                                        @if($volunteer->university)
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 font-normal">{{ $volunteer->university }}</p>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
+                                        {{ $volunteer->email }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">
+                                        {{ $volunteer->phone ?? '—' }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200 max-w-xs">
+                                        @if($volunteer->skills)
+                                            <div class="flex flex-wrap gap-1">
+                                                @foreach($volunteer->skills as $skill)
+                                                    <span class="inline-block bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 text-xs px-2 py-0.5 rounded">
+                                                        {{ ucwords(str_replace('_', ' ', $skill)) }}
+                                                    </span>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <span class="text-gray-400 dark:text-gray-500">—</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        @if($volunteer->status === 'approved')
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">Approved</span>
+                                        @elseif($volunteer->status === 'rejected')
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">Rejected</span>
+                                        @else
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">Pending</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $volunteer->created_at->format('d M Y') }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                        <div class="flex items-center justify-end gap-2">
+                                            <a href="{{ route('admin.volunteers.show', $volunteer->id) }}"
+                                                class="text-primary hover:text-sky-700 text-xs font-medium">View</a>
 
-        <div class="col-span-3">
-            <div class="card">
-                <div class="card-header flex justify-between">
-                    <h6 class="card-title">All Volunteer Applications</h6>
-                    <span class="text-sm text-gray-500">Total: {{ $volunteers->count() }}</span>
-                </div>
-                <div class="overflow-x-auto">
-                    <div class="min-w-full inline-block align-middle">
-                        <div class="border rounded-lg divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
-                            <div class="py-3 px-4">
-                                <div class="relative max-w-xs">
-                                    <label for="table-with-pagination-search" class="sr-only">Search</label>
-                                    <input type="text" name="table-with-pagination-search"
-                                        id="table-with-pagination-search" class="form-input ps-11"
-                                        placeholder="Search for items">
-                                    <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-                                        <svg class="h-3.5 w-3.5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                            width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                            <path
-                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="overflow-hidden">
-                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                    <thead class="bg-gray-50 dark:bg-gray-700">
-                                        <tr>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                                No</th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                                Name</th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                                Email</th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                                Phone</th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                                Skills</th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                                Status</th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                                Date</th>
-                                            <th scope="col"
-                                                class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">
-                                                Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                        @forelse ($volunteers as $volunteer)
-                                            <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                    {{ $loop->index + 1 }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                    {{ $volunteer->firstname }} {{ $volunteer->lastname }}
-                                                    @if($volunteer->university)
-                                                        <br><span class="text-xs text-gray-500">{{ $volunteer->university }}</span>
-                                                    @endif
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                    {{ $volunteer->email }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                    {{ $volunteer->phone }}</td>
-                                                <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
-                                                    @if($volunteer->skills)
-                                                        @foreach($volunteer->skills as $skill)
-                                                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded mb-1">
-                                                                {{ ucwords(str_replace('_', ' ', $skill)) }}
-                                                            </span>
-                                                        @endforeach
-                                                    @else
-                                                        <span class="text-gray-400">N/A</span>
-                                                    @endif
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                    @if($volunteer->status == 'approved')
-                                                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Approved</span>
-                                                    @elseif($volunteer->status == 'rejected')
-                                                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Rejected</span>
-                                                    @else
-                                                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Pending</span>
-                                                    @endif
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                    {{ $volunteer->created_at->format('M d, Y') }}
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                                    <a href="{{ route('admin.volunteers.show', $volunteer->id) }}" 
-                                                       class="text-primary hover:text-sky-700 mr-3">View</a>
-                                                    
-                                                    @if($volunteer->status != 'approved')
-                                                        <form action="{{ route('admin.volunteers.update-status', $volunteer->id) }}" 
-                                                              method="POST" class="inline">
-                                                            @csrf
-                                                            <input type="hidden" name="status" value="approved">
-                                                            <button type="submit" class="text-green-600 hover:text-green-800 mr-2"
-                                                                    onclick="return confirm('Approve this application?')">
-                                                                Approve
-                                                            </button>
-                                                        </form>
-                                                    @endif
-                                                    
-                                                    @if($volunteer->status != 'rejected')
-                                                        <form action="{{ route('admin.volunteers.update-status', $volunteer->id) }}" 
-                                                              method="POST" class="inline">
-                                                            @csrf
-                                                            <input type="hidden" name="status" value="rejected">
-                                                            <button type="submit" class="text-red-600 hover:text-red-800"
-                                                                    onclick="return confirm('Reject this application?')">
-                                                                Reject
-                                                            </button>
-                                                        </form>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="8" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                                                    No volunteer applications found.
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                                            @if($volunteer->status !== 'approved')
+                                                <form action="{{ route('admin.volunteers.update-status', $volunteer->id) }}" method="POST" class="inline"
+                                                    onsubmit="return confirm('Approve this application?')">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value="approved">
+                                                    <button type="submit" class="text-green-600 hover:text-green-800 text-xs font-medium">Approve</button>
+                                                </form>
+                                            @endif
+
+                                            @if($volunteer->status !== 'rejected')
+                                                <form action="{{ route('admin.volunteers.update-status', $volunteer->id) }}" method="POST" class="inline"
+                                                    onsubmit="return confirm('Reject this application?')">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value="rejected">
+                                                    <button type="submit" class="text-red-600 hover:text-red-800 text-xs font-medium">Reject</button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="px-6 py-10 text-center text-sm text-gray-500 dark:text-gray-400">
+                                        <i class="mgc_user_heart_line text-4xl mb-2 block opacity-30"></i>
+                                        No volunteer applications found.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+
+</main>
 @endsection

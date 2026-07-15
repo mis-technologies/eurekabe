@@ -9,8 +9,6 @@
         "cloudinary-labs/cloudinary-laravel": "^3.0",
         "cloudinary/cloudinary_php": "^3.1",
         "cmgmyr/messenger": "^2.30",
-        "filament/filament": "^3.2",
-        "filament/infolists": "^3.2",
         "laravel/folio": "^1.1",
         "laravel/framework": "^11.9",
         "laravel/reverb": "^1.0",
@@ -46,8 +44,7 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "@php artisan filament:upgrade"
+            "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",

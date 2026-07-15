@@ -12,9 +12,42 @@ class CreditSeeder extends Seeder
     {
         // ── Plans ──────────────────────────────────────────────────────────────
         $plans = [
-            ['name' => 'Free',  'slug' => 'free',  'monthly_credits' => 50,   'price_ngn' => 0],
-            ['name' => 'Basic', 'slug' => 'basic', 'monthly_credits' => 500,  'price_ngn' => 50000],  // ₦500
-            ['name' => 'Pro',   'slug' => 'pro',   'monthly_credits' => 2000, 'price_ngn' => 150000], // ₦1,500
+            [
+                'name'            => 'Free',
+                'slug'            => 'free',
+                'type'            => 'monthly',
+                'monthly_credits' => 50,
+                'price_ngn'       => 0,
+                'rollover'        => false,
+                'is_active'       => true,
+            ],
+            [
+                'name'            => 'Basic',
+                'slug'            => 'basic',
+                'type'            => 'monthly',
+                'monthly_credits' => 500,
+                'price_ngn'       => 50000, // ₦500
+                'rollover'        => false,
+                'is_active'       => true,
+            ],
+            [
+                'name'            => 'Pro',
+                'slug'            => 'pro',
+                'type'            => 'monthly',
+                'monthly_credits' => 2000,
+                'price_ngn'       => 150000, // ₦1,500
+                'rollover'        => true,
+                'is_active'       => true,
+            ],
+            [
+                'name'            => '100 Credits',
+                'slug'            => 'credit_pack_100',
+                'type'            => 'pay_as_you_go',
+                'monthly_credits' => 100,
+                'price_ngn'       => 20000, // ₦200
+                'rollover'        => false,
+                'is_active'       => true,
+            ],
         ];
 
         foreach ($plans as $plan) {
