@@ -221,7 +221,7 @@ class CreditService
         $freePlan = CreditPlan::where('slug', 'free')->first();
 
         return [
-            'plan_id'           => $freePlan?->id ?? 1,
+            'plan_id'           => $freePlan?->id,
             'balance'           => $freePlan?->monthly_credits ?? 50,
             'monthly_allowance' => $freePlan?->monthly_credits ?? 50,
             'next_reset_at'     => Carbon::now()->addMonth(),

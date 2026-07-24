@@ -11,6 +11,9 @@ class CommonDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([SchoolDatabaseSeeder::class]);
+        $this->call([
+            CreditPlanSeeder::class,
+            SchoolDatabaseSeeder::class,
+        ]);
     }
 }
