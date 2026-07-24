@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Modules\Common\Models\CreditPlan;
 use Modules\Common\Models\Payment;
+use Modules\Common\Notifications\Notification as EurekaNotification;
 use Modules\Common\Services\CreditService;
 use Modules\Common\Services\PaystackService;
 
@@ -23,10 +24,14 @@ class PaymentController extends Controller
      */
     public function initiate(Request $request)
     {
-        $request->validate(['plan_id' => 'required|integer|exists:credit_plans,id']);
+        $request->validate([
+            'plan_id'  => 'required|integer|exists:credit_plans,id',
+            'quantity' => 'nullable|integer|min:1|max:100',
+        ]);
 
-        $user = Auth::user();
-        $plan = CreditPlan::findOrFail($request->plan_id);
+        $user     = Auth::user();
+        $plan     = CreditPlan::findOrFail($request->plan_id);
+        $quantity = (int) ($request->input('quantity', 1));
 
         if (!$plan->is_active) {
             return response()->json(['status' => 'error', 'message' => 'Plan is not available.'], 400);
@@ -36,11 +41,17 @@ class PaymentController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Free plan requires no payment.'], 400);
         }
 
+        // quantity only applies to pay_as_you_go packs
+        if ($plan->type !== 'pay_as_you_go') {
+            $quantity = 1;
+        }
+
         $payment = Payment::create([
             'user_id'            => $user->id,
             'plan_id'            => $plan->id,
+            'quantity'           => $quantity,
             'paystack_reference' => 'EK_' . Str::upper(Str::random(12)) . '_' . time(),
-            'amount'             => $plan->price_ngn,
+            'amount'             => $plan->price_ngn * $quantity,
             'status'             => 'pending',
         ]);
 
@@ -119,9 +130,21 @@ class PaymentController extends Controller
             'meta'         => $meta ?: null,
         ]);
 
-        $user = $payment->user;
-        $plan = $payment->plan;
+        $user     = $payment->user;
+        $plan     = $payment->plan;
+        $quantity = $payment->quantity ?? 1;
 
-        $this->creditService->assignPlan($user, $plan);
+        $this->creditService->assignPlan($user, $plan, $quantity);
+
+        // Notify user of successful credit purchase
+        $creditsAdded = $plan->credits * $quantity;
+        $dbContent = [
+            'title'     => 'Payment Successful',
+            'text'      => "Your payment was successful. {$creditsAdded} credits have been added to your account.",
+            'entity'    => get_class($payment),
+            'entity_id' => $payment->id,
+            'meta'      => ['plan_id' => $plan->id, 'credits' => $creditsAdded],
+        ];
+        $user->notify(new EurekaNotification(null, $dbContent, ['database', 'push']));
     }
 }

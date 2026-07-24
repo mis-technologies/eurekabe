@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
 use Modules\Common\Models\Material;
-use Modules\Common\Models\MaterialSummary;
 use Modules\Common\Services\CreditService;
 
 class MaterialSummaryController extends Controller
@@ -21,7 +20,7 @@ class MaterialSummaryController extends Controller
 
     /**
      * GET /v1/materials/{id}/summary?length=short|medium|detailed
-     * Return cached summary (free) or indicate it hasn't been generated yet.
+     * Returns the cached summary from the Material column (free).
      */
     public function show(Request $request, int $id)
     {
@@ -30,12 +29,10 @@ class MaterialSummaryController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Material not found.'], 404);
         }
 
-        $length  = in_array($request->query('length'), ['short', 'medium', 'detailed'])
-            ? $request->query('length') : 'short';
+        $length  = $this->validLength($request->query('length'));
+        $content = $material->summary($length);
 
-        $summary = MaterialSummary::where('material_id', $id)->where('length_type', $length)->first();
-
-        if (!$summary) {
+        if (!$content) {
             return response()->json([
                 'status'    => 'success',
                 'generated' => false,
@@ -47,13 +44,13 @@ class MaterialSummaryController extends Controller
         return response()->json([
             'status'    => 'success',
             'generated' => true,
-            'data'      => ['id' => $summary->id, 'length_type' => $summary->length_type, 'content' => $summary->content],
+            'data'      => ['length_type' => $length, 'content' => $content],
         ]);
     }
 
     /**
      * POST /v1/materials/{id}/summary/generate
-     * Generate (or return existing) summary. Costs credits only on first generation.
+     * Generate summary via AI and store in the Material column. Idempotent (free on repeat).
      */
     public function generate(Request $request, int $id)
     {
@@ -64,19 +61,23 @@ class MaterialSummaryController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Material not found.'], 404);
         }
 
-        if (!$material->isReady()) {
-            return response()->json(['status' => 'error', 'message' => 'Material text extraction failed. Cannot generate summary.'], 422);
+        if ($material->isProcessing()) {
+            return response()->json(['status' => 'error', 'message' => 'Material is still being processed. Please try again shortly.'], 422);
         }
 
-        $length  = $request->input('length');
+        if (!$material->isReady()) {
+            return response()->json(['status' => 'error', 'message' => 'Text extraction failed for this material.'], 422);
+        }
+
+        $length     = $this->validLength($request->input('length'));
         $featureKey = "material_summary_{$length}";
 
         // Return cached (free)
-        $existing = MaterialSummary::where('material_id', $id)->where('length_type', $length)->first();
+        $existing = $material->summary($length);
         if ($existing) {
             return response()->json([
                 'status' => 'success',
-                'data'   => ['id' => $existing->id, 'length_type' => $existing->length_type, 'content' => $existing->content],
+                'data'   => ['length_type' => $length, 'content' => $existing],
             ]);
         }
 
@@ -84,31 +85,28 @@ class MaterialSummaryController extends Controller
         $user = $request->user();
         if (!$this->credits->deduct($user, $featureKey)) {
             $account = $this->credits->getAccount($user);
-            $cost    = $this->credits->getCost($featureKey);
-            return $this->insufficientCredits($account->balance, $cost);
+            return $this->insufficientCredits($account->balance, $this->credits->getCost($featureKey));
         }
 
-        // Call OpenAI
-        $config  = self::CONFIGS[$length];
-        $system  = 'You are an expert academic summariser. Respond using Markdown (bold for key terms, bullet points for lists). Do not use LaTeX. Be clear and educational.';
-        $prompt  = $config['instruction'] . "\n\nMaterial:\n" . $material->extracted_text;
+        $config = self::CONFIGS[$length];
+        $prompt = $config['instruction'] . "\n\nMaterial:\n" . $material->extracted_text;
 
         try {
-            $content = $this->callOpenAI($system, $prompt, $config['max_tokens']);
-        } catch (\Throwable $e) {
+            $content = $this->callOpenAI(
+                'You are an expert academic summariser. Respond using Markdown (bold for key terms, bullet points for lists). Do not use LaTeX. Be clear and educational.',
+                $prompt,
+                $config['max_tokens'],
+            );
+        } catch (\Throwable) {
             $this->credits->refund($user, $featureKey);
             return response()->json(['status' => 'error', 'message' => 'AI service error. Credits have been refunded.'], 503);
         }
 
-        $summary = MaterialSummary::create([
-            'material_id' => $id,
-            'length_type' => $length,
-            'content'     => $content,
-        ]);
+        $material->setSummary($length, $content);
 
         return response()->json([
             'status' => 'success',
-            'data'   => ['id' => $summary->id, 'length_type' => $summary->length_type, 'content' => $summary->content],
+            'data'   => ['length_type' => $length, 'content' => $content],
         ], 201);
     }
 
@@ -117,6 +115,11 @@ class MaterialSummaryController extends Controller
     private function findMaterial(Request $request, int $id): ?Material
     {
         return Material::where('id', $id)->where('user_id', $request->user()->id)->first();
+    }
+
+    private function validLength(?string $length): string
+    {
+        return in_array($length, ['short', 'medium', 'detailed']) ? $length : 'short';
     }
 
     private function callOpenAI(string $system, string $prompt, int $maxTokens): string
@@ -145,7 +148,7 @@ class MaterialSummaryController extends Controller
         return response()->json([
             'status'  => 'error',
             'code'    => 'INSUFFICIENT_CREDITS',
-            'message' => "Insufficient credits. You have {$balance} credits but this action costs {$required}.",
+            'message' => "Insufficient credits. You have {$balance} but this action costs {$required}.",
             'data'    => ['balance' => $balance, 'required' => $required],
         ], 402);
     }

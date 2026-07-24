@@ -9,7 +9,7 @@ use Modules\Common\Models\Subject;
 
 class Category extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['name', 'description', 'image', 'status'];
 
     public function subjects()
     {

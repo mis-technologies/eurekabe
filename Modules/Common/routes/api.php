@@ -52,15 +52,17 @@ Route::prefix('v1')->group(function () {
     // Auth
     // ------------------------------------------------------------------
     Route::prefix('auth')->group(function () {
-        Route::post('login', [LoginController::class, 'login']);
-        Route::post('register', [RegisterController::class, 'register']);
-        Route::post('email/send-code', [EmailController::class, 'sendCode']);
+        Route::middleware('throttle:10,1')->group(function () {
+            Route::post('login', [LoginController::class, 'login']);
+            Route::post('register', [RegisterController::class, 'register']);
+            Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
+            Route::post('password/reset', [PasswordController::class, 'resetPassword']);
+            Route::post('email/send-code', [EmailController::class, 'sendCode']);
+            Route::post('email/resend-code', [EmailController::class, 'resendCode'])->name('email.resendcode');
+        });
         Route::get('schools', [ExploreSchoolController::class, 'index']);
-        Route::post('password/forgot', [PasswordController::class, 'forgotPassword']);
-        Route::post('password/reset', [PasswordController::class, 'resetPassword']);
         Route::get('email/verify/{id}', [EmailController::class, 'verifyLink'])->name('email.verifylink');
         Route::post('email/verify', [EmailController::class, 'verifyCode'])->name('email.verifycode');
-        Route::post('email/resend-code', [EmailController::class, 'resendCode'])->name('email.resendcode');
         Route::post('social/login-google', [SocialAuthController::class, 'loginSocialUserWithGoogleToken']);
     });
 
@@ -76,8 +78,10 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('exam', ExamController::class)->names('exam');
     });
 
-    Route::post('generate-questions-batch', [AIExamController::class, 'generateQuestions']);
-    Route::post('save-generated-ai-exam', [AIExamController::class, 'saveGeneratedExam']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('generate-questions-batch', [AIExamController::class, 'generateQuestions']);
+        Route::post('save-generated-ai-exam', [AIExamController::class, 'saveGeneratedExam']);
+    });
 
     // ------------------------------------------------------------------
     // Explore
@@ -170,9 +174,9 @@ Route::prefix('v1')->group(function () {
     });
 
     // ------------------------------------------------------------------
-    // Testing / AI
+    // Testing / AI (debug-only — never available in production)
     // ------------------------------------------------------------------
-    Route::prefix('testing')->group(function () {
+    if (config('app.debug')) Route::prefix('testing')->group(function () {
 
         Route::post('generate-questions', function (Request $request) {
 
@@ -225,6 +229,5 @@ Route::prefix('v1')->group(function () {
 
         Route::post('generate-questions-batch', [AIExamController::class, 'generateQuestions']);
 
-    });
-
-});
+    }); // end testing group
+}); // end v1 prefix

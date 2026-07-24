@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notification as BaseNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Log;
+use Modules\Common\Providers\ExpoNotificationProvider;
 use Modules\Common\Providers\OneSignalProvider;
 
 class Notification extends BaseNotification //implements ShouldQueue
@@ -55,19 +56,31 @@ class Notification extends BaseNotification //implements ShouldQueue
     // push notification
     public function toPush($notifiable)
     {
-       try {           
-            if(!empty($notifiable->one_signal_id)) {
+        try {
+            $title = $this->dbContent['title'] ?? '';
+            $body  = $this->dbContent['text']  ?? '';
+
+            // Expo push token (preferred — managed Expo workflow)
+            if (!empty($notifiable->expo_push_token)) {
+                ExpoNotificationProvider::send(
+                    [$notifiable->expo_push_token],
+                    $title,
+                    $body,
+                    $this->dbContent
+                );
+            }
+
+            // OneSignal fallback (legacy / bare workflow)
+            if (!empty($notifiable->one_signal_id)) {
                 OneSignalProvider::sendToUsers(
                     [$notifiable->one_signal_id],
-                    $this->dbContent['title'],
-                    $this->dbContent['text'],
-                    [
-                        'data' => $this->dbContent,
-                        'url' => $this->dbContent['url'] ?? null,
-                    ]
+                    $title,
+                    $body,
+                    ['data' => $this->dbContent, 'url' => $this->dbContent['url'] ?? null]
                 );
-            } 
+            }
         } catch (\Exception $e) {
+            Log::error('Notification::toPush failed', ['error' => $e->getMessage()]);
         }
     }
 

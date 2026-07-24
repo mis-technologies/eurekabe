@@ -124,22 +124,42 @@ class StudentNotificationController extends Controller
 
     /**
      * Mark all user's notifications as read.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function markAllRead(Request $request)
     {
         $request->user()
             ->unreadNotifications()
-            ->get()->each(function ($n) {
-            $n->markAsRead();
-        });
+            ->get()->each(fn ($n) => $n->markAsRead());
+
         event(new SocketEvent([], Auth::user()->email, 'Notification'));
         return response()->json([
             'success' => true,
             'message' => 'All notifications successfully marked as read',
         ], 200);
+    }
+
+    /**
+     * Return the count of unread notifications.
+     */
+    public function unreadCount(Request $request)
+    {
+        $count = Auth::user()->unreadNotifications()->count();
+        return response()->json(['success' => true, 'data' => ['count' => $count]]);
+    }
+
+    /**
+     * Update the user's Expo push token.
+     *
+     * PATCH /student/me/push-token
+     * Body: { "expo_push_token": "ExponentPushToken[...]" }
+     */
+    public function updatePushToken(Request $request)
+    {
+        $request->validate(['expo_push_token' => 'required|string']);
+
+        Auth::user()->update(['expo_push_token' => $request->expo_push_token]);
+
+        return response()->json(['success' => true, 'message' => 'Push token updated']);
     }
 
 }

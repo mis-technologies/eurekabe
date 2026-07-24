@@ -53,6 +53,11 @@ return [
         'secret_key'     => env('PAYSTACK_SECRET_KEY'),
         'public_key'     => env('PAYSTACK_PUBLIC_KEY'),
         'webhook_secret' => env('PAYSTACK_WEBHOOK_SECRET'),
+        'callback_url'   => env('PAYSTACK_CALLBACK_URL', 'eurekamo://payment-callback'),
+    ],
+
+    'app' => [
+        'token_phrase' => env('TOKEN_SECRET_PHRASE', 'eureka'),
     ],
 
 ];

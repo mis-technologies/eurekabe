@@ -28,7 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
         //$schedule->command('queue:work')->everySecond();
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        // $exceptions->render(function (AuthenticationException $e, Request $request) {
-        //     return response()->json(['success'=> false, 'message' => 'Unauthenticated.'], 401);
-        // });
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
+            if (str_starts_with($request->getPathInfo(), '/api/')) {
+                return response()->json(['status' => 'error', 'message' => 'Unauthenticated.'], 401);
+            }
+        });
     })->create();

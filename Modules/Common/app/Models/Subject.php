@@ -9,7 +9,7 @@ use Modules\Common\Database\Factories\SubjectFactory;
 
 class Subject extends Model
 {
-    protected $guarded = [];
+    protected $fillable = ['name', 'category_id', 'description', 'image', 'status'];
 
     public function category()
     {

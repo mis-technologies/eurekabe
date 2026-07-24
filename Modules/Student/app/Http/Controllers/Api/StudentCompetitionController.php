@@ -3,10 +3,12 @@
 namespace Modules\Student\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Common\Models\Competition;
 use Modules\Common\Models\CompetitionParticipant;
+use Modules\Common\Notifications\Notification as EurekaNotification;
 use Modules\Student\Models\StudentExam;
 use Modules\Student\Models\StudentLeaderBoard;
 
@@ -82,6 +84,15 @@ class StudentCompetitionController extends Controller
             'competition_id' => $competition->id,
             'status'         => 'pending',
         ]);
+
+        $user = Auth::user();
+        $user->notify(new EurekaNotification(null, [
+            'title'     => 'Competition Joined',
+            'text'      => "You've joined \"{$competition->title}\". Good luck!",
+            'entity'    => get_class($competition),
+            'entity_id' => $competition->id,
+            'meta'      => ['competition_id' => $competition->id],
+        ], ['database', 'push']));
 
         return response()->json(['status' => 'success', 'message' => 'Joined successfully.', 'data' => $participant]);
     }
@@ -210,6 +221,28 @@ class StudentCompetitionController extends Controller
                 $competition->winner_id = $winner->user_id;
                 $competition->status    = 'completed';
                 $competition->save();
+
+                // Notify all participants that the competition is complete
+                $winnerUser   = User::find($winner->user_id);
+                $winnerName   = $winnerUser ? ($winnerUser->firstname ?? 'A participant') : 'A participant';
+                $allParticipants = User::whereIn('id',
+                    CompetitionParticipant::where('competition_id', $competition->id)->pluck('user_id')
+                )->get();
+
+                foreach ($allParticipants as $participant) {
+                    $isWinner = $participant->id === $winner->user_id;
+                    $text = $isWinner
+                        ? "Congratulations! You won \"{$competition->title}\"!"
+                        : "{$winnerName} has won \"{$competition->title}\". Check the results!";
+
+                    $participant->notify(new EurekaNotification(null, [
+                        'title'     => 'Competition Complete!',
+                        'text'      => $text,
+                        'entity'    => get_class($competition),
+                        'entity_id' => $competition->id,
+                        'meta'      => ['competition_id' => $competition->id, 'winner_id' => $winner->user_id],
+                    ], ['database', 'push']));
+                }
             }
         }
 

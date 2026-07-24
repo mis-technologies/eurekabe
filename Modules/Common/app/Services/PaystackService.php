@@ -28,9 +28,9 @@ class PaystackService
             'Content-Type'  => 'application/json',
         ])->post("{$this->baseUrl}/transaction/initialize", [
             'email'        => $user->email,
-            'amount'       => $plan->price_ngn,  // already in kobo
+            'amount'       => $payment->amount,  // already in kobo
             'reference'    => $payment->paystack_reference,
-            'callback_url' => env('PAYSTACK_CALLBACK_URL', 'eurekamo://payment-callback'),
+            'callback_url' => config('services.paystack.callback_url'),
             'metadata'     => [
                 'user_id'   => $user->id,
                 'plan_id'   => $plan->id,

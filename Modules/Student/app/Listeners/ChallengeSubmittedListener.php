@@ -72,6 +72,25 @@ class ChallengeSubmittedListener implements ShouldQueue
                             'status'       => $challenge->status,
                         ]
                     );
+
+                    // Also save a DB notification for the in-app feed
+                    $dbContent = [
+                        'title'     => 'Challenge Update',
+                        'text'      => "$participantName has submitted their challenge entry.",
+                        'entity'    => get_class($challenge),
+                        'entity_id' => $challenge->id,
+                        'meta'      => [
+                            'challenge_id' => $challenge->id,
+                            'exam_id'      => $challenge->exam_id,
+                            'status'       => $challenge->status,
+                        ],
+                    ];
+
+                    $participants->each(function ($participant) use ($dbContent) {
+                        $participant->notify(new \Modules\Common\Notifications\Notification(
+                            $dbContent, $dbContent, 'database'
+                        ));
+                    });
                 }
             } catch (\Exception $e) {
                 Log::error('Failed to send ChallengeSubmitted OneSignal notification', [

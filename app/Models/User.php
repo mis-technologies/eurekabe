@@ -64,6 +64,7 @@ class User extends Authenticatable
         'refereed_by',
         'deleted_at',
         'one_signal_id',
+        'expo_push_token',
         'last_seen_at',
     ];
 
@@ -122,7 +123,7 @@ class User extends Authenticatable
     {
         if (static::whereUsername($slug = Str::slug($name, '-'))->exists()) {
             $user = static::latest('id')->first();
-            return "{$slug}" . $user->id + rand();
+            return "{$slug}-{$user->id}-" . rand(100, 999);
         }
         return $slug;
     }
@@ -135,8 +136,9 @@ class User extends Authenticatable
         }
     }
 
-    public function examResults (){
-        return $this->hasMany(StudentExamResult::class, 'exam_id');
+    public function examResults()
+    {
+        return $this->hasMany(StudentExamResult::class, 'user_id');
     }
 
     // get lastname  attribute

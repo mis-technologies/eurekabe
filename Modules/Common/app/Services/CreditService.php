@@ -4,6 +4,7 @@ namespace Modules\Common\Services;
 
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Modules\Common\Models\CreditFeatureCost;
 use Modules\Common\Models\CreditPlan;
 use Modules\Common\Models\CreditPlanSubscription;
@@ -45,27 +46,30 @@ class CreditService
      */
     public function deduct(User $user, string $featureKey, int $multiplier = 1, ?string $description = null): bool
     {
-        $account = $this->getAccount($user);
-        $cost    = $this->getCost($featureKey, $multiplier);
+        $cost = $this->getCost($featureKey, $multiplier);
 
-        if ($account->balance < $cost) {
-            return false;
-        }
+        return DB::transaction(function () use ($user, $featureKey, $multiplier, $description, $cost) {
+            $account = UserCreditAccount::where('user_id', $user->id)->lockForUpdate()->first();
 
-        $newBalance = $account->balance - $cost;
-        $account->update(['balance' => $newBalance]);
+            if (!$account || $account->balance < $cost) {
+                return false;
+            }
 
-        CreditTransaction::create([
-            'user_id'     => $user->id,
-            'type'        => 'debit',
-            'amount'      => $cost,
-            'balance_after' => $newBalance,
-            'feature_key' => $featureKey,
-            'description' => $description ?? "Used: {$featureKey}" . ($multiplier > 1 ? " ×{$multiplier}" : ''),
-            'meta'        => $multiplier > 1 ? ['multiplier' => $multiplier] : null,
-        ]);
+            $newBalance = $account->balance - $cost;
+            $account->update(['balance' => $newBalance]);
 
-        return true;
+            CreditTransaction::create([
+                'user_id'       => $user->id,
+                'type'          => 'debit',
+                'amount'        => $cost,
+                'balance_after' => $newBalance,
+                'feature_key'   => $featureKey,
+                'description'   => $description ?? "Used: {$featureKey}" . ($multiplier > 1 ? " ×{$multiplier}" : ''),
+                'meta'          => $multiplier > 1 ? ['multiplier' => $multiplier] : null,
+            ]);
+
+            return true;
+        });
     }
 
     /**
@@ -114,12 +118,14 @@ class CreditService
      * Assign a plan to a user. Creates/updates the credit account and logs a subscription.
      * For pay_as_you_go plans, credits are added directly without creating a subscription.
      */
-    public function assignPlan(User $user, CreditPlan $plan): UserCreditAccount
+    public function assignPlan(User $user, CreditPlan $plan, int $quantity = 1): UserCreditAccount
     {
         // PAYG plans: just top up credits, no subscription lifecycle
         if ($plan->type === 'pay_as_you_go') {
-            $account = $this->getAccount($user);
-            $this->credit($user, $plan->monthly_credits, 'credit', "Credit pack purchase: {$plan->name} ({$plan->monthly_credits} credits)", ['plan_slug' => $plan->slug]);
+            $account  = $this->getAccount($user);
+            $credits  = $plan->monthly_credits * max(1, $quantity);
+            $label    = $quantity > 1 ? "{$credits} credits (×{$quantity})" : "{$plan->monthly_credits} credits";
+            $this->credit($user, $credits, 'credit', "Credit pack purchase: {$plan->name} ({$label})", ['plan_slug' => $plan->slug, 'quantity' => $quantity]);
             return $account->fresh('plan');
         }
 

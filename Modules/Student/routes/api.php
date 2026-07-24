@@ -52,12 +52,14 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         
         
 
-        // Notification
+        // Notifications
         Route::middleware('auth:sanctum')->group(function () {
-            Route::get('notifications', [StudentNotificationController::class, 'getNotifications']);
-            Route::get('notifications/mark-all-read', [StudentNotificationController::class, 'markAllRead']);
-            Route::get('notifications/{notification}', [StudentNotificationController::class, 'getSingle']);
-            Route::get('notifications/{notification}/mark-read', [StudentNotificationController::class, 'markAsRead']);
+            Route::get('notifications',                                   [StudentNotificationController::class, 'getNotifications']);
+            Route::get('notifications/unread-count',                     [StudentNotificationController::class, 'unreadCount']);
+            Route::get('notifications/mark-all-read',                    [StudentNotificationController::class, 'markAllRead']);
+            Route::get('notifications/{notification}',                   [StudentNotificationController::class, 'getSingle']);
+            Route::get('notifications/{notification}/mark-read',         [StudentNotificationController::class, 'markAsRead']);
+            Route::patch('me/push-token',                                [StudentNotificationController::class, 'updatePushToken']);
         });      
 
 

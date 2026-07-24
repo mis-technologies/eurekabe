@@ -46,7 +46,7 @@ class AdminNotificationController extends Controller
         $count = 0;
         foreach ($users as $user) {
             try {
-                $user->notify(new EurekaNotification($dbContent, $dbContent, 'database'));
+                $user->notify(new EurekaNotification($dbContent, $dbContent, ['database', 'push']));
                 $count++;
             } catch (\Exception $e) {
                 // Continue sending to remaining users if one fails

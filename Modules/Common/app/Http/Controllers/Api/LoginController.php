@@ -43,7 +43,7 @@ class LoginController extends Controller
         }
        
         $user->generateUsername();
-        $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'influenzit'))->plainTextToken;
+        $token = $user->createToken(config('services.app.token_phrase'))->plainTextToken;
         $user->one_signal_id = $request->one_signal_id;
         $user->save();
 

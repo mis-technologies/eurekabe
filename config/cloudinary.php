@@ -43,5 +43,16 @@ return [
     'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
     'api_key' => env('CLOUDINARY_API_KEY'),
     'api_secret' => env('CLOUDINARY_API_SECRET'),
-    'secure' => env('CLOUDINARY_SECURE')
+    'secure' => env('CLOUDINARY_SECURE'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Material Storage Disk
+    |--------------------------------------------------------------------------
+    | Where study material files (PDFs, TXTs) are stored.
+    | 'cloudinary' — upload to Cloudinary (resource_type=raw)
+    | any other value — treated as a Laravel filesystem disk name (e.g. 'public', 's3')
+    |
+    */
+    'material_disk' => env('MATERIAL_DISK', 'cloudinary'),
 ];

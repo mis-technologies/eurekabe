@@ -10,6 +10,7 @@ class Payment extends Model
     protected $fillable = [
         'user_id',
         'plan_id',
+        'quantity',
         'paystack_reference',
         'amount',
         'status',

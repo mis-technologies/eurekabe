@@ -45,7 +45,7 @@ class RegisterController extends Controller
             app(CreditService::class)->assignPlan($user, $freePlan);
         }
 
-        $token = $user->createToken(env('TOKEN_SECRET_PHRASE', 'eureka'))->plainTextToken;
+        $token = $user->createToken(config('services.app.token_phrase'))->plainTextToken;
 
         return response()->json([
             'status' => 'success',

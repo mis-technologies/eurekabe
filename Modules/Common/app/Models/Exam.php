@@ -31,9 +31,13 @@ class Exam extends Model
         'allow_ai_hints',
     ];
 
-    protected $guarded = [];
-
     public $appends = ['rating', 'feedback_count', 'questions_count', 'created_by', 'last_updated_at', 'tag', 'totalmark', 'exam_type', 'image'];
+
+    /** The study material this exam was generated from (private practice exams only) */
+    public function material()
+    {
+        return $this->belongsTo(Material::class, 'material_id');
+    }
 
     public function school()
     {
