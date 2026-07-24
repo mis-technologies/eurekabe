@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" data-mode="light" data-layout-width="default" data-layout-position="fixed"
-    data-topbar-color="light" data-menu-color="light" data-sidenav-view="md">
+    data-topbar-color="light" data-menu-color="light" data-sidenav-view="default">
 
 <head>
     <meta charset="utf-8">
@@ -16,6 +16,11 @@
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
 
     <!-- Theme Config -->
+    <script>
+        // Force sidebar to default (full-width) view, clearing any cached compact view
+        var _cfg = sessionStorage.getItem('__CONFIG__');
+        if (_cfg) { try { var _c = JSON.parse(_cfg); if (_c.sidenav && _c.sidenav.view !== 'default') { _c.sidenav.view = 'default'; sessionStorage.setItem('__CONFIG__', JSON.stringify(_c)); } } catch(e) {} }
+    </script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
 
     <style>
@@ -34,6 +39,11 @@
         }
         /* Card hover */
         .card { transition: box-shadow 0.15s ease; }
+        /* Fix submenu visibility */
+        .sub-menu, .sub-menu * {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
     </style>
 
     @stack('styles')

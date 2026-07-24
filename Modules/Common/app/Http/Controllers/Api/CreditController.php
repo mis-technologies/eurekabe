@@ -31,8 +31,10 @@ class CreditController extends Controller
                     'id'              => $account->plan->id,
                     'name'            => $account->plan->name,
                     'slug'            => $account->plan->slug,
+                    'type'            => $account->plan->type,
                     'monthly_credits' => $account->plan->monthly_credits,
                     'price_ngn'       => $account->plan->price_ngn,
+                    'rollover'        => $account->plan->rollover,
                 ] : null,
             ],
         ]);
@@ -52,8 +54,11 @@ class CreditController extends Controller
                 'id'              => $p->id,
                 'name'            => $p->name,
                 'slug'            => $p->slug,
+                'type'            => $p->type,
                 'monthly_credits' => $p->monthly_credits,
                 'price_ngn'       => $p->price_ngn,
+                'is_active'       => $p->is_active,
+                'rollover'        => $p->rollover,
             ]),
         ]);
     }

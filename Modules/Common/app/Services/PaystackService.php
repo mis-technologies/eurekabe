@@ -30,7 +30,7 @@ class PaystackService
             'email'        => $user->email,
             'amount'       => $plan->price_ngn,  // already in kobo
             'reference'    => $payment->paystack_reference,
-            'callback_url' => config('app.url') . '/payment/callback',
+            'callback_url' => env('PAYSTACK_CALLBACK_URL', 'eurekamo://payment-callback'),
             'metadata'     => [
                 'user_id'   => $user->id,
                 'plan_id'   => $plan->id,
