@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification as BaseNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Log;
 use Modules\Common\Providers\ExpoNotificationProvider;
 use Modules\Common\Providers\OneSignalProvider;
 
@@ -26,14 +25,8 @@ class Notification extends BaseNotification //implements ShouldQueue
     public function __construct($emailContent, $dbContent, $channel)
     {
         $this->emailContent = $emailContent;
-        $this->dbContent = $dbContent;
-        $this->channel = $channel;
-
-        Log::info('Sending OneSignal notification', [
-            'channel' => $this->channel,
-            'emailContent' => $this->emailContent,
-            'dbContent' => $this->dbContent,
-        ]);
+        $this->dbContent    = $dbContent;
+        $this->channel      = $channel;
     }
 
     /**
@@ -79,8 +72,8 @@ class Notification extends BaseNotification //implements ShouldQueue
                     ['data' => $this->dbContent, 'url' => $this->dbContent['url'] ?? null]
                 );
             }
-        } catch (\Exception $e) {
-            Log::error('Notification::toPush failed', ['error' => $e->getMessage()]);
+        } catch (\Exception) {
+            // Silently swallow push errors — never let them propagate to the caller
         }
     }
 

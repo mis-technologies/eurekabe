@@ -136,15 +136,19 @@ class PaymentController extends Controller
 
         $this->creditService->assignPlan($user, $plan, $quantity);
 
-        // Notify user of successful credit purchase
-        $creditsAdded = $plan->credits * $quantity;
-        $dbContent = [
-            'title'     => 'Payment Successful',
-            'text'      => "Your payment was successful. {$creditsAdded} credits have been added to your account.",
-            'entity'    => get_class($payment),
-            'entity_id' => $payment->id,
-            'meta'      => ['plan_id' => $plan->id, 'credits' => $creditsAdded],
-        ];
-        $user->notify(new EurekaNotification(null, $dbContent, ['database', 'push']));
+        // Notify user of successful credit purchase (best-effort — never fail the payment)
+        try {
+            $creditsAdded = ($plan->monthly_credits ?? 0) * $quantity;
+            $dbContent = [
+                'title'     => 'Payment Successful',
+                'text'      => "Your payment was successful. {$creditsAdded} credits have been added to your account.",
+                'entity'    => get_class($payment),
+                'entity_id' => $payment->id,
+                'meta'      => ['plan_id' => $plan->id, 'credits' => $creditsAdded],
+            ];
+            $user->notify(new EurekaNotification(null, $dbContent, ['database', 'push']));
+        } catch (\Throwable) {
+            // Notification failure must never roll back or fail the payment
+        }
     }
 }
