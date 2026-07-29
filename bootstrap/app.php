@@ -25,7 +25,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('api', \App\Http\Middleware\UpdateLastSeen::class);
     })
     ->withSchedule(function (Schedule $schedule) {
-        //$schedule->command('queue:work')->everySecond();
+        // Reset monthly credit allowances for accounts whose next_reset_at is past
+        $schedule->command('credits:monthly-reset')->daily();
+
+        // Auto-renew monthly subscriptions using stored card authorizations
+        $schedule->command('credits:renew-subscriptions')->daily();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e, Request $request) {

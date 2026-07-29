@@ -12,6 +12,8 @@ class Payment extends Model
         'plan_id',
         'quantity',
         'paystack_reference',
+        'authorization_code',
+        'authorization_email',
         'amount',
         'status',
         'processed_at',

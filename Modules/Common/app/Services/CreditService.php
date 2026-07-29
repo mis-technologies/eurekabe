@@ -134,11 +134,12 @@ class CreditService
             ->where('status', 'active')
             ->update(['status' => 'cancelled', 'expires_at' => Carbon::now()]);
 
-        // Create new subscription record
+        // Create new subscription record (expires_at tracked for renewal job)
         CreditPlanSubscription::create([
             'user_id'    => $user->id,
             'plan_id'    => $plan->id,
             'started_at' => Carbon::now(),
+            'expires_at' => Carbon::now()->addMonth(),
             'status'     => 'active',
         ]);
 

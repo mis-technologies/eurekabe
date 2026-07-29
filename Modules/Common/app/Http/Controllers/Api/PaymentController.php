@@ -81,7 +81,9 @@ class PaymentController extends Controller
             $data = $this->paystackService->verify($reference);
 
             if ($data['status'] === 'success') {
-                $this->processSuccessfulPayment($payment);
+                $authCode  = ($data['authorization']['reusable'] ?? false) ? ($data['authorization']['authorization_code'] ?? null) : null;
+                $authEmail = $authCode ? ($data['customer']['email'] ?? null) : null;
+                $this->processSuccessfulPayment($payment, [], $authCode, $authEmail);
                 return response()->json(['status' => 'success', 'data' => ['status' => 'success', 'plan' => $payment->plan]]);
             }
 
@@ -114,7 +116,10 @@ class PaymentController extends Controller
                     ->first();
 
                 if ($payment) {
-                    $this->processSuccessfulPayment($payment, $event['data']);
+                    $authorization = $event['data']['authorization'] ?? [];
+                    $authCode  = ($authorization['reusable'] ?? false) ? ($authorization['authorization_code'] ?? null) : null;
+                    $authEmail = $authCode ? ($event['data']['customer']['email'] ?? null) : null;
+                    $this->processSuccessfulPayment($payment, $event['data'], $authCode, $authEmail);
                 }
             }
         }
@@ -122,13 +127,20 @@ class PaymentController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    private function processSuccessfulPayment(Payment $payment, array $meta = []): void
+    private function processSuccessfulPayment(Payment $payment, array $meta = [], ?string $authCode = null, ?string $authEmail = null): void
     {
-        $payment->update([
+        $updateData = [
             'status'       => 'success',
             'processed_at' => now(),
             'meta'         => $meta ?: null,
-        ]);
+        ];
+
+        if ($authCode) {
+            $updateData['authorization_code']  = $authCode;
+            $updateData['authorization_email'] = $authEmail;
+        }
+
+        $payment->update($updateData);
 
         $user     = $payment->user;
         $plan     = $payment->plan;

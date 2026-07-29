@@ -19,14 +19,12 @@ class PaystackService
 
     /**
      * Initialize a Paystack transaction.
+     * Monthly plans force card-only so the authorization can be stored for recurring billing.
      * Returns ['authorization_url', 'reference'] or throws.
      */
     public function initiate(User $user, CreditPlan $plan, Payment $payment): array
     {
-        $response = Http::withHeaders([
-            'Authorization' => "Bearer {$this->secretKey}",
-            'Content-Type'  => 'application/json',
-        ])->post("{$this->baseUrl}/transaction/initialize", [
+        $payload = [
             'email'        => $user->email,
             'amount'       => $payment->amount,  // already in kobo
             'reference'    => $payment->paystack_reference,
@@ -36,7 +34,17 @@ class PaystackService
                 'plan_id'   => $plan->id,
                 'plan_type' => $plan->type,
             ],
-        ]);
+        ];
+
+        // Force card channel for monthly subscriptions so Paystack stores a reusable auth
+        if ($plan->type === 'monthly') {
+            $payload['channels'] = ['card'];
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer {$this->secretKey}",
+            'Content-Type'  => 'application/json',
+        ])->post("{$this->baseUrl}/transaction/initialize", $payload);
 
         if (!$response->successful() || !($response->json('status'))) {
             throw new \RuntimeException($response->json('message') ?? 'Paystack initialization failed');
@@ -60,6 +68,30 @@ class PaystackService
 
         if (!$response->successful() || !($response->json('status'))) {
             throw new \RuntimeException($response->json('message') ?? 'Paystack verification failed');
+        }
+
+        return $response->json('data');
+    }
+
+    /**
+     * Charge a stored card authorization (used for monthly subscription renewals).
+     * Returns the transaction data array or throws.
+     * Caller should check $data['status'] === 'success' before crediting the user.
+     */
+    public function chargeAuthorization(string $authorizationCode, string $email, int $amountKobo, string $reference): array
+    {
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer {$this->secretKey}",
+            'Content-Type'  => 'application/json',
+        ])->post("{$this->baseUrl}/transaction/charge_authorization", [
+            'authorization_code' => $authorizationCode,
+            'email'              => $email,
+            'amount'             => $amountKobo,
+            'reference'          => $reference,
+        ]);
+
+        if (!$response->successful() || !($response->json('status'))) {
+            throw new \RuntimeException($response->json('message') ?? 'Paystack charge authorization failed');
         }
 
         return $response->json('data');
