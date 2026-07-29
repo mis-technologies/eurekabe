@@ -135,4 +135,10 @@ Route::group(['middleware'=> 'isadmin'], function () {
     Route::get('/admin/billing/adjust', [AdminBillingController::class, 'adjustCredits'])->name('admin.billing.adjust');
     Route::post('/admin/billing/adjust', [AdminBillingController::class, 'applyAdjustment'])->name('admin.billing.adjust.apply');
 
+    // Subscriptions
+    Route::get('/admin/billing/subscriptions', [AdminBillingController::class, 'subscriptions'])->name('admin.billing.subscriptions');
+    Route::post('/admin/billing/subscriptions/{id}/cancel', [AdminBillingController::class, 'cancelSubscription'])->name('admin.billing.subscriptions.cancel');
+    Route::post('/admin/billing/subscriptions/{id}/extend', [AdminBillingController::class, 'extendSubscription'])->name('admin.billing.subscriptions.extend');
+    Route::post('/admin/billing/subscriptions/{id}/force-renew', [AdminBillingController::class, 'forceRenewSubscription'])->name('admin.billing.subscriptions.force-renew');
+
 });

@@ -163,6 +163,12 @@
                         </a>
                     </li>
                     <li class="menu-item">
+                        <a href="{{ route('admin.billing.subscriptions') }}"
+                            class="{{ Route::is('admin.billing.subscriptions*') ? 'active' : '' }} menu-link">
+                            <span class="menu-text">Subscriptions</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
                         <a href="{{ route('admin.billing.payments') }}"
                             class="{{ Route::is('admin.billing.payments') ? 'active' : '' }} menu-link">
                             <span class="menu-text">Payments</span>
