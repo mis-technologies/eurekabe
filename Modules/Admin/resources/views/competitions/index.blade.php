@@ -85,12 +85,9 @@
                                                     class="text-primary hover:text-sky-700 text-xs font-medium">View</a>
                                                 <a href="{{ route('admin.competitions.edit', $competition->id) }}"
                                                     class="text-amber-600 hover:text-amber-800 text-xs font-medium">Edit</a>
-                                                <form action="{{ route('admin.competitions.destroy', $competition->id) }}" method="POST" class="inline"
-                                                    onsubmit="return confirm('Are you sure you want to delete this competition?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-red-500 hover:text-red-700 text-xs font-medium">Delete</button>
-                                                </form>
+                                                <a href="{{ route('admin.competitions.delete', $competition->id) }}"
+                                                    onclick="return confirm('Are you sure you want to delete this competition?')"
+                                                    class="text-red-500 hover:text-red-700 text-xs font-medium">Delete</a>
                                             </div>
                                         </td>
                                     </tr>

@@ -13,13 +13,8 @@
     <script src="{{ asset('assets/js/config.js') }}"></script>
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900">
-
-    <div class="min-h-screen flex items-center justify-center p-4">
-        <div class="w-full max-w-md">
-            @yield('content')
-        </div>
-    </div>
+<body class="bg-gray-50 dark:bg-gray-900" style="margin:0;padding:0;min-height:100vh;">
+    @yield('content')
 
     <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('assets/libs/%40frostui/tailwindcss/frostui.js') }}"></script>

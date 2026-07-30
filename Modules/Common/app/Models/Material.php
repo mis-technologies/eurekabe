@@ -51,6 +51,20 @@ class Material extends Model
         return $this->hasMany(MaterialQuestion::class);
     }
 
+    // ─── Accessors ────────────────────────────────────────────────────────────
+
+    /** Returns the first available summary text (short → medium → detailed). */
+    public function getSummaryAttribute(): ?string
+    {
+        return $this->summary_short ?? $this->summary_medium ?? $this->summary_detailed;
+    }
+
+    /** Number of AI-generated resources (JSON array on the row). */
+    public function getResourcesCountAttribute(): int
+    {
+        return count($this->resources ?? []);
+    }
+
     // ─── Helpers ──────────────────────────────────────────────────────────────
 
     public function isReady(): bool

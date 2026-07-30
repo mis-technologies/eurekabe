@@ -10,14 +10,11 @@
             </a>
             <h4 class="text-xl font-semibold text-gray-800 dark:text-gray-100">User Detail</h4>
         </div>
-        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline"
-            onsubmit="return confirm('Are you sure you want to delete this user? This cannot be undone.')">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn bg-danger text-white">
-                <i class="mgc_delete_line mr-1"></i> Delete User
-            </button>
-        </form>
+        <a href="{{ route('admin.users.delete', $user->id) }}"
+            onclick="return confirm('Are you sure you want to delete this user? This cannot be undone.')"
+            class="btn bg-danger text-white">
+            <i class="mgc_delete_line mr-1"></i> Delete User
+        </a>
     </div>
 
     @if(session('success'))

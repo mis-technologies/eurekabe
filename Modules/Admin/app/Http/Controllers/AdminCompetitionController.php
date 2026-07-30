@@ -4,6 +4,7 @@ namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Modules\Common\Models\Competition;
 use Modules\Common\Models\Exam;
 use Modules\Common\Models\School;
@@ -43,6 +44,7 @@ class AdminCompetitionController extends Controller
         ]);
 
         $competition = Competition::create([
+            'user_id'     => Auth::id(),
             'name'        => $validated['name'],
             'description' => $validated['description'] ?? null,
             'instruction' => $validated['instruction'] ?? null,
@@ -69,7 +71,45 @@ class AdminCompetitionController extends Controller
             'participants.user',
         ])->findOrFail($id);
 
-        return view('admin::competitions.show', compact('competition'));
+        $attachedExamIds = $competition->exams->pluck('id');
+        $availableExams  = Exam::orderBy('title')
+            ->whereNotIn('id', $attachedExamIds)
+            ->get();
+
+        return view('admin::competitions.show', compact('competition', 'availableExams'));
+    }
+
+    public function addExam(Request $request, $id)
+    {
+        $request->validate([
+            'exam_id'         => 'required|exists:exams,id',
+            'duration'        => 'nullable|integer|min:1',
+            'total_questions' => 'nullable|integer|min:1',
+        ]);
+
+        $competition = Competition::findOrFail($id);
+
+        if ($competition->exams()->where('exam_id', $request->exam_id)->exists()) {
+            session()->flash('error', 'That exam is already attached to this competition.');
+            return redirect()->route('admin.competitions.show', $id);
+        }
+
+        $competition->exams()->attach($request->exam_id, [
+            'duration'        => $request->duration ?: null,
+            'total_questions' => $request->total_questions ?: null,
+        ]);
+
+        session()->flash('success', 'Exam added to competition.');
+        return redirect()->route('admin.competitions.show', $id);
+    }
+
+    public function removeExam($id, $examId)
+    {
+        $competition = Competition::findOrFail($id);
+        $competition->exams()->detach($examId);
+
+        session()->flash('success', 'Exam removed from competition.');
+        return redirect()->route('admin.competitions.show', $id);
     }
 
     public function edit($id)
