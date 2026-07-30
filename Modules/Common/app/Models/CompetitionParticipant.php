@@ -13,15 +13,21 @@ class CompetitionParticipant extends Model
     protected $fillable = [
         'user_id',
         'competition_id',
-        'status', // pending, approved, rejected, submitted
+        'status',
         'isPaid',
         'payment_id',
         'score',
         'submitted_at',
+        'started_at',
+        'paid_at',
+        'payment_method',
+        'paystack_reference',
     ];
 
     protected $casts = [
         'submitted_at' => 'datetime',
+        'started_at' => 'datetime',
+        'paid_at' => 'datetime',
         'isPaid' => 'boolean',
     ];
 

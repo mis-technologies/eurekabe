@@ -23,6 +23,10 @@ class Competition extends Model
         'name',
         'visibility',
         'type',
+        'price',
+        'timezone',
+        'window_start_hour',
+        'window_end_hour',
         'description',
         'instruction',
         'status',
@@ -65,6 +69,64 @@ class Competition extends Model
             ->first();
 
         return $file ? $file->url : null;
+    }
+
+    // Scopes
+    public function scopePublicOnly($query)
+    {
+        return $query->where('visibility', 'public');
+    }
+
+    public function scopeVisibleTo($query, $user)
+    {
+        return $query->where(function ($q) use ($user) {
+            $q->where('visibility', 'public')
+              ->orWhereHas('schools', function ($sq) use ($user) {
+                  $sq->whereHas('users', fn ($uq) => $uq->where('users.id', $user->id));
+              });
+        });
+    }
+
+    public function scopeWithinWindow($query)
+    {
+        return $query->where(function ($q) {
+            foreach ($q->getModel()->all() as $competition) {
+                if (!$this->isWithinWindow($competition)) {
+                    $q->where('id', '!=', $competition->id);
+                }
+            }
+        });
+    }
+
+    public function isWithinWindow(): bool
+    {
+        $now = now()->setTimezone($this->timezone);
+        $currentHour = (int) $now->format('H');
+        $startHour = $this->window_start_hour;
+        $endHour = $this->window_end_hour;
+
+        if ($startHour < $endHour) {
+            return $currentHour >= $startHour && $currentHour < $endHour;
+        }
+
+        return $currentHour >= $startHour || $currentHour < $endHour;
+    }
+
+    public function getWindowStatusAttribute(): string
+    {
+        if ($this->isWithinWindow()) {
+            return 'open';
+        }
+
+        $now = now()->setTimezone($this->timezone);
+        $currentHour = (int) $now->format('H');
+        $startHour = $this->window_start_hour;
+
+        if ($startHour <= $currentHour) {
+            return 'closed';
+        }
+
+        return 'upcoming';
     }
 
 }

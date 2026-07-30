@@ -57,6 +57,35 @@ class PaystackService
     }
 
     /**
+     * Initialize a competition payment transaction.
+     */
+    public function initializeCompetitionTransaction($user, $competition, $amount, $email): array
+    {
+        $payload = [
+            'email'        => $email,
+            'amount'       => (int) ($amount * 100),
+            'reference'    => "comp_{$competition->id}_user_{$user->id}_" . uniqid(),
+            'callback_url' => config('services.paystack.callback_url'),
+            'metadata'     => [
+                'competition_id' => $competition->id,
+                'user_id'        => $user->id,
+                'competition_name' => $competition->name,
+            ],
+        ];
+
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer {$this->secretKey}",
+            'Content-Type'  => 'application/json',
+        ])->post("{$this->baseUrl}/transaction/initialize", $payload);
+
+        if (!$response->successful() || !($response->json('status'))) {
+            throw new \RuntimeException($response->json('message') ?? 'Paystack initialization failed');
+        }
+
+        return $response->json('data');
+    }
+
+    /**
      * Verify a transaction with Paystack.
      * Returns the full data array or throws.
      */

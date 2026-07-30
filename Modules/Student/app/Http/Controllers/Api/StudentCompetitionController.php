@@ -19,13 +19,10 @@ class StudentCompetitionController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $query = Competition::with(['schools', 'exams'])
-            ->where(function ($q) {
-                $q->where('visibility', 'public')
-                  ->orWhereHas('schools', function ($sq) {
-                      $sq->whereHas('users', fn ($uq) => $uq->where('users.id', Auth::id()));
-                  });
-            });
+            ->visibleTo($user);
 
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
@@ -41,7 +38,17 @@ class StudentCompetitionController extends Controller
 
         $competitions = $query->latest()->paginate(20);
 
-        return response()->json(['status' => 'success', 'data' => $competitions]);
+        return response()->json([
+            'status' => 'success',
+            'data' => $competitions->map(fn ($c) => array_merge(
+                $c->toArray(),
+                [
+                    'window_status' => $c->window_status,
+                    'is_within_window' => $c->isWithinWindow(),
+                    'price_display' => $c->price > 0 ? number_format($c->price, 2) : 'Free',
+                ]
+            )),
+        ]);
     }
 
     /**
@@ -49,26 +56,37 @@ class StudentCompetitionController extends Controller
      */
     public function show(Competition $competition)
     {
+        $user = Auth::user();
         $competition->load(['schools', 'exams', 'participants.user']);
 
         $myParticipant = CompetitionParticipant::where('competition_id', $competition->id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', $user->id)
             ->first();
 
         return response()->json([
             'status' => 'success',
-            'data' => $competition,
+            'data' => array_merge(
+                $competition->toArray(),
+                [
+                    'window_status' => $competition->window_status,
+                    'is_within_window' => $competition->isWithinWindow(),
+                    'price_display' => $competition->price > 0 ? number_format($competition->price, 2) : 'Free',
+                ]
+            ),
             'my_status' => $myParticipant?->status,
+            'is_paid' => $myParticipant?->isPaid ?? false,
+            'can_join' => $myParticipant === null,
         ]);
     }
 
     /**
-     * Join a competition
+     * Join competition (free) or initiate payment (paid)
      */
-    public function join(Competition $competition)
+    public function join(Request $request, Competition $competition)
     {
+        $user = Auth::user();
         $existing = CompetitionParticipant::where('competition_id', $competition->id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', $user->id)
             ->first();
 
         if ($existing) {
@@ -79,22 +97,140 @@ class StudentCompetitionController extends Controller
             return response()->json(['status' => 'error', 'message' => 'This competition has ended.'], 400);
         }
 
-        $participant = CompetitionParticipant::create([
-            'user_id'        => Auth::id(),
-            'competition_id' => $competition->id,
-            'status'         => 'pending',
-        ]);
+        // Free competition — join directly
+        if ($competition->price <= 0) {
+            $participant = CompetitionParticipant::create([
+                'user_id'        => $user->id,
+                'competition_id' => $competition->id,
+                'status'         => 'pending',
+                'isPaid'         => true,
+                'paid_at'        => now(),
+                'payment_method' => 'free',
+            ]);
 
+            $user->notify(new EurekaNotification(null, [
+                'title'     => 'Competition Joined',
+                'text'      => "You've joined \"{$competition->name}\". Good luck!",
+                'entity'    => get_class($competition),
+                'entity_id' => $competition->id,
+                'meta'      => ['competition_id' => $competition->id],
+            ], ['database', 'push']));
+
+            return response()->json(['status' => 'success', 'message' => 'Joined successfully.', 'data' => $participant]);
+        }
+
+        // Paid competition — redirect to payment
+        return $this->initiatePayment($request, $competition);
+    }
+
+    /**
+     * Initiate payment for a paid competition
+     */
+    public function initiatePayment(Request $request, Competition $competition)
+    {
         $user = Auth::user();
-        $user->notify(new EurekaNotification(null, [
-            'title'     => 'Competition Joined',
-            'text'      => "You've joined \"{$competition->title}\". Good luck!",
-            'entity'    => get_class($competition),
-            'entity_id' => $competition->id,
-            'meta'      => ['competition_id' => $competition->id],
-        ], ['database', 'push']));
 
-        return response()->json(['status' => 'success', 'message' => 'Joined successfully.', 'data' => $participant]);
+        $existing = CompetitionParticipant::where('competition_id', $competition->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if ($existing) {
+            return response()->json(['status' => 'error', 'message' => 'You have already joined this competition.'], 409);
+        }
+
+        try {
+            $paystackService = app(\Modules\Common\Services\PaystackService::class);
+
+            $result = $paystackService->initializeCompetitionTransaction(
+                $user,
+                $competition,
+                $competition->price,
+                $user->email
+            );
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'authorization_url' => $result['authorization_url'],
+                    'reference' => $result['reference'],
+                    'competition_id' => $competition->id,
+                ],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * Confirm payment and create participant (webhook or callback)
+     */
+    public function confirmPayment(Request $request)
+    {
+        $reference = $request->input('reference');
+
+        if (!$reference) {
+            return response()->json(['status' => 'error', 'message' => 'Reference required.'], 400);
+        }
+
+        try {
+            $paystackService = app(\Modules\Common\Services\PaystackService::class);
+            $verification = $paystackService->verify($reference);
+
+            if ($verification['status'] !== 'success') {
+                return response()->json(['status' => 'error', 'message' => 'Payment was not successful.'], 400);
+            }
+
+            $metadata = $verification['metadata'] ?? [];
+            $competitionId = $metadata['competition_id'] ?? null;
+            $userId = $metadata['user_id'] ?? null;
+
+            if (!$competitionId || !$userId) {
+                return response()->json(['status' => 'error', 'message' => 'Invalid payment metadata.'], 400);
+            }
+
+            $competition = Competition::find($competitionId);
+            $user = User::find($userId);
+
+            if (!$competition || !$user) {
+                return response()->json(['status' => 'error', 'message' => 'Competition or user not found.'], 404);
+            }
+
+            $participant = CompetitionParticipant::firstOrCreate(
+                ['user_id' => $userId, 'competition_id' => $competitionId],
+                [
+                    'status' => 'pending',
+                    'isPaid' => true,
+                    'paid_at' => now(),
+                    'payment_method' => 'paystack',
+                    'paystack_reference' => $reference,
+                ]
+            );
+
+            if (!$participant->wasRecentlyCreated) {
+                $participant->update([
+                    'isPaid' => true,
+                    'paid_at' => now(),
+                    'payment_method' => 'paystack',
+                    'paystack_reference' => $reference,
+                ]);
+            }
+
+            $user->notify(new EurekaNotification(null, [
+                'title'     => 'Payment Confirmed',
+                'text'      => "Your payment for \"{$competition->name}\" has been confirmed. Ready to compete!",
+                'entity'    => get_class($competition),
+                'entity_id' => $competition->id,
+                'meta'      => ['competition_id' => $competition->id],
+            ], ['database', 'push']));
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Payment confirmed and joined competition.',
+                'data' => $participant,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 400);
+        }
     }
 
     /**
@@ -120,12 +256,27 @@ class StudentCompetitionController extends Controller
      */
     public function startExam(Request $request, Competition $competition, $examId)
     {
+        $user = Auth::user();
+
+        // Enforce timing window
+        if (!$competition->isWithinWindow()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Competition window is not open. ' . ucfirst($competition->window_status) . '.',
+                'window_status' => $competition->window_status,
+            ], 403);
+        }
+
         $participant = CompetitionParticipant::where('competition_id', $competition->id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', $user->id)
             ->first();
 
         if (!$participant || $participant->status === 'rejected') {
             return response()->json(['status' => 'error', 'message' => 'You are not an approved participant.'], 403);
+        }
+
+        if (!$participant->isPaid) {
+            return response()->json(['status' => 'error', 'message' => 'Payment required to start this competition.'], 403);
         }
 
         $competitionExam = $competition->exams()->find($examId);
@@ -135,7 +286,7 @@ class StudentCompetitionController extends Controller
 
         // Prevent re-start after submission
         $existing = StudentExam::where('exam_id', $competitionExam->id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', $user->id)
             ->where('competition_id', $competition->id)
             ->first();
 
@@ -148,13 +299,14 @@ class StudentCompetitionController extends Controller
 
         $studentExam = StudentExam::create([
             'exam_id'        => $competitionExam->id,
-            'user_id'        => Auth::id(),
+            'user_id'        => $user->id,
             'competition_id' => $competition->id,
             'status'         => StudentExam::STARTED,
             'started_at'     => now(),
             'questions'      => $questions->pluck('id'),
         ]);
 
+        $participant->update(['started_at' => now()]);
         $studentExam['questions'] = $questions->load('options');
 
         return response()->json(['status' => 'success', 'data' => $studentExam]);
@@ -171,6 +323,15 @@ class StudentCompetitionController extends Controller
         ]);
 
         $user = Auth::user();
+
+        // Enforce timing window — no submissions after window closes
+        if (!$competition->isWithinWindow()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Competition window has closed. Submissions are no longer accepted.',
+                'window_status' => $competition->window_status,
+            ], 403);
+        }
 
         $studentExam = StudentExam::where('id', $request->student_exam_id)
             ->where('competition_id', $competition->id)
