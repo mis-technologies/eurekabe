@@ -31,28 +31,36 @@ class AdminCompetitionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'instruction' => 'nullable|string',
-            'status'      => 'required|in:upcoming,ongoing,completed,cancelled',
-            'start_date'  => 'nullable|date',
-            'end_date'    => 'nullable|date|after_or_equal:start_date',
-            'visibility'  => 'required|in:public,school,private',
-            'type'        => 'required|string|max:100',
-            'school_ids'  => 'nullable|array',
-            'school_ids.*' => 'exists:schools,id',
+            'name'              => 'required|string|max:255',
+            'description'       => 'nullable|string',
+            'instruction'       => 'nullable|string',
+            'status'            => 'required|in:upcoming,ongoing,completed,cancelled',
+            'start_date'        => 'nullable|date',
+            'end_date'          => 'nullable|date|after_or_equal:start_date',
+            'visibility'        => 'required|in:public,school,private',
+            'type'              => 'required|string|max:100',
+            'price'             => 'nullable|numeric|min:0',
+            'timezone'          => 'required|timezone',
+            'window_start_hour' => 'required|integer|min:0|max:23',
+            'window_end_hour'   => 'required|integer|min:0|max:23',
+            'school_ids'        => 'nullable|array',
+            'school_ids.*'      => 'exists:schools,id',
         ]);
 
         $competition = Competition::create([
-            'user_id'     => Auth::id(),
-            'name'        => $validated['name'],
-            'description' => $validated['description'] ?? null,
-            'instruction' => $validated['instruction'] ?? null,
-            'status'      => $validated['status'],
-            'start_date'  => $validated['start_date'] ?? null,
-            'end_date'    => $validated['end_date'] ?? null,
-            'visibility'  => $validated['visibility'],
-            'type'        => $validated['type'],
+            'user_id'           => Auth::id(),
+            'name'              => $validated['name'],
+            'description'       => $validated['description'] ?? null,
+            'instruction'       => $validated['instruction'] ?? null,
+            'status'            => $validated['status'],
+            'start_date'        => $validated['start_date'] ?? null,
+            'end_date'          => $validated['end_date'] ?? null,
+            'visibility'        => $validated['visibility'],
+            'type'              => $validated['type'],
+            'price'             => $validated['price'] ?? 0,
+            'timezone'          => $validated['timezone'] ?? 'UTC',
+            'window_start_hour' => $validated['window_start_hour'] ?? 0,
+            'window_end_hour'   => $validated['window_end_hour'] ?? 1,
         ]);
 
         if (!empty($validated['school_ids'])) {
@@ -125,27 +133,35 @@ class AdminCompetitionController extends Controller
         $competition = Competition::findOrFail($id);
 
         $validated = $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'instruction' => 'nullable|string',
-            'status'      => 'required|in:upcoming,ongoing,completed,cancelled',
-            'start_date'  => 'nullable|date',
-            'end_date'    => 'nullable|date|after_or_equal:start_date',
-            'visibility'  => 'required|in:public,school,private',
-            'type'        => 'required|string|max:100',
-            'school_ids'  => 'nullable|array',
-            'school_ids.*' => 'exists:schools,id',
+            'name'              => 'required|string|max:255',
+            'description'       => 'nullable|string',
+            'instruction'       => 'nullable|string',
+            'status'            => 'required|in:upcoming,ongoing,completed,cancelled',
+            'start_date'        => 'nullable|date',
+            'end_date'          => 'nullable|date|after_or_equal:start_date',
+            'visibility'        => 'required|in:public,school,private',
+            'type'              => 'required|string|max:100',
+            'price'             => 'nullable|numeric|min:0',
+            'timezone'          => 'required|timezone',
+            'window_start_hour' => 'required|integer|min:0|max:23',
+            'window_end_hour'   => 'required|integer|min:0|max:23',
+            'school_ids'        => 'nullable|array',
+            'school_ids.*'      => 'exists:schools,id',
         ]);
 
         $competition->update([
-            'name'        => $validated['name'],
-            'description' => $validated['description'] ?? null,
-            'instruction' => $validated['instruction'] ?? null,
-            'status'      => $validated['status'],
-            'start_date'  => $validated['start_date'] ?? null,
-            'end_date'    => $validated['end_date'] ?? null,
-            'visibility'  => $validated['visibility'],
-            'type'        => $validated['type'],
+            'name'              => $validated['name'],
+            'description'       => $validated['description'] ?? null,
+            'instruction'       => $validated['instruction'] ?? null,
+            'status'            => $validated['status'],
+            'start_date'        => $validated['start_date'] ?? null,
+            'end_date'          => $validated['end_date'] ?? null,
+            'visibility'        => $validated['visibility'],
+            'type'              => $validated['type'],
+            'price'             => $validated['price'] ?? 0,
+            'timezone'          => $validated['timezone'] ?? 'UTC',
+            'window_start_hour' => $validated['window_start_hour'] ?? 0,
+            'window_end_hour'   => $validated['window_end_hour'] ?? 1,
         ]);
 
         $competition->schools()->sync($validated['school_ids'] ?? []);
@@ -182,5 +198,45 @@ class AdminCompetitionController extends Controller
         }
 
         return redirect()->route('admin.competitions.index');
+    }
+
+    public function broadcast(Request $request, $id)
+    {
+        $competition = Competition::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'message' => 'required|string',
+            'segment' => 'required|in:all_participants,schools,all_eligible',
+        ]);
+
+        $notification = new \Modules\Common\Notifications\Notification(null, [
+            'title' => $request->title,
+            'text' => $request->message,
+            'entity' => get_class($competition),
+            'entity_id' => $competition->id,
+            'meta' => ['competition_id' => $competition->id, 'admin_broadcast' => true],
+        ], ['database', 'push']);
+
+        $recipients = [];
+
+        match ($request->segment) {
+            'all_participants' => $recipients = $competition->participants()->pluck('user_id')->toArray(),
+            'schools' => $recipients = \App\Models\User::whereHas('schools', function ($q) use ($competition) {
+                $q->whereIn('school_id', $competition->schools()->pluck('schools.id'));
+            })->pluck('id')->toArray(),
+            'all_eligible' => $recipients = $competition->visibility === 'public'
+                ? \App\Models\User::where('user_type', 'student')->pluck('id')->toArray()
+                : \App\Models\User::whereHas('schools', function ($q) use ($competition) {
+                    $q->whereIn('school_id', $competition->schools()->pluck('schools.id'));
+                })->pluck('id')->toArray(),
+        };
+
+        foreach (array_chunk($recipients, 100) as $chunk) {
+            \App\Models\User::whereIn('id', $chunk)->each(fn ($user) => $user->notify($notification));
+        }
+
+        session()->flash('success', 'Notification broadcast to ' . count($recipients) . ' recipients.');
+        return redirect()->back();
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\AdminController;
+use Modules\Admin\Http\Controllers\AdminCompetitionController;
 
 /*
  *--------------------------------------------------------------------------
@@ -16,4 +17,5 @@ use Modules\Admin\Http\Controllers\AdminController;
 
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::apiResource('admin', AdminController::class)->names('admin');
+    Route::post('competitions/{competition}/broadcast', [AdminCompetitionController::class, 'broadcast']);
 });
