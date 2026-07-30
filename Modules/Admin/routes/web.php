@@ -101,6 +101,7 @@ Route::group(['middleware'=> 'isadmin'], function () {
     Route::get('/admin/competitions/{id}/edit', [AdminCompetitionController::class, 'edit'])->name('admin.competitions.edit');
     Route::post('/admin/competitions/{id}', [AdminCompetitionController::class, 'update'])->name('admin.competitions.update');
     Route::post('/admin/competitions/{id}/status', [AdminCompetitionController::class, 'updateStatus'])->name('admin.competitions.status');
+    Route::post('/admin/competitions/{id}/broadcast', [AdminCompetitionController::class, 'broadcast'])->name('admin.competitions.broadcast');
     Route::get('/admin/competitions/{id}/delete', [AdminCompetitionController::class, 'destroy'])->name('admin.competitions.delete');
     Route::post('/admin/competitions/{id}/exams', [AdminCompetitionController::class, 'addExam'])->name('admin.competitions.exams.add');
     Route::get('/admin/competitions/{id}/exams/{examId}/remove', [AdminCompetitionController::class, 'removeExam'])->name('admin.competitions.exams.remove');
