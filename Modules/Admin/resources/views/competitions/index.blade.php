@@ -38,6 +38,7 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Schools</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Start Date</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">End Date</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Participants</th>
@@ -70,6 +71,17 @@
                                                 {{ ucfirst($competition->status ?? '—') }}
                                             </span>
                                         </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            @if($competition->price > 0)
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                                    ₦{{ number_format($competition->price, 2) }}
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                                    Free
+                                                </span>
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                             {{ $competition->start_date ? \Carbon\Carbon::parse($competition->start_date)->format('d M Y') : '—' }}
                                         </td>
@@ -93,7 +105,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                                        <td colspan="9" class="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
                                             No competitions found. <a href="{{ route('admin.competitions.create') }}" class="text-primary hover:underline">Create one</a>.
                                         </td>
                                     </tr>

@@ -102,6 +102,43 @@
                         @error('end_date')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
 
+                    {{-- Pricing Section --}}
+                    <div class="md:col-span-2 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <h6 class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-4">Pricing & Entry Window</h6>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Entry Fee (₦) <span class="text-gray-400 font-normal">leave 0 for free</span></label>
+                        <input type="number" name="price" value="{{ old('price', $competition->price) }}" min="0" step="0.01" class="form-input w-full" placeholder="0.00">
+                        @error('price')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Timezone <span class="text-red-500">*</span></label>
+                        <select name="timezone" class="form-select w-full" required>
+                            <option value="">— Select Timezone —</option>
+                            <option value="UTC" {{ old('timezone', $competition->timezone) === 'UTC' ? 'selected' : '' }}>UTC</option>
+                            <option value="Africa/Lagos" {{ old('timezone', $competition->timezone) === 'Africa/Lagos' ? 'selected' : '' }}>Africa/Lagos (WAT)</option>
+                            <option value="Africa/Cairo" {{ old('timezone', $competition->timezone) === 'Africa/Cairo' ? 'selected' : '' }}>Africa/Cairo (EAT)</option>
+                            <option value="Europe/London" {{ old('timezone', $competition->timezone) === 'Europe/London' ? 'selected' : '' }}>Europe/London (GMT)</option>
+                            <option value="America/New_York" {{ old('timezone', $competition->timezone) === 'America/New_York' ? 'selected' : '' }}>America/New_York (EST)</option>
+                            <option value="Asia/Dubai" {{ old('timezone', $competition->timezone) === 'Asia/Dubai' ? 'selected' : '' }}>Asia/Dubai (GST)</option>
+                        </select>
+                        @error('timezone')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Window Start (Hour 0-23) <span class="text-red-500">*</span></label>
+                        <input type="number" name="window_start_hour" value="{{ old('window_start_hour', $competition->window_start_hour) }}" min="0" max="23" class="form-input w-full" required>
+                        @error('window_start_hour')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Window End (Hour 0-23) <span class="text-red-500">*</span></label>
+                        <input type="number" name="window_end_hour" value="{{ old('window_end_hour', $competition->window_end_hour) }}" min="0" max="23" class="form-input w-full" required>
+                        @error('window_end_hour')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Schools</label>
                         @php $selectedSchoolIds = old('school_ids', $competition->schools->pluck('id')->toArray()); @endphp

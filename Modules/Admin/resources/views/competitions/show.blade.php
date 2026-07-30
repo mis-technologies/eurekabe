@@ -270,6 +270,82 @@
                 </div>
             </div>
 
+            {{-- ── Broadcast Notification ── --}}
+            <div class="card border-blue-200 dark:border-blue-900/50">
+                <div class="card-header bg-blue-50 dark:bg-blue-900/20">
+                    <h6 class="card-title flex items-center gap-2">
+                        <i class="mgc_notification_line text-blue-600"></i>
+                        Send Broadcast Message
+                    </h6>
+                </div>
+                <div class="p-5 space-y-4">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Send a custom notification to participants or eligible students about this competition.
+                    </p>
+
+                    <form action="{{ route('admin.competitions.broadcast', $competition->id) }}" method="POST" id="broadcastForm">
+                        @csrf
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Notification Title <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" name="title" placeholder="e.g., Competition Reminder"
+                                    class="form-input w-full text-sm" maxlength="255" required>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Message <span class="text-red-500">*</span>
+                                </label>
+                                <textarea name="message" placeholder="Write your message here..." rows="4"
+                                    class="form-textarea w-full text-sm" maxlength="1000" required></textarea>
+                                <p class="text-xs text-gray-400 mt-1">Max 1000 characters</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Send to <span class="text-red-500">*</span>
+                                </label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="segment" value="all_participants" checked class="form-radio">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">
+                                            All Participants <span class="text-gray-500">({{ $competition->participants->count() }} users)</span>
+                                        </span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="segment" value="schools" class="form-radio">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">
+                                            Students in Competition Schools <span class="text-gray-500">({{ $competition->schools->count() }} schools)</span>
+                                        </span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="segment" value="all_eligible" class="form-radio">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">
+                                            All Eligible Students
+                                            <span class="text-gray-500">
+                                                ({{ $competition->visibility === 'public' ? 'all public' : 'school-scoped' }})
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3 pt-2">
+                                <button type="submit" class="btn bg-blue-600 text-white hover:bg-blue-700 text-sm">
+                                    <i class="mgc_send_line mr-1"></i> Send Message
+                                </button>
+                                <button type="reset" class="btn bg-gray-200 text-gray-700 hover:bg-gray-300 text-sm">
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             {{-- ── Participants ── --}}
             <div class="card">
                 <div class="card-header">
