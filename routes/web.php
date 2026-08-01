@@ -15,6 +15,7 @@ Route::get('/faq', [FrontWebsiteController::class, 'faq'])->name('pages.faq');
 Route::get('/contact', [FrontWebsiteController::class, 'contact'])->name('pages.contact');
 Route::get('/requestForm', [FrontWebsiteController::class, 'requestForm'])->name('pages.requestForm');
 Route::get('/policy-privacy', [FrontWebsiteController::class, 'policyPrivacy'])->name('pages.policy-privacy');
+Route::get('/terms-condition', [FrontWebsiteController::class, 'termsCondition'])->name('pages.terms-condition');
 
 // Onboarding
 

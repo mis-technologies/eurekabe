@@ -251,5 +251,9 @@ class FrontWebsiteController extends Controller
         return view('pages.privacy-policy');
     }
 
+    public function termsCondition()
+    {
+        return view('pages.terms-condition');
+    }
 
 }
