@@ -228,4 +228,39 @@ class StudentController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function deleteAccount(Request $request)
+    {
+        try {
+            $user = User::find(Auth::user()->id);
+            
+            $request->validate([
+                'password' => 'required|string'
+            ]);
+
+            if (!\Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Incorrect password'
+                ], 422);
+            }
+
+            // Denormalize/anonymize email and phone, but keep data
+            $user->email = 'deleted_' . \Illuminate\Support\Str::uuid() . '@eurekaedu.app';
+            if ($user->phone) {
+                $user->phone = 'deleted_' . time();
+            }
+            $user->save();
+
+            // Soft-delete the user
+            $user->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Account deleted successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

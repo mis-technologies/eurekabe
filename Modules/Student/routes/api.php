@@ -29,6 +29,7 @@ Route::namespace('Api')->prefix('v1')->group(function () {
         Route::post('account', [StudentController::class, 'createAccount']);
         Route::get('me', [StudentController::class, 'getAccount']);
         Route::patch('me', [StudentController::class, 'updateAccount']);
+        Route::delete('me', [StudentController::class, 'deleteAccount']);
         Route::post('me/change-profile-picture', [StudentController::class, 'updateProfilePicture']);
 
         // Student Exam
