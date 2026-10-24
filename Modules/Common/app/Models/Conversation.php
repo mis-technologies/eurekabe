@@ -70,6 +70,26 @@ class Conversation extends Model
         return $this->created_at->diffForHumans();
     }
 
+    /** 'image' | 'file' when the message carries an attachment, otherwise null. */
+    private function attachmentType(?Message $message): ?string
+    {
+        $file = $message?->files->first();
+        if (!$file) {
+            return null;
+        }
+
+        return str_starts_with((string) $file->mime, 'image/') ? 'image' : 'file';
+    }
+
+    private function attachmentLabel(?Message $message): ?string
+    {
+        return match ($this->attachmentType($message)) {
+            'image' => 'Photo',
+            'file'  => 'PDF document',
+            default => null,
+        };
+    }
+
     public function getHeadingAttribute()
     {
         $user = User::find($this->user_id);
@@ -92,7 +112,8 @@ class Conversation extends Model
                 'profile_pic' => $entityUser->image,
                 'username' => $entityUser->username ??  $entityUser->lastname,
                 'recipient_id' => $entityUser->id,
-                'recent_message' => $recentMessage?->text ?: ($recentMessage?->files->isNotEmpty() ? '📎 Attachment' : 'New conversation'),
+                'recent_message' => $recentMessage?->text ?: $this->attachmentLabel($recentMessage) ?: 'New conversation',
+                'recent_message_type' => $this->attachmentType($recentMessage),
                 'recent_message_created_at' => $recentMessage->created_at ?? $this->created_at->diffForHumans(),
             ];
         } else {
@@ -101,7 +122,8 @@ class Conversation extends Model
                 'profile_pic' => $user->image,
                 'username' => $user->username ?? $user->lastname,
                 'recipient_id' => $user->id,
-                'recent_message' => $recentMessage?->text ?: ($recentMessage?->files->isNotEmpty() ? '📎 Attachment' : 'New conversation'),
+                'recent_message' => $recentMessage?->text ?: $this->attachmentLabel($recentMessage) ?: 'New conversation',
+                'recent_message_type' => $this->attachmentType($recentMessage),
                 'recent_message_created_at' => $recentMessage->created_at ?? $this->created_at->diffForHumans(),
             ];
         }
