@@ -156,6 +156,9 @@ Route::prefix('v1')->group(function () {
         Route::get('conversations/{id}/messages', [ConversationController::class, 'getConversationMessages']);
         Route::post('conversations/{id}/messages', [ConversationController::class, 'sendMessage']);
         Route::get('presence/{userId}', [ConversationController::class, 'getPresence']);
+        Route::post('users/{userId}/block', [ConversationController::class, 'blockUser']);
+        Route::delete('users/{userId}/block', [ConversationController::class, 'unblockUser']);
+        Route::post('users/{userId}/report', [ConversationController::class, 'reportUser']);
     });
 
     // ------------------------------------------------------------------

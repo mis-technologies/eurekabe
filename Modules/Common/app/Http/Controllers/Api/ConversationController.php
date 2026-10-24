@@ -2,7 +2,9 @@
 
 namespace Modules\Common\Http\Controllers\Api;
 
+use App\Models\ContentReport;
 use App\Models\User;
+use App\Models\UserBlock;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +30,10 @@ class ConversationController extends Controller
                         ->where('entity_id', $user->id);
                 });
         })->paginate(30);
+        $conversations->setCollection($conversations->getCollection()->filter(function ($conversation) use ($user) {
+            $otherId = $conversation->user_id == $user->id ? $conversation->entity_id : $conversation->user_id;
+            return !UserBlock::existsBetween($user->id, (int) $otherId);
+        })->values());
         return response()->json([
             'status' => 'success',
             'message' => 'User conversations retreived successfully',
@@ -52,6 +58,13 @@ class ConversationController extends Controller
         if ($validated['recipient_type'] == 'school') {
             $validated['entity'] = 'Modules\School\Models\School';
             $validated['entity_id'] = $validated['recipient_id'];
+        }
+
+        if ($validated['recipient_type'] == 'user' && UserBlock::existsBetween($authUser->id, (int) $validated['entity_id'])) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You cannot message this user.',
+            ], 403);
         }
 
         //start conversation here if it doesn't exists before
@@ -155,6 +168,14 @@ class ConversationController extends Controller
             ], 404);
         }
 
+        $otherId = $conversation->user_id == $authUser->id ? $conversation->entity_id : $conversation->user_id;
+        if ($conversation->entity == get_class(new User()) && UserBlock::existsBetween($authUser->id, (int) $otherId)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You cannot message this user.',
+            ], 403);
+        }
+
         $payload = $request->validate([
             'text'    => 'sometimes|nullable|string',
             'files'   => 'sometimes|array',
@@ -184,6 +205,52 @@ class ConversationController extends Controller
             'message' => 'Conversations message created successfully',
             'data' => $conversation->messages()->latest()->with('files')->limit(2)->get(),
         ]);
+    }
+
+    /**
+     * Block a user. Blocked users cannot message the blocker and vice versa.
+     */
+    public function blockUser(Request $request, $userId)
+    {
+        $authUser = Auth::user();
+        if ((int) $userId === $authUser->id || !User::whereKey($userId)->exists()) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid user'], 422);
+        }
+
+        UserBlock::firstOrCreate(['blocker_id' => $authUser->id, 'blocked_id' => $userId]);
+
+        return response()->json(['status' => 'success', 'message' => 'User blocked']);
+    }
+
+    public function unblockUser($userId)
+    {
+        UserBlock::where('blocker_id', Auth::id())->where('blocked_id', $userId)->delete();
+
+        return response()->json(['status' => 'success', 'message' => 'User unblocked']);
+    }
+
+    /**
+     * Report a user (and optionally a specific message) for objectionable behaviour.
+     */
+    public function reportUser(Request $request, $userId)
+    {
+        $data = $request->validate([
+            'reason'          => 'required|string|in:spam,harassment,inappropriate,impersonation,other',
+            'details'         => 'nullable|string|max:1000',
+            'conversation_id' => 'nullable|integer',
+            'message_id'      => 'nullable|integer',
+        ]);
+
+        if ((int) $userId === Auth::id() || !User::whereKey($userId)->exists()) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid user'], 422);
+        }
+
+        ContentReport::create($data + [
+            'reporter_id'      => Auth::id(),
+            'reported_user_id' => $userId,
+        ]);
+
+        return response()->json(['status' => 'success', 'message' => 'Report submitted. Our team will review it within 24 hours.']);
     }
 
     /**
