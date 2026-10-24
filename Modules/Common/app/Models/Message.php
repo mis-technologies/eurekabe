@@ -53,16 +53,6 @@ class Message extends Model
         static::creating(function($message){
             $message->uuid = Uuid::generate(4)->__get('string'); // string, hex, uuid_ordered
         });
-        static::created(function($message) {
-
-            if( request()['files'] ){
-                $files = request()['files'];
-                foreach ($files as $key => $value) {
-                    \Modules\Common\Facades\FileFacade::cloudinaryUpload($value, $message, identifier: $key);  
-                }
-            }
-            
-         });
 
     }
 

@@ -177,14 +177,8 @@ class ConversationController extends Controller
         }
 
         $payload = $request->validate([
-            'text'    => 'sometimes|nullable|string',
-            'files'   => 'sometimes|array',
-            'files.*' => 'sometimes|file|max:20480', // 20 MB per file
+            'text' => 'required|string|max:2000',
         ]);
-
-        // Remove 'files' from payload — the Message boot() hook reads them
-        // directly from request() after the model is created.
-        unset($payload['files']);
 
         $payload['user_id'] = $authUser->id;
         if ($conversation->entity == get_class(new User())) {
@@ -203,7 +197,7 @@ class ConversationController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Conversations message created successfully',
-            'data' => $conversation->messages()->latest()->with('files')->limit(2)->get(),
+            'data' => $conversation->messages()->latest()->limit(2)->get(),
         ]);
     }
 
