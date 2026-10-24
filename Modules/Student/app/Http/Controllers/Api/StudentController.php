@@ -157,6 +157,7 @@ class StudentController extends Controller
                         'streak'           => $streak,
                     ],
                     'achievements' => $achievements,
+                    'leaderboard_opt_in' => (bool) $user->leaderboard_opt_in,
                 ],
             ]);
         } catch (\Exception $e) {
@@ -185,6 +186,10 @@ class StudentController extends Controller
                 $user->school_id = $request->school_id;
             }
 
+
+            if ($request->has('leaderboard_opt_in')) {
+                $user->leaderboard_opt_in = (bool) $request->leaderboard_opt_in;
+            }
 
             if ($request->has('username')) {
                 $validation = Validator::make($request->all(), [

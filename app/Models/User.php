@@ -66,6 +66,7 @@ class User extends Authenticatable
         'one_signal_id',
         'expo_push_token',
         'last_seen_at',
+        'leaderboard_opt_in',
     ];
 
 
@@ -93,6 +94,7 @@ class User extends Authenticatable
             'last_seen_at'      => 'datetime',
             'password' => 'hashed',
             'interest' => 'array',
+            'leaderboard_opt_in' => 'boolean',
         ];
     }
 

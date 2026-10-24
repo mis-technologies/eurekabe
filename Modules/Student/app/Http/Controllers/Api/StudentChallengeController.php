@@ -407,7 +407,7 @@ class StudentChallengeController extends Controller
         $result = $studentExam->result();
         $pointsEarned = $result['total_marks_earned'];
 
-        $leaderResult = StudentLeaderBoard::updateOrCreate(
+        StudentLeaderBoard::updateOrCreate(
             ['user_id' => $user->id, 'challenge_id' => $challenge->id],
             ['points' => $pointsEarned, 'exam_id' => $studentExam->exam_id]
         );

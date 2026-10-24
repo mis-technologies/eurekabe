@@ -19,7 +19,10 @@ class StudentLeaderBoardController extends Controller
         $year = Carbon::now()->year;
 
 
+        // Only students who've opted in appear on the public leaderboard — Apple guideline
+        // 5.1.2 requires consent before uploading/displaying scores on a global leaderboard.
         $leaderboard = StudentLeaderBoard::with('user')
+            ->whereHas('user', fn ($q) => $q->where('leaderboard_opt_in', true))
             ->whereBetween('created_at', [$startOfWeek, $endOfWeek])
             ->selectRaw('user_id, SUM(points) as total_points')
             ->groupBy('user_id')
@@ -49,7 +52,10 @@ class StudentLeaderBoardController extends Controller
         $monthName = Carbon::now()->format('F');
         $year = Carbon::now()->year;
 
+        // Only students who've opted in appear on the public leaderboard — Apple guideline
+        // 5.1.2 requires consent before uploading/displaying scores on a global leaderboard.
         $leaderboard = StudentLeaderBoard::with('user')
+            ->whereHas('user', fn ($q) => $q->where('leaderboard_opt_in', true))
             ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->selectRaw('user_id, SUM(points) as total_points')
             ->groupBy('user_id')
@@ -77,7 +83,10 @@ class StudentLeaderBoardController extends Controller
         $endOfYear = Carbon::now()->endOfYear();
         $year = Carbon::now()->year;
 
+        // Only students who've opted in appear on the public leaderboard — Apple guideline
+        // 5.1.2 requires consent before uploading/displaying scores on a global leaderboard.
         $leaderboard = StudentLeaderBoard::with('user')
+            ->whereHas('user', fn ($q) => $q->where('leaderboard_opt_in', true))
             ->whereBetween('created_at', [$startOfYear, $endOfYear])
             ->selectRaw('user_id, SUM(points) as total_points')
             ->groupBy('user_id')
