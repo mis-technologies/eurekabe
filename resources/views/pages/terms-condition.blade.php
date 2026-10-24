@@ -47,6 +47,13 @@
           <p>If you're using the app outside of an area with Wi-Fi, you should remember that your terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third party charges.</p>
         </div>
 
+        <!-- User Conduct -->
+        <div class="flex flex-col gap-2">
+          <h2 class="text-2xl font-bold">User Conduct and Content</h2>
+          <p>Eureka has zero tolerance for objectionable content and abusive users. You agree not to post, send or share content that is unlawful, harassing, hateful, sexually explicit, threatening, misleading or otherwise objectionable, and not to impersonate others or spam other users. This applies to messages, attachments, profile photos and usernames.</p>
+          <p>You can report a user, or block them, from within any chat. We review reports within 24 hours and may remove content, suspend or permanently remove accounts that break these rules, without prior notice.</p>
+        </div>
+
         <!-- Liability -->
         <div class="flex flex-col gap-2">
           <h2 class="text-2xl font-bold">Liability</h2>
