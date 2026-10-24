@@ -208,6 +208,16 @@ class ConversationController extends Controller
     }
 
     /**
+     * Number of unread messages sent to the current user (for the home badge).
+     */
+    public function unreadCount()
+    {
+        $count = Message::where('to_user_id', Auth::id())->whereNull('read_at')->count();
+
+        return response()->json(['status' => 'success', 'data' => ['count' => $count]]);
+    }
+
+    /**
      * Block a user. Blocked users cannot message the blocker and vice versa.
      */
     public function blockUser(Request $request, $userId)

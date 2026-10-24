@@ -59,7 +59,11 @@ class Conversation extends Model
 
     public function getUnreadCountAttribute()
     {
-        return Message::where('conversation_id', $this->id)->whereNull('read_at')->count();
+        // Only messages sent TO the current user count — not ones they sent themselves.
+        return Message::where('conversation_id', $this->id)
+            ->where('to_user_id', Auth::id())
+            ->whereNull('read_at')
+            ->count();
     }
     public function getDateAttribute()
     {

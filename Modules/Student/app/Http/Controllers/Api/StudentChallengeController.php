@@ -40,7 +40,7 @@ class StudentChallengeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Challenge retrieved',
-            'data' => $challenge->load('participants', 'exam', 'user'),
+            'data' => $challenge->load('participants', 'exam', 'user', 'winner'),
         ]);
     }
 
@@ -433,9 +433,9 @@ class StudentChallengeController extends Controller
                 ->count();
 
             if ($stillActive === 0) {
-                $winner = StudentChallengeParticipant::where('challenge_id', $challenge->id)
-                    ->where('status', StudentChallengeParticipant::STATUS_SUBMITTED)
-                    ->orderByDesc('score')
+                $winner = StudentChallengeParticipant::ranked()
+                    ->where('student_challenge_participants.challenge_id', $challenge->id)
+                    ->where('student_challenge_participants.status', StudentChallengeParticipant::STATUS_SUBMITTED)
                     ->first();
 
                 $challenge->winner_id = $winner?->user_id;
@@ -468,11 +468,11 @@ class StudentChallengeController extends Controller
 
     public function getChallengeRanking(Request $request, StudentChallenge $challenge)
     {
-        $results = StudentChallengeParticipant::where('challenge_id', $challenge->id)
+        $results = StudentChallengeParticipant::ranked()
+            ->where('student_challenge_participants.challenge_id', $challenge->id)
             ->with(['user' => function ($query) {
                 $query->select('id', 'firstname', 'lastname', 'image');
             }])
-            ->orderByDesc('score')
             ->get();
 
         return response()->json([

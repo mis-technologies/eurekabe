@@ -18,6 +18,24 @@ class StudentChallengeParticipant  extends Model
     public const STATUS_SUBMITTED = 'submitted';
     public const STATUS_DECLINED = 'declined';
 
+    /**
+     * Order participants for a challenge: highest score first, and on a tie
+     * whoever submitted their exam first (student_exams.ended_at) ranks higher.
+     */
+    public function scopeRanked($query)
+    {
+        return $query
+            ->leftJoin('student_exams', function ($join) {
+                $join->on('student_exams.challenge_id', '=', 'student_challenge_participants.challenge_id')
+                    ->on('student_exams.user_id', '=', 'student_challenge_participants.user_id');
+            })
+            ->select('student_challenge_participants.*')
+            ->orderByDesc('student_challenge_participants.score')
+            ->orderByRaw('student_exams.ended_at IS NULL')
+            ->orderBy('student_exams.ended_at')
+            ->orderBy('student_challenge_participants.id');
+    }
+
     public $appends = [
         'is_winner',
     ];
