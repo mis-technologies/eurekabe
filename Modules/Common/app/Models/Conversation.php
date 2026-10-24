@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Modules\Common\Models\Message;
-use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class Conversation extends Model
 {
@@ -149,7 +149,7 @@ class Conversation extends Model
     {
         parent::boot();
         static::creating(function ($conv) {
-            $conv->uuid = Uuid::generate(4)->__get('string'); // string, hex, uuid_ordered
+            $conv->uuid = (string) Str::uuid(); // string, hex, uuid_ordered
         });
 
         static::retrieved(function ($conv) {

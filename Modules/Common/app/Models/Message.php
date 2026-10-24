@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 use Modules\Common\Models\Conversation;
 use App\Models\User;
 use Modules\Common\Models\File;
-use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 
 class Message extends Model
@@ -51,7 +51,7 @@ class Message extends Model
     public static function boot(){
         parent::boot();
         static::creating(function($message){
-            $message->uuid = Uuid::generate(4)->__get('string'); // string, hex, uuid_ordered
+            $message->uuid = (string) Str::uuid(); // string, hex, uuid_ordered
         });
 
     }
