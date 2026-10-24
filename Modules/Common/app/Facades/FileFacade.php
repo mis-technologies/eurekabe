@@ -157,7 +157,7 @@ class FileFacade
     }
 
 
-    public static function cloudinaryUpload($file, $entity = null, $identifier = null)
+    public static function cloudinaryUpload($file, $entity = null, $identifier = null, array $options = [])
     {
         try {
             // Configure Cloudinary
@@ -173,12 +173,12 @@ class FileFacade
             ]);
 
             // Upload the file to Cloudinary
-            $uploadResult = (new UploadApi())->upload($file->getRealPath(), [
+            $uploadResult = (new UploadApi())->upload($file->getRealPath(), array_merge([
                 'folder' => 'uploads',
                 'public_id' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
                 'overwrite' => true,
                 'resource_type' => 'image'
-            ]);
+            ], $options));
 
             // $uploadResult = Cloudinary::uploadApi()->upload($file->getRealPath());
 

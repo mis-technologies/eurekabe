@@ -211,7 +211,13 @@ class ConversationController extends Controller
                 $isPdf = $file->getClientMimeType() === 'application/pdf';
                 $isPdf
                     ? FileFacade::uploadRawFile($file, $message, null, 'chat')
-                    : FileFacade::cloudinaryUpload($file, $message);
+                    : FileFacade::cloudinaryUpload($file, $message, null, [
+                        // Unique name (two people can send "IMG_0001.jpg") and a size-limited copy.
+                        'folder'         => 'chat',
+                        'public_id'      => (string) \Illuminate\Support\Str::uuid(),
+                        'overwrite'      => false,
+                        'transformation' => [['width' => 1600, 'height' => 1600, 'crop' => 'limit', 'quality' => 'auto']],
+                    ]);
             } catch (\Throwable $e) {
                 // Don't leave an empty message behind if the upload fails.
                 $message->delete();
