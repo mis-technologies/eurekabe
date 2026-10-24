@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Common\Events\MessageSentEvent;
+use Modules\Common\Facades\FileFacade;
 use Modules\Common\Http\Requests\StartConversationRequest;
 use Modules\Common\Models\Conversation;
 use Modules\Common\Models\Message;
@@ -177,8 +178,19 @@ class ConversationController extends Controller
         }
 
         $payload = $request->validate([
-            'text' => 'required|string|max:2000',
+            'text' => 'nullable|string|max:2000',
+            'file' => 'nullable|file|mimes:jpg,jpeg,png,webp,heic,heif,pdf|max:10240', // one photo or PDF, 10 MB
         ]);
+
+        if (!filled($payload['text'] ?? null) && !$request->hasFile('file')) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Write a message or attach a photo or PDF.',
+            ], 422);
+        }
+
+        $file = $request->file('file');
+        unset($payload['file']);
 
         $payload['user_id'] = $authUser->id;
         if ($conversation->entity == get_class(new User())) {
@@ -193,7 +205,26 @@ class ConversationController extends Controller
             }
         }
         $message = $conversation->messages()->create($payload);
-        event(new MessageSentEvent($message));
+
+        if ($file) {
+            try {
+                $isPdf = $file->getClientMimeType() === 'application/pdf';
+                $isPdf
+                    ? FileFacade::uploadRawFile($file, $message, null, 'chat')
+                    : FileFacade::cloudinaryUpload($file, $message);
+            } catch (\Throwable $e) {
+                // Don't leave an empty message behind if the upload fails.
+                $message->delete();
+                report($e);
+
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Could not upload your attachment. Please try again.',
+                ], 422);
+            }
+        }
+
+        event(new MessageSentEvent($message->load('files')));
         return response()->json([
             'success' => true,
             'message' => 'Conversations message created successfully',

@@ -23,7 +23,7 @@
         <ul class="list-disc pl-6 space-y-2">
           <li><strong>Account details</strong> — your name, email address, username, school and password (stored securely hashed). Used to create and secure your account.</li>
           <li><strong>Exam activity</strong> — exams you take, answers, scores, ranks, achievements and credit usage. Used to show your progress and results.</li>
-          <li><strong>Profile photo</strong> — an image you choose from your photo library. Used only to show your profile photo.</li>
+          <li><strong>Photos and PDFs</strong> — a profile photo, or a photo or PDF you choose to attach to a chat message. Used only to show your profile photo and to deliver attachments to the person you send them to.</li>
           <li><strong>Messages</strong> — messages you send to other students through in-app chat, stored on our servers so they can be delivered to the recipient.</li>
           <li><strong>Device information</strong> — a push notification token, and basic device and log data used for notifications, crash reporting and security.</li>
         </ul>

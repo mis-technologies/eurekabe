@@ -42,6 +42,7 @@ class MessageSentEvent implements ShouldBroadcastNow
             'user_id'         => $this->message->user_id,
             'to_user_id'      => $this->message->to_user_id,
             'text'            => $this->message->text,
+            'files'           => $this->message->files,
             'read_at'         => $this->message->read_at,
             'from'            => $this->message->from,
             'created_at'      => $this->message->created_at?->toIso8601String(),
