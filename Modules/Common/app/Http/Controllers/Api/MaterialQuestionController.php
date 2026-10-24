@@ -86,18 +86,39 @@ class MaterialQuestionController extends Controller
             ? 'Each item must have: "question" (string), "options" (array of exactly 4 strings), "correct_answer" (string: "A", "B", "C", or "D"), "explanation" (string).'
             : 'Each item must have: "question" (string), "correct_answer" (string — a model answer paragraph), "explanation" (string). Omit the "options" field.';
 
+        $difficultyGuide = [
+            'easy'   => 'Easy: direct recall of definitions, terms, facts or single steps stated in the material.',
+            'medium' => 'Medium: understanding and application — explain why/how, compare concepts, or apply an idea to a short scenario.',
+            'hard'   => 'Hard: analysis and multi-step reasoning — combine several ideas, evaluate trade-offs, handle edge cases or calculations. Must NOT be a simple recall question.',
+        ][$difficulty];
+
+        // Questions this material already has (any difficulty) — the model must not repeat them.
+        $existing = MaterialQuestion::where('material_id', $id)
+            ->where('question_type', $type)
+            ->latest('id')->limit(80)->pluck('question')->all();
+
+        $avoid = $existing
+            ? "\n\nThese questions already exist. Do NOT repeat, rephrase or closely imitate any of them; cover different parts of the material:\n- "
+                . implode("\n- ", array_map(fn ($q) => mb_substr($q, 0, 140), $existing))
+            : '';
+
+        // Ask for a few extra so we can still return $count after duplicates are dropped.
+        $requested = min(25, (int) ceil($count * 1.3) + 1);
+
         $pastContext = $pastText
             ? "\n\nAdditionally, here are previous exam questions from this course (use these to help predict the style and focus areas of likely future questions):\n{$pastText}"
             : '';
 
         $system = 'You are an expert exam question writer for Nigerian university students. Always respond with valid JSON only.';
-        $prompt = "Generate exactly {$count} {$difficultyLabel} difficulty {$typeLabel} practice questions based on the following study material. "
+        $prompt = "Generate exactly {$requested} {$difficultyLabel} difficulty {$typeLabel} practice questions based on the following study material. "
+            . "Every question must be different from the others. {$difficultyGuide} "
             . "Return a JSON object with a \"questions\" array. {$schemaInstruction}"
+            . $avoid
             . "\n\nStudy Material:\n" . substr($material->extracted_text, 0, 8000)
             . $pastContext;
 
         try {
-            $parsed = $this->callOpenAIJson($system, $prompt, min(4000, $count * 200));
+            $parsed = $this->callOpenAIJson($system, $prompt, min(4000, $requested * 200));
         } catch (\Throwable $e) {
             $this->credits->refund($user, 'material_questions', $count);
             return response()->json(['status' => 'error', 'message' => 'AI service error. Credits have been refunded.'], 503);
@@ -109,8 +130,19 @@ class MaterialQuestionController extends Controller
             return response()->json(['status' => 'error', 'message' => 'AI returned an unexpected response. Credits have been refunded.'], 500);
         }
 
+        // Drop anything that repeats an existing question or another one in this batch.
+        $seen     = $existing;
         $toInsert = [];
-        foreach (array_slice($items, 0, $count) as $item) {
+        foreach ($items as $item) {
+            if (count($toInsert) >= $count) {
+                break;
+            }
+            $text = trim((string) ($item['question'] ?? ''));
+            if ($text === '' || $this->isDuplicate($text, $seen)) {
+                continue;
+            }
+            $seen[] = $text;
+
             $options = null;
             if ($type === 'mcq' && isset($item['options']) && is_array($item['options'])) {
                 $options = array_slice(array_values($item['options']), 0, 4);
@@ -127,6 +159,17 @@ class MaterialQuestionController extends Controller
                 'created_at'    => now(),
                 'updated_at'    => now(),
             ];
+        }
+
+        if (empty($toInsert)) {
+            $this->credits->refund($user, 'material_questions', $count);
+            return response()->json(['status' => 'error', 'message' => 'No new questions could be generated from this material. Credits have been refunded.'], 422);
+        }
+
+        // Charged for $count but fewer unique questions came back — refund the difference.
+        $shortfall = $count - count($toInsert);
+        if ($shortfall > 0) {
+            $this->credits->refund($user, 'material_questions', $shortfall);
         }
 
         MaterialQuestion::insert($toInsert);
@@ -154,6 +197,29 @@ class MaterialQuestionController extends Controller
     }
 
     // ─── Helpers ─────────────────────────────────────────────────────────────
+
+    /** Normalise for comparison: lower-case, letters/digits only, single spaces. */
+    private function normalise(string $text): string
+    {
+        return trim(preg_replace('/\s+/', ' ', preg_replace('/[^\p{L}\p{N}\s]/u', ' ', mb_strtolower($text))));
+    }
+
+    /** True when $text matches (or is ~85%+ similar to) any question in $others. */
+    private function isDuplicate(string $text, array $others): bool
+    {
+        $a = $this->normalise($text);
+        foreach ($others as $other) {
+            $b = $this->normalise((string) $other);
+            if ($a === $b) {
+                return true;
+            }
+            similar_text($a, $b, $percent);
+            if ($percent >= 85) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private function findMaterial(Request $request, int $id): ?Material
     {
