@@ -10,6 +10,8 @@ class CreditPlanSubscription extends Model
     protected $fillable = [
         'user_id',
         'plan_id',
+        'provider',
+        'apple_original_transaction_id',
         'started_at',
         'expires_at',
         'status',

@@ -24,6 +24,7 @@ use Modules\Common\Http\Controllers\Api\ConversationController;
 use Modules\Common\Http\Controllers\Api\AiTutorController;
 use Modules\Common\Http\Controllers\Api\ArticleController;
 use Modules\Common\Http\Controllers\Api\CreditController;
+use Modules\Common\Http\Controllers\Api\AppleIapController;
 use Modules\Common\Http\Controllers\Api\PaymentController as ApiPaymentController;
 use Modules\Common\Http\Controllers\Api\MaterialController;
 use Modules\Common\Http\Controllers\Api\MaterialSummaryController;
@@ -121,6 +122,7 @@ Route::prefix('v1')->group(function () {
         Route::get('history', [CreditController::class, 'history']);
         Route::post('payment/initiate',          [ApiPaymentController::class, 'initiate']);
         Route::get('payment/verify/{reference}', [ApiPaymentController::class, 'verify']);
+        Route::post('payment/apple/verify',      [AppleIapController::class, 'verify']);
     });
 
     // Paystack webhook — no auth middleware

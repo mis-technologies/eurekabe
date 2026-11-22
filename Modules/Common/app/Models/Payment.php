@@ -10,10 +10,13 @@ class Payment extends Model
     protected $fillable = [
         'user_id',
         'plan_id',
+        'provider',
         'quantity',
         'paystack_reference',
         'authorization_code',
         'authorization_email',
+        'apple_transaction_id',
+        'apple_original_transaction_id',
         'amount',
         'status',
         'processed_at',

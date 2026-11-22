@@ -115,6 +115,16 @@ class CreditService
     }
 
     /**
+     * Revoke a user's paid plan on expiry/refund/chargeback and downgrade to Free.
+     */
+    public function revokePlan(User $user): UserCreditAccount
+    {
+        $freePlan = CreditPlan::where('slug', 'free')->firstOrFail();
+
+        return $this->assignPlan($user, $freePlan);
+    }
+
+    /**
      * Assign a plan to a user. Creates/updates the credit account and logs a subscription.
      * For pay_as_you_go plans, credits are added directly without creating a subscription.
      */

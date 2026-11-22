@@ -17,9 +17,12 @@ class RenewMonthlySubscriptions extends Command
 
     public function handle(CreditService $creditService, PaystackService $paystackService): int
     {
-        // Find active monthly subscriptions expiring within the next 25 hours
+        // Find active monthly subscriptions expiring within the next 25 hours.
+        // Apple-provider subscriptions are excluded — Apple renews those itself
+        // and notifies us via Server Notifications V2 (see app/Listeners/AppStore).
         $due = CreditPlanSubscription::with(['user', 'plan'])
             ->where('status', 'active')
+            ->where('provider', 'paystack')
             ->whereNotNull('expires_at')
             ->where('expires_at', '<=', now()->addHours(25))
             ->get();

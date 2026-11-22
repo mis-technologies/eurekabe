@@ -8,14 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Modules\Common\Models\CreditPlan;
 use Modules\Common\Models\Payment;
-use Modules\Common\Notifications\Notification as EurekaNotification;
-use Modules\Common\Services\CreditService;
+use Modules\Common\Services\PaymentFulfillmentService;
 use Modules\Common\Services\PaystackService;
 
 class PaymentController extends Controller
 {
     public function __construct(
-        private CreditService $creditService,
+        private PaymentFulfillmentService $fulfillmentService,
         private PaystackService $paystackService,
     ) {}
 
@@ -142,25 +141,6 @@ class PaymentController extends Controller
 
         $payment->update($updateData);
 
-        $user     = $payment->user;
-        $plan     = $payment->plan;
-        $quantity = $payment->quantity ?? 1;
-
-        $this->creditService->assignPlan($user, $plan, $quantity);
-
-        // Notify user of successful credit purchase (best-effort — never fail the payment)
-        try {
-            $creditsAdded = ($plan->monthly_credits ?? 0) * $quantity;
-            $dbContent = [
-                'title'     => 'Payment Successful',
-                'text'      => "Your payment was successful. {$creditsAdded} credits have been added to your account.",
-                'entity'    => get_class($payment),
-                'entity_id' => $payment->id,
-                'meta'      => ['plan_id' => $plan->id, 'credits' => $creditsAdded],
-            ];
-            $user->notify(new EurekaNotification(null, $dbContent, ['database', 'push']));
-        } catch (\Throwable) {
-            // Notification failure must never roll back or fail the payment
-        }
+        $this->fulfillmentService->fulfill($payment);
     }
 }

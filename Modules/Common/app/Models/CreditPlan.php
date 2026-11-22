@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CreditPlan extends Model
 {
-    protected $fillable = ['name', 'slug', 'type', 'monthly_credits', 'price_ngn', 'is_active', 'rollover'];
+    protected $fillable = ['name', 'slug', 'apple_product_id', 'type', 'monthly_credits', 'price_ngn', 'is_active', 'rollover'];
 
     protected $casts = [
         'is_active' => 'boolean',
