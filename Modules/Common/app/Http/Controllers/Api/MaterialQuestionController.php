@@ -75,6 +75,7 @@ class MaterialQuestionController extends Controller
         if (!$this->credits->deduct($user, 'material_questions', $count)) {
             $account = $this->credits->getAccount($user);
             $cost    = $this->credits->getCost('material_questions', $count);
+            $this->credits->notifyLowBalance($user);
             return $this->insufficientCredits($account->balance, $cost);
         }
 

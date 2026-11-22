@@ -22,13 +22,13 @@ class PaystackService
      * Monthly plans force card-only so the authorization can be stored for recurring billing.
      * Returns ['authorization_url', 'reference'] or throws.
      */
-    public function initiate(User $user, CreditPlan $plan, Payment $payment): array
+    public function initiate(User $user, CreditPlan $plan, Payment $payment, ?string $callbackUrl = null): array
     {
         $payload = [
             'email'        => $user->email,
             'amount'       => $payment->amount,  // already in kobo
             'reference'    => $payment->paystack_reference,
-            'callback_url' => config('services.paystack.callback_url'),
+            'callback_url' => $callbackUrl ?? config('services.paystack.callback_url'),
             'metadata'     => [
                 'user_id'   => $user->id,
                 'plan_id'   => $plan->id,

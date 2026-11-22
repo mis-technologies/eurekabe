@@ -23,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->appendToGroup('api', \App\Http\Middleware\UpdateLastSeen::class);
+        $middleware->alias(['credits.web.session' => \App\Http\Middleware\EnsureCreditsWebSession::class]);
     })
     ->withSchedule(function (Schedule $schedule) {
         // Reset monthly credit allowances for accounts whose next_reset_at is past

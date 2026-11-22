@@ -2,9 +2,12 @@
 
 namespace Modules\Common\Services;
 
+use App\Mail\LowBalanceAlert;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Modules\Common\Models\CreditFeatureCost;
 use Modules\Common\Models\CreditPlan;
 use Modules\Common\Models\CreditPlanSubscription;
@@ -26,6 +29,35 @@ class CreditService
         $this->maybeReset($account);
 
         return $account->fresh('plan');
+    }
+
+    /**
+     * Email the user a link to check usage/top up once they hit an
+     * insufficient-credits wall. Throttled to once per 24h per account so
+     * repeated failed actions in one session don't spam them. Never throws —
+     * a notification failure must not break the caller's own error response.
+     */
+    public function notifyLowBalance(User $user): void
+    {
+        $account = $this->getAccount($user);
+
+        if ($account->low_balance_notified_at?->gt(now()->subHours(24))) {
+            return;
+        }
+
+        try {
+            $signedUrl = URL::temporarySignedRoute(
+                'credits.web.show',
+                now()->addDays(14),
+                ['user' => $user->id]
+            );
+
+            Mail::to($user->email)->send(new LowBalanceAlert($user, $account, $signedUrl));
+
+            $account->update(['low_balance_notified_at' => now()]);
+        } catch (\Throwable $e) {
+            report($e);
+        }
     }
 
     /**

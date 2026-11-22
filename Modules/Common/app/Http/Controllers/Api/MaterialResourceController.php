@@ -61,6 +61,7 @@ class MaterialResourceController extends Controller
         $user = $request->user();
         if (!$this->credits->deduct($user, 'material_resources')) {
             $account = $this->credits->getAccount($user);
+            $this->credits->notifyLowBalance($user);
             return $this->insufficientCredits($account->balance, $this->credits->getCost('material_resources'));
         }
 

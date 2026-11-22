@@ -70,3 +70,16 @@ use App\Http\Controllers\VolunteerApplicationController;
 
 Route::get('/volunteer/apply', [VolunteerApplicationController::class, 'showForm'])->name('volunteer.apply');
 Route::post('/volunteer/apply', [VolunteerApplicationController::class, 'submit'])->name('volunteer.apply.submit');
+
+// Credits web top-up — reached only via the signed link emailed when a user
+// (notably iOS, which has no in-app purchasing) runs low on AI credits.
+use App\Http\Controllers\CreditsWebController;
+
+Route::get('/credits/topup', [CreditsWebController::class, 'show'])
+    ->name('credits.web.show')
+    ->middleware('signed');
+
+Route::middleware('credits.web.session')->group(function () {
+    Route::post('/credits/topup/initiate', [CreditsWebController::class, 'initiatePayment'])->name('credits.web.initiate');
+    Route::get('/credits/topup/callback', [CreditsWebController::class, 'callback'])->name('credits.web.callback');
+});

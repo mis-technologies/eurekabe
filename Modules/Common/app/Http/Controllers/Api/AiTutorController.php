@@ -50,6 +50,7 @@ class AiTutorController extends Controller
         if (!$credits->deduct($user, $featureKey)) {
             $account = $credits->getAccount($user);
             $cost    = $credits->getCost($featureKey);
+            $credits->notifyLowBalance($user);
             return response()->json([
                 'status'  => 'error',
                 'code'    => 'INSUFFICIENT_CREDITS',

@@ -13,10 +13,12 @@ class UserCreditAccount extends Model
         'balance',
         'monthly_allowance',
         'next_reset_at',
+        'low_balance_notified_at',
     ];
 
     protected $casts = [
-        'next_reset_at' => 'datetime',
+        'next_reset_at'           => 'datetime',
+        'low_balance_notified_at' => 'datetime',
     ];
 
     public function user()
