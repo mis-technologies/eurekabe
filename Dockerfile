@@ -30,7 +30,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Override PHP settings for larger file uploads
 RUN echo "upload_max_filesize = 100M" >> /usr/local/etc/php/conf.d/uploads.ini \
     && echo "post_max_size = 100M" >> /usr/local/etc/php/conf.d/uploads.ini \
-    && echo "memory_limit = 256M" >> /usr/local/etc/php/conf.d/uploads.ini
+    && echo "memory_limit = 256M" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "max_execution_time = 300" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "max_input_time = 300" >> /usr/local/etc/php/conf.d/uploads.ini \
+    && printf "[www]\ncatch_workers_output = yes\ndecorate_workers_output = no\nrequest_terminate_timeout = 300\n" > /usr/local/etc/php-fpm.d/zz-logging.conf
     
 
 # Copy existing application directory contents
