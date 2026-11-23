@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
@@ -18,85 +17,39 @@ class ProcessMaterialJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $timeout = 180;
-    public int $tries   = 2;
+    public int $timeout = 600;
+    public int $tries   = 1;   // extraction is deterministic; retrying a timeout just wastes the worker
 
     public function __construct(public int $materialId) {}
 
     public function handle(): void
     {
-        $material = Material::with('file')->find($this->materialId);
+        $material = Material::find($this->materialId);
 
         if (!$material || $material->status !== 'processing') {
             return;
         }
 
-        $file = $material->file;
+        $relative = $material->path;
+        $disk     = Storage::disk('local');
 
-        if (!$file) {
-            $material->update(['status' => 'failed']);
-            $this->notifyUser($material, false);
+        if (!$relative || !$disk->exists($relative)) {
+            Log::error('ProcessMaterialJob: uploaded file missing', [
+                'material_id' => $this->materialId,
+                'path'        => $relative,
+            ]);
+            $this->markFailed($material);
             return;
         }
 
+        $absolute = $disk->path($relative);
+
         try {
-            $ext        = strtolower($file->extension);
-            $isRemote   = $file->disk === 'cloudinary';
+            $ext  = strtolower(pathinfo($absolute, PATHINFO_EXTENSION));
+            $text = $ext === 'pdf' ? $this->extractPdf($absolute) : (string) file_get_contents($absolute);
 
-            if ($ext === 'pdf') {
-                $tmpPath = tempnam(sys_get_temp_dir(), 'mat_');
-
-                // For Cloudinary the path is a URL; for local disks get an absolute path
-                if ($isRemote) {
-                    $resp = Http::timeout(60)->get($file->path);
-                    if (!$resp->successful()) {
-                        throw new \RuntimeException("Remote file fetch failed (HTTP {$resp->status()}) for {$file->path}");
-                    }
-                    $contents = $resp->body();
-                } else {
-                    $contents = Storage::disk($file->disk)->get($file->path);
-                }
-
-                if ($contents === null || $contents === false) {
-                    Log::error('ProcessMaterialJob: file contents could not be retrieved', [
-                        'material_id' => $this->materialId,
-                        'disk'        => $file->disk,
-                        'path'        => $file->path,
-                    ]);
-                    $material->update(['status' => 'failed']);
-                    $this->notifyUser($material, false);
-                    return;
-                }
-
-                file_put_contents($tmpPath, $contents);
-
-                try {
-                    $parser = new \Smalot\PdfParser\Parser();
-                    $text   = $parser->parseFile($tmpPath)->getText();
-                } catch (\Throwable $parseError) {
-                    // Smalot rejects encrypted PDFs (even with an empty user password).
-                    // Fall back to poppler's pdftotext, which handles them.
-                    Log::warning('ProcessMaterialJob: pdfparser failed, trying pdftotext', [
-                        'material_id' => $this->materialId,
-                        'error'       => $parseError->getMessage(),
-                    ]);
-                    $text = $this->extractWithPdftotext($tmpPath);
-                    if ($text === null) {
-                        @unlink($tmpPath);
-                        throw $parseError;
-                    }
-                } finally {
-                    @unlink($tmpPath);
-                }
-            } else {
-                $text = $isRemote
-                    ? Http::timeout(60)->get($file->path)->body()
-                    : Storage::disk($file->disk)->get($file->path);
-            }
-
-            if (!$text || trim($text) === '') {
-                $material->update(['status' => 'failed']);
-                $this->notifyUser($material, false);
+            if (trim((string) $text) === '') {
+                $this->markFailed($material);
                 return;
             }
 
@@ -116,17 +69,41 @@ class ProcessMaterialJob implements ShouldQueue
             Log::error('ProcessMaterialJob: extraction failed', [
                 'material_id' => $this->materialId,
                 'error'       => $e->getMessage(),
-                'attempt'     => $this->attempts(),
             ]);
-
-            // Only mark failed + notify on the final attempt, otherwise the retry
-            // would exit early because status is no longer 'processing'.
-            if ($this->attempts() >= $this->tries) {
-                $material->update(['status' => 'failed']);
-                $this->notifyUser($material, false);
-            }
-            throw $e;
+            throw $e; // failed() below marks the material failed + notifies
+        } finally {
+            // The file is only needed for extraction; discard it either way.
+            $disk->delete($relative);
+            $material->path = null;
+            $material->saveQuietly();
         }
+    }
+
+    /** Also runs when the worker kills the job on timeout, so status can never stay "processing". */
+    public function failed(?\Throwable $e): void
+    {
+        $material = Material::find($this->materialId);
+        if ($material && $material->status === 'processing') {
+            $this->markFailed($material);
+        }
+    }
+
+    private function markFailed(Material $material): void
+    {
+        $material->update(['status' => 'failed']);
+        $this->notifyUser($material, false);
+    }
+
+    private function extractPdf(string $path): string
+    {
+        // pdftotext (poppler) is fast, low-memory and handles encrypted PDFs; use it first.
+        $text = $this->extractWithPdftotext($path);
+        if ($text !== null && trim($text) !== '') {
+            return $text;
+        }
+
+        // Fallback to the pure-PHP parser (e.g. if poppler isn't installed).
+        return (new \Smalot\PdfParser\Parser())->parseFile($path)->getText();
     }
 
     private function extractWithPdftotext(string $path): ?string

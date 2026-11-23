@@ -41,27 +41,17 @@ class MaterialController extends Controller
         $file     = $request->file('file');
         $title    = $request->input('title') ?: pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
-        // Create the Material record first (so File can reference its ID)
+        // Keep the upload on local disk only until text extraction finishes;
+        // ProcessMaterialJob deletes it afterwards. No remote storage needed.
+        $path = $file->store('material-uploads', 'local');
+
         $material = Material::create([
             'user_id'           => $request->user()->id,
             'title'             => $title,
             'original_filename' => $file->getClientOriginalName(),
+            'path'              => $path,
             'status'            => 'processing',
         ]);
-
-        // Upload to configured storage disk via FileFacade (non-blocking on failure)
-        try {
-            $fileRecord = FileFacade::uploadRawFile($file, $material, 'document');
-            $material->update(['file_id' => $fileRecord->id]);
-        } catch (\Throwable $e) {
-            // Upload failed — mark as failed immediately, no point queuing
-            $material->update(['status' => 'failed']);
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'File upload to storage failed. Please try again.',
-                'data'    => $this->materialResource($material->fresh('file')),
-            ], 422);
-        }
 
         // Dispatch async job to extract text and update status
         ProcessMaterialJob::dispatch($material->id);
@@ -99,7 +89,12 @@ class MaterialController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Material not found.'], 404);
         }
 
-        // Best-effort: delete from whichever disk the file is on
+        // Remove any upload still waiting to be processed
+        if ($material->path) {
+            \Illuminate\Support\Facades\Storage::disk('local')->delete($material->path);
+        }
+
+        // Legacy rows: file stored via FileFacade (Cloudinary/public disk)
         if ($material->file) {
             FileFacade::deleteRawFile($material->file);
         }
@@ -124,7 +119,7 @@ class MaterialController extends Controller
             'id'                => $m->id,
             'title'             => $m->title,
             'original_filename' => $m->display_filename,
-            'path'              => $m->file?->path ?? $m->path,
+            'path'              => $m->file?->path,
             'word_count'        => $m->word_count,
             'status'            => $m->status,
             'created_at'        => $m->created_at?->toISOString(),
