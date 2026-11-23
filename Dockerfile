@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libonig-dev \
     cron \
+    poppler-utils \
     supervisor \
     nginx \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \

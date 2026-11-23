@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Process;
 use Modules\Common\Models\Material;
 use Modules\Common\Notifications\Notification as EurekaNotification;
 
@@ -69,11 +70,24 @@ class ProcessMaterialJob implements ShouldQueue
 
                 file_put_contents($tmpPath, $contents);
 
-                $parser = new \Smalot\PdfParser\Parser();
-                $pdf    = $parser->parseFile($tmpPath);
-                $text   = $pdf->getText();
-
-                @unlink($tmpPath);
+                try {
+                    $parser = new \Smalot\PdfParser\Parser();
+                    $text   = $parser->parseFile($tmpPath)->getText();
+                } catch (\Throwable $parseError) {
+                    // Smalot rejects encrypted PDFs (even with an empty user password).
+                    // Fall back to poppler's pdftotext, which handles them.
+                    Log::warning('ProcessMaterialJob: pdfparser failed, trying pdftotext', [
+                        'material_id' => $this->materialId,
+                        'error'       => $parseError->getMessage(),
+                    ]);
+                    $text = $this->extractWithPdftotext($tmpPath);
+                    if ($text === null) {
+                        @unlink($tmpPath);
+                        throw $parseError;
+                    }
+                } finally {
+                    @unlink($tmpPath);
+                }
             } else {
                 $text = $isRemote
                     ? Http::timeout(60)->get($file->path)->body()
@@ -112,6 +126,20 @@ class ProcessMaterialJob implements ShouldQueue
                 $this->notifyUser($material, false);
             }
             throw $e;
+        }
+    }
+
+    private function extractWithPdftotext(string $path): ?string
+    {
+        try {
+            $process = new Process(['pdftotext', '-enc', 'UTF-8', '-layout', $path, '-']);
+            $process->setTimeout(120);
+            $process->run();
+
+            return $process->isSuccessful() ? $process->getOutput() : null;
+        } catch (\Throwable $e) {
+            Log::error('ProcessMaterialJob: pdftotext failed', ['error' => $e->getMessage()]);
+            return null;
         }
     }
 
