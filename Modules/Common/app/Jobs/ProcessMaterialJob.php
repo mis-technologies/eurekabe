@@ -42,7 +42,7 @@ class ProcessMaterialJob implements ShouldQueue
             $isRemote   = $file->disk === 'cloudinary';
 
             if ($ext === 'pdf') {
-                $tmpPath = tempnam(sys_get_temp_dir(), 'mat_') . '.pdf';
+                $tmpPath = tempnam(sys_get_temp_dir(), 'mat_');
 
                 // For Cloudinary the path is a URL; for local disks get an absolute path
                 if ($isRemote) {
@@ -116,7 +116,7 @@ class ProcessMaterialJob implements ShouldQueue
         if ($success) {
             $dbContent = [
                 'title'     => 'Material Ready',
-                'text'      => "\"{$title}\" has been processed and is ready for study.',",
+                'text'      => "\"{$title}\" has been processed and is ready for study.",
                 'entity'    => get_class($material),
                 'entity_id' => $material->id,
                 'meta'      => ['material_id' => $material->id],
