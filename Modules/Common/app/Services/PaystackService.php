@@ -59,13 +59,13 @@ class PaystackService
     /**
      * Initialize a competition payment transaction.
      */
-    public function initializeCompetitionTransaction($user, $competition, $amount, $email): array
+    public function initializeCompetitionTransaction($user, $competition, $amount, $email, ?string $callbackUrl = null): array
     {
         $payload = [
             'email'        => $email,
             'amount'       => (int) ($amount * 100),
             'reference'    => "comp_{$competition->id}_user_{$user->id}_" . uniqid(),
-            'callback_url' => config('services.paystack.callback_url'),
+            'callback_url' => $callbackUrl ?? config('services.paystack.callback_url'),
             'metadata'     => [
                 'competition_id' => $competition->id,
                 'user_id'        => $user->id,

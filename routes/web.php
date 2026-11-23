@@ -83,3 +83,10 @@ Route::middleware('credits.web.session')->group(function () {
     Route::post('/credits/topup/initiate', [CreditsWebController::class, 'initiatePayment'])->name('credits.web.initiate');
     Route::get('/credits/topup/callback', [CreditsWebController::class, 'callback'])->name('credits.web.callback');
 });
+
+// Competition entry payment — emailed to users (notably iOS, with no in-app
+// purchasing) who request to enter a paid competition. See
+// StudentCompetitionController::requestEntryPaymentEmail().
+use App\Http\Controllers\CompetitionsWebController;
+
+Route::get('/competitions/entry/callback', [CompetitionsWebController::class, 'callback'])->name('competitions.web.callback');

@@ -162,6 +162,54 @@ class StudentCompetitionController extends Controller
     }
 
     /**
+     * iOS entry path for a paid competition (guideline 3.1.1/3.1.3(b)) — no
+     * in-app Paystack flow there, so we email a payment link instead. The
+     * emailed link's Paystack callback points at a web page (CompetitionsWebController)
+     * which calls confirmPayment() on success, exactly as the mobile
+     * in-app flow does via its own callback.
+     */
+    public function requestEntryPaymentEmail(Request $request, Competition $competition)
+    {
+        $user = Auth::user();
+
+        $existing = CompetitionParticipant::where('competition_id', $competition->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if ($existing) {
+            return response()->json(['status' => 'error', 'message' => 'You have already joined this competition.'], 409);
+        }
+
+        if ($competition->price <= 0) {
+            return response()->json(['status' => 'error', 'message' => 'This competition is free — join directly.'], 400);
+        }
+
+        try {
+            $paystackService = app(\Modules\Common\Services\PaystackService::class);
+
+            $result = $paystackService->initializeCompetitionTransaction(
+                $user,
+                $competition,
+                $competition->price,
+                $user->email,
+                route('competitions.web.callback')
+            );
+
+            \Illuminate\Support\Facades\Mail::to($user->email)->send(
+                new \App\Mail\CompetitionEntryPaymentLink($user, $competition, $result['authorization_url'])
+            );
+
+            return response()->json([
+                'status'  => 'success',
+                'message' => "We've emailed you the next steps to complete your entry.",
+            ]);
+        } catch (\Exception $e) {
+            report($e);
+            return response()->json(['status' => 'error', 'message' => 'Could not send entry email. Please try again.'], 400);
+        }
+    }
+
+    /**
      * Confirm payment and create participant (webhook or callback)
      */
     public function confirmPayment(Request $request)

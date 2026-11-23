@@ -70,6 +70,7 @@ Route::namespace('Api')->prefix('v1')->group(function () {
             Route::get('/{competition}',                              [StudentCompetitionController::class, 'show']);
             Route::post('/{competition}/join',                        [StudentCompetitionController::class, 'join']);
             Route::post('/{competition}/initiate-payment',            [StudentCompetitionController::class, 'initiatePayment']);
+            Route::post('/{competition}/request-entry-email',         [StudentCompetitionController::class, 'requestEntryPaymentEmail']);
             Route::post('/confirm-payment',                           [StudentCompetitionController::class, 'confirmPayment']);
             Route::delete('/{competition}/leave',                     [StudentCompetitionController::class, 'leave']);
             Route::post('/{competition}/exams/{examId}/start',        [StudentCompetitionController::class, 'startExam']);
