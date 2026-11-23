@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Modules\Common\Models\Material;
@@ -46,7 +47,11 @@ class ProcessMaterialJob implements ShouldQueue
 
                 // For Cloudinary the path is a URL; for local disks get an absolute path
                 if ($isRemote) {
-                    $contents = file_get_contents($file->path);
+                    $resp = Http::timeout(60)->get($file->path);
+                    if (!$resp->successful()) {
+                        throw new \RuntimeException("Remote file fetch failed (HTTP {$resp->status()}) for {$file->path}");
+                    }
+                    $contents = $resp->body();
                 } else {
                     $contents = Storage::disk($file->disk)->get($file->path);
                 }
@@ -71,7 +76,7 @@ class ProcessMaterialJob implements ShouldQueue
                 @unlink($tmpPath);
             } else {
                 $text = $isRemote
-                    ? file_get_contents($file->path)
+                    ? Http::timeout(60)->get($file->path)->body()
                     : Storage::disk($file->disk)->get($file->path);
             }
 
@@ -97,10 +102,16 @@ class ProcessMaterialJob implements ShouldQueue
             Log::error('ProcessMaterialJob: extraction failed', [
                 'material_id' => $this->materialId,
                 'error'       => $e->getMessage(),
+                'attempt'     => $this->attempts(),
             ]);
-            $material->update(['status' => 'failed']);
-            $this->notifyUser($material, false);
-            throw $e; // allow queue to record the failure and retry
+
+            // Only mark failed + notify on the final attempt, otherwise the retry
+            // would exit early because status is no longer 'processing'.
+            if ($this->attempts() >= $this->tries) {
+                $material->update(['status' => 'failed']);
+                $this->notifyUser($material, false);
+            }
+            throw $e;
         }
     }
 
@@ -111,7 +122,7 @@ class ProcessMaterialJob implements ShouldQueue
             return;
         }
 
-        $title = $material->name ?? 'Your material';
+        $title = $material->title ?? 'Your material';
 
         if ($success) {
             $dbContent = [
